@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
 
-from models import db, Meet, Event, Record, RelayResult
+# from models import db, Meet, Event, Record, RelayResult
 
 
 @app.route('/')
@@ -25,9 +25,9 @@ def ranking():
     style = request.args.get('style')
     distance = request.args.get('distance')
 
-    records = Record.query.all()
+    # records = Record.query.all()
 
-    return render_template('ranking.html', records = records[:10])
+    return render_template('ranking.html', records =[])
 
 if __name__ == "__main__":
     if os.name == "nt": #ローカルの自機Windowsのとき
