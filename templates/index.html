@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/index.css">
   <link rel="stylesheet" href="static/odometer-theme-default.css">
   <link rel="icon" href="static/favicon.ico">
 </head>
@@ -29,7 +29,7 @@
         </ul>
       </div>
     </div>
-    <img src="static/logo.png" alt="Swimmers' Zero" id="logo">
+    <a href="index.html"><img src="static/logo.png" alt="Swimmers' Zero" id="logo"></a>
   </header>
 
   <div id="hero">
@@ -41,6 +41,7 @@
       <p>現在のレコード数</p>
       <p class="odometer" id="target">1000000<p>
     </div>
+    <!-- なんかかっこいい雨あられアニメーション -->
     <div class="back">
       <figure></figure>
       <figure></figure>
@@ -53,10 +54,10 @@
   <div id="category">
     <p>区分からランキングを検索</p>
     <div class="buttons">
-      <a class="button" href="#">男子短水路</a>
-      <a class="button" href="#">男子長水路</a>
-      <a class="button women" href="#">女子短水路</a>
-      <a class="button women" href="#">女子長水路</a>
+      <a class="button" href="ranking?group=MS">男子短水路</a>
+      <a class="button women" href="ranking?group=WS">女子短水路</a>
+      <a class="button" href="ranking?group=ML">男子長水路</a>
+      <a class="button women" href="ranking?group=WL">女子長水路</a>
     </div>
   </div>
 
