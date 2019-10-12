@@ -1,17 +1,23 @@
+import datetime
+import json
 import os
+import re
+import requests
 
 from flask import Flask, request, render_template
-# from flask_sqlalchemy import SQLAlchemy
-
-from env import Record, ret_session
-
-ss = ret_session()
+from env import database_url
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url()
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
+
+from models import db, Meet, Event, Record, RelayResult
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/ranking')
 def ranking():
@@ -19,7 +25,7 @@ def ranking():
     style = request.args.get('style')
     distance = request.args.get('distance')
 
-    records = ss.query(Record).all()
+    records = Record.query.all()
 
     return render_template('ranking.html', records = records[:10])
 
