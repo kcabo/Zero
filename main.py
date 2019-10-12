@@ -5,10 +5,10 @@ import re
 import requests
 
 from flask import Flask, request, render_template
-from env import database_url
+# from env import database_url
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url()
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
 
 from models import db, Meet, Event, Record, RelayResult
