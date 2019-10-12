@@ -6,7 +6,6 @@ from sqlalchemy import Column, Integer, String
 # from sqlalchemy.orm import sessionmaker
 
 import constant
-import env
 import os
 import re
 import requests
