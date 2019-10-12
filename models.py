@@ -41,8 +41,8 @@ def format_time(time_str):
             min = ob.group(1) if ob.group(1) != "" else 0
             return "{}:{}.{}".format(min, ob.group(2), ob.group(3))
 
-def create_table():
-    db.create_all()
+# def create_table():
+db.create_all()
 
 def get_html(url):
     req = requests.get(url)
