@@ -7,34 +7,26 @@ import requests
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
-if os.name == 'nt':
+if os.name == 'nt': # ローカルのWindows環境
     from env import database_url
-else:
+else: # 本番Linux環境
     database_url = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
 
-# from models import db, Meet, Event, Record, RelayResult
-
-# ##test##
-# from models import create_table, Hoge
-#
-# create_table()
-#
-# # a1 = Hoge('a', '0:32.00')
-# # a2 = Hoge('a', '0:28.00')
-# # a3 = Hoge('a', '12:29.00')
-#
-# # db.session.add_all([a1, a2, a3])
-# # db.session.commit()
-
+# from models import db, create_table
+# from parser import Meet, Record, Relay, Event
 
 import time
+
 @app.route('/')
 def index():
-    time.sleep(10)
     return render_template('index.html')
 
+@app.route('/time')
+def index():
+    time.sleep(300)
+    return render_template('index.html')
 
 @app.route('/ranking')
 def ranking():
