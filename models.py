@@ -1,19 +1,31 @@
-from __main__ import app
-from flask_sqlalchemy import SQLAlchemy
-
-from sqlalchemy import Column, Integer, String
-# from sqlalchemy.ext.declarative import declarative_base
-# from sqlalchemy.orm import sessionmaker
-
 import constant
 import os
 import re
 import requests
 
+from __main__ import app
+from flask_sqlalchemy import SQLAlchemy
+
 from bs4 import BeautifulSoup, element
 from tqdm import tqdm
 
 db = SQLAlchemy(app)
+
+###ここからテスト
+
+import random
+class Hoge(db.Model):
+    __tablename__ = 'hoge'
+    id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
+    name = db.Column(db.String, nullable = False)                     # 大会名
+    time = db.Column(db.String, nullable = False)
+    filter = db.Column(db.String, nullable = False)
+
+    def __init__(self, name, time):
+        self.name = name
+        self.time = time
+
+###テストここまで
 
 meet_link_ptn = re.compile(r"code=[0-9]{7}$") # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
@@ -41,8 +53,8 @@ def format_time(time_str):
             min = ob.group(1) if ob.group(1) != "" else 0
             return "{}:{}.{}".format(min, ob.group(2), ob.group(3))
 
-# def create_table():
-db.create_all()
+def create_table():
+    db.create_all()
 
 def get_html(url):
     req = requests.get(url)
@@ -51,16 +63,16 @@ def get_html(url):
 
 class Meet(db.Model):
     __tablename__ = 'meets'
-    id = Column(Integer, primary_key=True)                      # 連番で振られるid
-    meetid = Column(String, unique = True, nullable = False)    # 7桁の大会ID 0119721など0で始まることもある
-    name = Column(String, nullable = False)                     # 大会名
-    place = Column(String, nullable = False)                    # 会場
-    pool = Column(String, nullable = False)                     # 短水路or長水路
-    start = Column(String, nullable = False)                    # 大会開始日 2019/09/24 で表す
-    end = Column(String, nullable = False)                      # 大会終了日
-    area = Column(Integer, nullable = False)                    # 地域(整数)
-    year = Column(Integer, nullable = False)                    # 開催年
-    code = Column(Integer, nullable = False)                    # 下三桁
+    id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
+    meetid = db.Column(db.String, unique = True, nullable = False)    # 7桁の大会ID 0119721など0で始まることもある
+    name = db.Column(db.String, nullable = False)                     # 大会名
+    place = db.Column(db.String, nullable = False)                    # 会場
+    pool = db.Column(db.String, nullable = False)                     # 短水路or長水路
+    start = db.Column(db.String, nullable = False)                    # 大会開始日 2019/09/24 で表す
+    end = db.Column(db.String, nullable = False)                      # 大会終了日
+    area = db.Column(db.Integer, nullable = False)                    # 地域(整数)
+    year = db.Column(db.Integer, nullable = False)                    # 開催年
+    code = db.Column(db.Integer, nullable = False)                    # 下三桁
 
     def __init__(self, meet_id):
         self.meetid = meet_id
@@ -102,16 +114,16 @@ class Event:
 
 class Record(db.Model): #個人種目の１記録
     __tablename__ = 'records'
-    id = Column(Integer, primary_key=True)                      # 連番で振られるid
-    meetid = Column(String, nullable = False)                   # 7桁の大会ID 0119721など0で始まることもある
-    sex = Column(Integer, nullable = False)                     # 性別
-    style = Column(Integer, nullable = False)                   # 泳法
-    distance = Column(Integer, nullable = False)                # 距離
-    name = Column(String, nullable = False)                     # 選手氏名
-    team = Column(String, nullable = False)                     # 所属名
-    grade = Column(String, nullable = False)                    # 学年
-    time = Column(String, nullable = False)                     # タイム。#:##.##書式文字列
-    laps = Column(String, nullable = False)                     # ラップタイム。#:##.##,#:##.##,...
+    id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
+    meetid = db.Column(db.String, nullable = False)                   # 7桁の大会ID 0119721など0で始まることもある
+    sex = db.Column(db.Integer, nullable = False)                     # 性別
+    style = db.Column(db.Integer, nullable = False)                   # 泳法
+    distance = db.Column(db.Integer, nullable = False)                # 距離
+    name = db.Column(db.String, nullable = False)                     # 選手氏名
+    team = db.Column(db.String, nullable = False)                     # 所属名
+    grade = db.Column(db.String, nullable = False)                    # 学年
+    time = db.Column(db.String, nullable = False)                     # タイム。#:##.##書式文字列
+    laps = db.Column(db.String, nullable = False)                     # ラップタイム。#:##.##,#:##.##,...
 
     def __init__(self, meet_id, sex, style, distance, row, lap_table):
         self.meetid = meet_id
@@ -139,19 +151,19 @@ class Record(db.Model): #個人種目の１記録
 
 class RelayResult(db.Model): #リレーの１結果
     __tablename__ = 'relay'
-    id = Column(Integer, primary_key=True)                      # 連番で振られるid
-    meetid = Column(String, nullable = False)                   # 7桁の大会ID 0119721など0で始まることもある
-    sex = Column(Integer, nullable = False)                     # 性別
-    style = Column(Integer, nullable = False)                   # 泳法
-    distance = Column(Integer, nullable = False)                # 距離
-    rank = Column(String, nullable = False)                     # 順位（棄権や失格の場合も記述される）
-    first = Column(String, nullable = False)                    # 第一泳者
-    second = Column(String, nullable = False)                   # 第二泳者
-    third = Column(String, nullable = False)                    # 第三泳者
-    fourth = Column(String, nullable = False)                   # 第四泳者
-    team = Column(String, nullable = False)                     # 所属名
-    time = Column(String, nullable = False)                     # タイム。#:##.##書式文字列
-    laps = Column(String, nullable = False)                     # ラップタイム。#:##.##,#:##.##,...
+    id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
+    meetid = db.Column(db.String, nullable = False)                   # 7桁の大会ID 0119721など0で始まることもある
+    sex = db.Column(db.Integer, nullable = False)                     # 性別
+    style = db.Column(db.Integer, nullable = False)                   # 泳法
+    distance = db.Column(db.Integer, nullable = False)                # 距離
+    rank = db.Column(db.String, nullable = False)                     # 順位（棄権や失格の場合も記述される）
+    first = db.Column(db.String, nullable = False)                    # 第一泳者
+    second = db.Column(db.String, nullable = False)                   # 第二泳者
+    third = db.Column(db.String, nullable = False)                    # 第三泳者
+    fourth = db.Column(db.String, nullable = False)                   # 第四泳者
+    team = db.Column(db.String, nullable = False)                     # 所属名
+    time = db.Column(db.String, nullable = False)                     # タイム。#:##.##書式文字列
+    laps = db.Column(db.String, nullable = False)                     # ラップタイム。#:##.##,#:##.##,...
 
     def __init__(self, meet_id, sex, style, distance, row, lap_table):
         self.meetid = meet_id
