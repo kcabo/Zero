@@ -24,7 +24,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/time')
-def index():
+def timeout():
     time.sleep(300)
     return render_template('index.html')
 
