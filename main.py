@@ -29,8 +29,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとロ�
 # # db.session.commit()
 
 
+import time
 @app.route('/')
 def index():
+    time.sleep(10)
     return render_template('index.html')
 
 
@@ -43,6 +45,8 @@ def ranking():
     # records = db.session.query(Hoge).distinct(Hoge.name).all()#.order_by(Hoge.time).all()
 
     return render_template('ranking.html', records = records)
+
+
 
 if __name__ == "__main__":
     if os.name == "nt": #ローカルの自機Windowsのとき
