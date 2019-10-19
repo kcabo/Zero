@@ -2,7 +2,7 @@
 # インポートされたあとメイン関数に再び戻る
 # メイン関数におけるクエリ結果に対して使用するメソッドはここで定義される
 # パーサーのためのメソッドをparser.pyからインポートする
-from __main__ import app
+from main import app
 import constant
 
 import os
@@ -68,7 +68,7 @@ class Meet(db.Model):
     def __str__(self):
         # return f'<{self.id}><{self.meetid}>{self.name} {self.pool} {self.start}'
         return str((self.id, self.meetid, self.name, self.pool, self.start))
-        
+
     def __init__(self, meet_id): # meetidを受け取り大会情報を持たせる
         self.meetid = meet_id
         self.area = int(meet_id[:2])
