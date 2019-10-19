@@ -1,5 +1,5 @@
-# models.pyをインポートし、定義されたテーブルクラスにクラスメソッドを追加する
-from models import db, Meet, Record, Relay
+# models.pyからインポートされる
+# from models import Meet, Record, Relay
 import constant
 
 import os
@@ -208,14 +208,12 @@ def fetch_meets(year):
 
     print(f'20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
     meets = [Meet(id) for id in tqdm(meet_ids)]
-    session.add_all(meets)
-    session.commit()
+    return meets # DBへの追加はメインで
 
 
 
-
-def fetch_records():
-    target_meets = session.query(Meet).filter(Meet.start >= "2019/06/25", Meet.start <= "2019/07/30").all()
+def fetch_records(target_meets): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
+    # target_meets = session.query(Meet).filter(Meet.start >= "2019/06/25", Meet.start <= "2019/07/30").all()
     # target_meets = session.query(Meet).filter(Meet.meetid == meetid).all()
     # target_meets = session.query(Meet).filter(Meet.start >= minDate).all()
     # target_meets = session.query(Meet).all()
@@ -231,9 +229,7 @@ def fetch_records():
     print('{}個の記録が見つかりました。\nデータを適切な形に編集しています...'.format(len(records)))
     for r in records:
         r.fix_raw_data()
-    session.add_all(records)
-    session.commit()
-
+    return records # DBへの追加はメインで
 
 # if __name__ == '__main__':
 #     # create_table()

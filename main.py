@@ -14,19 +14,13 @@ else: # 本番Linux環境
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
 
-# from models import db, create_table
+from models import * # db, create_table
 # from parser import Meet, Record, Relay, Event
-
-import time
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/time')
-def timeout():
-    time.sleep(300)
-    return render_template('index.html')
 
 @app.route('/ranking')
 def ranking():
