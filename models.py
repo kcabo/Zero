@@ -2,21 +2,21 @@
 # インポートされたあとメイン関数に再び戻る
 # メイン関数におけるクエリ結果に対して使用するメソッドはここで定義される
 # パーサーのためのメソッドをparser.pyからインポートする
-from main import app
+from __main__ import app
 import constant
 
 import os
 import re
 import requests
+from time import sleep
 
 from bs4 import BeautifulSoup, element
 from tqdm import tqdm
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) #, session_options={"expire_on_commit": False})
+# db.init_app(app)
 
-def create_table():
-    db.create_all()
 
 meet_link_ptn = re.compile(r"code=[0-9]{7}$") # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
@@ -46,6 +46,7 @@ def format_time(time_str):
 
 # DOM探索木をURLから生成
 def pour_soup(url):
+    sleep(0.8)
     req = requests.get(url)
     req.encoding = "cp932"
     return BeautifulSoup(req.text, "lxml")
@@ -189,6 +190,34 @@ class Relay(db.Model): #リレーの１記録
         self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
 
 
+# 大会のインスタンス集合から種目のインスタンス集合を作るサブルーチン
+def arrange_events(target_meets_ids):
+    events = []
+    print(">>>{}の大会の全開催種目を集めています…".format(len(target_meets_ids)))
+    for id in tqdm(target_meets_ids):
+        soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
+        aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
+        events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
+        print(">>>{}種目見つかりました。".format(len(events)))       # 25690 10min-1390meets
+        return events
+
+
+def fetch_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
+    events = arrange_events(target_meets_ids)
+    records = []
+    print('>>>全種目の記録の抽出を開始します...')
+    for e in tqdm(events):
+        table, lap_tables = e.parse_table()
+        if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
+            records.extend([Record(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
+        else:
+            records.extend([Relay(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
+    print('>>>{}個の記録が見つかりました。\n>>>データを適切な形に編集しています...'.format(len(records)))
+    for r in records:
+        r.fix_raw_data()
+    db.session.add_all(records)
+    db.session.commit()
+    print(f'>>>COMPLETE!! データ件数：{len(records)}')
 
 
 # 特定の年度・地域で開催された大会IDのリストを作成するサブルーチン
@@ -200,44 +229,14 @@ def find_meet(year, area):
     id_list = [a["href"][-7:] for a in meet_id_aTags] #大会コード七桁のみ抽出
     return id_list
 
-# 大会のインスタンス集合から種目のインスタンス集合を作るサブルーチン
-def arrange_events(target_meets):
-    events = []
-    print("{}の大会の全開催種目を集めています…".format(len(target_meets)))
-    for meet in tqdm(target_meets):
-        soup = pour_soup("http://www.swim-record.com/swims/ViewResult/?h=V1000&code=" + meet.meetid)
-        aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
-        events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
-        print("{}種目見つかりました。".format(len(events)))       # 25690 10min-1390meets
-        return events
-
-# 指定年度の大会の情報をDBに追加
 def fetch_meets(year):
-    print("{}年の大会IDを集めています…".format(year))
+    print(f">>>20{year}年の大会IDを集めています…")
     meet_ids = []
     for area in tqdm(constant.area_list):
         meet_ids.extend(find_meet(year, area))
 
-    print(f'20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
+    print(f'>>>20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
     meets = [Meet(id) for id in tqdm(meet_ids)]
-    return meets # DBへの追加はメインで
-
-
-def fetch_records(target_meets): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
-    # target_meets = session.query(Meet).filter(Meet.start >= "2019/06/25", Meet.start <= "2019/07/30").all()
-    # target_meets = session.query(Meet).filter(Meet.meetid == meetid).all()
-    # target_meets = session.query(Meet).filter(Meet.start >= minDate).all()
-    # target_meets = session.query(Meet).all()
-    events = arrange_events(target_meets)
-    records = []
-    print('記録の抽出を開始します...')
-    for e in tqdm(events):
-        table, lap_tables = e.parse_table()
-        if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
-            records.extend([Record(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
-        else:
-            records.extend([Relay(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
-    print('{}個の記録が見つかりました。\nデータを適切な形に編集しています...'.format(len(records)))
-    for r in records:
-        r.fix_raw_data()
-    return records # DBへの追加はメインで
+    db.session.add_all(meets)
+    db.session.commit()
+    print(f'>>>COMPLETE!! データ件数：{len(meets)}')
