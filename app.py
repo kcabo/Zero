@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとロ�
 db = SQLAlchemy(app) #, session_options={"expire_on_commit": False})
 
 print('appが読み込まれた')
-
 from views import *
 print('views読み込み終わり')
 
