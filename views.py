@@ -30,7 +30,7 @@ print('modelsも読み込みました')
 
 @app.route('/')
 def index():
-    print('root')
+    print('hello')
     count = db.session.query(Record).count()
     return render_template('index.html', count_records = count)
 
