@@ -80,7 +80,8 @@ def start_scraper(target=None):
     db.session.commit()
     return 'Commenced a scraping process'
 
-
+if __name__ != '__main__':
+    print('importされたよ')
 
 # if __name__ == "__main__":
 #     if os.name == "nt": #ローカルの自機Windowsのとき

@@ -15,14 +15,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとロ�
 
 db = SQLAlchemy(app) #, session_options={"expire_on_commit": False})
 
+print('appが読み込まれた')
+
+from views import *
 
 
 if __name__ == "__main__":
 
     # import views
-    from views import *
 
     if os.name == "nt": #ローカルの自機Windowsのとき
+        print('ローカルで起動します')
         app.run(debug=True)
     else:
+        print('本番環境で起動します')
         app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=False)
