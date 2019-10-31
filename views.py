@@ -8,18 +8,22 @@ import threading
 
 from flask import Flask, request, render_template
 
+#
+# app = Flask(__name__)
+# if os.name == 'nt': # ローカルのWindows環境
+#     from env import database_url
+# else: # 本番Linux環境
+#     database_url = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
+#
+#
+# from models import init
+# # import models
+# init(app)
+from models import db, Meet, Record, Relay, fetch_meets, fetch_records
 
-app = Flask(__name__)
-if os.name == 'nt': # ローカルのWindows環境
-    from env import database_url
-else: # 本番Linux環境
-    database_url = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
-
-
-from models import db, Meet, Record, Relay
-import models
+from app import app
 
 @app.route('/')
 def index():
@@ -41,6 +45,7 @@ def create():
     db.create_all()
     return 'CREATEDだぜやったね'
 
+#ここ隠さないと他の人にアクセスされてしまう
 @app.route('/db/drop')
 def drop():
     db.drop_all()
@@ -60,14 +65,14 @@ def start_scraper(target=None):
     elif target == 'meets':
         year = 19
         db.session.query(Meet).filter_by(year = year).delete() # 同じ年度を二重に登録しないように削除する
-        th = threading.Thread(target=models.fetch_meets, name='scraper', args=(year,))
+        th = threading.Thread(target=fetch_meets, name='scraper', args=(year,))
     elif target == 'records':
         date_min = "2019/04/01"
         date_max = "2019/04/06"
         target_meets = db.session.query(Meet).filter(Meet.start >= date_min, Meet.start <= date_max).all()
         target_meets_ids = [m.meetid for m in target_meets]
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
-        th = threading.Thread(target=models.fetch_records, name='scraper', args=(target_meets_ids,))
+        th = threading.Thread(target=fetch_records, name='scraper', args=(target_meets_ids,))
     else:
         return 'Please specify the target.'
 
@@ -77,8 +82,8 @@ def start_scraper(target=None):
 
 
 
-if __name__ == "__main__":
-    if os.name == "nt": #ローカルの自機Windowsのとき
-        app.run(debug=True)
-    else:
-        app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=False)
+# if __name__ == "__main__":
+#     if os.name == "nt": #ローカルの自機Windowsのとき
+#         app.run(debug=True)
+#     else:
+#         app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=False)
