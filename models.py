@@ -2,7 +2,7 @@
 # インポートされたあとメイン関数に再び戻る
 # メイン関数におけるクエリ結果に対して使用するメソッドはここで定義される
 # パーサーのためのメソッドをparser.pyからインポートする
-from __main__ import app
+# from __main__ import app
 import constant
 
 import os
@@ -12,11 +12,19 @@ from time import sleep
 
 from bs4 import BeautifulSoup, element
 from tqdm import tqdm
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy(app) #, session_options={"expire_on_commit": False})
-# db.init_app(app)
+# from flask_sqlalchemy import SQLAlchemy
+#
+# # db = SQLAlchemy(app) #, session_options={"expire_on_commit": False})
+# # db.init_app(app)
+#
+# # 以下がメインモジュールからimport appしないでdb接続をやる方式
+# db = SQLAlchemy()
+# def init(app):
+#     global db
+#     db.init_app(app)
 
+from app import db
 
 meet_link_ptn = re.compile(r"code=[0-9]{7}$") # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
