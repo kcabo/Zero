@@ -24,6 +24,7 @@ from tqdm import tqdm
 #     global db
 #     db.init_app(app)
 
+print('models読み込み始め')
 from app import db
 print('appからdb')
 

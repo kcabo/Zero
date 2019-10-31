@@ -21,9 +21,12 @@ from flask import Flask, request, render_template
 # from models import init
 # # import models
 # init(app)
-from models import db, Meet, Record, Relay, fetch_meets, fetch_records
-
+print('views読み込み始まり')
 from app import app
+print('app読み込みました')
+from models import db, Meet, Record, Relay, fetch_meets, fetch_records
+print('modelsも読み込みました')
+
 
 @app.route('/')
 def index():
@@ -80,8 +83,7 @@ def start_scraper(target=None):
     db.session.commit()
     return 'Commenced a scraping process'
 
-if __name__ != '__main__':
-    print('importされたよ')
+
 
 # if __name__ == "__main__":
 #     if os.name == "nt": #ローカルの自機Windowsのとき
