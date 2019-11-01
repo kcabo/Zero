@@ -1,7 +1,10 @@
+from time import time
+
 class Takenoko:
     # tqdmみたいなイテレータ。要はプログレスバー
     # タケノコに見えないのはご愛嬌
     def __init__(self, list):
+        self.start = time()
         self.list = list
         self.current = 0 # 処理中のインデックス
         self.grow = 0 # タケノコの成長具合
@@ -18,7 +21,8 @@ class Takenoko:
         index = self.current
         max = self.length
         if index >= max:
-            print(f'>>> Done!  length: {max}')
+            elapsed = time() - self.start
+            print(f'>>> Done!  length: {max}  minutes: {round(elapsed/60)}')
             raise StopIteration()
         elif index >= self.process[self.grow]:
             self.grow += 1
@@ -31,6 +35,7 @@ path = 'status'
 def update_status(status):
     with open(path, 'w') as f:
         f.write(status)
+    print(f'status updated: {status}')
 
 def free():
     update_status('free')
