@@ -10,7 +10,9 @@ from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+from constant import area_list
 from task_manager import Takenoko, free, busy, get_status
+
 
 app = Flask(__name__)
 if os.name == 'nt': # ローカルのWindows環境
@@ -22,13 +24,6 @@ else:
 db = SQLAlchemy(app)
 
 manegement_url = os.environ['ADMIN_URL']
-
-area_list = [
-    "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
-    "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
-    "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48",
-    "49", "50", "51", "52", "53", "70", "80"
-]
 
 meet_link_ptn = re.compile(r"code=[0-9]{7}$") # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
@@ -207,8 +202,8 @@ def arrange_events(target_meets_ids):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
         aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
         events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
-        print(f'>>> {len(events)}種目見つかりました。')       # 25690 10min-1390meets
-        return events
+    print(f'>>> {len(events)}種目見つかりました。')       # 25690 10min-1390meets
+    return events
 
 
 def fetch_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
@@ -257,6 +252,7 @@ def fetch_meets(year):
 @app.route('/')
 def index():
     count = db.session.query(Record).count()
+    count += db.session.query(Relay).count()
     return render_template('index.html', count_records = count)
 
 
@@ -312,4 +308,4 @@ def manegement(command=None):
 
 if __name__ == "__main__": #gunicornで動かす場合は実行されない
     print('組み込みサーバーで起動します')
-    app.run(debug=True)
+    app.run()
