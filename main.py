@@ -272,11 +272,11 @@ def ranking():
 @app.route(manegement_url + '/<command>')
 def manegement(command=None):
 
-    if method == 'create':
+    if command == 'create':
         db.create_all()
         return 'すべてのテーブルを作成しました'
 
-    elif method == 'drop':
+    elif command == 'drop':
         db.drop_all()
         return 'すべてのテーブルを削除しました'
 
@@ -310,6 +310,6 @@ def manegement(command=None):
 
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #gunicornで動かす場合は実行されない
     print('組み込みサーバーで起動します')
     app.run(debug=True)
