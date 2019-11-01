@@ -3,24 +3,25 @@ import json
 import os
 import re
 import requests
-import threading
 from time import sleep
+import threading
 
 from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-# from tqdm import tqdm
+
 from task_manager import Takenoko, free, busy, get_status
 
 app = Flask(__name__)
 if os.name == 'nt': # ローカルのWindows環境
-    from env import database_url
-else: # 本番Linux環境
-    database_url = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #これ書かないとログがうるさくなる
+    import env
+    app.config.from_object('config.Develop')
+else:
+    app.config.from_object('config.Product')
 
 db = SQLAlchemy(app)
+
+manegement_url = os.environ['ADMIN_URL']
 
 area_list = [
     "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
@@ -252,7 +253,7 @@ def fetch_meets(year):
     free()
 
 
-
+####### 以下ルーター #######
 @app.route('/')
 def index():
     count = db.session.query(Record).count()
@@ -267,40 +268,33 @@ def ranking():
     records = db.session.query(Record).filter(Record.time != "").order_by(Record.time).limit(40)
     return render_template('ranking.html', records = records)
 
-db_management_url = '/db/<method>'
-@app.route(db_management_url)
-def manage_database(method=None):
-    if method is None:
-        count = db.session.query(Meet).count()
-        return f'現在の大会数： {count}'
-    elif method == 'create':
+@app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
+@app.route(manegement_url + '/<command>')
+def manegement(command=None):
+
+    if method == 'create':
         db.create_all()
         return 'すべてのテーブルを作成しました'
+
     elif method == 'drop':
         db.drop_all()
         return 'すべてのテーブルを削除しました'
-    else:
-        return '<h1>invalid url</h1>'
 
-@app.route('/scrape') # /scrapeだけのURLの場合、targetにNoneが代入されて実行される
-@app.route('/scrape/<target>')
-def manage_task(target=None):
-    # thread_list = [t.name for t in threading.enumerate()]
-    # tasks_msg = f'<h1>ONGOING TASKS: {", ".join(thread_list)}</h1>'
-    # print(thread_list)
     status = get_status()
-    if target is None:
+    if command is None:
         return f'<h1>{status}</h1>'
-    # elif 'scraper' in thread_list: #既に別のスクレイパーが動いているとき
-    elif status == 'busy':
+
+    elif status == 'busy': #既に別のスクレイパーが動いているとき
         return f'<h1>Command Denied. A scraping process is working already. status: {status}</h1>'
-    elif target == 'meets':
+
+    elif command == 'meets':
         year = 19
         db.session.query(Meet).filter_by(year = year).delete() # 同じ年度を二重に登録しないように削除する
         th = threading.Thread(target=fetch_meets, name='scraper', args=(year,))
-    elif target == 'records':
-        date_min = "2019/04/01"
-        date_max = "2019/04/06"
+
+    elif command == 'records':
+        date_min = request.args.get('from', default="2019/04/01")
+        date_max = request.args.get('to', default="2019/04/06")
         target_meets = db.session.query(Meet).filter(Meet.start >= date_min, Meet.start <= date_max).all()
         target_meets_ids = [m.meetid for m in target_meets]
         # リストでフィルターをかけているが、deleteの引数synchronize_sessionのデフォルト値'evaluate'ではこれをサポートしていない(らしい)からFalseを指定する
