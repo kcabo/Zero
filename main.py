@@ -9,7 +9,8 @@ from time import sleep
 from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-from tqdm import tqdm
+# from tqdm import tqdm
+from task_manager import Takenoko, free, busy, get_status
 
 app = Flask(__name__)
 if os.name == 'nt': # ローカルのWindows環境
@@ -201,7 +202,7 @@ class Relay(db.Model): #リレーの１記録
 def arrange_events(target_meets_ids):
     events = []
     print(f">>> {len(target_meets_ids)}の大会の全開催種目を集めています…")
-    for id in target_meets_ids:
+    for id in Takenoko(target_meets_ids):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
         aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
         events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
@@ -213,7 +214,7 @@ def fetch_records(target_meets_ids): # 対象の大会のインスタンス集�
     events = arrange_events(target_meets_ids)
     records = []
     print('>>> 全種目の記録の抽出を開始します...')
-    for e in events:
+    for e in Takenoko(events):
         table, lap_tables = e.parse_table()
         if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
             records.extend([Record(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
@@ -225,6 +226,7 @@ def fetch_records(target_meets_ids): # 対象の大会のインスタンス集�
     db.session.add_all(records)
     db.session.commit()
     print(f'>>> COMPLETE!! データ件数：{len(records)}')
+    free()
 
 
 # 特定の年度・地域で開催された大会IDのリストを作成するサブルーチン
@@ -239,14 +241,15 @@ def find_meet(year, area):
 def fetch_meets(year):
     print(f">>> 20{year}年の大会IDを集めています…")
     meet_ids = []
-    for area in tqdm(area_list):
+    for area in Takenoko(area_list):
         meet_ids.extend(find_meet(year, area))
 
     print(f'>>> 20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
-    meets = [Meet(id) for id in tqdm(meet_ids)]
+    meets = [Meet(id) for id in Takenoko(meet_ids)]
     db.session.add_all(meets)
     db.session.commit()
     print(f'>>> COMPLETE!! データ件数：{len(meets)}')
+    free()
 
 
 
@@ -279,18 +282,18 @@ def manage_database(method=None):
     else:
         return '<h1>invalid url</h1>'
 
-
 @app.route('/scrape') # /scrapeだけのURLの場合、targetにNoneが代入されて実行される
 @app.route('/scrape/<target>')
-def start_scraper(target=None):
-    thread_list = [t.name for t in threading.enumerate()]
-    tasks_msg = f'<h1>ONGOING TASKS: {", ".join(thread_list)}</h1>'
-    print(tasks_msg)
-
+def manage_task(target=None):
+    # thread_list = [t.name for t in threading.enumerate()]
+    # tasks_msg = f'<h1>ONGOING TASKS: {", ".join(thread_list)}</h1>'
+    # print(thread_list)
+    status = get_status()
     if target is None:
-        return tasks_msg
-    elif 'scraper' in thread_list: #既に別のスクレイパーが動いているとき
-        return 'Command Denied. A scraping process is working already. ' + tasks_msg
+        return f'<h1>{status}</h1>'
+    # elif 'scraper' in thread_list: #既に別のスクレイパーが動いているとき
+    elif status == 'busy':
+        return f'<h1>Command Denied. A scraping process is working already. status: {status}</h1>'
     elif target == 'meets':
         year = 19
         db.session.query(Meet).filter_by(year = year).delete() # 同じ年度を二重に登録しないように削除する
@@ -306,9 +309,9 @@ def start_scraper(target=None):
     else:
         return '<h1>invalid url</h1>'
 
+    busy()
     th.start()
     db.session.commit()
-    print(tasks_msg)
     return '<h1>Commenced a scraping process</h1>'
 
 
