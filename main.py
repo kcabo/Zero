@@ -9,6 +9,7 @@ from time import sleep
 from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+from tqdm import tqdm
 
 app = Flask(__name__)
 if os.name == 'nt': # ローカルのWindows環境
@@ -46,11 +47,11 @@ def format_time(time_str):
     else:
         ob = re.match(time_format_ptn, time_str)
         if ob is None: # おそらく発生しないはず。すべて正規表現に一致するはず
-            print('\n>>無効なタイム文字列:{}'.format(time_str))
+            print(f'\n>>無効なタイム文字列:{time_str}')
             return time_str
         else:
             min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
-            return "{}:{}.{}".format(min, ob.group(2), ob.group(3))
+            return f'{min}:{ob.group(2)}.{ob.group(3)}'
 
 # DOM探索木をURLから生成
 def pour_soup(url):
@@ -199,31 +200,31 @@ class Relay(db.Model): #リレーの１記録
 # 大会のインスタンス集合から種目のインスタンス集合を作るサブルーチン
 def arrange_events(target_meets_ids):
     events = []
-    print(">>>{}の大会の全開催種目を集めています…".format(len(target_meets_ids)))
+    print(f">>> {len(target_meets_ids)}の大会の全開催種目を集めています…")
     for id in target_meets_ids:
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
         aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
         events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
-        print(">>>{}種目見つかりました。".format(len(events)))       # 25690 10min-1390meets
+        print(f'>>> {len(events)}種目見つかりました。')       # 25690 10min-1390meets
         return events
 
 
 def fetch_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
     events = arrange_events(target_meets_ids)
     records = []
-    print('>>>全種目の記録の抽出を開始します...')
+    print('>>> 全種目の記録の抽出を開始します...')
     for e in events:
         table, lap_tables = e.parse_table()
         if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
             records.extend([Record(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
         else:
             records.extend([Relay(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
-    print('>>>{}個の記録が見つかりました。\n>>>データを適切な形に編集しています...'.format(len(records)))
+    print(f'>>> {len(records)}個の記録が見つかりました。\n>>> データを適切な形に編集しています...')
     for r in records:
         r.fix_raw_data()
     db.session.add_all(records)
     db.session.commit()
-    print(f'>>>COMPLETE!! データ件数：{len(records)}')
+    print(f'>>> COMPLETE!! データ件数：{len(records)}')
 
 
 # 特定の年度・地域で開催された大会IDのリストを作成するサブルーチン
@@ -236,16 +237,16 @@ def find_meet(year, area):
     return id_list
 
 def fetch_meets(year):
-    print(f">>>20{year}年の大会IDを集めています…")
+    print(f">>> 20{year}年の大会IDを集めています…")
     meet_ids = []
-    for area in area_list:
+    for area in tqdm(area_list):
         meet_ids.extend(find_meet(year, area))
 
-    print(f'>>>20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
-    meets = [Meet(id) for id in meet_ids]
+    print(f'>>> 20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
+    meets = [Meet(id) for id in tqdm(meet_ids)]
     db.session.add_all(meets)
     db.session.commit()
-    print(f'>>>COMPLETE!! データ件数：{len(meets)}')
+    print(f'>>> COMPLETE!! データ件数：{len(meets)}')
 
 
 
@@ -263,27 +264,28 @@ def ranking():
     records = db.session.query(Record).filter(Record.time != "").order_by(Record.time).limit(40)
     return render_template('ranking.html', records = records)
 
-
-@app.route('/db/<method>')
+db_management_url = '/db/<method>'
+@app.route(db_management_url)
 def manage_database(method=None):
     if method is None:
         count = db.session.query(Meet).count()
         return f'現在の大会数： {count}'
     elif method == 'create':
         db.create_all()
-        return 'CREATEDだぜやったね'
+        return 'すべてのテーブルを作成しました'
     elif method == 'drop':
         db.drop_all()
-        return 'DROPDROPざまあみろ'
+        return 'すべてのテーブルを削除しました'
     else:
-        return 'invalid url'
+        return '<h1>invalid url</h1>'
 
 
 @app.route('/scrape') # /scrapeだけのURLの場合、targetにNoneが代入されて実行される
 @app.route('/scrape/<target>')
 def start_scraper(target=None):
     thread_list = [t.name for t in threading.enumerate()]
-    tasks_msg = f'ONGOING TASKS: {", ".join(thread_list)}'
+    tasks_msg = f'<h1>ONGOING TASKS: {", ".join(thread_list)}</h1>'
+    print(tasks_msg)
 
     if target is None:
         return tasks_msg
@@ -302,13 +304,12 @@ def start_scraper(target=None):
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         th = threading.Thread(target=fetch_records, name='scraper', args=(target_meets_ids,))
     else:
-        return 'Please specify the target.'
+        return '<h1>invalid url</h1>'
 
     th.start()
     db.session.commit()
-    return 'Commenced a scraping process'
-
-
+    print(tasks_msg)
+    return '<h1>Commenced a scraping process</h1>'
 
 
 
