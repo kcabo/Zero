@@ -194,7 +194,10 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
                 records = [Relay(*args) for args in set_args_4_records]
             count_records += len(records)
             for r in records:
-                r.fix_raw_data()
+                try:
+                    r.fix_raw_data()
+                except AssertionError()
+                    print(r)
             db.session.add_all(records)
             db.session.commit()
     print(f'>>> 全{count_records}の記録の保存が完了')
@@ -231,6 +234,7 @@ def index():
     return render_template('index.html', count_records = count)
 
 
+# TODO: リレーの記録も結合させる
 @app.route('/ranking')
 def ranking():
     group = request.args.get('group')
