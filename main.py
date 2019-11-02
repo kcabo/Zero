@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
-from constant import area_list
+from constant import style_dic, distance_dic, area_list
 from str_format import del_space, del_numspace, format_time
 from task_manager import Takenoko, free, busy, get_status
 
@@ -194,10 +194,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
                 records = [Relay(*args) for args in set_args_4_records]
             count_records += len(records)
             for r in records:
-                try:
-                    r.fix_raw_data()
-                except AssertionError:
-                    print(r)
+                r.fix_raw_data()
             db.session.add_all(records)
             db.session.commit()
     print(f'>>> 全{count_records}の記録の保存が完了')
@@ -240,6 +237,7 @@ def ranking():
     group = request.args.get('group', 'MS')
     style = request.args.get('style')
     distance = request.args.get('distance')
+
     records = db.session.query(Record).filter(Record.time != "").order_by(Record.time).limit(40)
     return render_template('ranking.html', records = records, group = group)
 

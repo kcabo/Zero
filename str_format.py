@@ -15,6 +15,10 @@ def format_time(time_str):
         return ""
     else:
         ob = re.match(time_format_ptn, time_str)
-        assert ob is not None, f'無効なタイム文字列:{time_str}'
-        min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
-        return f'{min}:{ob.group(2)}.{ob.group(3)}'
+        # assert ob is not None, f'無効なタイム文字列:{time_str}'
+        if ob is None:
+            print(f'<!!>無効なタイム文字列＜{time_str}＞を検出しました。一時的な値として"99:99:99"を返します')
+            return '99:99.99'
+        else:
+            min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
+            return f'{min}:{ob.group(2)}.{ob.group(3)}'
