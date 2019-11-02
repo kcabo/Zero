@@ -196,7 +196,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
             for r in records:
                 try:
                     r.fix_raw_data()
-                except AssertionError():
+                except AssertionError:
                     print(r)
             db.session.add_all(records)
             db.session.commit()
@@ -237,11 +237,11 @@ def index():
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
 def ranking():
-    group = request.args.get('group')
+    group = request.args.get('group', 'MS')
     style = request.args.get('style')
     distance = request.args.get('distance')
     records = db.session.query(Record).filter(Record.time != "").order_by(Record.time).limit(40)
-    return render_template('ranking.html', records = records)
+    return render_template('ranking.html', records = records, group = group)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')
