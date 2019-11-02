@@ -1,5 +1,4 @@
-# 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいよ
-
+# 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいと思うんだ
 import datetime
 import os
 import re
@@ -13,7 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 
 from constant import style_dic, distance_dic, area_list
-from str_format import del_space, del_numspace, format_time
+from format import del_space, del_numspace, format_time
 from task_manager import Takenoko, free, busy, get_status
 
 
@@ -27,7 +26,6 @@ else:
 db = SQLAlchemy(app)
 
 manegement_url = os.environ['ADMIN_URL']
-
 meet_link_ptn = re.compile(r"code=[0-9]{7}$")           # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
 event_link_ptn = re.compile(r"&code=(\d{7})&sex=(\d)&event=(\d)&distance=(\d)") # "/swims/ViewResult?h=V1100&code=0919601&sex=1&event=5&distance=4"
@@ -47,7 +45,7 @@ class Meet(db.Model):
     meetid = db.Column(db.String, unique = True, nullable = False)    # 7桁の大会ID 0119721など0で始まることもある
     name = db.Column(db.String, nullable = False)                     # 大会名
     place = db.Column(db.String, nullable = False)                    # 会場
-    pool = db.Column(db.String, nullable = False)                     # 短水路or長水路
+    pool = db.Column(db.Integer, nullable = False)                    # 0 (短水路) or 1(長水路)
     start = db.Column(db.String, nullable = False)                    # 大会開始日 2019/09/24 で表す
     end = db.Column(db.String, nullable = False)                      # 大会終了日
     area = db.Column(db.Integer, nullable = False)                    # 地域(整数2桁)
@@ -70,7 +68,7 @@ class Meet(db.Model):
         matchOb = re.match(meet_caption_ptn, caption[1].string) # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路  ←caption[1]
         self.name = matchOb.group(1)
         self.place = matchOb.group(2)
-        self.pool = matchOb.group(3)
+        self.pool = 0 if matchOb.group(3)=='短水路' else 1
 
 
 # これだけテーブルとして定義されない
@@ -185,7 +183,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
     """
     print(f">>> {len(target_meets_ids)}の大会の全記録の抽出開始")
     count_records = 0
-    for id in Takenoko(target_meets_ids):
+    for id in Takenoko(target_meets_ids, 20):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
         aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンクをすべてリストに格納
         events = [Event(a["href"]) for a in aTags]          # リンクから種目のインスタンス生成
@@ -220,7 +218,7 @@ def add_meets(year):
     for area in Takenoko(area_list):
         meet_ids.extend(find_meet(year, area))
     print(f'>>> 20{year}年に開催される全{len(meet_ids)}の大会情報を取得中')
-    meets = [Meet(id) for id in Takenoko(meet_ids)]
+    meets = [Meet(id) for id in Takenoko(meet_ids, 20)]
     db.session.add_all(meets)
     db.session.commit()
     print(f'>>> 全{len(meets)}の大会情報の保存が完了')
@@ -234,6 +232,9 @@ def index():
     count += db.session.query(Relay).count()
     return render_template('index.html', count_records = count)
 
+@app.route('/up')
+def wake_up(): # 監視サービスで監視する用のURL
+    return 'ok'
 
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
@@ -243,12 +244,12 @@ def ranking():
     style = style_dic[request.args.get('style', 'fr')]
     distance = distance_dic[request.args.get('distance', 50, type=int)]
     # NOTE: ここ水路判定 日本語ではなく0 or 1で処理したい
-    target_meets = db.session.query(Meet).filter_by(pool='短水路' if pool == 0 else '長水路').all()
+    target_meets = db.session.query(Meet).filter_by(pool=pool).all()
     target_meets_ids = [m.meetid for m in target_meets]
     records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).all()
     print(f'records length:{len(records)}')
     fixed = map(lambda x:x.export_tupple(), records)
-    df = pd.DataFrame(fixed,columns = ['id', 'name', 'team', 'grade', 'time'])
+    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
     df.sort_values(['time'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
     # print(df)
@@ -268,7 +269,8 @@ def manegement(command=None):
 
     status = get_status()
     if command is None:
-        return f'<h1>{status}:{threading.enumerate()}</h1>'
+        thread_list = [t.name for t in threading.enumerate()] # 起動中のスレッド一覧を取得
+        return f'<h1>{status}:{", ".join(thread_list)}</h1>'
 
     elif status == 'busy': #既に別のスクレイパーが動いているとき
         return f'<h1>Command Denied. One scraping process is runnnig.</h1><p>status: {status}</p>'
@@ -295,6 +297,7 @@ def manegement(command=None):
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         db.session.query(Relay).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         th = threading.Thread(target=add_records, name='scraper', args=(target_meets_ids,))
+        
     else:
         return '<h1>invalid url</h1>'
 

@@ -3,15 +3,18 @@ from time import time
 class Takenoko:
     # tqdmみたいなイテレータ。要はプログレスバー
     # タケノコに見えないのはご愛嬌
-    def __init__(self, list):
+    def __init__(self, list, times=10):
         self.start = time()
         self.list = list
         self.current = 0 # 処理中のインデックス
         self.grow = 0 # タケノコの成長具合
         self.length = len(list)
-        # リスト全体を10等分し、途中通過地点を格納したリストを作成
-        interval = self.length / 10
-        self.process = [int(i * interval)-1 for i in range(1,11)]
+        if self.length < times:
+            times = self.length
+        self.times = times
+        # リスト全体を等分し、途中通過地点を格納したリストを作成
+        interval = self.length / times
+        self.process = [int(i * interval)-1 for i in range(1,times+1)]
 
     # まず__iter__メソッドが呼ばれてから__next__が呼ばれる
     def __iter__(self):
@@ -26,7 +29,7 @@ class Takenoko:
             raise StopIteration()
         elif index >= self.process[self.grow]:
             self.grow += 1
-            msg = '|{:10s}|{:^5d} in {}'.format('*' * self.grow, index + 1, max)
+            msg = '>{}<{:^5d} in {}'.format('=' * self.grow + "." * (self.times - self.grow), index + 1, max)
             print(msg)
         self.current += 1
         return self.list[index]
@@ -52,3 +55,6 @@ def get_status():
 
 if __name__ == '__main__':
     free()
+    # from time import sleep
+    # for i in Takenoko(range(10),15):
+    #     sleep(0.5)
