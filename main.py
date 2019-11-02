@@ -211,15 +211,15 @@ def find_meet(year, area):
     return id_list
 
 def add_meets(year):
-    print(f">>> 20{year}年の大会IDを集めています…")
+    print(f">>> 20{year}年開催の大会IDの収集を開始")
     meet_ids = []
     for area in Takenoko(area_list):
         meet_ids.extend(find_meet(year, area))
-    print(f'>>> 20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
+    print(f'>>> 20{year}年に開催される全{len(meet_ids)}の大会情報を取得中')
     meets = [Meet(id) for id in Takenoko(meet_ids)]
     db.session.add_all(meets)
     db.session.commit()
-    print(f'>>> COMPLETE!! データ件数：{len(meets)}')
+    print(f'>>> 全{len(meets)}の大会情報の保存が完了')
     free()
 
 
