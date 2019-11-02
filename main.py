@@ -243,7 +243,7 @@ def ranking():
     sex = request.args.get('sex', 1, type=int)
     style = style_dic[request.args.get('style', 'fr')]
     distance = distance_dic[request.args.get('distance', 50, type=int)]
-    # NOTE: ここ水路判定 日本語ではなく0 or 1で処理したい
+    # 水路判定
     target_meets = db.session.query(Meet).filter_by(pool=pool).all()
     target_meets_ids = [m.meetid for m in target_meets]
     records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).all()
@@ -297,7 +297,7 @@ def manegement(command=None):
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         db.session.query(Relay).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         th = threading.Thread(target=add_records, name='scraper', args=(target_meets_ids,))
-        
+
     else:
         return '<h1>invalid url</h1>'
 
