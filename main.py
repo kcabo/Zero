@@ -238,12 +238,12 @@ def index():
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
 def ranking():
-    group = request.args.get('group', 'ML')
+    pool = request.args.get('pool', 1, type=int)
+    sex = request.args.get('sex', 1, type=int)
     style = style_dic[request.args.get('style', 'fr')]
     distance = distance_dic[request.args.get('distance', 50, type=int)]
-    sex = 1 if group[0] == 'M' else 2
-    pool = '短水路' if group[1] == 'S' else '長水路'
-    target_meets = db.session.query(Meet).filter_by(pool=pool).all()
+    # NOTE: ここ水路判定 日本語ではなく0 or 1で処理したい
+    target_meets = db.session.query(Meet).filter_by(pool='短水路' if pool == 0 else '長水路').all()
     target_meets_ids = [m.meetid for m in target_meets]
     records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).all()
     print(f'records length:{len(records)}')
@@ -252,7 +252,7 @@ def ranking():
     df.sort_values(['time'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
     # print(df)
-    return render_template('ranking.html', records = df[:100], group = group)
+    return render_template('ranking.html', records = df[:100], pool=pool, sex=sex, style=style, distance=distance)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')
