@@ -49,3 +49,6 @@ def get_status():
     if status not in ['busy', 'free']:
         raise Exception('ステータスファイルの値が無効です！')
     return status
+
+if __name__ == '__main__':
+    free()

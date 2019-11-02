@@ -1,5 +1,6 @@
+# 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいよ
+
 import datetime
-import json
 import os
 import re
 import requests
@@ -11,6 +12,7 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 from constant import area_list
+from str_format import del_space, del_numspace, format_time
 from task_manager import Takenoko, free, busy, get_status
 
 
@@ -25,30 +27,9 @@ db = SQLAlchemy(app)
 
 manegement_url = os.environ['ADMIN_URL']
 
-meet_link_ptn = re.compile(r"code=[0-9]{7}$") # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
+meet_link_ptn = re.compile(r"code=[0-9]{7}$")           # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
 meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
 event_link_ptn = re.compile(r"&code=(\d{7})&sex=(\d)&event=(\d)&distance=(\d)") # "/swims/ViewResult?h=V1100&code=0919601&sex=1&event=5&distance=4"
-time_format_ptn = re.compile(r'([0-9]{0,2}):?([0-9]{2}).([0-9]{2})')
-space_erase_table = str.maketrans("","","\n\r 　 ") # 第三引数に指定した文字が削除される。左から、LF,CR,半角スペース,全角スペース,nbsp
-space_and_nums = str.maketrans("","","\n\r 　 1234.")
-
-def del_space(str):
-    return str.translate(space_erase_table) if str is not None else ""
-
-def del_numspace(str):
-    return str.translate(space_and_nums)
-
-def format_time(time_str):
-    if time_str == "" or time_str == "--:--.--" or time_str == "-": # リレーで第一泳者以外の失格の場合--:--.--になる
-        return ""
-    else:
-        ob = re.match(time_format_ptn, time_str)
-        if ob is None: # おそらく発生しないはず。すべて正規表現に一致するはず
-            print(f'\n>>無効なタイム文字列:{time_str}')
-            return time_str
-        else:
-            min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
-            return f'{min}:{ob.group(2)}.{ob.group(3)}'
 
 # DOM探索木をURLから生成
 def pour_soup(url):
@@ -175,9 +156,7 @@ class Relay(db.Model): #リレーの１記録
         self.rank = data[0].text # data[0].stringだとタグを含んだときにNoneが返されてしまう
         swimmers = [del_numspace(name) for name in data[1].contents if isinstance(name, element.NavigableString)] # data[1].contentsはbrタグを含む配列
         count_swimmers = len(swimmers)
-        if count_swimmers !=4 and count_swimmers!=1: # おそらく発生しない
-            print(data[1])
-            raise IndexError("泳者が４人でも空白スペースだけでもありません！")
+        assert count_swimmers == 1 or count_swimmers == 4
         self.name_1 = swimmers[0] if count_swimmers == 4 else ""
         self.name_2 = swimmers[1] if count_swimmers == 4 else ""
         self.name_3 = swimmers[2] if count_swimmers == 4 else ""
@@ -194,34 +173,31 @@ class Relay(db.Model): #リレーの１記録
         self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
 
 
-# 大会のインスタンス集合から種目のインスタンス集合を作るサブルーチン
-def arrange_events(target_meets_ids):
-    events = []
-    print(f">>> {len(target_meets_ids)}の大会の全開催種目を集めています…")
+def add_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
+    """
+    記録をテーブルに追加する。
+    大会IDが格納されたリストを受け取り、１大会ごとにすべての記録を抽出し、RecordかRelayのインスタンスを生成する
+    コミットするタイミングをどうするかが問題。最後にやるとメモリが開放されないかもしれないし、何回もやると途中で中断された場合に困る。
+    """
+    print(f">>> {len(target_meets_ids)}の大会の全記録の抽出開始")
+    count_records = 0
     for id in Takenoko(target_meets_ids):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
-        aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンク
-        events.extend([Event(a["href"]) for a in aTags])    # リンクから種目のインスタンス生成
-    print(f'>>> {len(events)}種目見つかりました。')       # 25690 10min-1390meets
-    return events
-
-
-def fetch_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
-    events = arrange_events(target_meets_ids)
-    records = []
-    print('>>> 全種目の記録の抽出を開始します...')
-    for e in Takenoko(events):
-        table, lap_tables = e.parse_table()
-        if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
-            records.extend([Record(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
-        else:
-            records.extend([Relay(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)])
-    print(f'>>> {len(records)}個の記録が見つかりました。\n>>> データを適切な形に編集しています...')
-    for r in records:
-        r.fix_raw_data()
-    db.session.add_all(records)
-    db.session.commit()
-    print(f'>>> COMPLETE!! データ件数：{len(records)}')
+        aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンクをすべてリストに格納
+        events = [Event(a["href"]) for a in aTags]          # リンクから種目のインスタンス生成
+        for e in events:
+            table, lap_tables = e.parse_table()
+            set_args_4_records = [(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)]
+            if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
+                records = [Record(*args) for args in set_args_4_records]
+            else:
+                records = [Relay(*args) for args in set_args_4_records]
+            count_records += len(records)
+            for r in records:
+                r.fix_raw_data()
+            db.session.add_all(records)
+            db.session.commit()
+    print(f'>>> 全{count_records}の記録の保存が完了')
     free()
 
 
@@ -234,12 +210,11 @@ def find_meet(year, area):
     id_list = [a["href"][-7:] for a in meet_id_aTags] #大会コード七桁のみ抽出
     return id_list
 
-def fetch_meets(year):
+def add_meets(year):
     print(f">>> 20{year}年の大会IDを集めています…")
     meet_ids = []
     for area in Takenoko(area_list):
         meet_ids.extend(find_meet(year, area))
-
     print(f'>>> 20{year}年に開催される{len(meet_ids)}の大会の情報を取得しています…')
     meets = [Meet(id) for id in Takenoko(meet_ids)]
     db.session.add_all(meets)
@@ -281,21 +256,30 @@ def manegement(command=None):
         return f'<h1>{status}</h1>'
 
     elif status == 'busy': #既に別のスクレイパーが動いているとき
-        return f'<h1>Command Denied. A scraping process is working already. status: {status}</h1>'
+        return f'<h1>Command Denied. One scraping process is runnnig.</h1><p>status: {status}</p>'
 
     elif command == 'meets':
         year = 19
         db.session.query(Meet).filter_by(year = year).delete() # 同じ年度を二重に登録しないように削除する
-        th = threading.Thread(target=fetch_meets, name='scraper', args=(year,))
+        th = threading.Thread(target=add_meets, name='scraper', args=(year,))
 
     elif command == 'records':
-        date_min = request.args.get('from', default="2019/04/01")
-        date_max = request.args.get('to', default="2019/04/06")
+        range = request.args.get('range', default=None, type=int)
+        if range is None:
+            date_min = request.args.get('from', default="2019/04/01")
+            date_max = request.args.get('to', default="2019/04/06")
+        else:
+            today = datetime.date.today()
+            week_ago = today - datetime.timedelta(days=range)
+            date_min = week_ago.strftime('%Y/%m/%d')
+            date_max = today.strftime('%Y/%m/%d')
+        print(f'from {date_min} to {date_max}')
         target_meets = db.session.query(Meet).filter(Meet.start >= date_min, Meet.start <= date_max).all()
         target_meets_ids = [m.meetid for m in target_meets]
         # リストでフィルターをかけているが、deleteの引数synchronize_sessionのデフォルト値'evaluate'ではこれをサポートしていない(らしい)からFalseを指定する
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
-        th = threading.Thread(target=fetch_records, name='scraper', args=(target_meets_ids,))
+        db.session.query(Relay).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
+        th = threading.Thread(target=add_records, name='scraper', args=(target_meets_ids,))
     else:
         return '<h1>invalid url</h1>'
 
