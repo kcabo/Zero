@@ -196,7 +196,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
             for r in records:
                 try:
                     r.fix_raw_data()
-                except AssertionError()
+                except AssertionError():
                     print(r)
             db.session.add_all(records)
             db.session.commit()
