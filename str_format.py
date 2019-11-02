@@ -14,11 +14,7 @@ def format_time(time_str):
     if time_str == "" or time_str == "--:--.--" or time_str == "-": # リレーで第一泳者以外の失格の場合--:--.--になる
         return ""
     else:
-        if ob is None: # おそらく発生しないはず。すべて正規表現に一致するはず
-            print(f'\n>>無効なタイム文字列:{time_str}')
-            # return time_str
-            raise Exception('無効文字列')
-        else:
-            ob = re.match(time_format_ptn, time_str)
-            min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
-            return f'{min}:{ob.group(2)}.{ob.group(3)}'
+        ob = re.match(time_format_ptn, time_str)
+        assert ob is not None, f'無効なタイム文字列:{time_str}'
+        min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
+        return f'{min}:{ob.group(2)}.{ob.group(3)}'
