@@ -10,6 +10,7 @@ import threading
 from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+import pandas as pd
 
 from constant import style_dic, distance_dic, area_list
 from str_format import del_space, del_numspace, format_time
@@ -126,6 +127,9 @@ class Record(db.Model): #個人種目の１記録
         self.time = format_time(del_space(self.time))
         self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
 
+    def export_tupple(self):
+        return self.id, self.name, self.team, self.grade, self.time
+
 
 class Relay(db.Model): #リレーの１記録
     __tablename__ = 'relays'
@@ -234,12 +238,21 @@ def index():
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
 def ranking():
-    group = request.args.get('group', 'MS')
-    style = request.args.get('style')
-    distance = request.args.get('distance')
-
-    records = db.session.query(Record).filter(Record.time != "").order_by(Record.time).limit(40)
-    return render_template('ranking.html', records = records, group = group)
+    group = request.args.get('group', 'ML')
+    style = style_dic[request.args.get('style', 'fr')]
+    distance = distance_dic[request.args.get('distance', 50, type=int)]
+    sex = 1 if group[0] == 'M' else 2
+    pool = '短水路' if group[1] == 'S' else '長水路'
+    target_meets = db.session.query(Meet).filter_by(pool=pool).all()
+    target_meets_ids = [m.meetid for m in target_meets]
+    records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).all()
+    print(f'records length:{len(records)}')
+    fixed = map(lambda x:x.export_tupple(), records)
+    df = pd.DataFrame(fixed,columns = ['id', 'name', 'team', 'grade', 'time'])
+    df.sort_values(['time'], inplace=True)
+    df.drop_duplicates(subset=['name','grade'], inplace=True)
+    # print(df)
+    return render_template('ranking.html', records = df[:100], group = group)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')
@@ -255,7 +268,7 @@ def manegement(command=None):
 
     status = get_status()
     if command is None:
-        return f'<h1>{status}</h1>'
+        return f'<h1>{status}:{threading.enumerate()}</h1>'
 
     elif status == 'busy': #既に別のスクレイパーが動いているとき
         return f'<h1>Command Denied. One scraping process is runnnig.</h1><p>status: {status}</p>'
