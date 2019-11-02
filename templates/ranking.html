@@ -31,66 +31,70 @@
     </div>
     <a href="/"><img src="static/logo.png" alt="Swimmers' Zero" id="logo"></a>
   </header>
-
   <main>
+
     <div id="data-config">
 
       <div id="events">
         <div class="dropdown">
           <button class="dropbtn">Fr</button>
           <div class="dropdown-content">
-            <a href="?group={{group}}&style=fr&distance=25">25m</a>
-            <a href="?group={{group}}&style=fr&distance=50">50m</a>
-            <a href="?group={{group}}&style=fr&distance=100">100m</a>
-            <a href="?group={{group}}&style=fr&distance=200">200m</a>
-            <a href="?group={{group}}&style=fr&distance=400">400m</a>
-            <a href="?group={{group}}&style=fr&distance=800">800m</a>
-            <a href="?group={{group}}&style=fr&distance=1500">1500m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=25">25m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=50">50m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=100">100m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=200">200m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=400">400m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=800">800m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=1500">1500m</a>
           </div>
         </div>
 
         <div class="dropdown">
           <button class="dropbtn">Ba</button>
           <div class="dropdown-content">
-            <a href="?group={{group}}&style=fr&distance=25">25m</a>
-            <a href="?group={{group}}&style=fr&distance=25">50m</a>
-            <a href="?group={{group}}&style=fr&distance=25">100m</a>
-            <a href="?group={{group}}&style=fr&distance=25">200m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=25">25m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=50">50m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=100">100m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=200">200m</a>
           </div>
         </div>
 
         <div class="dropdown">
           <button class="dropbtn">Br</button>
           <div class="dropdown-content">
-            <a href="?group={{group}}&style=fr&distance=25">25m</a>
-            <a href="?group={{group}}&style=fr&distance=25">50m</a>
-            <a href="?group={{group}}&style=fr&distance=25">100m</a>
-            <a href="?group={{group}}&style=fr&distance=25">200m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=25">25m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=50">50m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=100">100m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=200">200m</a>
           </div>
         </div>
 
         <div class="dropdown">
           <button class="dropbtn">Fly</button>
           <div class="dropdown-content">
-            <a href="?group={{group}}&style=fr&distance=25">25m</a>
-            <a href="?group={{group}}&style=fr&distance=25">50m</a>
-            <a href="?group={{group}}&style=fr&distance=25">100m</a>
-            <a href="?group={{group}}&style=fr&distance=25">200m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=25">25m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=50">50m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=100">100m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=200">200m</a>
           </div>
         </div>
 
         <div class="dropdown">
           <button class="dropbtn">IM</button>
           <div class="dropdown-content">
-            <a href="?group={{group}}&style=fr&distance=25">100m</a>
-            <a href="?group={{group}}&style=fr&distance=25">200m</a>
-            <a href="?group={{group}}&style=fr&distance=25">400m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=100">100m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=200">200m</a>
+            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=400">400m</a>
           </div>
         </div>
       </div>
 
     </div>
-
+    <p>
+      {% if sex == 1 %}男子{% else %}女子{% endif %}
+      {% if pool == 1 %}長水路{% else %}短水路{% endif %}
+      {{distance}}{{style}}
+    </p>
     <table>
       <tr>
         <th>順位</th>
@@ -100,20 +104,20 @@
         <th>タイム</th>
       </tr>
       {% for r in records.itertuples() %}
-      <tr>
-        <td>{{loop.index}}</td>
-        <td>{{r.name}}</td>
-        <td>{{r.team}}</td>
-        <td><span>{{r.grade}}</span></td>
-        <td>{{r.time}}</td>
-      </tr>
-      {% endfor %}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td>{{r.name}}</td>
+      <td>{{r.team}}</td>
+      <td><span>{{r.grade}}</span></td>
+      <td>{{r.time}}</td>
+    </tr>
+    {% endfor %}
     </table>
 
-  </main>
-  <footer>
-    <p>CREATED BY REO KANZAKI</p>
-  </footer>
+    </main>
+    <footer>
+      <p>CREATED BY REO KANZAKI</p>
+    </footer>
 
 </body>
 
