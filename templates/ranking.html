@@ -99,7 +99,7 @@
         <th>学年</th>
         <th>タイム</th>
       </tr>
-      {% for r in records %}
+      {% for r in records.itertuples() %}
       <tr>
         <td>{{loop.index}}</td>
         <td>{{r.name}}</td>
