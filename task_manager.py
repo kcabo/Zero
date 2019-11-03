@@ -29,7 +29,8 @@ class Takenoko:
             raise StopIteration()
         elif index >= self.process[self.grow]:
             self.grow += 1
-            msg = '>{}<{:^5d} in {}'.format('=' * self.grow + "." * (self.times - self.grow), index + 1, max)
+            elapsed = time() - self.start
+            msg = f'>{"=" * self.grow + "." * (self.times - self.grow)}< {index + 1} / {max}  {round(elapsed/60)}m'
             print(msg)
         self.current += 1
         return self.list[index]
