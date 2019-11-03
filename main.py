@@ -32,7 +32,7 @@ event_link_ptn = re.compile(r"&code=(\d{7})&sex=(\d)&event=(\d)&distance=(\d)") 
 
 # DOM探索木をURLから生成
 def pour_soup(url):
-    sleep(0.8)
+    sleep(0.4)
     req = requests.get(url)
     req.encoding = "cp932"
     return BeautifulSoup(req.text, "lxml")
@@ -291,7 +291,7 @@ def manegement(command=None):
             date_min = week_ago.strftime('%Y/%m/%d')
             date_max = today.strftime('%Y/%m/%d')
         print(f'from {date_min} to {date_max}')
-        target_meets = db.session.query(Meet).filter(Meet.start >= date_min, Meet.start <= date_max).all()
+        target_meets = db.session.query(Meet).filter(Meet.start >= date_min, Meet.start <= date_max).order_by(Meet.start).all()
         target_meets_ids = [m.meetid for m in target_meets]
         # リストでフィルターをかけているが、deleteの引数synchronize_sessionのデフォルト値'evaluate'ではこれをサポートしていない(らしい)からFalseを指定する
         db.session.query(Record).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
