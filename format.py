@@ -11,7 +11,7 @@ def del_numspace(str):
     return str.translate(space_and_nums)
 
 def format_time(time_str):
-    if time_str == "" or time_str == "--:--.--" or time_str == "-": # リレーで第一泳者以外の失格の場合--:--.--になる
+    if time_str in["", "--:--.--", "-", "ｰ"]: # リレーで第一泳者以外の失格の場合--:--.--になる。最後のはハイフンではなく半角カタカナ長音
         return ""
     else:
         ob = re.match(time_format_ptn, time_str)
@@ -21,4 +21,4 @@ def format_time(time_str):
             return '99:99.99'
         else:
             min = ob.group(1) if ob.group(1) != "" else 0 # 32.34とか分がないとき
-            return f'{min}:{ob.group(2)}.{ob.group(3)}'
+            return f'{int(min)}:{ob.group(2)}.{ob.group(3)}'
