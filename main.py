@@ -2,6 +2,7 @@
 # 混合種目に出ている人の記録も男子か女子かに含めるようにしないと
 # アジア選手権(8019710)の記録が01:12.34の書式になっていた。ラップタイムも含め更新が必要
 # 上の大会と平沼さんの99：99.00を空白文字に修正する
+# 外国人の除外
 import datetime
 import os
 import re
@@ -35,7 +36,7 @@ event_link_ptn = re.compile(r"&code=(\d{7})&sex=(\d)&event=(\d)&distance=(\d)") 
 
 # DOM探索木をURLから生成
 def pour_soup(url):
-    sleep(0.4)
+    sleep(1)
     req = requests.get(url)
     req.encoding = "cp932"
     return BeautifulSoup(req.text, "lxml")
