@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>SwimmersZero|Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="static/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/dashboard.css">
+</head>
+
+<body>
+  <nav>
+    <a href="/"><img src="static/wlogo.svg" alt="Zero" id="logo"></a>
+    <div id="search-container">
+      <input name="name" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </div>
+  </nav>
+
+  <div id="swimmer-info">
+    <img src="static/men.svg" alt="men" id="p-icon">
+    <div class="column">
+      <h1>神崎伶央</h1>
+      <div id="tips">
+        <span class="univ">大学２</span>
+        <span>慶応</span>
+        <span>JPN</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="cards">
+    <div id="participate">
+      <div id="radar-container" class="card">
+        <canvas id="radar" width="400" height="400"></canvas>
+      </div>
+      <div class="column">
+        <div class="card">
+          <p class="caption">出場回数</p>
+          <p class="data">32<span>回</span></p>
+        </div>
+        <div class="card">
+          <p class="caption">S1種目</p>
+          <p class="data">Fr<span>1500m</span></p>
+        </div>
+        <div class="card">
+          <p class="caption">S1偏差値(長)</p>
+          <p class="data">61.7</p>
+        </div>
+        <div class="card">
+          <p class="caption">S1偏差値(短)</p>
+          <p class="data">59.0</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="condition" class="card">
+      <h2>2019年のIMの調子</h2>
+      <p>○…長水路 △…短水路</p>
+      <div id="line-container">
+        <canvas id="lineChart" width="400" height="250"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-container">
+    <div class="circle"></div>
+    <h3>Bests</h3>
+  </div>
+  <div id="bests">
+    <div class="card">
+      <div class="header fr">
+        <img src="static/fr.svg" alt="自由形">
+        <p>自由形</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>50m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>100m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>200m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header fr">
+        <img src="static/fr.svg" alt="自由形">
+        <p>自由形</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>400m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>800m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>1500m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header ba">
+        <img src="static/ba.svg" alt="背泳ぎ">
+        <p>背泳ぎ</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>50m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>100m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>200m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header br">
+        <img src="static/br.svg" alt="平泳ぎ">
+        <p>平泳ぎ</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>50m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>100m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>200m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header fly">
+        <img src="static/fly.svg" alt="バタフライ">
+        <p>バタフライ</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>50m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>100m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>200m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header im">
+        <img src="static/im.svg" alt="個人メドレー">
+        <p>個人メドレー</p>
+      </div>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <td><span>短</span></td>
+              <td></td>
+              <td><span>長</span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>50m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>100m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+            <tr>
+              <td>0:28.12</td>
+              <th rowspan="2"><span>200m</span></th>
+              <td>0:29.12</td>
+            </tr>
+            <tr>
+              <td>2019/03/17</td>
+              <td>2019/03/17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="caption-container">
+    <div class="circle"></div>
+    <h3>Records</h3>
+  </div>
+
+  <div id="records" class="card">
+    <table>
+      <tbody>
+        <tr>
+          <td><span class="fr">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="s">短</span></td>
+          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
+        </tr>
+        <tr>
+          <td><span class="fr">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="l">長</span></td>
+          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
+        </tr>
+        <tr>
+          <td><span class="fr">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="s">短</span></td>
+          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
+        </tr>
+        <tr>
+          <td><span class="fr">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="l">長</span></td>
+          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
+        </tr>
+        <tr>
+          <td><span class="fly">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="s">短</span></td>
+          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
+        </tr>
+        <tr>
+          <td><span class="fr">50Fr</span></td>
+          <td>0:26.23</td>
+          <td><span class="l">長</span></td>
+          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+  <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0
+      58-18 88-18s
+      58 18 88 18
+      58-18 88-18
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
+    </g>
+  </svg>
+  <div id="footer">
+    <p>Created by Reo Kanzaki</p>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script>
+    var colorLong = '#1B98E0';
+    var colorShort = '#06A77D';
+    var tDegree = '29'
+    var gray = '#555';
+    var lineWidth = 0.7;
+
+    var ctxRadar = document.getElementById("radar").getContext('2d');
+    var dataLong = [10, 10, 4, 2, 13];
+    var dataShort = [2, 10, 6, 4, 7];
+    var radarConfig = {
+      type: 'radar',
+      data: {
+        labels: ['Fr', 'Ba', 'Br', 'Fly', 'IM'],
+        datasets: [{
+          data: dataLong,
+          label: '長水',
+          borderColor: colorLong,
+          pointBorderColor: colorLong,
+          backgroundColor: colorLong + tDegree,
+          pointBackgroundColor: colorLong + tDegree,
+          borderWidth: lineWidth,
+          pointBorderWidth: lineWidth
+        }, {
+          data: dataShort,
+          label: '短水',
+          borderColor: colorShort,
+          pointBorderColor: colorShort,
+          backgroundColor: colorShort + tDegree,
+          pointBackgroundColor: colorShort + tDegree,
+          borderWidth: lineWidth,
+          pointBorderWidth: lineWidth
+        }]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            fontSize: 10
+          }
+        },
+        scale: {
+          pointLabels: {
+            fontSize: 10,
+            fontColor: gray,
+          },
+          ticks: {
+            fontColor: gray,
+            suggestedMin: 0,
+            max: 15,
+            stepSize: 5,
+          },
+          gridLines: {
+            color: gray,
+            lineWidth: 0.5
+          },
+          angleLines: {
+            color: gray,
+            lineWidth: 0.5
+          }
+        }
+      }
+    };
+    var radar = new Chart(ctxRadar, radarConfig);
+
+    var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+    var colorE1 = '#CD6CFF';
+    var colorE2 = '#F4376E';
+    var ctxLine = document.getElementById("lineChart").getContext('2d');
+    var e1Long = [{
+      x: 1,
+      y: 64
+    }, {
+      x: 59,
+      y: 46.62
+    }, {
+      x: 81,
+      y: 100
+    }, {
+      x: 110,
+      y: 0
+    }, {
+      x: 138,
+      y: 34.59
+    }, {
+      x: 176,
+      y: 1.5
+    }, {
+      x: 208,
+      y: 60.15
+    }];
+    var e1Short = [{
+      x: 218,
+      y: 37
+    }, {
+      x: 288,
+      y: 12
+    }, {
+      x: 318,
+      y: 100
+    }];
+    var e2Long = [{
+      x: 1,
+      y: 93.7
+    }, {
+      x: 59,
+      y: 0
+    }, {
+      x: 81,
+      y: 76
+    }, {
+      x: 110,
+      y: 9.9
+    }, {
+      x: 138,
+      y: 84.5
+    }, {
+      x: 166,
+      y: 100
+    }];
+    var e2Short = [{
+      x: 218,
+      y: 21
+    }, {
+      x: 288,
+      y: 32
+    }, {
+      x: 318,
+      y: 98
+    }];
+    var datasets = [{
+        label: '長 100IM',
+        data: e1Long,
+        pointStyle: 'circle',
+        borderColor: colorE1,
+        backgroundColor: colorE1 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+      },
+      {
+        label: '短 100IM',
+        data: e1Short,
+        pointStyle: 'triangle',
+        borderColor: colorE1,
+        backgroundColor: colorE1 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+      },
+      {
+        label: '長 200IM',
+        data: e2Long,
+        pointStyle: 'circle',
+        borderColor: colorE2,
+        backgroundColor: colorE2 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+      },
+      {
+        label: '短 200IM',
+        data: e2Short,
+        pointStyle: 'triangle',
+        borderColor: colorE2,
+        backgroundColor: colorE2 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+      }
+    ];
+
+    var lineConfig = {
+      type: 'scatter',
+      data: {
+        datasets: datasets
+      },
+      options: {
+        // tooltips: {
+        //   enabled: false
+        // },
+        elements: {
+          line: {
+            tension: 0
+          },
+        },
+        legend: {
+          position: 'bottom',
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 365,
+              stepSize: 1,
+              autoSkip: false,
+              maxRotation: 0,
+              callback: function(value, index, values) {
+                // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
+                var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+                if (i >= 0) {
+                  return jMonths[i]
+                } else {
+                  return null
+                }
+              }
+            },
+            gridLines: {
+              borderDash: [3],
+              zeroLineBorderDash: [3],
+              tickMarkLength: 8,
+              color: '#aaa',
+              zeroLineColor: '#aaa',
+              lineWidth: 0.5,
+              zeroLineWidth: 0.5,
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 105,
+              stepSize: 1,
+            }
+          }]
+        }
+      }
+    };
+    var myChart = new Chart(ctxLine, lineConfig);
+  </script>
+</body>
+
+</html>

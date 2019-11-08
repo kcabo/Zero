@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Roboto:400,700,900&display=swap&subset=japanese');
+:root {
+  --c-yellow: #FFB300;
+  --c-blue: #1E88E5;
+  --c-sky: #14FFF7;
+  --c-water: #3dd8ff;
+  --c-fr: #03A9F4;
+  --c-ba: #54b14f;
+  --c-br: #3f51b5;
+  --c-fly: #ff5722;
+  --c-im: #eb1e61;
+}
+body {
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+  background-color: #f4f4f4ee
+}
+
+nav {
+  padding: 10px;
+  /* border-bottom: 0.3px solid #bbb; */
+  background-color: #222;
+  max-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logo {
+  width: 80px;
+}
+
+/* 検索ボックス */
+#search-container {
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+}
+#search-container input:first-child {
+  border: .8px #555 solid;
+  border-radius: 5px;
+  width: 100%;
+  /* max-width: 400px; */
+  padding: 3px 10px;
+  line-height: 1.8;
+  font-size: 14px;
+  color: #aaa;
+  background-color: #3337;
+  outline: none;
+}
+#search-container input:first-child:focus {
+  background-color: #eee;
+  color: #111;
+}
+#search-container input:nth-child(2) {
+  outline: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: var(--c-water);
+  padding: 2px 16px;
+  border: .8px #555 solid;
+  border-radius: 0 5px 5px 0;
+}
+#search-container span {
+  position: absolute;
+  top: 8px;
+  right: 13px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px white solid;
+}
+#search-container span::after {
+  content: '';
+  position: absolute;
+  top: 11px;
+  right: -7px;
+  width: 6px;
+  height: 2px;
+  background-color: white;
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+
+/* 選手名 */
+#swimmer-info {
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+#p-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 18px;
+}
+
+h1 {
+  font-size: 25px;
+  letter-spacing: 3px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+#tips span {
+  font-size: 11px;
+  background-color: var(--c-yellow);
+  color: white;
+  padding: 1.2px 8px;
+  border-radius: 5px;
+}
+
+#tips span.univ {
+  background-color: var(--c-blue);
+  margin-right: 2px;
+}
+
+/* 数枚のカード全体を囲む */
+.cards {
+  width: 90%;
+  margin: auto;
+  padding-top: 20px;
+  max-width: 700px;
+}
+.card {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+
+/* 各種目の出場回数などを表示する段 */
+#participate {
+  display: flex;
+  justify-content: space-between;
+}
+#radar-container {
+  width: 70%;
+  max-width: 400px;
+  padding: 10px 0;
+}
+#participate .column {
+  width: 28%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#participate .column .card {
+  width: 100%;
+  /* max-width: 400px; */
+  padding: 6px 12px;
+  height: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#participate .card .caption {
+  font-size: 10px;
+  color: #aaa;
+}
+#participate .card .data {
+  letter-spacing: -1.4px;
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #37474F;
+}
+#participate .card .data span {
+  font-size: 12px;
+  padding-left: 5px;
+  letter-spacing: -0.4px;
+
+}
+
+
+/* 調子の段 */
+#condition {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+#condition h2 {
+  font-size: 14px;
+  color: #555;
+  padding-top: 5px;
+}
+#condition p {
+  font-size: 10px;
+  color: #aaa;
+}
+
+#line-container {
+  padding: 10px;
+}
+
+
+/* 見出し */
+.caption-container {
+  position: relative;
+  margin-top: 20px;
+  height: 80px;
+}
+.caption-container .circle {
+  position: absolute;
+  top: 0;
+  left: -25px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--c-sky);
+  z-index: -1;
+}
+.caption-container h3 {
+  font-size: 37px;
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+.caption-container h3::first-letter {
+  font-size: 50px;
+  color: white;
+}
+
+/* ベスト横スクロール */
+#bests {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+#bests::-webkit-scrollbar {
+  width: 0px;
+}
+#bests .card {
+  display: inline-block;
+  overflow: hidden;
+  margin: 10px 3px;
+}
+#bests .header {
+  width: 200px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+}
+#bests .header.fr {
+  background-color: var(--c-fr);
+}
+#bests .header.ba {
+  background-color: var(--c-ba);
+}
+#bests .header.br {
+  background-color: var(--c-br);
+}
+#bests .header.fly {
+  background-color: var(--c-fly);
+}
+#bests .header.im {
+  background-color: var(--c-im);
+}
+
+#bests .header img {
+  width: 60px;
+  margin: 0 auto;
+}
+#bests .header p {
+  margin-top: -8px;
+}
+#bests .wrap {
+  width: 200px;
+}
+#bests table {
+  width: 92%;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 14px;
+  color: #222;
+  border-collapse: collapse;
+}
+#bests thead td, tbody th{
+  font-size: 10px;
+  color: white;
+  /* height: 15px; */
+  /* border-bottom: .5px #555 solid; */
+}
+#bests thead td span{
+  background-color: #1D3557;
+  padding: 2px 18px;
+  border-radius: 4px;
+}
+#bests tbody th span {
+  background-color: #AAB3C0;
+  display: inline-block;
+  width: 90%;
+  line-height: 1.5;
+  border-radius: 4px;
+
+}
+#bests tbody th {
+  width: 28%;
+  height: 35px;
+  font-weight: normal;
+  padding-top: 8px;
+}
+
+#bests tbody tr:nth-child(2n+1) td {
+  /* border: 0.1px #111 solid; */
+  height: 30px;
+  padding-top: 12px;
+}
+#bests tbody tr:nth-child(2n) td {
+  font-size: 10px;
+  line-height: 0.8;
+  padding-bottom: 5px;
+  color: #444;
+}
+
+
+/* レコード一覧 */
+#records {
+  padding: 2px;
+  width: 90%;
+  margin: 10px auto;
+}
+#records table {
+  width: 96%;
+  margin: 5px auto;
+  text-align: center;
+  font-size: 13px;
+  line-height: 2.8;
+  color: #222;
+  border-collapse: collapse;
+  max-width: 500px;
+}
+#records tr ~ tr {
+  border-top: 0.5px #eee solid;
+}
+#records tr td:nth-child(3) {
+  width: 12%;
+}
+#records tr td:nth-child(3) span {
+  padding: 2px 3.4px;
+  border-radius: 3px;
+  border: 1px #1D3557 solid;
+}
+#records tr td:nth-child(3) span.s {
+  color: #182C48;
+  font-weight: 650;
+}
+#records tr td:nth-child(3) span.l {
+  color: white;
+  background-color: #1D3557;
+}
+#records tr td:nth-child(1) span {
+  display: inline-block;
+  width: 50px;
+  color: white;
+  border-radius: 10px;
+  line-height: 1.7;
+}
+#records tr td:nth-child(1) span.fr {
+  background-color: var(--c-fr);
+}
+#records tr td:nth-child(1) span.ba {
+  background-color: var(--c-ba);
+}
+#records tr td:nth-child(1) span.br {
+  background-color: var(--c-br);
+}
+#records tr td:nth-child(1) span.fly {
+  background-color: var(--c-fly);
+}
+#records tr td:nth-child(1) span.im {
+  background-color: var(--c-im);
+}
+#records tr td:nth-child(2) {
+  font-size: 16px;
+  width: 30%;
+  font-weight: bold;
+  color: #222;
+}
+#records tr td:nth-child(4) {
+  text-align: left;
+  width: 40%;
+  max-width: 160px;
+  color: #aaa;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* フッター */
+.parallax > use {
+  animation: move-forever 12s linear infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -2s;
+  animation-duration: 5s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 3s;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate(-90px, 0%);
+  }
+  100% {
+    transform: translate(85px, 0%);
+  }
+}
+.editorial {
+  display: block;
+  width: 100%;
+  height: 80px;
+  margin-top: 70px;
+}
+
+#footer {
+  text-align: center;
+  background-color: #2d55aa;
+  text-align: center;
+  margin: -.1em 0 0 0;
+  padding: 40px 10px;
+  color: #eee;
+  font-size: 20px;
+  font-weight: 600;
+}
+/*prevent many large-by-comparison ripples by shrinking the height*/
+@media (max-width: 50em) {
+  .content h1 {
+    font-size: 12vmax;
+  }
+  .editorial {
+    height: 17vw;
+  }
+}

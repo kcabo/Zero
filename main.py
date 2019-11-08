@@ -240,6 +240,10 @@ def index():
 def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
 def ranking():
