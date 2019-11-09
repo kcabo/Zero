@@ -280,19 +280,15 @@ def ranking():
     style = style_dic[request.args.get('style', 'fr')]
     distance = distance_dic[request.args.get('distance', 50, type=int)]
 
-    # 水路判定
-    # target_meets = db.session.query(Meet).filter_by(pool=pool).all()
-    # target_meets_ids = [m.meetid for m in target_meets]
-    # records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).order_by(Record.time).limit(20000).all()
-
-    # 上記と違い、recordsとmeetsを内部結合して水路判定
-    records = db.session.query(Record, Meet).filter(Record.sex==sex, Record.style==style, Record.distance==distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool).order_by(Record.time).limit(20000).all()
+    records = (db.session.query(Record, Meet)
+            .filter(Record.sex==sex, Record.style==style, Record.distance==distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
+            .limit(20000)
+            .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
     print(f'query records length:{len(records)}')
     fixed = map(lambda x:x.Record.export_tupple(), records)
     df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
-    # df.sort_values(['time'], inplace=True)
+    df.sort_values(['time'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
-    # print(df)
     return render_template('ranking.html', records = df[:100], pool=pool, sex=sex, style=style, distance=distance)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
