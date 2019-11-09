@@ -87,7 +87,7 @@ nav {
 /* 選手名 */
 #swimmer-info {
   box-shadow: 0 2px 5px #ccc;
-  padding: 12px 0;
+  padding: 12px;
   display: flex;
   align-items: center;
   background-color: white;
@@ -96,9 +96,11 @@ nav {
 #p-icon {
   width: 60px;
   height: 60px;
-  margin: 0 18px;
+  margin: 0 10px;
 }
-
+#swimmer-info .column {
+  margin-left: 8px;
+}
 h1 {
   font-size: 25px;
   letter-spacing: 3px;
