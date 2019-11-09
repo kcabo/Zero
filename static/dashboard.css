@@ -369,19 +369,19 @@ h1 {
   border-radius: 10px;
   line-height: 1.7;
 }
-#records tr td:nth-child(1) span.fr {
+#records tr td:nth-child(1) span.Fr {
   background-color: var(--c-fr);
 }
-#records tr td:nth-child(1) span.ba {
+#records tr td:nth-child(1) span.Ba {
   background-color: var(--c-ba);
 }
-#records tr td:nth-child(1) span.br {
+#records tr td:nth-child(1) span.Br {
   background-color: var(--c-br);
 }
-#records tr td:nth-child(1) span.fly {
+#records tr td:nth-child(1) span.Fly {
   background-color: var(--c-fly);
 }
-#records tr td:nth-child(1) span.im {
+#records tr td:nth-child(1) span.IM {
   background-color: var(--c-im);
 }
 #records tr td:nth-child(2) {
