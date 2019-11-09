@@ -7,7 +7,6 @@
   <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content="#ffffff">
-  <!-- <link rel="icon" href="static/favicon.ico"> -->
   <link rel="icon" type="image/png" href="static/icon-192x192.png">
   <link rel="apple-touch-icon" type="image/png" href="static/apple-touch-icon-180x180.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,20 +17,22 @@
 <body>
   <nav>
     <a href="/"><img src="static/wlogo.svg" alt="Zero" id="logo"></a>
-    <div id="search-container">
-      <input name="name" type="text" placeholder="選手を検索">
+    <form id="search-container" method="post" action="/dashboard">
+      <!-- とりあえず今はidでのみ検索できるように -->
+      <input name="id" type="text" placeholder="選手を検索">
       <input type="submit" value=""><span></span>
-    </div>
+    </form>
   </nav>
 
   <div id="swimmer-info">
-    <img src="static/men.svg" alt="men" id="p-icon">
+    <img src="static/{{info['sex']}}.svg" alt="{{info['sex']}}" id="p-icon">
     <div class="column">
-      <h1>神崎伶央</h1>
+      <h1>{{info['name']}}</h1>
       <div id="tips">
-        <span class="univ">大学２</span>
-        <span>慶応</span>
-        <span>JPN</span>
+        <span class="univ">{{info['grade']}}</span>
+        {% for t in info['teams'] %}
+        <span>{{t}}</span>
+        {% endfor %}
       </div>
     </div>
   </div>
