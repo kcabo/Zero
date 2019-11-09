@@ -109,6 +109,7 @@ h1 {
 }
 
 #tips span {
+  display: inline-block;
   font-size: 11px;
   background-color: var(--c-yellow);
   color: white;
