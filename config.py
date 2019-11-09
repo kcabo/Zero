@@ -6,7 +6,7 @@ class Base:
     TESTING = True
 
 class Develop(Base):
-    DEBUG = False
+    DEBUG = True
 
 class Product(Base):
     DEBUG = False

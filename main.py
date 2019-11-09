@@ -244,10 +244,24 @@ def wake_up(): # 監視サービスで監視する用のURL
 def dashboard():
 
     # まずはレコードテーブルからIDを受け取りそこから「誰の」IDなのかを検索
+    id = request.args.get('id', 1, type=int)
+    swimmer = db.session.query(Record).get(id)
+
     # 取得した選手の性別・名前・学年でフィルタリングしてrecordsテーブルから取得
-    # 上と同時にそれぞれのrecordのmeetidからMeetを外部結合（すべてのMeetidがMeetに存在することを約束されているなら内部結合でいい）
+    # 上と同時にそれぞれのrecordのmeetidからMeetを内部結合
+    records = (db.session.query(Record, Meet)
+            .filter(Record.sex == swimmer.sex, Record.name == swimmer.name, Record.grade == swimmer.grade, Record.meetid == Meet.meetid)
+            .all())
+
     # 見出しの選手情報：     性別　名前　学年　所属(複数ある)
-    # 全レコード：          種目(50Fr)　スタイル　距離　記録　水路(l,m,長,短)　日付　大会名 のデータフレームを作成
+    teams = {r.Record.team for r in records}
+    print(teams)
+
+    # 全レコード：          id, 種目(50Fr)　スタイル　距離　記録　水路(l,m,長,短)　日付　大会名 のデータフレームを作成
+    fixed = map(lambda x:(x.Record.id, x.Record.style, x.Record.distance, x.Record.time, x.Meet.pool, x.Meet.start, x.Meet.name), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'style', 'distance', 'time', 'pool', 'start', 'meet_name'])
+    print(df)
+
     # 出場回数：            全出場回数　五スタイルのそれぞれの回数(リストか辞書)　スタイルと距離を結合（種目）し、そのなかでの最多(S1)　偏差値(保留)
     # 上の段階で折れ線グラフ化する2種目を選ぶ ←S1のスタイルのなかから、もっとも出場している種目を2つ選ぶ ←今後３つとかにしてもいいよね
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
@@ -255,11 +269,6 @@ def dashboard():
     #                      {x:経過日数,y:計算結果}のリストを返す。それを4回繰り返す。
     # データフレームを（早い順、日付最新順）に並び替え。種目で重複削除。
     # 6カテゴリ(5種目＋長距離)の変数を作る。型はリストかディクショナリ。すべての抽出結果をその中に格納。（ベストのないカテゴリはFalseを返すようにする）
-
-    jj = db.session.query(Record, Meet).filter(Record.name == '塩浦慎理', Record.meetid == Meet.meetid).limit(100).all()
-
-    for j in jj:
-        print(j.Record, j.Meet)
 
     return render_template('dashboard.html')
 
@@ -270,12 +279,16 @@ def ranking():
     sex = request.args.get('sex', 1, type=int)
     style = style_dic[request.args.get('style', 'fr')]
     distance = distance_dic[request.args.get('distance', 50, type=int)]
+
     # 水路判定
-    target_meets = db.session.query(Meet).filter_by(pool=pool).all()
-    target_meets_ids = [m.meetid for m in target_meets]
-    records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).order_by(Record.time).limit(20000).all()
+    # target_meets = db.session.query(Meet).filter_by(pool=pool).all()
+    # target_meets_ids = [m.meetid for m in target_meets]
+    # records = db.session.query(Record).filter(Record.meetid.in_(target_meets_ids), Record.time != "", Record.sex==sex, Record.style==style, Record.distance==distance).order_by(Record.time).limit(20000).all()
+
+    # 上記と違い、recordsとmeetsを内部結合して水路判定
+    records = db.session.query(Record, Meet).filter(Record.sex==sex, Record.style==style, Record.distance==distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool).order_by(Record.time).limit(20000).all()
     print(f'query records length:{len(records)}')
-    fixed = map(lambda x:x.export_tupple(), records)
+    fixed = map(lambda x:x.Record.export_tupple(), records)
     df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
     # df.sort_values(['time'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
