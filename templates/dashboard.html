@@ -25,12 +25,12 @@
   </nav>
 
   <div id="swimmer-info">
-    <img src="static/{{info['sex']}}.svg" alt="{{info['sex']}}" id="p-icon">
+    <img src="static/{{s.sex}}.svg" alt="{{s.sex}}" id="p-icon">
     <div class="column">
-      <h1>{{info['name']}}</h1>
+      <h1>{{s.name}}</h1>
       <div id="tips">
-        <span class="univ">{{info['grade']}}</span>
-        {% for t in info['teams'] %}
+        <span class="univ">{{s.grade}}</span>
+        {% for t in s.teams %}
         <span>{{t}}</span>
         {% endfor %}
       </div>
@@ -46,7 +46,7 @@
       <div class="column">
         <div class="card">
           <p class="caption">出場回数</p>
-          <p class="data">32<span>回</span></p>
+          <p class="data">{{s.total_count}}<span>回</span></p>
         </div>
         <div class="card">
           <p class="caption">S1種目</p>
@@ -64,7 +64,7 @@
     </div>
 
     <div id="condition" class="card">
-      <h2>2019年のIMの調子</h2>
+      <h2>2019年の調子</h2>
       <p>○…長水路 △…短水路</p>
       <div id="line-container">
         <canvas id="lineChart" width="400" height="250"></canvas>
@@ -437,8 +437,8 @@
     var lineWidth = 0.7;
 
     var ctxRadar = document.getElementById("radar").getContext('2d');
-    var dataLong = [10, 10, 4, 2, 13];
-    var dataShort = [2, 10, 6, 4, 7];
+    var dataLong = {{s.count_style_long}};
+    var dataShort = {{s.count_style_short}};
     var radarConfig = {
       type: 'radar',
       data: {

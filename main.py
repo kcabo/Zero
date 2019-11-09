@@ -1,7 +1,6 @@
 # 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいと思うんだ
 # 混合種目に出ている人の記録も男子か女子かに含めるようにしないと
-# アジア選手権(8019710)の記録が01:12.34の書式になっていた。ラップタイムも含め更新が必要
-# 上の大会と平沼さんの99：99.00を空白文字に修正する
+# 平沼さんの99：99.00を空白文字に修正する
 # 外国人の除外
 import datetime
 import os
@@ -246,10 +245,10 @@ def dashboard():
         id = request.form.get('id', 1, type=int)
 
     # まずは「誰の」IDなのかを検索
-    swimmer = db.session.query(Record).get(id)
-    sex = swimmer.sex
-    name = swimmer.name
-    grade = swimmer.grade
+    target = db.session.query(Record).get(id)
+    sex = target.sex
+    name = target.name
+    grade = target.grade
 
     # 取得した選手の性別・名前・学年でフィルタリングしてrecordsテーブルから取得
     # 同時にそれぞれのrecordのmeetidからMeetを内部結合
@@ -259,10 +258,12 @@ def dashboard():
 
     # 見出しの選手情報：     性別　名前　学年　所属(複数ある)
     teams = {r.Record.team for r in records}
-    info = {'sex':'men' if sex == 1 else 'women', 'name':name, 'grade':grade, 'teams':teams}
-
-    analyzed = analyzer.swimmer_statisctics(records)
-    return render_template('dashboard.html', info=info)
+    swimmer = analyzer.swimmer_statisctics(records)
+    swimmer.sex = 'men' if sex == 1 else 'women'
+    swimmer.name = name
+    swimmer.grade = grade
+    swimmer.teams = teams
+    return render_template('dashboard.html', s = swimmer)
 
 # TODO: リレーの記録も結合させる
 @app.route('/ranking')
