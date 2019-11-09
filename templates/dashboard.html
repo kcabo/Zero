@@ -364,42 +364,14 @@
   <div id="records" class="card">
     <table>
       <tbody>
+        {% for r in s.records.itertuples() %}
         <tr>
-          <td><span class="fr">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="s">短</span></td>
-          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
+          <td><span class="{{r.style}}">{{r.event}}</span></td>
+          <td>{{r.time}}</td>
+          <td><span class="{{r.pool}}">{% if r.pool == 'l' %}長{% else %}短{% endif %}</span></td>
+          <td>{{r.start}}<br>{{r.meet_name}}</td>
         </tr>
-        <tr>
-          <td><span class="fr">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="l">長</span></td>
-          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
-        </tr>
-        <tr>
-          <td><span class="fr">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="s">短</span></td>
-          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
-        </tr>
-        <tr>
-          <td><span class="fr">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="l">長</span></td>
-          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
-        </tr>
-        <tr>
-          <td><span class="fly">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="s">短</span></td>
-          <td>2019/11/02<br>静岡:県秋季短水路選手権</td>
-        </tr>
-        <tr>
-          <td><span class="fr">50Fr</span></td>
-          <td>0:26.23</td>
-          <td><span class="l">長</span></td>
-          <td>2019/11/02<br>岩手:(★東北)第9回JSCA東北支部ｼﾞｭﾆｱ</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
