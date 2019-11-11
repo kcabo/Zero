@@ -74,7 +74,7 @@ def swimmer_statisctics(records):
         if len(filtered) == 0:
             return ''
         elif len(filtered) == 1:
-            return '{{x:{filtered["days"].iloc[0]},y:50}}'
+            return f'{{x:{filtered["days"].iloc[0]},y:50}}'
         else:
             max = filtered['time_val'].max()
             min = filtered['time_val'].min()
