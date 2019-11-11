@@ -62,20 +62,22 @@ def swimmer_statisctics(records):
     swimmer.s1 = df['event'].value_counts().index[0] # ここでのS1はスタイルではなく距離も含めた種目
     swimmer.s2 = df['event'].value_counts().index[1]
 
-    print(f's1{swimmer.s1}, s2{swimmer.s2}')
-
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
     from_date = datetime.datetime(2019,4,1)
     df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化
     df['time_val'] = df['time'].map(fmt_2_val)
 
     def set_scatter_points(df, event, pool):
-            filtered = df[(df['event'] == swimmer.s1) & (df['pool'] == pool)].loc[:, ['days', 'time_val']]
-            filtered.sort_values(['days','time_val'], inplace=True)
-            filtered.drop_duplicates(subset='days', inplace=True)
+        filtered = df[(df['event'] == swimmer.s1) & (df['pool'] == pool)].loc[:, ['days', 'time_val']]
+        filtered.sort_values(['days','time_val'], inplace=True)
+        filtered.drop_duplicates(subset='days', inplace=True)
+        if len(filtered) == 0:
+            return ''
+        elif len(filtered) == 1:
+            return '{{x:{filtered["days"].iloc[0]},y:50}}'
+        else:
             max = filtered['time_val'].max()
             min = filtered['time_val'].min()
-            print(filtered)
             filtered['normalized'] = filtered['time_val'].map(lambda x:((max - x)*100)/(max - min))
             points = [f"{{x:{days},y:{int(normalized)}}}" for days, normalized in zip(filtered['days'], filtered['normalized'])]
             return ','.join(points)
