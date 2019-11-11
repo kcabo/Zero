@@ -45,7 +45,6 @@ def swimmer_statisctics(records):
     df['event'] = df['distance'].astype(str) + df['style']
 
     swimmer.records = df.sort_values(['start', 'style', 'distance', 'time'], ascending=[False, True, True, True])
-    # print(df if os.name =='nt' else '')
     df = df[df['time'] != ""] # 空白タイム削除
 
     # 出場回数：            全出場回数　五スタイルのそれぞれの回数(リストか辞書)　スタイルと距離を結合（種目）し、そのなかでの最多(S1)　偏差値(保留)
@@ -63,6 +62,8 @@ def swimmer_statisctics(records):
     swimmer.s1 = df['event'].value_counts().index[0] # ここでのS1はスタイルではなく距離も含めた種目
     swimmer.s2 = df['event'].value_counts().index[1]
 
+    print(f's1{swimmer.s1}, s2{swimmer.s2}')
+
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
     from_date = datetime.datetime(2019,4,1)
     df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化
@@ -74,6 +75,7 @@ def swimmer_statisctics(records):
             filtered.drop_duplicates(subset='days', inplace=True)
             max = filtered['time_val'].max()
             min = filtered['time_val'].min()
+            print
             filtered['normalized'] = filtered['time_val'].map(lambda x:((max - x)*100)/(max - min))
             points = [f"{{x:{days},y:{int(normalized)}}}" for days, normalized in zip(filtered['days'], filtered['normalized'])]
             return ','.join(points)
