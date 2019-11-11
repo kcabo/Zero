@@ -82,6 +82,7 @@ def swimmer_statisctics(records):
             points = [f"{{x:{days},y:{int(normalized)}}}" for days, normalized in zip(filtered['days'], filtered['normalized'])]
             return ','.join(points)
 
+    print(swimmer.s1, swimmer.s2, '\n', df)
     swimmer.e1_long_points = set_scatter_points(df, swimmer.s1, 'l')
     swimmer.e1_short_points = set_scatter_points(df, swimmer.s1, 's')
     swimmer.e2_long_points = set_scatter_points(df, swimmer.s2, 'l')
