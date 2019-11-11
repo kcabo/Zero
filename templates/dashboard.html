@@ -50,7 +50,7 @@
         </div>
         <div class="card">
           <p class="caption">S1種目</p>
-          <p class="data">Fr<span>1500m</span></p>
+          <p class="data">{{s.s1}}</p>
         </div>
         <div class="card">
           <p class="caption">S1偏差値(長)</p>
@@ -471,69 +471,12 @@
     var colorE1 = '#CD6CFF';
     var colorE2 = '#F4376E';
     var ctxLine = document.getElementById("lineChart").getContext('2d');
-    var e1Long = [{
-      x: 1,
-      y: 64
-    }, {
-      x: 59,
-      y: 46.62
-    }, {
-      x: 81,
-      y: 100
-    }, {
-      x: 110,
-      y: 0
-    }, {
-      x: 138,
-      y: 34.59
-    }, {
-      x: 176,
-      y: 1.5
-    }, {
-      x: 208,
-      y: 60.15
-    }];
-    var e1Short = [{
-      x: 218,
-      y: 37
-    }, {
-      x: 288,
-      y: 12
-    }, {
-      x: 318,
-      y: 100
-    }];
-    var e2Long = [{
-      x: 1,
-      y: 93.7
-    }, {
-      x: 59,
-      y: 0
-    }, {
-      x: 81,
-      y: 76
-    }, {
-      x: 110,
-      y: 9.9
-    }, {
-      x: 138,
-      y: 84.5
-    }, {
-      x: 166,
-      y: 100
-    }];
-    var e2Short = [{
-      x: 218,
-      y: 21
-    }, {
-      x: 288,
-      y: 32
-    }, {
-      x: 318,
-      y: 98
-    }];
+    var e1Long = [{{s.e1_long_points}}];
+    var e1Short = [{{s.e1_short_points}}];
+    var e2Long = [{{s.e2_long_points}}];
+    var e2Short = [{{s.e2_short_points}}];
     var datasets = [{
-        label: '長 100IM',
+        label: '長 {{s.s1}}',
         data: e1Long,
         pointStyle: 'circle',
         borderColor: colorE1,
@@ -542,7 +485,7 @@
         borderWidth: lineWidth,
       },
       {
-        label: '短 100IM',
+        label: '短 {{s.s1}}',
         data: e1Short,
         pointStyle: 'triangle',
         borderColor: colorE1,
@@ -551,7 +494,7 @@
         borderWidth: lineWidth,
       },
       {
-        label: '長 200IM',
+        label: '長 {{s.s2}}',
         data: e2Long,
         pointStyle: 'circle',
         borderColor: colorE2,
@@ -560,7 +503,7 @@
         borderWidth: lineWidth,
       },
       {
-        label: '短 200IM',
+        label: '短 {{s.s2}}',
         data: e2Short,
         pointStyle: 'triangle',
         borderColor: colorE2,
