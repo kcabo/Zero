@@ -75,7 +75,7 @@ def swimmer_statisctics(records):
             filtered.drop_duplicates(subset='days', inplace=True)
             max = filtered['time_val'].max()
             min = filtered['time_val'].min()
-            print
+            print(filtered)
             filtered['normalized'] = filtered['time_val'].map(lambda x:((max - x)*100)/(max - min))
             points = [f"{{x:{days},y:{int(normalized)}}}" for days, normalized in zip(filtered['days'], filtered['normalized'])]
             return ','.join(points)
