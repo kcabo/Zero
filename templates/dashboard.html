@@ -31,7 +31,9 @@
       <h1>{{s.name}}</h1>
       <div id="tips">
         <span class="univ">{{s.grade}}</span>
-        {% for t in s.teams %}<span>{{t}}</span>{% endfor %}
+        {% for t in s.teams %}
+        <span>{{t}}</span>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -402,7 +404,8 @@
         legend: {
           position: 'bottom',
           labels: {
-            boxWidth: 15
+            boxWidth: 10,
+            fontSize: 11,
           }
         },
         scales: {
