@@ -58,9 +58,10 @@ def swimmer_statisctics(records):
     swimmer.count_style_long = count_style(df, "l")
     swimmer.count_style_short = count_style(df, "s")
 
-    # 折れ線グラフ化する最多出場の2種目を選ぶ
-    swimmer.s1 = df['event'].value_counts().index[0] # ここでのS1はスタイルではなく距離も含めた種目
-    swimmer.s2 = df['event'].value_counts().index[1]
+    # 折れ線グラフ化する最多出場の2種目を選ぶ ここでのS1はスタイルではなく距離も含めた種目
+    event_counts = df['event'].value_counts()
+    swimmer.s1 = event_counts.index[0]
+    swimmer.s2 = event_counts.index[1] if len(event_counts) > 1 else ''
 
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
     from_date = datetime.datetime(2019,4,1)
@@ -73,12 +74,13 @@ def swimmer_statisctics(records):
         filtered.drop_duplicates(subset='days', inplace=True) # 同じ日の同じレース（予選と決勝など）は早い方のタイムを残す
         if len(filtered) == 0:
             return '' # 記録なし
-        elif len(filtered) == 1:
-            return f'{{x:{filtered["days"].iloc[0]},y:50}}' # 記録が一つだから標準化できない(ゼロ除算が発生)
+
+        # タイムを数値変換。最大値(最遅)からそれぞれの記録を引き算。その結果の中での最大値(最速)をdとし100/dをそれぞれに乗算
+        max = filtered['time_val'].max()
+        min = filtered['time_val'].min()
+        if max == min:
+            return f'{{x:{filtered["days"].iloc[0]},y:50}}' # 標準化できない(ゼロ除算が発生)
         else:
-            max = filtered['time_val'].max()
-            min = filtered['time_val'].min()
-            # タイムを数値変換。最大値(最遅)からそれぞれの記録を引き算。その結果の中での最大値(最速)をdとし100/dをそれぞれに乗算
             filtered['normalized'] = filtered['time_val'].map(lambda x:((max - x)*100)/(max - min)) # ワーストを0,ベストを100として標準化
             points = [f"{{x:{days},y:{int(normalized)}}}" for days, normalized in zip(filtered['days'], filtered['normalized'])] # グラフのパラメータを文字列で作成
             return ','.join(points)
@@ -89,6 +91,27 @@ def swimmer_statisctics(records):
     swimmer.e2_short_points = set_scatter_points(df, swimmer.s2, 's')
 
     # データフレームを（早い順、日付最新順）に並び替え。種目で重複削除。
-    # 6カテゴリ(5種目＋長距離)の変数を作る。型はリストかディクショナリ。すべての抽出結果をその中に格納。（ベストのないカテゴリはFalseを返すようにする）
+    df.sort_values(['time_val', 'days'], ascending=[True, False], inplace=True)
+    df.drop_duplicates(['pool', 'event'], inplace=True)
+    def set_bests(df, keys):
+        if len(df) == 0:
+            return False
+        else:
+            dic = {}
+            for key in keys:
+                dic["l-" + key] = ['', '']
+                dic["s-" + key] = ['', '']
+            for event, time, start, pool in zip(df['event'], df['time'], df['start'], df['pool']):
+                dic[pool + "-" + event] = [time, start]
+            return dic
+    # 6カテゴリ(5種目＋長距離)の変数を作る。（ベストのないカテゴリはFalseを返すようにする）
+    swimmer.Fr_sprint_bests = set_bests(df[df['event'].isin(['50Fr','100Fr', '200Fr'])], ['50Fr','100Fr', '200Fr'])
+    swimmer.Fr_endurance_bests = set_bests(df[df['event'].isin(['400Fr','800Fr', '1500Fr'])], ['400Fr','800Fr', '1500Fr'])
+    swimmer.Ba_bests = set_bests(df[df['style'] == 'Ba'], ['50Ba','100Ba', '200Ba'])
+    swimmer.Br_bests = set_bests(df[df['style'] == 'Br'], ['50Br','100Br', '200Br'])
+    swimmer.Fly_bests = set_bests(df[df['style'] == 'Fly'], ['50Fly','100Fly', '200Fly'])
+    swimmer.IM_bests = set_bests(df[df['style'] == 'IM'], ['100IM','200IM', '400IM'])
+
+    print(swimmer.Fr_sprint_bests)
 
     return swimmer

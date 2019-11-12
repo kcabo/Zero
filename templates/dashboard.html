@@ -2,21 +2,22 @@
 <html lang="ja">
 
 <head>
-  <title>SwimmersZero|Dashboard</title>
+  <title>SwimmersZero</title>
   <meta charset="utf-8">
   <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content="#ffffff">
-  <link rel="icon" type="image/png" href="static/icon-192x192.png">
-  <link rel="apple-touch-icon" type="image/png" href="static/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-  <link rel="stylesheet" href="static/dashboard.css">
+  <link rel="stylesheet" href="static/css/common.css">
+  <link rel="stylesheet" href="static/css/dashboard.css">
 </head>
 
 <body>
   <nav>
-    <a href="/"><img src="static/wlogo.svg" alt="Zero" id="logo"></a>
+    <a href="/"><img src="static/img/wlogo.svg" alt="Zero" id="logo"></a>
     <form id="search-container" method="post" action="/dashboard">
       <!-- とりあえず今はidでのみ検索できるように -->
       <input name="id" type="text" placeholder="選手を検索">
@@ -25,7 +26,7 @@
   </nav>
 
   <div id="swimmer-info">
-    <img src="static/{{s.sex}}.svg" alt="{{s.sex}}" id="p-icon">
+    <img src="static/img/{{s.sex}}.svg" alt="{{s.sex}}" id="p-icon">
     <div class="column">
       <h1>{{s.name}}</h1>
       <div id="tips">
@@ -77,242 +78,151 @@
     <h3>Bests</h3>
   </div>
   <div id="bests">
+    {% if s.Fr_sprint_bests %}
     <div class="card">
-      <div class="header fr">
-        <img src="static/fr.svg" alt="自由形">
+      <div class="header Fr">
+        <img src="static/img/Fr.svg" alt="自由形">
         <p>自由形</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
         <table>
           <thead>
-            <tr>
-              <td><span>短</span></td>
-              <td></td>
-              <td><span>長</span></td>
-            </tr>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>50m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>100m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>200m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
+            <tr><td>{{s.Fr_sprint_bests['s-50Fr'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Fr_sprint_bests['l-50Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_sprint_bests['s-50Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-50Fr'][1]}}</td></tr>
+            <tr><td>{{s.Fr_sprint_bests['s-100Fr'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Fr_sprint_bests['l-100Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_sprint_bests['s-100Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-100Fr'][1]}}</td></tr>
+            <tr><td>{{s.Fr_sprint_bests['s-200Fr'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Fr_sprint_bests['l-200Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_sprint_bests['s-200Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-200Fr'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
+    {% if s.Fr_endurance_bests %}
     <div class="card">
-      <div class="header fr">
-        <img src="static/fr.svg" alt="自由形">
+      <div class="header Fr">
+        <img src="static/img/Fr.svg" alt="自由形">
         <p>自由形</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
         <table>
           <thead>
-            <tr>
-              <td><span>短</span></td>
-              <td></td>
-              <td><span>長</span></td>
-            </tr>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>400m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>800m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>1500m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
+            <tr><td>{{s.Fr_endurance_bests['s-400Fr'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.Fr_endurance_bests['l-400Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_endurance_bests['s-400Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-400Fr'][1]}}</td></tr>
+            <tr><td>{{s.Fr_endurance_bests['s-800Fr'][0]}}</td><th rowspan="2"><span>800m</span></th><td>{{s.Fr_endurance_bests['l-800Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_endurance_bests['s-800Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-800Fr'][1]}}</td></tr>
+            <tr><td>{{s.Fr_endurance_bests['s-1500Fr'][0]}}</td><th rowspan="2"><span>1500m</span></th><td>{{s.Fr_endurance_bests['l-1500Fr'][0]}}</td></tr>
+            <tr><td>{{s.Fr_endurance_bests['s-1500Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-1500Fr'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
+    {% if s.Ba_bests %}
     <div class="card">
-      <div class="header ba">
-        <img src="static/ba.svg" alt="背泳ぎ">
+      <div class="header Ba">
+        <img src="static/img/Ba.svg" alt="背泳ぎ">
         <p>背泳ぎ</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
         <table>
           <thead>
-            <tr>
-              <td><span>短</span></td>
-              <td></td>
-              <td><span>長</span></td>
-            </tr>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>50m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>100m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>200m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
+            <tr><td>{{s.Ba_bests['s-50Ba'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Ba_bests['l-50Ba'][0]}}</td></tr>
+            <tr><td>{{s.Ba_bests['s-50Ba'][1]}}</td><td>{{s.Ba_bests['l-50Ba'][1]}}</td></tr>
+            <tr><td>{{s.Ba_bests['s-100Ba'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Ba_bests['l-100Ba'][0]}}</td></tr>
+            <tr><td>{{s.Ba_bests['s-100Ba'][1]}}</td><td>{{s.Ba_bests['l-100Ba'][1]}}</td></tr>
+            <tr><td>{{s.Ba_bests['s-200Ba'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Ba_bests['l-200Ba'][0]}}</td></tr>
+            <tr><td>{{s.Ba_bests['s-200Ba'][1]}}</td><td>{{s.Ba_bests['l-200Ba'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
+    {% if s.Br_bests %}
     <div class="card">
-      <div class="header br">
-        <img src="static/br.svg" alt="平泳ぎ">
+      <div class="header Br">
+        <img src="static/img/Br.svg" alt="平泳ぎ">
         <p>平泳ぎ</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
         <table>
           <thead>
-            <tr>
-              <td><span>短</span></td>
-              <td></td>
-              <td><span>長</span></td>
-            </tr>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>50m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>100m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>200m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
+            <tr><td>{{s.Br_bests['s-50Br'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Br_bests['l-50Br'][0]}}</td></tr>
+            <tr><td>{{s.Br_bests['s-50Br'][1]}}</td><td>{{s.Br_bests['l-50Br'][1]}}</td></tr>
+            <tr><td>{{s.Br_bests['s-100Br'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Br_bests['l-100Br'][0]}}</td></tr>
+            <tr><td>{{s.Br_bests['s-100Br'][1]}}</td><td>{{s.Br_bests['l-100Br'][1]}}</td></tr>
+            <tr><td>{{s.Br_bests['s-200Br'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Br_bests['l-200Br'][0]}}</td></tr>
+            <tr><td>{{s.Br_bests['s-200Br'][1]}}</td><td>{{s.Br_bests['l-200Br'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
+    {% if s.Fly_bests %}
     <div class="card">
-      <div class="header fly">
-        <img src="static/fly.svg" alt="バタフライ">
+      <div class="header Fly">
+        <img src="static/img/Fly.svg" alt="バタフライ">
         <p>バタフライ</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
         <table>
           <thead>
-            <tr>
-              <td><span>短</span></td>
-              <td></td>
-              <td><span>長</span></td>
-            </tr>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>50m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>100m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
-            <tr>
-              <td>0:28.12</td>
-              <th rowspan="2"><span>200m</span></th>
-              <td>0:29.12</td>
-            </tr>
-            <tr>
-              <td>2019/03/17</td>
-              <td>2019/03/17</td>
-            </tr>
+            <tr><td>{{s.Fly_bests['s-50Fly'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Fly_bests['l-50Fly'][0]}}</td></tr>
+            <tr><td>{{s.Fly_bests['s-50Fly'][1]}}</td><td>{{s.Fly_bests['l-50Fly'][1]}}</td></tr>
+            <tr><td>{{s.Fly_bests['s-100Fly'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Fly_bests['l-100Fly'][0]}}</td></tr>
+            <tr><td>{{s.Fly_bests['s-100Fly'][1]}}</td><td>{{s.Fly_bests['l-100Fly'][1]}}</td></tr>
+            <tr><td>{{s.Fly_bests['s-200Fly'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Fly_bests['l-200Fly'][0]}}</td></tr>
+            <tr><td>{{s.Fly_bests['s-200Fly'][1]}}</td><td>{{s.Fly_bests['l-200Fly'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
+    {% if s.IM_bests %}
     <div class="card">
-      <div class="header im">
-        <img src="static/im.svg" alt="個人メドレー">
+      <div class="header IM">
+        <img src="static/img/IM.svg" alt="個人メドレー">
         <p>個人メドレー</p>
       </div>
-      <div class="wrap">
+      <div class="best_container">
+        <table>
+          <thead>
+            <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
+          </thead>
+          <tbody>
+            <tr><td>{{s.IM_bests['s-100IM'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.IM_bests['l-100IM'][0]}}</td></tr>
+            <tr><td>{{s.IM_bests['s-100IM'][1]}}</td><td>{{s.IM_bests['l-100IM'][1]}}</td></tr>
+            <tr><td>{{s.IM_bests['s-200IM'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.IM_bests['l-200IM'][0]}}</td></tr>
+            <tr><td>{{s.IM_bests['s-200IM'][1]}}</td><td>{{s.IM_bests['l-200IM'][1]}}</td></tr>
+            <tr><td>{{s.IM_bests['s-400IM'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.IM_bests['l-400IM'][0]}}</td></tr>
+            <tr><td>{{s.IM_bests['s-400IM'][1]}}</td><td>{{s.IM_bests['l-400IM'][1]}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="card">
+      <div class="header Ba">
+        <img src="static/img/Ba.svg" alt="背泳ぎ">
+        <p>背泳ぎ</p>
+      </div>
+      <div class="best_container">
         <table>
           <thead>
             <tr>

@@ -2,16 +2,18 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Swimmers' Zero</title>
-  <meta name="description" content="ここにサイト説明を入れます">
+  <title>SwimmersZero</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-  <link rel="stylesheet" href="static/index.css">
-  <link rel="stylesheet" href="static/odometer-theme-default.css">
-  <link rel="icon" href="static/favicon.ico">
+  <link rel="stylesheet" href="static/css/common.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/odometer-theme-default.css">
 </head>
 
 <body>
@@ -29,11 +31,11 @@
         </ul>
       </div>
     </div>
-    <a href="/"><img src="static/logo.png" alt="Swimmers' Zero" id="logo"></a>
+    <a href="/"><img src="static/img/logo.png" alt="Swimmers' Zero" id="logo"></a>
   </header>
 
   <div id="hero">
-    <img src="static/hero.png" alt="全員、ランクイン。">
+    <img src="static/img/hero.png" alt="全員、ランクイン。">
   </div>
 
   <div id="count-record">
@@ -66,7 +68,7 @@
     <p>CREATED BY REO KANZAKI</p>
   </footer>
 
-  <script src="static/odometer.min.js"></script>
+  <script src="static/js/odometer.min.js"></script>
   <script>
     var odometer = document.getElementById("target");
     window.onload = function() {
