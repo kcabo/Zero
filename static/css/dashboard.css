@@ -293,9 +293,10 @@ h1 {
   width: 30%;
   font-weight: bold;
   color: #222;
+  letter-spacing: -0.3px;
 }
 #records tr td:nth-child(3) {
-  width: 30px;
+  width: 38px;
 }
 #records tr td:nth-child(3) span {
   padding: 2px 3.4px;
