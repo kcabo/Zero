@@ -205,7 +205,7 @@ h1 {
   font-size: 14px;
   color: #222;
   border-collapse: collapse;
-  height: 140px;
+  height: 150px;
 }
 #bests thead td, tbody th{
   font-size: 10px;
@@ -262,14 +262,16 @@ h1 {
 #records tr ~ tr {
   border-top: 0.5px #eee solid;
 }
-
+#records tr td:nth-child(1) {
+  width: 60px;
+}
 #records tr td:nth-child(1) span {
   display: inline-block;
-  width: 65px;
+  width: 55px;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   line-height: 1.8;
-  letter-spacing: 1px;
+  letter-spacing: .5px;
 }
 #records tr td:nth-child(1) span.Fr {
   background-color: var(--c-fr);
@@ -293,7 +295,7 @@ h1 {
   color: #222;
 }
 #records tr td:nth-child(3) {
-  width: 12%;
+  width: 30px;
 }
 #records tr td:nth-child(3) span {
   padding: 2px 3.4px;
@@ -310,11 +312,11 @@ h1 {
 }
 #records tr td:nth-child(4) {
   text-align: left;
-  width: 40%;
-  max-width: 160px;
+  max-width: 140px;
   color: #aaa;
   font-size: 10px;
   line-height: 1;
+  width: 40%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
