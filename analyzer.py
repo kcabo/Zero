@@ -93,6 +93,7 @@ def swimmer_statisctics(records):
     # データフレームを（早い順、日付最新順）に並び替え。種目で重複削除。
     df.sort_values(['time_val', 'days'], ascending=[True, False], inplace=True)
     df.drop_duplicates(['pool', 'event'], inplace=True)
+    
     def set_bests(df, keys):
         if len(df) == 0:
             return False
@@ -104,6 +105,7 @@ def swimmer_statisctics(records):
             for event, time, start, pool in zip(df['event'], df['time'], df['start'], df['pool']):
                 dic[pool + "-" + event] = [time, start]
             return dic
+
     # 6カテゴリ(5種目＋長距離)の変数を作る。（ベストのないカテゴリはFalseを返すようにする）
     swimmer.Fr_sprint_bests = set_bests(df[df['event'].isin(['50Fr','100Fr', '200Fr'])], ['50Fr','100Fr', '200Fr'])
     swimmer.Fr_endurance_bests = set_bests(df[df['event'].isin(['400Fr','800Fr', '1500Fr'])], ['400Fr','800Fr', '1500Fr'])
@@ -111,7 +113,5 @@ def swimmer_statisctics(records):
     swimmer.Br_bests = set_bests(df[df['style'] == 'Br'], ['50Br','100Br', '200Br'])
     swimmer.Fly_bests = set_bests(df[df['style'] == 'Fly'], ['50Fly','100Fly', '200Fly'])
     swimmer.IM_bests = set_bests(df[df['style'] == 'IM'], ['100IM','200IM', '400IM'])
-
-    print(swimmer.Fr_sprint_bests)
 
     return swimmer
