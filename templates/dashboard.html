@@ -31,9 +31,7 @@
       <h1>{{s.name}}</h1>
       <div id="tips">
         <span class="univ">{{s.grade}}</span>
-        {% for t in s.teams %}
-        <span>{{t}}</span>
-        {% endfor %}
+        {% for t in s.teams %}<span>{{t}}</span>{% endfor %}
       </div>
     </div>
   </div>
@@ -41,8 +39,8 @@
 
   <div class="cards">
     <div id="participate">
-      <div id="radar-container" class="card">
-        <canvas id="radar" width="400" height="400"></canvas>
+      <div id="bar-container" class="card">
+        <canvas id="bar" width="400" height="400"></canvas>
       </div>
       <div class="column">
         <div class="card">
@@ -65,8 +63,8 @@
     </div>
 
     <div id="condition" class="card">
-      <h2>2019年の調子</h2>
-      <p>○…長水路 △…短水路</p>
+      <h2>2019年度の調子</h2>
+      <p>○…長水路 ◇…短水路</p>
       <div id="line-container">
         <canvas id="lineChart" width="400" height="250"></canvas>
       </div>
@@ -243,7 +241,7 @@
 
 
 
-  <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none">
+  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
     <defs>
       <path id="gentle-wave" d="M-160 44c30 0
       58-18 88-18s
@@ -265,114 +263,125 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>
-    var colorLong = '#1B98E0';
-    var colorShort = '#06A77D';
-    var tDegree = '29'
+    var colorLong = '#4cc4eb';
+    var colorShort = '#48cfad';
+    var tDegree = '33'
     var gray = '#555';
-    var lineWidth = 0.7;
+    var lineWidth = 1.2;
 
-    var ctxRadar = document.getElementById("radar").getContext('2d');
+    var ctxBar = document.getElementById("bar").getContext('2d');
     var dataLong = {{s.count_style_long}};
     var dataShort = {{s.count_style_short}};
-    var radarConfig = {
-      type: 'radar',
+    var barConfig = {
+      type: 'bar',
       data: {
         labels: ['Fr', 'Ba', 'Br', 'Fly', 'IM'],
         datasets: [{
           data: dataLong,
-          label: '長水',
+          label: '長水路',
           borderColor: colorLong,
-          pointBorderColor: colorLong,
           backgroundColor: colorLong + tDegree,
-          pointBackgroundColor: colorLong + tDegree,
           borderWidth: lineWidth,
-          pointBorderWidth: lineWidth
         }, {
           data: dataShort,
-          label: '短水',
+          label: '短水路',
           borderColor: colorShort,
-          pointBorderColor: colorShort,
           backgroundColor: colorShort + tDegree,
-          pointBackgroundColor: colorShort + tDegree,
           borderWidth: lineWidth,
-          pointBorderWidth: lineWidth
         }]
       },
       options: {
-        legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            fontSize: 10
-          }
+        scales: {
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              fontColor: gray,
+              min: 0,
+              suggestedMax: 20,
+              stepSize: 5,
+              padding: -5,
+            },
+            gridLines: {
+              display: false
+            },
+          }],
+          xAxes: [{
+            stacked: true,
+            ticks: {
+              fontColor: gray,
+              padding: -7,
+            },
+            gridLines: {
+              display: false
+            }
+          }],
         },
-        scale: {
-          pointLabels: {
-            fontSize: 10,
-            fontColor: gray,
-          },
-          ticks: {
-            fontColor: gray,
-            suggestedMin: 0,
-            max: 15,
-            stepSize: 5,
-          },
-          gridLines: {
-            color: gray,
-            lineWidth: 0.5
-          },
-          angleLines: {
-            color: gray,
-            lineWidth: 0.5
-          }
+        legend: {
+          display: false
+        },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint',
         }
       }
     };
-    var radar = new Chart(ctxRadar, radarConfig);
+    var bar = new Chart(ctxBar, barConfig);
 
     var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
-    var colorE1 = '#CD6CFF';
-    var colorE2 = '#F4376E';
     var ctxLine = document.getElementById("lineChart").getContext('2d');
     var e1Long = [{{s.e1_long_points}}];
     var e1Short = [{{s.e1_short_points}}];
     var e2Long = [{{s.e2_long_points}}];
     var e2Short = [{{s.e2_short_points}}];
+    var colorE1 = '#4cc4eb';
+    var colorE2 = '#48cfad';
+    var colorE3 = '#a0d468';
+    var colorE4 = '#ffce54';
+    var tDegree = '11';
+    var lineWidth = 2;
     var datasets = [{
-        label: '長水路 {{s.s1}}',
+        label: '長 {{s.s1}}',
         data: e1Long,
         pointStyle: 'circle',
         borderColor: colorE1,
         backgroundColor: colorE1 + tDegree,
         showLine: true,
         borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.5,
       },
       {
-        label: '短水路 {{s.s1}}',
+        label: '短 {{s.s1}}',
         data: e1Short,
-        pointStyle: 'triangle',
-        borderColor: colorE1,
-        backgroundColor: colorE1 + tDegree,
+        pointStyle: 'rectRot',
+        borderColor: colorE2,
+        backgroundColor: colorE2 + tDegree,
         showLine: true,
         borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.8,
       },
       {
-        label: '長水路 {{s.s2}}',
+        label: '長 {{s.s2}}',
         data: e2Long,
         pointStyle: 'circle',
-        borderColor: colorE2,
-        backgroundColor: colorE2 + tDegree,
+        borderColor: colorE3,
+        backgroundColor: colorE3 + tDegree,
         showLine: true,
         borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.5,
       },
       {
-        label: '短水路 {{s.s2}}',
+        label: '短 {{s.s2}}',
         data: e2Short,
-        pointStyle: 'triangle',
-        borderColor: colorE2,
-        backgroundColor: colorE2 + tDegree,
+        pointStyle: 'rectRot',
+        borderColor: colorE4,
+        backgroundColor: colorE4 + tDegree,
         showLine: true,
         borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.8,
       }
     ];
 
@@ -387,17 +396,20 @@
         // },
         elements: {
           line: {
-            tension: 0
+            tension: 0.15,
           },
         },
         legend: {
           position: 'bottom',
+          labels: {
+            boxWidth: 15
+          }
         },
         scales: {
           xAxes: [{
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 365,
+              suggestedMax: 244,
               stepSize: 1,
               autoSkip: false,
               maxRotation: 0,
@@ -429,6 +441,10 @@
               stepSize: 1,
             }
           }]
+        },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint',
         }
       }
     };
