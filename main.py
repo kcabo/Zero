@@ -244,9 +244,11 @@ def dashboard():
         id = request.args.get('id', 1, type=int)
         target = db.session.query(Record).get(id)
     else:
-        search_name = request.form.get('name')
+        search_name = request.form.get('name', '神崎伶央')
         target = db.session.query(Record).filter(Record.name == search_name).first()
-
+        if target is None:
+            return 'NO RESULTS'
+            
     sex = target.sex
     name = target.name
     grade = target.grade

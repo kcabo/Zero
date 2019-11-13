@@ -1,25 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:700|Noto+Sans+JP:700|Roboto:100,400,700,900&display=swap&subset=japanese');
-:root {
-  --c-yellow: #FFB300;
-  --c-blue: #1E88E5;
-  --c-sky: #14FFF7;
-  --c-water: #3dd8ff;
-  /* --c-fr: #03A9F4;
-  --c-ba: #54b14f;
-  --c-br: #3f51b5;
-  --c-fly: #ff5722;
-  --c-im: #eb1e61; */
-  --c-fr: #03A9F4;
-  --c-ba: #20bf6b;
-  --c-br: #3867d6;
-  --c-fly: #fa8231;
-  --c-im: #8b54d0;
-  --c-men: #4fc0e8;
-  --c-women: #ed85c0;
-}
-html {
-  font-size: 62.5%;
-}
 body {
   font-family: 'Roboto', 'Noto Sans JP', sans-serif;
   background-color: #111;
@@ -30,7 +9,7 @@ body {
 
 h2 {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 10px;
   line-height: 1;
   font-weight: 500;
