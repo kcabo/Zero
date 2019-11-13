@@ -195,6 +195,8 @@ table.women tr td:nth-child(1) span {
 table tr td:nth-child(2) {
   width: 27%;
   line-height: 1;
+  letter-spacing: 1px;
+  padding: 0px 4px;
 }
 table tr td:nth-child(3) {
   width: 75px;
@@ -204,11 +206,11 @@ table tr td:nth-child(4) span {
   font-size: 1.2rem;
   border-radius: 5px;
   display: inline-block;
-  width: 40px;
-  height: 25px;
+  width: 45px;
+  height: 22px;
   color: white;
   text-align: center;
-  line-height: 25px;
+  line-height: 22px;
 }
 table.women tr td:nth-child(4) span {
   background-color: #EE90C5;
@@ -232,6 +234,7 @@ table.women tr:nth-child(2n) {
   width: 100%;
   display: flex;
   justify-content: center;
+  max-width: 800px;
 }
 #pagination a {
   display: block;
@@ -240,7 +243,7 @@ table.women tr:nth-child(2n) {
   border-radius: 5px;
   font-size: 1.3rem;
   padding: 5px 15px;
-  margin: 0px 15px;
+  margin: 0px 25px;
 }
 #pagination a.hidden {
   visibility: hidden;
