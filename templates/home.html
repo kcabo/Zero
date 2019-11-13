@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>SwimmersZero</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/css/odometer-theme-default.css">
+  <link rel="stylesheet" href="static/css/common.css">
+  <link rel="stylesheet" href="static/css/home.css">
+</head>
+
+<body>
+
+  <nav>
+    <a href="/"><img src="static/img/wlogo.svg" alt="Zero" id="logo"></a>
+    <form id="search-container" method="post" action="/dashboard">
+      <!-- とりあえず今はidでのみ検索できるように -->
+      <input name="id" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </form>
+  </nav>
+
+
+  <div id="caption">
+    <p>全員、ランクイン。</p>
+  </div>
+
+  <div id="total">
+    <h2>現在のレコード数</h2>
+    <p class="odometer" id="target">0<p>
+  </div>
+
+
+
+  <div id="ranking">
+    <h2>ランキングを見る</h2>
+    <div class="buttons">
+      <div><a href="ranking?sex=1">男子</a></div>
+      <div><a href="ranking?sex=2">女子</a></div>
+    </div>
+  </div>
+
+
+  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0
+      58-18 88-18s
+      58 18 88 18
+      58-18 88-18
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
+    </g>
+  </svg>
+  <div id="footer">
+    <p>Created by Reo Kanzaki</p>
+  </div>
+
+
+  <script src="static/js/odometer.min.js"></script>
+  <script>
+    var odometer = document.getElementById("target");
+    window.onload = function() {
+      odometer.innerHTML = {{count_records}};
+    };
+  </script>
+</body>
+
+</html>
