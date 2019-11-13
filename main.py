@@ -15,7 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 
 import analyzer
-from constant import style_dic, distance_dic, area_list
+from constant import style_2_num, distance_2_num, area_list, style_2_japanese
 from format import del_space, del_numspace, format_time
 from task_manager import Takenoko, free, busy, get_status
 
@@ -270,22 +270,44 @@ def dashboard():
 def ranking():
     pool = request.args.get('pool', 1, type=int)
     sex = request.args.get('sex', 1, type=int)
-    style = style_dic[request.args.get('style', 'fr')]
-    distance = distance_dic[request.args.get('distance', 50, type=int)]
+    style = request.args.get('style', 'Fr')
+    distance = request.args.get('distance', 50, type=int)
+    page = request.args.get('page', 1, type=int)
 
     records = (db.session.query(Record, Meet)
-            .filter(Record.sex==sex, Record.style==style, Record.distance==distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
+            .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
             .limit(20000)
             .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
     print(f'query records length:{len(records)}')
 
-    fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
-    df.sort_values(['time'], inplace=True)
-    df.drop_duplicates(subset=['name','grade'], inplace=True)
-    return render_template('ranking.html', records = df[:100], pool=pool, sex=sex, style=style, distance=distance)
+    df_ = analyzer.output_ranking(records)
+    data_from = 500*(page-1)
+    data_till = 500*page
+    df = df_[data_from:data_till] # 1ページ目なら[0:500]
+    # {% for rank, id, name, time, grade, team in ranking %}
+    ranking = zip(range(data_from+1, data_till+1), df['id'], df['name'], df['time'], df['grade'], df['team'])
 
+    pages = ['hidden' if page==1 else page-1,
+            'hidden' if len(df) < 500 else page+1]
 
+    group = f'pool={pool}&sex={sex}'
+    group_bools = [' selected' if pool==0 and sex==1 else '',
+                ' selected' if pool==1 and sex==1 else '',
+                ' selected' if pool==0 and sex==2 else '',
+                ' selected' if pool==1 and sex==2 else '']
+    current_event = f'style={style}&distance={distance}'
+    str_sex = 'men' if sex == 1 else 'women'
+    caption = f'{distance}m {style_2_japanese[style]}'
+
+    return render_template(
+            'ranking.html',
+            ranking = ranking,
+            group = group,
+            group_bools = group_bools,
+            current_event = current_event,
+            caption = caption,
+            str_sex = str_sex,
+            pages = pages)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')

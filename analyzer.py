@@ -93,7 +93,7 @@ def swimmer_statisctics(records):
     # データフレームを（早い順、日付最新順）に並び替え。種目で重複削除。
     df.sort_values(['time_val', 'days'], ascending=[True, False], inplace=True)
     df.drop_duplicates(['pool', 'event'], inplace=True)
-    
+
     def set_bests(df, keys):
         if len(df) == 0:
             return False
@@ -115,3 +115,13 @@ def swimmer_statisctics(records):
     swimmer.IM_bests = set_bests(df[df['style'] == 'IM'], ['100IM','200IM', '400IM'])
 
     return swimmer
+
+
+def output_ranking(records):
+    fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
+    df.sort_values(['time'], inplace=True)
+    df.drop_duplicates(subset=['name','grade'], inplace=True)
+    # df = df.replace({'grade': {'学':' '}})
+    df.reset_index(drop=True, inplace=True)
+    return df
