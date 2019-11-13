@@ -14,8 +14,8 @@
   --c-br: #3867d6;
   --c-fly: #fa8231;
   --c-im: #8b54d0;
-  --c-men: rgb(93, 156, 236);
-  --c-women: rgb(235, 83, 103)
+  --c-men: #4fc0e8;
+  --c-women: #ed85c0;
 }
 html {
   font-size: 62.5%;

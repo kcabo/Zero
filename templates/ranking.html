@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
-  <title>SwimmersZero</title>
+  <title>SwimmersZero|Ranking</title>
   <meta charset="utf-8">
   <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,109 +16,124 @@
 </head>
 
 <body>
-  <header>
-    <div id="nav-drawer">
-      <input id="nav-input" type="checkbox" class="nav-unshown">
-      <label id="nav-open" for="nav-input"><span></span></label>
-      <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-      <div id="nav-content">
-        まだ作ってないw
-        <ul id="nav">
-          <li><a href="">Develop</a></li>
-          <li><a href="">Search</a></li>
-          <li><a href="">Ranking</a></li>
-        </ul>
-      </div>
-    </div>
-    <a href="/"><img src="static/img/logo.png" alt="Swimmers' Zero" id="logo"></a>
-  </header>
-  <main>
+  <nav>
+    <a href="/"><img src="static/img/wlogo.svg" alt="Zero" id="logo"></a>
+    <form id="search-container" method="post" action="/dashboard">
+      <!-- とりあえず今はidでのみ検索できるように -->
+      <input name="id" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </form>
+  </nav>
 
-    <div id="data-config">
 
-      <div id="events">
-        <div class="dropdown">
-          <button class="dropbtn">Fr</button>
-          <div class="dropdown-content">
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=25">25m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=50">50m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=100">100m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=200">200m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=400">400m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=800">800m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fr&distance=1500">1500m</a>
-          </div>
+  <div id="header">
+    <h1>Ranking</h1>
+    <p>―2019―</p>
+
+    <div id="style-buttons">
+      <div id="fr" class="row">
+        <span>自由形</span>
+        <div class="column">
+          <a href="?{{group}}&style=Fr&distance=50">50</a>
+          <a href="?{{group}}&style=Fr&distance=400">400</a>
         </div>
-
-        <div class="dropdown">
-          <button class="dropbtn">Ba</button>
-          <div class="dropdown-content">
-            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=25">25m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=50">50m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=100">100m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=ba&distance=200">200m</a>
-          </div>
+        <div class="column">
+          <a href="?{{group}}&style=Fr&distance=100">100</a>
+          <a href="?{{group}}&style=Fr&distance=800">800</a>
         </div>
-
-        <div class="dropdown">
-          <button class="dropbtn">Br</button>
-          <div class="dropdown-content">
-            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=25">25m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=50">50m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=100">100m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=br&distance=200">200m</a>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="dropbtn">Fly</button>
-          <div class="dropdown-content">
-            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=25">25m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=50">50m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=100">100m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=fly&distance=200">200m</a>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="dropbtn">IM</button>
-          <div class="dropdown-content">
-            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=100">100m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=200">200m</a>
-            <a href="?pool={{pool}}&sex={{sex}}&style=IM&distance=400">400m</a>
-          </div>
+        <div class="column">
+          <a href="?{{group}}&style=Fr&distance=200">200</a>
+          <a href="?{{group}}&style=Fr&distance=1500">1500</a>
         </div>
       </div>
-
+      <div id="ba" class="row">
+        <span>背泳ぎ</span>
+        <a href="?{{group}}&style=Ba&distance=50">50</a>
+        <a href="?{{group}}&style=Ba&distance=100">100</a>
+        <a href="?{{group}}&style=Ba&distance=200">200</a>
+      </div>
+      <div id="br" class="row">
+        <span>平泳ぎ</span>
+        <a href="?{{group}}&style=Br&distance=50">50</a>
+        <a href="?{{group}}&style=Br&distance=100">100</a>
+        <a href="?{{group}}&style=Br&distance=200">200</a>
+      </div>
+      <div id="fly" class="row">
+        <span>バタフライ</span>
+        <a href="?{{group}}&style=Fly&distance=50">50</a>
+        <a href="?{{group}}&style=Fly&distance=100">100</a>
+        <a href="?{{group}}&style=Fly&distance=200">200</a>
+      </div>
+      <div id="im" class="row">
+        <span>個人メドレー</span>
+        <a href="?{{group}}&style=IM&distance=100">100</a>
+        <a href="?{{group}}&style=IM&distance=200">200</a>
+        <a href="?{{group}}&style=IM&distance=400">400</a>
+      </div>
     </div>
-    <p>
-      {% if sex == 1 %}男子{% else %}女子{% endif %}
-      {% if pool == 1 %}長水路{% else %}短水路{% endif %}
-      {{distance}}{{style}}
-    </p>
-    <table>
-      <tr>
-        <th>順位</th>
-        <th>氏名</th>
-        <th>所属</th>
-        <th>学年</th>
-        <th>タイム</th>
-      </tr>
-      {% for r in records.itertuples() %}
+
+    <div id="tab">
+      <div class="men{{group_bools[0]}}">
+        <a href="?pool=0&sex=1&{{current_event}}">男子<br>短水路</a>
+      </div>
+      <div class="men{{group_bools[1]}}">
+        <a href="?pool=1&sex=1&{{current_event}}">男子<br>長水路</a>
+      </div>
+      <div class="women{{group_bools[2]}}">
+        <a href="?pool=0&sex=2&{{current_event}}">女子<br>短水路</a>
+      </div>
+      <div class="women{{group_bools[3]}}">
+        <a href="?pool=1&sex=2&{{current_event}}">女子<br>長水路</a>
+      </div>
+    </div>
+
+    <div id="filter">
+      <p>Filter</p>
+      <div>
+        <a href="#">大学生のみ</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="caption">
+    <h2>{{caption}}</h2>
+  </div>
+
+  <table class="{{str_sex}}"><tbody>
+    {% for rank, id, name, time, grade, team in ranking %}
     <tr>
-      <td>{{loop.index}}</td>
-      <td><a href="/dashboard?id={{r.id}}">{{r.name}}</a></td>
-      <td>{{r.team}}</td>
-      <td><span>{{r.grade}}</span></td>
-      <td>{{r.time}}</td>
+      <td><span>{{rank}}</span></td>
+      <td><a href="/dashboard?id={{id}}">{{name}}</a></td>
+      <td>{{time}}</td>
+      <td><span>{{grade}}</span></td>
+      <td>{{team}}</td>
     </tr>
     {% endfor %}
-    </table>
+    </tbody></table>
 
-    </main>
-    <footer>
-      <p>CREATED BY REO KANZAKI</p>
-    </footer>
+    <div id="pagination">
+      <a href="?{{group}}&{{current_event}}&page={{pages[0]}}" class="{{pages[0]}}">前の500件</a>
+      <a href="?{{group}}&{{current_event}}&page={{pages[1]}}" class="{{pages[1]}}">次の500件</a>
+    </div>
+
+  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0
+      58-18 88-18s
+      58 18 88 18
+      58-18 88-18
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
+    </g>
+  </svg>
+  <div id="footer">
+    <p>Created by Reo Kanzaki</p>
+  </div>
 
 </body>
 
