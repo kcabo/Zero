@@ -242,11 +242,11 @@ def wake_up(): # 監視サービスで監視する用のURL
 def dashboard():
     if request.method == 'GET':
         id = request.args.get('id', 1, type=int)
+        target = db.session.query(Record).get(id)
     else:
-        id = request.form.get('id', 1, type=int)
+        search_name = request.form.get('name')
+        target = db.session.query(Record).filter(Record.name == search_name).first()
 
-    # まずは「誰の」IDなのかを検索
-    target = db.session.query(Record).get(id)
     sex = target.sex
     name = target.name
     grade = target.grade
