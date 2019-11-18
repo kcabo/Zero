@@ -33,7 +33,7 @@ def fmt_2_val(fmt):
     sec = int(match.group(2)) * 100 + int(match.group(3))
     return min * 6000 + sec #100倍した秒数
 
-def swimmer_statisctics(records):
+def swimmer_statisctics(records, sex):
     swimmer = Swimmer()
 
     # 全レコード：id, スタイル　距離　種目名　記録　水路(l,m)　日付　大会名 のデータフレームを作成
@@ -63,10 +63,20 @@ def swimmer_statisctics(records):
     swimmer.s1 = event_counts.index[0]
     swimmer.s2 = event_counts.index[1] if len(event_counts) > 1 else ''
 
+    # row = df[df['event']==swimmer.s1].loc[0, ['style', 'distance']]
+    # target_style = row.at[0, 'style']
+    # target_distance = row.at[0, 'distance']
+    # target_sex = sex
+    # long_st = db.session.query(Statistics).filter_by(pool==1, sex==sex, style==target_style, distance==target_distance).first()
+    #
+    # swimmer.deviation_long =
+
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
     from_date = datetime.datetime(2019,4,1)
     df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化
     df['time_val'] = df['time'].map(fmt_2_val) # 記録を100倍の秒数に
+    df.sort_values(['time_val', 'days'], ascending=[True, False], inplace=True)
+
 
     def set_scatter_points(df, event, pool):
         filtered = df[(df['event'] == event) & (df['pool'] == pool)].loc[:, ['days', 'time_val']] #水路と種目で抽出
@@ -90,8 +100,7 @@ def swimmer_statisctics(records):
     swimmer.e2_long_points = set_scatter_points(df, swimmer.s2, 'l')
     swimmer.e2_short_points = set_scatter_points(df, swimmer.s2, 's')
 
-    # データフレームを（早い順、日付最新順）に並び替え。種目で重複削除。
-    df.sort_values(['time_val', 'days'], ascending=[True, False], inplace=True)
+    # 種目で重複削除。
     df.drop_duplicates(['pool', 'event'], inplace=True)
 
     def set_bests(df, keys):
@@ -120,7 +129,8 @@ def swimmer_statisctics(records):
 def output_ranking(records):
     fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
     df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
-    df.sort_values(['time'], inplace=True)
+    df['time_val'] = df['time'].map(fmt_2_val) # 記録を100倍の秒数に
+    df.sort_values(['time_val'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
     # df = df.replace({'grade': {'学':' '}})
     df.reset_index(drop=True, inplace=True)
