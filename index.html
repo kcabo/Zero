@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>SwimmersZero</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/css/odometer-theme-default.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-149393969-2');
+  </script>
+
+</head>
+
+<body>
+
+  <nav>
+    <!-- <form id="search-container" method="post" action="/dashboard">
+      <input name="name" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </form> -->
+  </nav>
+
+  <div id="logo">
+    <a href="/"><img src="static/img/logo.svg" alt="Zero"></a>
+  </div>
+
+  <div id="header">
+    <div data-text="全員､ランクイン｡">全員､ランクイン｡</div>
+  </div>
+
+  <div id="total">
+    <h2>現在のレコード数</h2>
+    <p class="odometer" id="target">0<p>
+  </div>
+
+
+
+  <div id="ranking">
+    <h2>ランキングを見る</h2>
+    <div class="buttons">
+      <div><a href="ranking?sex=1">男子</a></div>
+      <div><a href="ranking?sex=2">女子</a></div>
+    </div>
+  </div>
+
+
+  <div id="readme">
+    <h2>このサイトについて</h2>
+    <p>
+      全国のレースデータからランキングや選手個人の分析ページを提供します。
+      Pythonが好きでしょうがない学生が非営利に運営するサイトです。
+      毎日午前三時に自動で更新されます。
+      リレーや男女混合種目のデータはまだ反映できておりません。
+      修正点や改善点、このようなデータがほしいなどありましたら是非私にお寄せください。
+    </p>
+  </div>
+
+  <div id="update">
+    <h2>更新履歴</h2>
+    <table><tbody>
+      <tr>
+        <th>2019/11/15</th>
+        <td>ベータ版をローンチ</td>
+      </tr>
+    </tbody></table>
+  </div>
+
+  <div id="todo">
+    <h2>実装予定</h2>
+    <ul>
+      <li>S1偏差値の算出</li>
+      <li>高速化</li>
+      <li>選手のあいまい検索</li>
+      <li>外国籍選手の除外</li>
+      <li>リレーの記録の取り込み</li>
+      <li>ランキングのフィルター機能</li>
+      <li>ラップタイムの分析</li>
+      <li>レース詳細をAjaxで見られるように</li>
+    </ul>
+  </div>
+
+
+  <div id="credits">
+    <h2>CREDITS</h2>
+    <ul>
+      <li>“<a href="https://thenounproject.com/787kmj787/uploads/?i=1493460">freestyle</a>” icon by ummmpa from <a href="http://thenounproject.com/">the Noun Project</a>.</li>
+      <li>“<a href="https://thenounproject.com/search/?q=backstroke&i=1493461">backstroke</a>” icon by ummmpa from <a href="http://thenounproject.com/">the Noun Project</a>.</li>
+      <li>“<a href="https://thenounproject.com/787kmj787/uploads/?i=1493463">breaststroke</a>” icon by ummmpa from <a href="http://thenounproject.com/">the Noun Project</a>.</li>
+      <li>“<a href="https://thenounproject.com/787kmj787/uploads/?i=1493462">Butterfly</a>” icon by ummmpa from <a href="http://thenounproject.com/">the Noun Project</a>.</li>
+      <li>“<a href="https://thenounproject.com/term/circles/2957877/">circles</a>” icon by Andrejs Kirma <a href="http://thenounproject.com/">the Noun Project</a>.</li>
+    </ul>
+  </div>
+
+
+  <div id="footer">
+    <p>Reo Kanzaki</p>
+  </div>
+
+
+  <script src="static/js/odometer.min.js"></script>
+  <script>
+    var odometer = document.getElementById("target");
+    window.onload = function() {
+      odometer.innerHTML = {{count_records}};
+    };
+  </script>
+</body>
+
+</html>

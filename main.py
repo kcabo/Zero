@@ -240,8 +240,7 @@ def add_meets(year):
 def index():
     count = db.session.query(Record).count()
     count += db.session.query(Relay).count()
-    # return render_template('index.html', count_records = count)
-    return render_template('home.html', count_records=count)
+    return render_template('index.html', count_records=count)
 
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
