@@ -175,6 +175,16 @@ class Relay(db.Model): #リレーの１記録
         self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
 
 
+class Statistics(db.Model): #種目の平均値、標準偏差
+    __tablename__ = 'statistics'
+    id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
+    pool = db.Column(db.Integer, nullable = False)                    # 0 (短水路) or 1(長水路)
+    sex = db.Column(db.Integer, nullable = False)                     # 性別
+    style = db.Column(db.Integer, nullable = False)                   # 泳法
+    distance = db.Column(db.Integer, nullable = False)                # 距離
+    average = db.Column(db.Float)
+    sd = db.Column(db.Float)
+
 def add_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
     """
     記録をテーブルに追加する。
@@ -248,7 +258,7 @@ def dashboard():
         target = db.session.query(Record).filter(Record.name == search_name).first()
         if target is None:
             return 'NO RESULTS'
-            
+
     sex = target.sex
     name = target.name
     grade = target.grade
@@ -261,7 +271,7 @@ def dashboard():
 
     # 見出しの選手情報：     性別　名前　学年　所属(複数ある)
     teams = {r.Record.team for r in records}
-    swimmer = analyzer.swimmer_statisctics(records)
+    swimmer = analyzer.swimmer_statisctics(records, sex)
     swimmer.sex = 'men' if sex == 1 else 'women'
     swimmer.name = name
     swimmer.grade = grade
@@ -279,7 +289,6 @@ def ranking():
 
     records = (db.session.query(Record, Meet)
             .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
-            .limit(20000)
             .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
     print(f'query records length:{len(records)}')
 
@@ -363,6 +372,12 @@ def manegement(command=None):
     db.session.commit()
     return '<h1>Commenced a scraping process</h1>'
 
+
+def set_standards():
+    records = (db.session.query(Record, Meet)
+            .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
+            .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
+    print(f'query records length:{len(records)}')
 
 
 if __name__ == "__main__": #gunicornで動かす場合は実行されない
