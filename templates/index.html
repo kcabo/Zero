@@ -2,9 +2,9 @@
 <html lang="ja">
 
 <head>
-  <title>SwimmersZero</title>
+  <title>Swimmers-Zero</title>
   <meta charset="utf-8">
-  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
@@ -20,17 +20,13 @@
     gtag('js', new Date());
     gtag('config', 'UA-149393969-2');
   </script>
-
 </head>
-
 <body>
 
-  <nav>
     <!-- <form id="search-container" method="post" action="/dashboard">
       <input name="name" type="text" placeholder="選手を検索">
       <input type="submit" value=""><span></span>
     </form> -->
-  </nav>
 
   <div id="logo">
     <a href="/"><img src="static/img/logo.svg" alt="Zero"></a>
@@ -45,8 +41,6 @@
     <p class="odometer" id="target">0<p>
   </div>
 
-
-
   <div id="ranking">
     <h2>ランキングを見る</h2>
     <div class="buttons">
@@ -59,17 +53,21 @@
   <div id="readme">
     <h2>このサイトについて</h2>
     <p>
-      全国のレースデータからランキングや選手個人の分析ページを提供します。
-      Pythonが好きでしょうがない学生が非営利に運営するサイトです。
-      毎日午前三時に自動で更新されます。
-      リレーや男女混合種目のデータはまだ反映できておりません。
-      修正点や改善点、このようなデータがほしいなどありましたら是非私にお寄せください。
+      数字にこだわるすべてのスイマーへ――
+      データ分析の新しい可能性を提供します。
+      日本全国すべてのレース結果を毎日自動解析。
+      修正点や改善点、新しい分析のアイデアがございましたら是非私にお寄せください。
+      ※リレーや男女混合種目のデータはまだ反映できておりません。
     </p>
   </div>
 
   <div id="update">
     <h2>更新履歴</h2>
     <table><tbody>
+      <tr>
+        <th>2019/11/19</th>
+        <td>トップページを更新</td>
+      </tr>
       <tr>
         <th>2019/11/15</th>
         <td>ベータ版をローンチ</td>
@@ -87,7 +85,8 @@
       <li>リレーの記録の取り込み</li>
       <li>ランキングのフィルター機能</li>
       <li>ラップタイムの分析</li>
-      <li>レース詳細をAjaxで見られるように</li>
+      <!-- <li>泳力番付</li> -->
+      <li>レース詳細を非同期通信で見られるように</li>
     </ul>
   </div>
 
