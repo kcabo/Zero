@@ -35,7 +35,7 @@ class Takenoko:
         self.current += 1
         return self.list[index]
 
-path = 'status'
+path = 'memo/status'
 def update_status(status):
     with open(path, 'w') as f:
         f.write(status)
