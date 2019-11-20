@@ -53,6 +53,27 @@ distance_2_num = {
     1500:7
 }
 
+event_2_num = {
+    '50Fr': {'style': 1,'distance': 2},
+    '100Fr': {'style': 1,'distance': 3},
+    '200Fr': {'style': 1,'distance': 4},
+    '400Fr': {'style': 1,'distance': 5},
+    '800Fr': {'style': 1,'distance': 6},
+    '1500Fr': {'style': 1,'distance': 7},
+    '50Ba': {'style': 2,'distance': 2},
+    '100Ba': {'style': 2,'distance': 3},
+    '200Ba': {'style': 2,'distance': 4},
+    '50Br': {'style': 3,'distance': 2},
+    '100Br': {'style': 3,'distance': 3},
+    '200Br': {'style': 3,'distance': 4},
+    '50Fly': {'style': 4,'distance': 2},
+    '100Fly': {'style': 4,'distance': 3},
+    '200Fly': {'style': 4,'distance': 4},
+    '100IM': {'style': 5,'distance': 3},
+    '200IM': {'style': 5,'distance': 4},
+    '400IM': {'style': 5,'distance': 5}
+}
+
 
 
 

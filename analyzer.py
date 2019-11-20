@@ -33,7 +33,7 @@ def fmt_2_val(fmt):
     sec = int(match.group(2)) * 100 + int(match.group(3))
     return min * 6000 + sec #100倍した秒数
 
-def swimmer_statisctics(records, sex):
+def swimmer_statisctics(records):
     swimmer = Swimmer()
 
     # 全レコード：id, スタイル　距離　種目名　記録　水路(l,m)　日付　大会名 のデータフレームを作成
@@ -63,13 +63,6 @@ def swimmer_statisctics(records, sex):
     swimmer.s1 = event_counts.index[0]
     swimmer.s2 = event_counts.index[1] if len(event_counts) > 1 else ''
 
-    # row = df[df['event']==swimmer.s1].loc[0, ['style', 'distance']]
-    # target_style = row.at[0, 'style']
-    # target_distance = row.at[0, 'distance']
-    # target_sex = sex
-    # long_st = db.session.query(Statistics).filter_by(pool==1, sex==sex, style==target_style, distance==target_distance).first()
-    #
-    # swimmer.deviation_long =
 
     # 調子折れ線グラフ：     2種目2水路に分ける。日付のシリアル化。記録の並び替え（1:経過日数少ない順,2:タイム早い順）して、日数が被ってるのを重複削除
     from_date = datetime.datetime(2019,4,1)
@@ -100,8 +93,18 @@ def swimmer_statisctics(records, sex):
     swimmer.e2_long_points = set_scatter_points(df, swimmer.s2, 'l')
     swimmer.e2_short_points = set_scatter_points(df, swimmer.s2, 's')
 
-    # 種目で重複削除。
+
+    # 種目で重複削除。これで残っている記録はすべてベストになる
     df.drop_duplicates(['pool', 'event'], inplace=True)
+
+    # 偏差値導出のためにS1のベストをvalueでぬきだす
+    def pop_best(df, event, pool):
+        res = df[(df['event']==event) & (df['pool']==pool)]
+        res.reset_index(drop=True, inplace=True)
+        return None if len(res) == 0 else res.at[0, 'time_val']
+    swimmer.s1_best_long = pop_best(df, swimmer.s1, 'l')
+    swimmer.s1_best_short = pop_best(df, swimmer.s1, 's')
+
 
     def set_bests(df, keys):
         if len(df) == 0:
@@ -135,3 +138,23 @@ def output_ranking(records):
     # df = df.replace({'grade': {'学':' '}})
     df.reset_index(drop=True, inplace=True)
     return df
+
+def compile_statistics(records, agegroup):
+    df = output_ranking(records)
+    if agegroup != '全体':
+        df = df[df['grade'].str.startswith(agegroup)] # 大学、などで学年が始まる行のみ取り出し
+    df.reset_index(drop=True, inplace=True)
+    count = len(df)
+    if count < 2:
+        return None, None, None, None, count
+    else:
+        max500th = df.at[499, 'time'] if count >= 500 else '99:99.00'
+        max5000th = df.at[4999, 'time'] if count >= 5000 else '99:99.00'
+        sd = df['time_val'].std()
+        average = df['time_val'].mean()
+        return average, sd, max500th, max5000th, count
+
+#
+# tiv = 2512
+# res = (tiv - 2382) / 114 * -10 + 50
+# print(res)

@@ -1,7 +1,5 @@
 # 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいと思うんだ
-# 混合種目に出ている人の記録も男子か女子かに含めるようにしないと
-# 平沼さんの99：99.00を空白文字に修正する
-# 外国人の除外
+# とかいってもやっぱスクレイパーを分離させたい
 import datetime
 import os
 import re
@@ -12,21 +10,17 @@ import threading
 from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-import pandas as pd
 
+if os.name == 'nt': # ローカルのWindows環境なら、環境変数をその都度設定
+    import env
 import analyzer
-from constant import style_2_num, distance_2_num, area_list, style_2_japanese, foreign_teams
+from constant import style_2_num, distance_2_num, area_list, style_2_japanese, foreign_teams, event_2_num
 from format import del_space, del_numspace, format_time
-from task_manager import Takenoko, free, busy, get_status
+from task_manager import Takenoko, free, busy, get_status, notify_line
 
 
 app = Flask(__name__)
-if os.name == 'nt': # ローカルのWindows環境
-    import env
-    app.config.from_object('config.Develop')
-else:
-    app.config.from_object('config.Product')
-
+app.config.from_object('config.Develop' if os.name == 'nt' else 'config.Product')
 db = SQLAlchemy(app)
 
 manegement_url = os.environ['ADMIN_URL']
@@ -182,16 +176,63 @@ class Statistics(db.Model): #種目の平均値、標準偏差
     sex = db.Column(db.Integer, nullable = False)                     # 性別
     style = db.Column(db.Integer, nullable = False)                   # 泳法
     distance = db.Column(db.Integer, nullable = False)                # 距離
-    average = db.Column(db.Float)
-    sd = db.Column(db.Float)
+    agegroup = db.Column(db.String, nullable = False)                 # 全体・小学・中学・高校・大学・一般
+    average = db.Column(db.Float)                                     # タイムの平均値 100倍秒数値
+    sd = db.Column(db.Float)                                          # 標準偏差    100倍秒数値
+    max500th = db.Column(db.String)                                   # 500番目のタイム。#:##.##書式文字列
+    max5000th = db.Column(db.String)                                  # 5000番目のタイム。#:##.##書式文字列 設定しないかも
+    count = db.Column(db.Integer)                                     # その種目のランキング化したあとの人数
+
+    def __init__(self, pool, sex, style, distance, agegroup):
+        self.pool = pool
+        self.sex = sex
+        self.style = style
+        self.distance = distance
+        self.agegroup = agegroup
+
+
+def initialize_stats_table():
+    for pool in [0, 1]:
+        for sex in [1, 2]:
+            for style in [1, 2, 3, 4, 5]:
+                if style == 1: # Fr
+                    distances = [2, 3, 4, 5, 6, 7]
+                elif style == 5: # IM
+                    distances = [3, 4, 5]
+                else: # それ以外
+                    distances = [2, 3, 4]
+
+                for distance in distances:
+                    for agegroup in ['全体', '一般', '大学', '高校', '中学', '小学']:
+                        row = Statistics(pool, sex, style, distance, agegroup)
+                        db.session.add(row)
+    db.session.commit()
+
+
+def set_standards():
+    # statisticsテーブルの行を一行ずつ見ていき、それぞれアップデート
+    stats = db.session.query(Statistics).all()
+    for st in Takenoko(stats):
+        records = (db.session.query(Record, Meet)
+            .filter(Record.sex==st.sex, Record.style==st.style, Record.distance==st.distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == st.pool)
+            .all())
+        st.average, st.sd, st.max500th, st.max5000th, st.count = analyzer.compile_statistics(records, st.agegroup)
+    db.session.commit()
+    free()
+
+def calc_deviation(value, average, sd):
+    res = (value - average) / sd * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
+    return round(res, 1)
+
 
 def add_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
     """
     記録をテーブルに追加する。
     大会IDが格納されたリストを受け取り、１大会ごとにすべての記録を抽出し、RecordかRelayのインスタンスを生成する
-    コミットするタイミングをどうするかが問題。最後にやるとメモリが開放されないかもしれないし、何回もやると途中で中断された場合に困る。
     """
-    print(f">>> {len(target_meets_ids)}の大会の全記録の抽出開始")
+    initial_msg = f">>> {len(target_meets_ids)}の大会の全記録の抽出開始"
+    notify_line(initial_msg)
+    print(initial_msg)
     count_records = 0
     for id in Takenoko(target_meets_ids, 20):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
@@ -209,13 +250,16 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
                 r.fix_raw_data()
             db.session.add_all(records)
             db.session.commit()
-    print(f'>>> 全{count_records}の記録の保存が完了')
+
+    complete_msg = f'>>> 全{count_records}の記録の保存が完了'
+    notify_line(complete_msg)
+    print(complete_msg)
     free()
 
 
 # 特定の年度・地域で開催された大会IDのリストを作成するサブルーチン
 def find_meet(year, area):
-    url = r"http://www.swim-record.com/taikai/{}/{}.html".format(year, area)
+    url = f"http://www.swim-record.com/taikai/{year}/{area}.html"
     soup = pour_soup(url)
     #div内での一番最初のtableが競泳、そのなかでリンク先がコードになっているものを探す
     meet_id_aTags = soup.find("div", class_ = "result_main").find("table", recursive = False).find_all("a", href = meet_link_ptn)
@@ -270,11 +314,19 @@ def dashboard():
 
     # 見出しの選手情報：     性別　名前　学年　所属(複数ある)
     teams = {r.Record.team for r in records}
-    swimmer = analyzer.swimmer_statisctics(records, sex)
+    swimmer = analyzer.swimmer_statisctics(records)
     swimmer.sex = 'men' if sex == 1 else 'women'
     swimmer.name = name
     swimmer.grade = grade
     swimmer.teams = teams
+
+    # S1偏差値の導出
+    s1_style = event_2_num[swimmer.s1]['style']
+    s1_distance = event_2_num[swimmer.s1]['distance']
+    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
+    swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].sd) if swimmer.s1_best_short is not None else '-'
+    swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].sd) if swimmer.s1_best_long is not None else '-'
+
     return render_template('dashboard.html', s = swimmer)
 
 # TODO: リレーの記録も結合させる
@@ -289,10 +341,9 @@ def ranking():
     records = (db.session.query(Record, Meet)
             .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
             .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
-    print(f'query records length:{len(records)}')
 
     df_ = analyzer.output_ranking(records)
-    print(f'Ranking Swimmers: {len(df_)} sex:{sex} pool:{pool} style:{style} distance:{distance}')
+    print(f'query: all:{len(records)} filtered:{len(df_)} sex:{sex} pool:{pool} style:{style} distance:{distance}')
     data_from = 500*(page-1)
     data_till = 500*page
     df = df_[data_from:data_till] # 1ページ目なら[0:500]
@@ -339,13 +390,19 @@ def manegement(command=None):
         db.session.commit()
         return f'外国人チームの記録を削除。件数：{count}'
 
+    elif command == 'initStats':
+        db.session.query(Statistics).delete()
+        initialize_stats_table()
+        return '統計テーブルの初期化を完了'
+
+    # ここから先は並列処理のコマンドになる
     status = get_status()
     if command is None:
         thread_list = [t.name for t in threading.enumerate()] # 起動中のスレッド一覧を取得
         return f'<h1>{status}:{", ".join(thread_list)}</h1>'
 
-    elif status == 'busy': #既に別のスクレイパーが動いているとき
-        return f'<h1>Command Denied. One scraping process is runnnig.</h1><p>status: {status}</p>'
+    elif status == 'busy': #既に別のジョブが動いているとき
+        return f'<h1>Command Denied. One process is runnnig.</h1><p>status: {status}</p>'
 
     elif command == 'meets':
         year = 19
@@ -370,20 +427,18 @@ def manegement(command=None):
         db.session.query(Relay).filter(Record.meetid.in_(target_meets_ids)).delete(synchronize_session = False)
         th = threading.Thread(target=add_records, name='scraper', args=(target_meets_ids,))
 
+    elif command == 'statistics':
+        th = threading.Thread(target=set_standards, name='analyzer')
+
     else:
         return '<h1>invalid url</h1>'
 
     busy()
-    th.start()
     db.session.commit()
-    return '<h1>Commenced a scraping process</h1>'
+    th.start()
+    return '<h1>process started</h1>'
 
 
-def set_standards():
-    records = (db.session.query(Record, Meet)
-            .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
-            .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
-    print(f'query records length:{len(records)}')
 
 
 if __name__ == "__main__": #gunicornで動かす場合は実行されない
