@@ -153,8 +153,3 @@ def compile_statistics(records, agegroup):
         sd = df['time_val'].std()
         average = df['time_val'].mean()
         return average, sd, max500th, max5000th, count
-
-#
-# tiv = 2512
-# res = (tiv - 2382) / 114 * -10 + 50
-# print(res)

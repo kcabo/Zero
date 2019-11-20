@@ -218,6 +218,7 @@ def set_standards():
             .filter(Record.sex==st.sex, Record.style==st.style, Record.distance==st.distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == st.pool)
             .all())
         st.average, st.sd, st.max500th, st.max5000th, st.count = analyzer.compile_statistics(records, st.agegroup)
+        del records
         db.session.commit()
     print('全種目の分析を完了')
     free()
@@ -325,7 +326,7 @@ def dashboard():
     # S1偏差値の導出
     s1_style = event_2_num[swimmer.s1]['style']
     s1_distance = event_2_num[swimmer.s1]['distance']
-    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
+    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup='全体').order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
     swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].sd) if swimmer.s1_best_short is not None else '-'
     swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].sd) if swimmer.s1_best_long is not None else '-'
 
@@ -340,9 +341,16 @@ def ranking():
     distance = request.args.get('distance', 50, type=int)
     page = request.args.get('page', 1, type=int)
 
-    records = (db.session.query(Record, Meet)
-            .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
-            .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
+    if page == 1:
+        target_event = db.session.query(Statistics).filter_by(pool=pool, sex=sex, style=style_2_num[style], distance=distance_2_num[distance], agegroup='全体').first()
+        time_limit = target_event.max500th
+        records = (db.session.query(Record, Meet)
+                .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.time <= time_limit, Record.meetid == Meet.meetid, Meet.pool == pool)
+                .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
+    else:
+        records = (db.session.query(Record, Meet)
+                .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
+                .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
 
     df_ = analyzer.output_ranking(records)
     print(f'query: all:{len(records)} filtered:{len(df_)} sex:{sex} pool:{pool} style:{style} distance:{distance}')
