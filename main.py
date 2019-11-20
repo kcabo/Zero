@@ -292,6 +292,7 @@ def ranking():
     print(f'query records length:{len(records)}')
 
     df_ = analyzer.output_ranking(records)
+    print(f'Ranking Swimmers: {len(df_)} sex{{sex}} pool{{pool}} style{{style}} distance{{distance}}')
     data_from = 500*(page-1)
     data_till = 500*page
     df = df_[data_from:data_till] # 1ページ目なら[0:500]
