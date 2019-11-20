@@ -211,13 +211,15 @@ def initialize_stats_table():
 
 def set_standards():
     # statisticsテーブルの行を一行ずつ見ていき、それぞれアップデート
+    print('全432種目の記録分布の分析を開始')
     stats = db.session.query(Statistics).all()
-    for st in Takenoko(stats):
+    for st in Takenoko(stats, 20):
         records = (db.session.query(Record, Meet)
             .filter(Record.sex==st.sex, Record.style==st.style, Record.distance==st.distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == st.pool)
             .all())
         st.average, st.sd, st.max500th, st.max5000th, st.count = analyzer.compile_statistics(records, st.agegroup)
-    db.session.commit()
+        db.session.commit()
+    print('全種目の分析を完了')
     free()
 
 def calc_deviation(value, average, sd):
