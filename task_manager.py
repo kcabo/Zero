@@ -1,3 +1,5 @@
+import os
+import requests
 from time import time
 
 class Takenoko:
@@ -54,8 +56,14 @@ def get_status():
         raise Exception('ステータスファイルの値が無効です！')
     return status
 
+
+url = "https://notify-api.line.me/api/notify"
+def notify_line(message):
+    access_token = os.environ['LINE_NOTIFY_ACCESS_TOKEN']
+    headers = {'Authorization': 'Bearer ' + access_token}
+    payload = {'message': message, 'notificationDisabled': True}
+    r = requests.post(url, headers=headers, params=payload)
+    return r
+
 if __name__ == '__main__':
     free()
-    # from time import sleep
-    # for i in Takenoko(range(10),15):
-    #     sleep(0.5)
