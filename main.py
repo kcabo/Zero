@@ -326,7 +326,7 @@ def dashboard():
     # S1偏差値の導出
     s1_style = event_2_num[swimmer.s1]['style']
     s1_distance = event_2_num[swimmer.s1]['distance']
-    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup='全体').order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
+    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
     swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].sd) if swimmer.s1_best_short is not None else '-'
     swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].sd) if swimmer.s1_best_long is not None else '-'
 
