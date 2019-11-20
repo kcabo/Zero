@@ -15,7 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 
 import analyzer
-from constant import style_2_num, distance_2_num, area_list, style_2_japanese
+from constant import style_2_num, distance_2_num, area_list, style_2_japanese, foreign_teams
 from format import del_space, del_numspace, format_time
 from task_manager import Takenoko, free, busy, get_status
 
@@ -292,7 +292,7 @@ def ranking():
     print(f'query records length:{len(records)}')
 
     df_ = analyzer.output_ranking(records)
-    print(f'Ranking Swimmers: {len(df_)} sex{{sex}} pool{{pool}} style{{style}} distance{{distance}}')
+    print(f'Ranking Swimmers: {len(df_)} sex:{sex} pool:{pool} style:{style} distance:{distance}')
     data_from = 500*(page-1)
     data_till = 500*page
     df = df_[data_from:data_till] # 1ページ目なら[0:500]
@@ -332,6 +332,12 @@ def manegement(command=None):
     elif command == 'drop':
         db.drop_all()
         return 'すべてのテーブルを削除しました'
+
+    elif command == 'deleteForeign':
+        count = db.session.query(Record).filter(Record.team.in_(foreign_teams)).count()
+        db.session.query(Record).filter(Record.team.in_(foreign_teams)).delete(synchronize_session = False)
+        db.session.commit()
+        return f'外国人チームの記録を削除。件数：{count}'
 
     status = get_status()
     if command is None:

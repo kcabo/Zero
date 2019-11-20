@@ -121,3 +121,40 @@ area = {
     "70" : "全国大会",
     "80" : "国際大会"
 }
+
+
+foreign_teams = [
+    'ﾄﾝｶﾞ',
+    'ﾈﾊﾟｰﾙ',
+    'ｶﾝﾎﾞｼﾞｱ',
+    'AUS',
+    'Australia',
+    'AUT',
+    'BEL',
+    'BLR',
+    'BRA',
+    'CAN',
+    'CHN',
+    'DEN',
+    'ESP',
+    'FAR',
+    'GER',
+    'HKG',
+    'HUN',
+    'ITA',
+    'JAM',
+    'KOR',
+    'LTU',
+    'NZL',
+    'OMA',
+    'QAT',
+    'RSA',
+    'RUS',
+    'SGP',
+    'SWE',
+    'THA',
+    'Thailand',
+    'TPE',
+    'UKR',
+    'USA'
+]
