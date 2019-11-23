@@ -68,6 +68,7 @@ h1 {
 }
 #participate .column {
   width: 34%;
+  min-width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -120,6 +121,29 @@ h1 {
 
 #line-container {
   padding: 10px;
+}
+
+@media screen and (min-width:1024px) {
+  .cards {
+    display: flex;
+    justify-content: center;
+    max-width: none;
+  }
+  #participate {
+    width: 40%;
+  }
+  #bar-container {
+    width: 300px;
+    max-width: 400px;
+  }
+  #participate .column {
+    width: 200px;
+  }
+  #condition {
+    width: 40%;
+    margin: 0 10px;
+    max-width: 500px;
+  }
 }
 
 
