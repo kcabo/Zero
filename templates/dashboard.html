@@ -57,7 +57,7 @@
         </div>
         <div class="card">
           <p class="caption">S1種目</p>
-          <p class="data">{{s.s1}}</p>
+          <p class="data">{{s.s1['event_name']}}</p>
         </div>
         <div class="card">
           <p class="caption">S1偏差値(長)</p>
@@ -84,7 +84,7 @@
     <h3>Bests</h3>
   </div>
   <div id="bests">
-    {% if s.Fr_sprint_bests %}
+    {% if s.bests['Fr_sprint'] %}
     <div class="card">
       <div class="header Fr">
         <img src="static/img/Fr.svg" alt="自由形">
@@ -96,18 +96,18 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.Fr_sprint_bests['s-50Fr'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Fr_sprint_bests['l-50Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_sprint_bests['s-50Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-50Fr'][1]}}</td></tr>
-            <tr><td>{{s.Fr_sprint_bests['s-100Fr'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Fr_sprint_bests['l-100Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_sprint_bests['s-100Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-100Fr'][1]}}</td></tr>
-            <tr><td>{{s.Fr_sprint_bests['s-200Fr'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Fr_sprint_bests['l-200Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_sprint_bests['s-200Fr'][1]}}</td><td>{{s.Fr_sprint_bests['l-200Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-50Fr'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.bests['Fr_sprint']['l-50Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-50Fr'][1]}}</td><td>{{s.bests['Fr_sprint']['l-50Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-100Fr'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.bests['Fr_sprint']['l-100Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-100Fr'][1]}}</td><td>{{s.bests['Fr_sprint']['l-100Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-200Fr'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.bests['Fr_sprint']['l-200Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_sprint']['s-200Fr'][1]}}</td><td>{{s.bests['Fr_sprint']['l-200Fr'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     {% endif %}
-    {% if s.Fr_endurance_bests %}
+    {% if s.bests['Fr_endurance'] %}
     <div class="card">
       <div class="header Fr">
         <img src="static/img/Fr.svg" alt="自由形">
@@ -119,18 +119,18 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.Fr_endurance_bests['s-400Fr'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.Fr_endurance_bests['l-400Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_endurance_bests['s-400Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-400Fr'][1]}}</td></tr>
-            <tr><td>{{s.Fr_endurance_bests['s-800Fr'][0]}}</td><th rowspan="2"><span>800m</span></th><td>{{s.Fr_endurance_bests['l-800Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_endurance_bests['s-800Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-800Fr'][1]}}</td></tr>
-            <tr><td>{{s.Fr_endurance_bests['s-1500Fr'][0]}}</td><th rowspan="2"><span>1500m</span></th><td>{{s.Fr_endurance_bests['l-1500Fr'][0]}}</td></tr>
-            <tr><td>{{s.Fr_endurance_bests['s-1500Fr'][1]}}</td><td>{{s.Fr_endurance_bests['l-1500Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-400Fr'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.bests['Fr_endurance']['l-400Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-400Fr'][1]}}</td><td>{{s.bests['Fr_endurance']['l-400Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-800Fr'][0]}}</td><th rowspan="2"><span>800m</span></th><td>{{s.bests['Fr_endurance']['l-800Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-800Fr'][1]}}</td><td>{{s.bests['Fr_endurance']['l-800Fr'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-1500Fr'][0]}}</td><th rowspan="2"><span>1500m</span></th><td>{{s.bests['Fr_endurance']['l-1500Fr'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fr_endurance']['s-1500Fr'][1]}}</td><td>{{s.bests['Fr_endurance']['l-1500Fr'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     {% endif %}
-    {% if s.Ba_bests %}
+    {% if s.bests['Ba'] %}
     <div class="card">
       <div class="header Ba">
         <img src="static/img/Ba.svg" alt="背泳ぎ">
@@ -142,18 +142,18 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.Ba_bests['s-50Ba'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Ba_bests['l-50Ba'][0]}}</td></tr>
-            <tr><td>{{s.Ba_bests['s-50Ba'][1]}}</td><td>{{s.Ba_bests['l-50Ba'][1]}}</td></tr>
-            <tr><td>{{s.Ba_bests['s-100Ba'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Ba_bests['l-100Ba'][0]}}</td></tr>
-            <tr><td>{{s.Ba_bests['s-100Ba'][1]}}</td><td>{{s.Ba_bests['l-100Ba'][1]}}</td></tr>
-            <tr><td>{{s.Ba_bests['s-200Ba'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Ba_bests['l-200Ba'][0]}}</td></tr>
-            <tr><td>{{s.Ba_bests['s-200Ba'][1]}}</td><td>{{s.Ba_bests['l-200Ba'][1]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-50Ba'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.bests['Ba']['l-50Ba'][0]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-50Ba'][1]}}</td><td>{{s.bests['Ba']['l-50Ba'][1]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-100Ba'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.bests['Ba']['l-100Ba'][0]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-100Ba'][1]}}</td><td>{{s.bests['Ba']['l-100Ba'][1]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-200Ba'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.bests['Ba']['l-200Ba'][0]}}</td></tr>
+            <tr><td>{{s.bests['Ba']['s-200Ba'][1]}}</td><td>{{s.bests['Ba']['l-200Ba'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     {% endif %}
-    {% if s.Br_bests %}
+    {% if s.bests['Br'] %}
     <div class="card">
       <div class="header Br">
         <img src="static/img/Br.svg" alt="平泳ぎ">
@@ -165,18 +165,18 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.Br_bests['s-50Br'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Br_bests['l-50Br'][0]}}</td></tr>
-            <tr><td>{{s.Br_bests['s-50Br'][1]}}</td><td>{{s.Br_bests['l-50Br'][1]}}</td></tr>
-            <tr><td>{{s.Br_bests['s-100Br'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Br_bests['l-100Br'][0]}}</td></tr>
-            <tr><td>{{s.Br_bests['s-100Br'][1]}}</td><td>{{s.Br_bests['l-100Br'][1]}}</td></tr>
-            <tr><td>{{s.Br_bests['s-200Br'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Br_bests['l-200Br'][0]}}</td></tr>
-            <tr><td>{{s.Br_bests['s-200Br'][1]}}</td><td>{{s.Br_bests['l-200Br'][1]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-50Br'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.bests['Br']['l-50Br'][0]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-50Br'][1]}}</td><td>{{s.bests['Br']['l-50Br'][1]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-100Br'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.bests['Br']['l-100Br'][0]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-100Br'][1]}}</td><td>{{s.bests['Br']['l-100Br'][1]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-200Br'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.bests['Br']['l-200Br'][0]}}</td></tr>
+            <tr><td>{{s.bests['Br']['s-200Br'][1]}}</td><td>{{s.bests['Br']['l-200Br'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     {% endif %}
-    {% if s.Fly_bests %}
+    {% if s.bests['Fly'] %}
     <div class="card">
       <div class="header Fly">
         <img src="static/img/Fly.svg" alt="バタフライ">
@@ -188,18 +188,18 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.Fly_bests['s-50Fly'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.Fly_bests['l-50Fly'][0]}}</td></tr>
-            <tr><td>{{s.Fly_bests['s-50Fly'][1]}}</td><td>{{s.Fly_bests['l-50Fly'][1]}}</td></tr>
-            <tr><td>{{s.Fly_bests['s-100Fly'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.Fly_bests['l-100Fly'][0]}}</td></tr>
-            <tr><td>{{s.Fly_bests['s-100Fly'][1]}}</td><td>{{s.Fly_bests['l-100Fly'][1]}}</td></tr>
-            <tr><td>{{s.Fly_bests['s-200Fly'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.Fly_bests['l-200Fly'][0]}}</td></tr>
-            <tr><td>{{s.Fly_bests['s-200Fly'][1]}}</td><td>{{s.Fly_bests['l-200Fly'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-50Fly'][0]}}</td><th rowspan="2"><span>50m</span></th><td>{{s.bests['Fly']['l-50Fly'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-50Fly'][1]}}</td><td>{{s.bests['Fly']['l-50Fly'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-100Fly'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.bests['Fly']['l-100Fly'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-100Fly'][1]}}</td><td>{{s.bests['Fly']['l-100Fly'][1]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-200Fly'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.bests['Fly']['l-200Fly'][0]}}</td></tr>
+            <tr><td>{{s.bests['Fly']['s-200Fly'][1]}}</td><td>{{s.bests['Fly']['l-200Fly'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     {% endif %}
-    {% if s.IM_bests %}
+    {% if s.bests['IM'] %}
     <div class="card">
       <div class="header IM">
         <img src="static/img/IM.svg" alt="個人メドレー">
@@ -211,12 +211,12 @@
             <tr><td><span>短</span></td><td></td><td><span>長</span></td></tr>
           </thead>
           <tbody>
-            <tr><td>{{s.IM_bests['s-100IM'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.IM_bests['l-100IM'][0]}}</td></tr>
-            <tr><td>{{s.IM_bests['s-100IM'][1]}}</td><td>{{s.IM_bests['l-100IM'][1]}}</td></tr>
-            <tr><td>{{s.IM_bests['s-200IM'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.IM_bests['l-200IM'][0]}}</td></tr>
-            <tr><td>{{s.IM_bests['s-200IM'][1]}}</td><td>{{s.IM_bests['l-200IM'][1]}}</td></tr>
-            <tr><td>{{s.IM_bests['s-400IM'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.IM_bests['l-400IM'][0]}}</td></tr>
-            <tr><td>{{s.IM_bests['s-400IM'][1]}}</td><td>{{s.IM_bests['l-400IM'][1]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-100IM'][0]}}</td><th rowspan="2"><span>100m</span></th><td>{{s.bests['IM']['l-100IM'][0]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-100IM'][1]}}</td><td>{{s.bests['IM']['l-100IM'][1]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-200IM'][0]}}</td><th rowspan="2"><span>200m</span></th><td>{{s.bests['IM']['l-200IM'][0]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-200IM'][1]}}</td><td>{{s.bests['IM']['l-200IM'][1]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-400IM'][0]}}</td><th rowspan="2"><span>400m</span></th><td>{{s.bests['IM']['l-400IM'][0]}}</td></tr>
+            <tr><td>{{s.bests['IM']['s-400IM'][1]}}</td><td>{{s.bests['IM']['l-400IM'][1]}}</td></tr>
           </tbody>
         </table>
       </div>
@@ -337,10 +337,6 @@
 
     var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
     var ctxLine = document.getElementById("lineChart").getContext('2d');
-    var e1Long = [{{s.e1_long_points}}];
-    var e1Short = [{{s.e1_short_points}}];
-    var e2Long = [{{s.e2_long_points}}];
-    var e2Short = [{{s.e2_short_points}}];
     var colorE1 = '#4cc4eb';
     var colorE2 = '#48cfad';
     var colorE3 = '#a0d468';
@@ -348,8 +344,8 @@
     var tDegree = '11';
     var lineWidth = 2;
     var datasets = [{
-        label: '長 {{s.s1}}',
-        data: e1Long,
+        label: '長 {{s.s1["event_name"]}}',
+        data: [{{s.s1["long_trend"]}}],
         pointStyle: 'circle',
         borderColor: colorE1,
         backgroundColor: colorE1 + tDegree,
@@ -359,8 +355,8 @@
         pointRadius: 2.5,
       },
       {
-        label: '短 {{s.s1}}',
-        data: e1Short,
+        label: '短 {{s.s1["event_name"]}}',
+        data: [{{s.s1["short_trend"]}}],
         pointStyle: 'rectRot',
         borderColor: colorE2,
         backgroundColor: colorE2 + tDegree,
@@ -370,8 +366,8 @@
         pointRadius: 2.8,
       },
       {
-        label: '長 {{s.s2}}',
-        data: e2Long,
+        label: '長 {{s.s2["event_name"]}}',
+        data: [{{s.s2["long_trend"]}}],
         pointStyle: 'circle',
         borderColor: colorE3,
         backgroundColor: colorE3 + tDegree,
@@ -381,8 +377,8 @@
         pointRadius: 2.5,
       },
       {
-        label: '短 {{s.s2}}',
-        data: e2Short,
+        label: '短 {{s.s2["event_name"]}}',
+        data: [{{s.s2["short_trend"]}}],
         pointStyle: 'rectRot',
         borderColor: colorE4,
         backgroundColor: colorE4 + tDegree,
@@ -446,7 +442,7 @@
             display: false,
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 105,
+              suggestedMax: 102,
               stepSize: 1,
             }
           }]

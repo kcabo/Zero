@@ -236,6 +236,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
     initial_msg = f">>> {len(target_meets_ids)}の大会の全記録の抽出開始"
     notify_line(initial_msg)
     print(initial_msg)
+    before = count_records()
     count_records = 0
     for id in Takenoko(target_meets_ids, 20):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
@@ -254,7 +255,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
             db.session.add_all(records)
             db.session.commit()
 
-    complete_msg = f'>>> 全{count_records}の記録の保存が完了'
+    complete_msg = f'>>> 全{count_records}の記録の保存が完了 ({before}) -> ({count_records()})'
     notify_line(complete_msg)
     print(complete_msg)
     free()
@@ -281,13 +282,15 @@ def add_meets(year):
     print(f'>>> 全{len(meets)}の大会情報の保存が完了')
     free()
 
+def count_records():
+    count = db.session.query(Record).count()
+    count += db.session.query(Relay).count()
+    return count
 
 ####### 以下ルーター #######
 @app.route('/')
 def index():
-    count = db.session.query(Record).count()
-    count += db.session.query(Relay).count()
-    return render_template('index.html', count_records=count)
+    return render_template('index.html', count_records=count_records())
 
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
@@ -317,18 +320,18 @@ def dashboard():
 
     # 見出しの選手情報：     性別　名前　学年　所属(複数ある)
     teams = {r.Record.team for r in records}
-    swimmer = analyzer.swimmer_statisctics(records)
+    swimmer = analyzer.Swimmer(records)
     swimmer.sex = 'men' if sex == 1 else 'women'
     swimmer.name = name
     swimmer.grade = grade
     swimmer.teams = teams
 
     # S1偏差値の導出
-    s1_style = event_2_num[swimmer.s1]['style']
-    s1_distance = event_2_num[swimmer.s1]['distance']
+    s1_style = event_2_num[swimmer.s1['event_name']]['style'] # DB検索用に数字に戻す
+    s1_distance = event_2_num[swimmer.s1['event_name']]['distance']
     stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
-    swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].std) if swimmer.s1_best_short is not None else '-'
-    swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].std) if swimmer.s1_best_long is not None else '-'
+    swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].average, stats[0].std) if swimmer.s1['short_best'] is not None else '-'
+    swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].average, stats[1].std) if swimmer.s1['long_best'] is not None else '-'
 
     return render_template('dashboard.html', s = swimmer)
 
