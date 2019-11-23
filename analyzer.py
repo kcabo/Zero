@@ -141,15 +141,22 @@ def output_ranking(records):
 
 def compile_statistics(records, agegroup):
     df = output_ranking(records)
-    if agegroup != '全体':
-        df = df[df['grade'].str.startswith(agegroup)] # 大学、などで学年が始まる行のみ取り出し
-    df.reset_index(drop=True, inplace=True)
-    count = len(df)
-    if count < 2:
-        return None, None, None, None, count
+    if agegroup == '全体':
+        vals = df['time_val']
+        max500th = df.at[499, 'time'] if len(df) >= 500 else '99:99.00'
     else:
-        max500th = df.at[499, 'time'] if count >= 500 else '99:99.00'
-        max5000th = df.at[4999, 'time'] if count >= 5000 else '99:99.00'
-        sd = df['time_val'].std()
-        average = df['time_val'].mean()
-        return average, sd, max500th, max5000th, count
+        vals = df[df['grade'].str.startswith(agegroup)]['time_val'] # 大学、などで学年が始まる行のみ取り出し
+        max500th = ''
+    count = len(vals)
+    if count < 2:
+        return None, None, None, count
+    else:
+        q1 = vals.quantile(.25)
+        q3 = vals.quantile(.75)
+        iqr = q3-q1
+        lower_limit = q1 - iqr * 1.5
+        upper_limit = q3 + iqr * 1.5
+        desc = vals[(vals > lower_limit) & (vals < upper_limit)].describe() # 外れ値除去
+        std = round(desc['std'], 2)
+        average = round(desc['mean'], 2)
+        return average, std, max500th, count
