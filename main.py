@@ -178,9 +178,9 @@ class Statistics(db.Model): #種目の平均値、標準偏差
     distance = db.Column(db.Integer, nullable = False)                # 距離
     agegroup = db.Column(db.String, nullable = False)                 # 全体・小学・中学・高校・大学・一般
     average = db.Column(db.Float)                                     # タイムの平均値 100倍秒数値
-    sd = db.Column(db.Float)                                          # 標準偏差    100倍秒数値
+    std = db.Column(db.Float)                                          # 標準偏差    100倍秒数値
     max500th = db.Column(db.String)                                   # 500番目のタイム。#:##.##書式文字列
-    max5000th = db.Column(db.String)                                  # 5000番目のタイム。#:##.##書式文字列 設定しないかも
+    # max5000th = db.Column(db.String)                                  # 5000番目のタイム。#:##.##書式文字列 設定しないかも
     count = db.Column(db.Integer)                                     # その種目のランキング化したあとの人数
 
     def __init__(self, pool, sex, style, distance, agegroup):
@@ -217,14 +217,14 @@ def set_standards():
         records = (db.session.query(Record, Meet)
             .filter(Record.sex==st.sex, Record.style==st.style, Record.distance==st.distance, Record.time != "", Record.meetid == Meet.meetid, Meet.pool == st.pool)
             .all())
-        st.average, st.sd, st.max500th, st.max5000th, st.count = analyzer.compile_statistics(records, st.agegroup)
+        st.average, st.std, st.max500th, st.count = analyzer.compile_statistics(records, st.agegroup)
         del records
         db.session.commit()
     print('全種目の分析を完了')
     free()
 
-def calc_deviation(value, average, sd):
-    res = (value - average) / sd * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
+def calc_deviation(value, average, std):
+    res = (value - average) / std * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
     return round(res, 1)
 
 
@@ -327,8 +327,8 @@ def dashboard():
     s1_style = event_2_num[swimmer.s1]['style']
     s1_distance = event_2_num[swimmer.s1]['distance']
     stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
-    swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].sd) if swimmer.s1_best_short is not None else '-'
-    swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].sd) if swimmer.s1_best_long is not None else '-'
+    swimmer.dev_short = calc_deviation(swimmer.s1_best_short, stats[0].average, stats[0].std) if swimmer.s1_best_short is not None else '-'
+    swimmer.dev_long = calc_deviation(swimmer.s1_best_long, stats[1].average, stats[1].std) if swimmer.s1_best_long is not None else '-'
 
     return render_template('dashboard.html', s = swimmer)
 
