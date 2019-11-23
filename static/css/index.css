@@ -131,12 +131,12 @@ h2 {
 }
 
 #update table th {
-  width: 30%;
+  width: 20%;
   /* font-weight: 100; */
 }
 
 #update table td {
-  width: 70%;
+  width: 80%;
   padding: 0 10px;
 }
 
