@@ -236,7 +236,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
     initial_msg = f">>> {len(target_meets_ids)}の大会の全記録の抽出開始"
     notify_line(initial_msg)
     print(initial_msg)
-    before = count_records()
+    before = count_query()
     count_records = 0
     for id in Takenoko(target_meets_ids, 20):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
@@ -255,7 +255,7 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
             db.session.add_all(records)
             db.session.commit()
 
-    complete_msg = f'>>> 全{count_records}の記録の保存が完了 ({before}) -> ({count_records()})'
+    complete_msg = f'>>> 全{count_records}の記録の保存が完了 ({before}) -> ({count_query()})'
     notify_line(complete_msg)
     print(complete_msg)
     free()
@@ -282,7 +282,7 @@ def add_meets(year):
     print(f'>>> 全{len(meets)}の大会情報の保存が完了')
     free()
 
-def count_records():
+def count_query():
     count = db.session.query(Record).count()
     count += db.session.query(Relay).count()
     return count
@@ -290,7 +290,7 @@ def count_records():
 ####### 以下ルーター #######
 @app.route('/')
 def index():
-    return render_template('index.html', count_records=count_records())
+    return render_template('index.html', count_records=count_query())
 
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
