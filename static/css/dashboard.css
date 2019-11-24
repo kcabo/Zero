@@ -130,7 +130,7 @@ h1 {
     max-width: none;
   }
   #participate {
-    width: 40%;
+    width: 45%;
   }
   #bar-container {
     width: 300px;
@@ -298,6 +298,7 @@ h1 {
   border-radius: 12px;
   line-height: 1.8;
   letter-spacing: .5px;
+  font-weight: bold;
 }
 #records tr td:nth-child(1) span.Fr {
   background-color: var(--c-fr);
