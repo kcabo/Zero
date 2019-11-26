@@ -241,7 +241,7 @@ input[type="checkbox"] {
   color: #555;
   cursor: pointer;
   border-radius: 50%;
-  margin: 10px 4px;
+  margin: 8px 4px;
 }
 .page_btns.men span.current, .page_btns.men span:hover {
   background-color: var(--c-men);

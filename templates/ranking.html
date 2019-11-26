@@ -193,8 +193,8 @@
   <script>
     var pg = document.getElementsByClassName('page_btns');
     for(var i=0; i<2; i++){
-      for(var j=0; j<{{max_page}}; i++){
-        var e = pg[i].children[j]
+      for(var j=0; j<{{max_page}}; j++){
+        var e = pg[i].children[j];
         if(e.textContent == '{{current_page}}'){
           e.classList.add('current');
         };
