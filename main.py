@@ -373,7 +373,8 @@ def ranking():
                 ' selected' if pool==1 and sex==2 else '']
     current_event = f'style={style}&distance={distance}'
     str_sex = 'men' if sex == 1 else 'women'
-    caption = f'{distance}m {style_2_japanese[style]}'
+    jpn_group = f'{"男子" if sex == 1 else "女子"} {"長水路" if pool == 1 else "短水路"}'
+    jpn_event = f'{distance}m {style_2_japanese[style]}'
 
     return render_template(
             'ranking.html',
@@ -381,7 +382,8 @@ def ranking():
             group = group,
             group_bools = group_bools,
             current_event = current_event,
-            caption = caption,
+            jpn_group = jpn_group,
+            jpn_event = jpn_event,
             str_sex = str_sex,
             pages = pages)
 
