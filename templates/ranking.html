@@ -2,7 +2,7 @@
 <html lang="ja">
 
 <head>
-  <title>SwimmersZero|Ranking</title>
+  <title>Swimmers-Zero</title>
   <meta charset="utf-8">
   <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,10 +31,29 @@
     </form>
   </nav>
 
+  <label for="toggle">
+    <div id="header" class="{{str_sex}}">
+      {{jpn_event}}<span>/ {{jpn_group}}</span>
+    </div>
+  </label>
 
-  <div id="header">
-    <h1>Ranking</h1>
-    <p>―2019―</p>
+  <input type="checkbox" id="toggle" checked="checked">
+  <div id="options">
+
+    <div id="tab">
+      <div class="men{{group_bools[0]}}">
+        <a href="?pool=0&sex=1&{{current_event}}">男子<br>短水路</a>
+      </div>
+      <div class="men{{group_bools[1]}}">
+        <a href="?pool=1&sex=1&{{current_event}}">男子<br>長水路</a>
+      </div>
+      <div class="women{{group_bools[2]}}">
+        <a href="?pool=0&sex=2&{{current_event}}">女子<br>短水路</a>
+      </div>
+      <div class="women{{group_bools[3]}}">
+        <a href="?pool=1&sex=2&{{current_event}}">女子<br>長水路</a>
+      </div>
+    </div>
 
     <div id="style-buttons">
       <div id="fr" class="row">
@@ -78,31 +97,15 @@
       </div>
     </div>
 
-    <div id="tab">
-      <div class="men{{group_bools[0]}}">
-        <a href="?pool=0&sex=1&{{current_event}}">男子<br>短水路</a>
-      </div>
-      <div class="men{{group_bools[1]}}">
-        <a href="?pool=1&sex=1&{{current_event}}">男子<br>長水路</a>
-      </div>
-      <div class="women{{group_bools[2]}}">
-        <a href="?pool=0&sex=2&{{current_event}}">女子<br>短水路</a>
-      </div>
-      <div class="women{{group_bools[3]}}">
-        <a href="?pool=1&sex=2&{{current_event}}">女子<br>長水路</a>
-      </div>
-    </div>
-
     <div id="filter">
       <p>Filter</p>
       <div>
         <a href="#">大学生のみ</a>
       </div>
+      <input type="checkbox" name="grade" value="小学1" id="elm1">
+      <label for="elm1" class="label">小学1</label>
     </div>
 
-    <div id="caption">
-      <h2>{{caption}}</h2>
-    </div>
   </div>
 
 
