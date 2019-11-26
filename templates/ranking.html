@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <link rel="stylesheet" href="static/css/common.css">
-  <link rel="stylesheet" href="static/css/ranking_2.css">
+  <link rel="stylesheet" href="static/css/ranking_3.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -101,7 +101,7 @@
 
       <div id="filter">
         <p>Filter</p>
-        <form method="post" action="?{{group}}&{{current_event}}">
+        <form method="post" action="?{{group}}&{{current_event}}" name="gradeFilter">
           <input type="checkbox" name="grade" value="小学1" id="elm1" {% if '小学1' in grades %}checked{% endif %}>
           <label for="elm1">小学1</label>
           <input type="checkbox" name="grade" value="小学2" id="elm2" {% if '小学2' in grades %}checked{% endif %}>
@@ -146,7 +146,11 @@
 
     </div>
 
-
+    <div class="page_btns">
+      {% for i in range(1, max_page+1) %}
+      <span onclick="jump_page({{i}})">{{i}}</span>
+      {% endfor %}
+    </div>
 
     <table class="{{str_sex}}"><tbody>
       {% for rank, id, name, time, grade, team in ranking %}
@@ -160,10 +164,12 @@
       {% endfor %}
       </tbody></table>
 
-      <div id="pagination">
-        <a href="?{{group}}&{{current_event}}&page={{pages[0]}}" class="{{pages[0]}}">前の500件</a>
-        <a href="?{{group}}&{{current_event}}&page={{pages[1]}}" class="{{pages[1]}}">次の500件</a>
+      <div class="page_btns">
+        {% for i in range(1, max_page+1) %}
+        <span onclick="jump_page({{i}})">{{i}}</span>
+        {% endfor %}
       </div>
+
     </main>
 
   <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
@@ -184,7 +190,38 @@
   <div id="footer">
     <p>Created by Reo Kanzaki</p>
   </div>
-
+  <script>
+    var pg = document.getElementsByClassName('page_btns');
+    for(var i=0; i<2; i++){
+      for(var j=0; j<{{max_page}}; i++){
+        var e = pg[i].children[j]
+        if(e.textContent == {{current_page}}){
+          e.classList.add('current');
+          e.classList.add('{{str_sex}}');
+        };
+      };
+    };
+  </script>
+  <script>
+  {% autoescape false %}
+    function jump_page(page) {
+      var flag = false;
+      var url = "?{{group}}&{{current_event}}&page=" + page;
+      for (var i = 0; i < 19; i++){
+        if(document.gradeFilter.grade[i].checked) {
+          flag = true;
+          break;
+        };
+      };
+      if(flag) {
+        document.gradeFilter.action = url;
+        document.gradeFilter.submit();
+      } else {
+        location.href = url;
+      };
+    };
+  {% endautoescape %}
+  </script>
 </body>
 
 </html>

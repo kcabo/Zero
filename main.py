@@ -343,10 +343,10 @@ def ranking():
     style = request.args.get('style', 'Fr')
     distance = request.args.get('distance', 50, type=int)
     page = request.args.get('page', 1, type=int)
-    grades = []
+    grades = request.form.getlist("grade") # POST時のフォームの内容が格納される GET時は空リスト
 
-    if request.method == 'POST':
-        grades = request.form.getlist("grade")
+    if grades:
+        print(request.form)
         records = (db.session.query(Record, Meet)
                 .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.grade.in_(grades), Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
                 .all())
@@ -362,16 +362,15 @@ def ranking():
                 .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
 
     df_ = analyzer.output_ranking(records)
-    print(f'query: all:{len(records)} filtered:{len(df_)} sex:{sex} pool:{pool} style:{style} distance:{distance}')
+    ranking_length = len(df_)
+    print(f'query: all:{len(records)} rank:{ranking_length} sex:{sex} pool:{pool} style:{style} distance:{distance}')
     data_from = 500*(page-1)
     data_till = 500*page
     df = df_[data_from:data_till] # 1ページ目なら[0:500]
     # {% for rank, id, name, time, grade, team in ranking %}
     ranking = zip(range(data_from+1, data_till+1), df['id'], df['name'], df['time'], df['grade'], df['team'])
 
-    pages = ['hidden' if page==1 else page-1,
-            'hidden' if len(df) < 500 else page+1]
-
+    max_page = (ranking_length - 1) // 500 + 1
     group = f'pool={pool}&sex={sex}'
     group_bools = [' selected' if pool==0 and sex==1 else '',
                 ' selected' if pool==1 and sex==1 else '',
@@ -392,7 +391,8 @@ def ranking():
             jpn_event = jpn_event,
             str_sex = str_sex,
             grades = grades,
-            pages = pages)
+            current_page = page,
+            max_page = max_page)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')

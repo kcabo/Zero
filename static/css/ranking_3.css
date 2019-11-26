@@ -222,6 +222,34 @@ input[type="checkbox"] {
   bottom: -30px;
 }
 
+
+/* ページ遷移のボタン */
+.page_btns {
+  font-size: 0;
+  text-align: center;
+}
+.page_btns span {
+  font-size: 1.7rem;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 5px 0;
+  color: #555;
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 10px 4px;
+}
+.page_btns span.current.men, .page_btns span:hover {
+  background-color: var(--c-men);
+  color: white;
+}
+.page_btns span.current.women, .page_btns span:hover {
+  background-color: var(--c-women);
+  color: white;
+}
+
 table {
   /* margin-top: 10px; */
   width: 100%;
@@ -286,29 +314,4 @@ table.men tr:nth-child(2n) {
 }
 table.women tr:nth-child(2n) {
   background-color: #fdfafa;
-}
-
-#pagination {
-  margin-top: 30px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-#pagination a {
-  display: block;
-  text-decoration: none;
-  color: white;
-  border-radius: 5px;
-  font-size: 1.3rem;
-  padding: 5px 15px;
-  margin: 0px 25px;
-}
-#pagination a.hidden {
-  visibility: hidden;
-}
-.men + #pagination a {
-  background-color: var(--c-men)
-}
-.women + #pagination a {
-  background-color: var(--c-women)
 }
