@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <link rel="stylesheet" href="static/css/common.css">
-  <link rel="stylesheet" href="static/css/ranking_3.css">
+  <link rel="stylesheet" href="static/css/ranking_4.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -146,7 +146,7 @@
 
     </div>
 
-    <div class="page_btns">
+    <div class="page_btns {{str_sex}}">
       {% for i in range(1, max_page+1) %}
       <span onclick="jump_page({{i}})">{{i}}</span>
       {% endfor %}
@@ -164,7 +164,7 @@
       {% endfor %}
       </tbody></table>
 
-      <div class="page_btns">
+      <div class="page_btns {{str_sex}}">
         {% for i in range(1, max_page+1) %}
         <span onclick="jump_page({{i}})">{{i}}</span>
         {% endfor %}
@@ -197,7 +197,6 @@
         var e = pg[i].children[j]
         if(e.textContent == {{current_page}}){
           e.classList.add('current');
-          e.classList.add('{{str_sex}}');
         };
       };
     };
