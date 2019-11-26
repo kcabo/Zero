@@ -344,6 +344,7 @@ def ranking():
     distance = request.args.get('distance', 50, type=int)
     page = request.args.get('page', 1, type=int)
     grades = request.form.getlist("grade") # POST時のフォームの内容が格納される GET時は空リスト
+    ranking_length = 0
 
     if grades:
         print(request.form)
@@ -356,13 +357,15 @@ def ranking():
         records = (db.session.query(Record, Meet)
                 .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.time <= time_limit, Record.meetid == Meet.meetid, Meet.pool == pool)
                 .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
+        ranking_length = target_event.count
     else:
         records = (db.session.query(Record, Meet)
                 .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
                 .all()) # sortはORM側でやるのが早いのかそれともpandasに渡してからやったほうが早いのか…
 
     df_ = analyzer.output_ranking(records)
-    ranking_length = len(df_)
+    if ranking_length == 0:
+        ranking_length = len(df_)
     print(f'query: all:{len(records)} rank:{ranking_length} sex:{sex} pool:{pool} style:{style} distance:{distance}')
     data_from = 500*(page-1)
     data_till = 500*page
