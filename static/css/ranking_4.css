@@ -227,6 +227,8 @@ input[type="checkbox"] {
 .page_btns {
   font-size: 0;
   text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 .page_btns span {
   font-size: 1.7rem;
@@ -241,11 +243,11 @@ input[type="checkbox"] {
   border-radius: 50%;
   margin: 10px 4px;
 }
-.page_btns span.current.men, .page_btns span:hover {
+.page_btns.men span.current, .page_btns.men span:hover {
   background-color: var(--c-men);
   color: white;
 }
-.page_btns span.current.women, .page_btns span:hover {
+.page_btns.women span.current, .page_btns.women span:hover {
   background-color: var(--c-women);
   color: white;
 }
