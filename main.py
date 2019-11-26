@@ -336,15 +336,21 @@ def dashboard():
     return render_template('dashboard.html', s = swimmer)
 
 # TODO: リレーの記録も結合させる
-@app.route('/ranking')
+@app.route('/ranking',  methods = ['POST', 'GET'])
 def ranking():
     pool = request.args.get('pool', 1, type=int)
     sex = request.args.get('sex', 1, type=int)
     style = request.args.get('style', 'Fr')
     distance = request.args.get('distance', 50, type=int)
     page = request.args.get('page', 1, type=int)
+    grades = []
 
-    if page == 1:
+    if request.method == 'POST':
+        grades = request.form.getlist("grade")
+        records = (db.session.query(Record, Meet)
+                .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.grade.in_(grades), Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
+                .all())
+    elif page == 1:
         target_event = db.session.query(Statistics).filter_by(pool=pool, sex=sex, style=style_2_num[style], distance=distance_2_num[distance], agegroup='全体').first()
         time_limit = target_event.max500th
         records = (db.session.query(Record, Meet)
@@ -385,6 +391,7 @@ def ranking():
             jpn_group = jpn_group,
             jpn_event = jpn_event,
             str_sex = str_sex,
+            grades = grades,
             pages = pages)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
