@@ -347,7 +347,6 @@ def ranking():
     ranking_length = 0
 
     if grades:
-        print(request.form)
         records = (db.session.query(Record, Meet)
                 .filter(Record.sex==sex, Record.style==style_2_num[style], Record.distance==distance_2_num[distance], Record.grade.in_(grades), Record.time != "", Record.meetid == Meet.meetid, Meet.pool == pool)
                 .all())

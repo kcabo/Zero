@@ -137,7 +137,7 @@ input[type="checkbox"] {
   text-align: center;
   overflow: hidden;
   border: 1px #ddd solid;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 #tab div.selected.men, #tab div.men:hover {
   border: none;
@@ -153,9 +153,9 @@ input[type="checkbox"] {
 }
 #tab div a {
   text-decoration: none;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   display: inline-block;
-  line-height: 1.3;
+  line-height: 1.5;
   width: 100%;
   height: 100%;
   color: #aaa;
@@ -167,7 +167,7 @@ input[type="checkbox"] {
   margin: 20px 10px;
   border: .8px #ddd solid;
   position: relative;
-  padding: 15px 0px 20px 0px;
+  padding: 15px 0px 25px 0px;
 }
 #filter > p {
   position: absolute;
@@ -191,11 +191,11 @@ input[type="checkbox"] {
   line-height: 2;
   letter-spacing: 3px;
   height: 2.8rem;
-  width: 70px;
+  width: 75px;
   border-radius: 4px;
   border: solid 0.8px #ddd;
   color: #aaa;
-  margin: 2px;
+  margin: 3px;
 }
 #filter input:checked + label {
   color: white;
@@ -317,4 +317,27 @@ table.men tr:nth-child(2n) {
 }
 table.women tr:nth-child(2n) {
   background-color: #fdfafa;
+}
+
+#page_down {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-image: radial-gradient( circle farthest-corner at 1.3% 2.8%,  rgba(239,249,249,1) 0%, rgba(182,199,226,1) 100.2% );
+  box-shadow: 0 2px 2px #ccc;
+}
+#page_down div {
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-top: solid 10px #697b91;
+  border-right: solid 10px transparent;
+  border-bottom: solid 10px transparent;
+  border-left: solid 10px transparent;
 }
