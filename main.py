@@ -320,11 +320,15 @@ def dashboard():
     swimmer.teams = teams
 
     # S1偏差値の導出
-    s1_style = event_2_num[swimmer.s1['event_name']]['style'] # DB検索用に数字に戻す
-    s1_distance = event_2_num[swimmer.s1['event_name']]['distance']
-    stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
-    swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].average, stats[0].std) if swimmer.s1['short_best'] is not None else '-'
-    swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].average, stats[1].std) if swimmer.s1['long_best'] is not None else '-'
+    s1_event = swimmer.s1['event_name']
+    if s1_event == '':
+        swimmer.dev_long, swimmer.dev_short = '', ''
+    else:
+        s1_style = event_2_num[s1_event]['style'] # DB検索用に数字に戻す
+        s1_distance = event_2_num[s1_event]['distance']
+        stats = db.session.query(Statistics).filter_by(sex=sex, style=s1_style, distance=s1_distance, agegroup=grade[:2]).order_by(Statistics.pool).all() # 1番目が短水路、2番目が長水路になる
+        swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].average, stats[0].std) if swimmer.s1['short_best'] is not None else '-'
+        swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].average, stats[1].std) if swimmer.s1['long_best'] is not None else '-'
 
     return render_template('dashboard.html', s = swimmer)
 
