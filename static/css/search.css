@@ -1,0 +1,127 @@
+main {
+  max-width: 1000px;
+  margin: auto;
+}
+body {
+  background-color: #F5F5F5;
+}
+.card {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+#header {
+  background-color: #2d55aa;
+  height: 70px;
+  padding: 10px;
+  font-size: 1.6rem;
+  position: relative;
+}
+#header p {
+  color: white;
+  text-align: center;
+}
+#header form {
+  position: absolute;
+  left: 15%;
+  bottom: -18px;
+  width: 70%;
+  padding: 10px;
+}
+
+
+#results {
+  margin: 40px 10px;
+}
+
+#results .card {
+  margin-bottom: 8px;
+  padding: 5px 8px;
+  display: flex;
+}
+#results .card.men {
+  border-left: solid 7px var(--c-men);
+}
+#results .card.women {
+  border-left: solid 7px var(--c-women);
+}
+#results .card img {
+  width: 40px;
+  height: 40px;
+}
+
+#results .card a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.7rem;
+  /* width: 120px; */
+  white-space: nowrap;
+  padding: 0 10px;
+  line-height: 40px;
+  letter-spacing: 1px;
+}
+
+#results .card div {
+  padding: 4px;
+}
+#results .card div span {
+  display: inline-block;
+  font-size: 1.1rem;
+  background-color: var(--c-yellow);
+  color: white;
+  padding: 0 10px;
+  border-radius: 5px;
+  line-height: 15px;
+  margin: 1px;
+}
+#results .card div span:first-child {
+  background-color: var(--c-blue);
+}
+
+#results .card{
+  animation-name: fadein;
+  animation-duration: 1s;
+}
+#results .card:nth-child(2) {
+  animation-duration: 1.5s;
+}
+#results .card:nth-child(3) {
+  animation-duration: 2s;
+}
+#results .card:nth-child(4) {
+  animation-duration: 2.5s;
+}
+#results .card:nth-child(5) {
+  animation-duration: 3s;
+}
+#results .card:nth-child(6) {
+  animation-duration: 3.5s;
+}
+#results .card:nth-child(7) {
+  animation-duration: 4s;
+}
+#results .card:nth-child(8) {
+  animation-duration: 4.5s;
+}
+#results .card:nth-child(9) {
+  animation-duration: 5s;
+}
+#results .card:nth-child(10) {
+  animation-duration: 5.5s;
+}
+#results .card:nth-child(11) {
+  animation-duration: 6s;
+}
+#results .card:nth-child(12) {
+  animation-duration: 6.5s;
+}
+@keyframes fadein {
+from {
+    opacity: 0;
+    transform: translateY(20px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}

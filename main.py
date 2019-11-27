@@ -297,17 +297,10 @@ def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'
 
 
-@app.route('/dashboard', methods = ['POST', 'GET'])
+@app.route('/dashboard')
 def dashboard():
-    if request.method == 'GET':
-        id = request.args.get('id', 1, type=int)
-        target = db.session.query(Record).get(id)
-    else:
-        search_name = request.form.get('name', '神崎伶央')
-        target = db.session.query(Record).filter(Record.name == search_name).first()
-        if target is None:
-            return 'NO RESULTS'
-
+    id = request.args.get('id', 1, type=int)
+    target = db.session.query(Record).get(id)
     sex = target.sex
     name = target.name
     grade = target.grade
@@ -395,6 +388,19 @@ def ranking():
             grades = grades,
             current_page = page,
             max_page = max_page)
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_name = request.form.get('name', '神崎伶央')
+    records = db.session.query(Record).filter(Record.name.like(f"%{search_name}%")).all()
+    if records is None:
+        return 'NO RESULTS'
+
+    candidates = analyzer.raise_candidates(records)
+    return render_template(
+            'search.html',
+            search_name = search_name,
+            candidates = candidates)
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')
