@@ -118,6 +118,28 @@ class Swimmer:
                 dic[pool + "-" + event] = [time, start] # 上書き
             return dic
 
+
+class Candidate:
+    def __init__(self, df):
+        self.id = df.iloc[0]['id']
+        self.sex = 'men' if df.iloc[0]['sex'] == 1 else 'women'
+        self.name = df.iloc[0]['name']
+        self.grade = df.iloc[0]['grade']
+        teams = df['team'].unique()
+        self.teams = teams.tolist()
+
+def raise_candidates(records):
+    fixed = map(lambda x:(x.id, x.sex, x.name, x.team, x.grade), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'sex', 'name', 'team', 'grade'])
+    unique = df.drop_duplicates(subset=['sex', 'name', 'grade'])
+
+    candidates = []
+    for sex, name, grade in zip(unique['sex'], unique['name'], unique['grade']):
+        c = Candidate(df[(df['sex'] == sex) & (df['name'] == name) & (df['grade'] == grade)])
+        candidates.append(c)
+
+    return candidates
+
 def output_ranking(records):
     fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
     df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])

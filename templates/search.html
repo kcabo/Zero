@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>Swimmers-Zero</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/css/common.css">
+  <link rel="stylesheet" href="static/css/search.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-149393969-2');
+  </script>
+</head>
+
+<body>
+  <nav>
+    <a href="/"><img src="static/img/logo.svg" alt="Zero" id="logo"></a>
+    <form id="search-container" method="post" action="/search">
+      <input name="name" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </form>
+  </nav>
+
+
+  <main>
+
+    <div id="header">
+      <p>選手: "{{search_name}}" の検索結果</p>
+      <form class="card">
+          a
+      </form>
+    </div>
+
+    <div id="results">
+      {% for c in candidates %}
+      <div class="card {{c.sex}}">
+        <img src="static/img/{{c.sex}}.svg" alt="{{c.sex}}">
+        <a href="/dashboard?id={{c.id}}">{{c.name}}</a>
+        <div>
+          <span>{{c.grade}}</span>
+          {% for t in c.teams %}
+          <span>{{t}}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+  </main>
+
+
+
+  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0
+      58-18 88-18s
+      58 18 88 18
+      58-18 88-18
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
+    </g>
+  </svg>
+  <div id="footer">
+    <p>Created by Reo Kanzaki</p>
+  </div>
+
+
+</body>
+
+</html>
