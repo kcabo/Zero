@@ -166,6 +166,10 @@
 
     </main>
 
+  <div id="page_down" onclick="go_bottom()">
+    <div></div>
+  </div>
+
   <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
     <defs>
       <path id="gentle-wave" d="M-160 44c30 0
@@ -184,6 +188,16 @@
   <div id="footer">
     <p>Created by Reo Kanzaki</p>
   </div>
+
+  <!-- ajaxやるまで使っちゃや―よ -->
+  <!-- <script src="static/js/jquery-3.4.1.min.js"></script> -->
+  <script>
+    function go_bottom(){
+      var doc = document.documentElement;
+      var bottom = doc.scrollHeight - doc.clientHeight;
+      window.scroll(0, bottom);
+    };
+  </script>
   <script>
     var pg = document.getElementsByClassName('page_btns');
     for(var i=0; i<2; i++){
