@@ -51,7 +51,7 @@ class Swimmer:
 
         # 折れ線グラフ化する最多出場の2種目を選ぶ ここでのS1はスタイルではなく距離も含めた種目
         event_counts = df['event'].value_counts()
-        s1 = event_counts.index[0]
+        s1 = event_counts.index[0] if len(event_counts) > 0 else ''  # 出場種目が棄権しか無いと得意種目すら無い
         s2 = event_counts.index[1] if len(event_counts) > 1 else ''  # 1種目しか出場しておらずS2が無いときは空白
         self.s1 = {'event_name': s1}
         self.s2 = {'event_name': s2}
