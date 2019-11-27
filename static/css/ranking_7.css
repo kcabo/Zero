@@ -123,9 +123,9 @@ input[type="checkbox"] {
 }
 
 
-/* カテゴリ選ぶタブみたいなやつ */
+/* カテゴリ選択 */
 #tab {
-  margin: 10px 10px;
+  margin: 15px 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -164,7 +164,7 @@ input[type="checkbox"] {
 
 /* フィルターボタン */
 #filter {
-  margin: 20px 10px;
+  margin: 30px 10px;
   border: .8px #ddd solid;
   position: relative;
   padding: 15px 0px 25px 0px;
@@ -218,8 +218,8 @@ input[type="checkbox"] {
   color: white;
   border-radius: 4px;
   position: absolute;
-  right: 6px;
-  bottom: -30px;
+  right: calc(50% - 45px);
+  bottom: -40px;
   box-shadow: 0 2px 5px #ccc;
 }
 
@@ -324,20 +324,20 @@ table.women tr:nth-child(2n) {
   right: 14px;
   bottom: 14px;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-image: radial-gradient( circle farthest-corner at 1.3% 2.8%,  rgba(239,249,249,1) 0%, rgba(182,199,226,1) 100.2% );
+  width: 50px;
+  height: 50px;
+  border-radius: 30%;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   box-shadow: 0 2px 2px #ccc;
 }
 #page_down div {
   position: absolute;
-  top: 17px;
-  left: 10px;
+  top: 22px;
+  left: calc(50% - 12px);
   width: 0;
   height: 0;
-  border-top: solid 10px #697b91;
-  border-right: solid 10px transparent;
-  border-bottom: solid 10px transparent;
-  border-left: solid 10px transparent;
+  border-top: solid 12px #252627;
+  border-right: solid 12px transparent;
+  border-bottom: solid 12px transparent;
+  border-left: solid 12px transparent;
 }
