@@ -396,6 +396,8 @@ def ranking():
 @app.route('/search', methods=['POST'])
 def search():
     search_name = request.form.get('name', '神崎伶央')
+    if search_name == '':
+        return 'INVALID QUERY'
     records = db.session.query(Record).filter(Record.name.like(f"%{search_name}%")).all()
     if records is None:
         return 'NO RESULTS'
