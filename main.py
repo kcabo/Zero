@@ -236,7 +236,6 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
     initial_msg = f">>> {len(target_meets_ids)}の大会の全記録の抽出開始"
     notify_line(initial_msg)
     print(initial_msg)
-    before = count_query()
     count_records = 0
     for id in Takenoko(target_meets_ids, 20):
         soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
@@ -255,7 +254,8 @@ def add_records(target_meets_ids): # 対象の大会のインスタンス集合�
             db.session.add_all(records)
             db.session.commit()
 
-    complete_msg = f'>>> 全{count_records}の記録の保存が完了 ({before}) -> ({count_query()})'
+    total = '{:,}'.format(count_query())
+    complete_msg = f'>>> 全{count_records}件の記録の保存完了 現在：{total}件'
     notify_line(complete_msg)
     print(complete_msg)
     free()
@@ -332,6 +332,7 @@ def dashboard():
 
     return render_template('dashboard.html', s = swimmer)
 
+
 # TODO: リレーの記録も結合させる
 @app.route('/ranking',  methods = ['POST', 'GET'])
 def ranking():
@@ -393,20 +394,47 @@ def ranking():
             current_page = page,
             max_page = max_page)
 
-@app.route('/search', methods=['POST'])
+
+@app.route('/search', methods=['GET','POST'])
 def search():
-    search_name = request.form.get('name', '神崎伶央')
-    if search_name == '':
-        return 'INVALID QUERY'
-    records = db.session.query(Record).filter(Record.name.like(f"%{search_name}%")).all()
-    if records is None:
-        return 'NO RESULTS'
+    if request.method == 'POST':
+        name = request.form.get('name', '').replace(' ','')
+        team = request.form.get('team', '').replace(' ','')
+        exact = True if request.form.get('exact', '') == 'true' else False
+    else:
+        name = request.args.get('name')
+        team = request.args.get('team')
+        exact = True
+
+    if name and exact:
+        records = db.session.query(Record).filter(Record.name == name).all()
+        msg = f'選手: {name}の検索結果(完全一致)'
+    elif name and not exact:
+        records = db.session.query(Record).filter(Record.name.like(f"%{name}%")).all()
+        msg = f'選手: {name}の検索結果(部分一致)'
+    elif team and exact:
+        team_mates = db.session.query(Record).filter(Record.team == team).all()
+        msg = f'団体: {team}の検索結果(完全一致)'
+    elif team and not exact:
+        team_mates = db.session.query(Record).filter(Record.team.like(f"%{team}%")).all()
+        msg = f'団体: {team}の検索結果(部分一致)'
+    else:
+        records = []
+        msg = ''
+
+    # team_matesは検索したチームから出た記録しか抽出されないので、各選手の他のチームから出た記録も検索
+    if team:
+        names = {m.name for m in team_mates}
+        records = db.session.query(Record).filter(Record.name.in_(names)).all()
 
     candidates = analyzer.raise_candidates(records)
+    show_sorry = False if candidates else True
     return render_template(
             'search.html',
-            search_name = search_name,
-            candidates = candidates)
+            message = msg,
+            candidates = candidates,
+            show_sorry = show_sorry)
+
 
 @app.route(manegement_url) # commandなしのURLの場合、Noneが代入される
 @app.route(manegement_url + '/<command>')
