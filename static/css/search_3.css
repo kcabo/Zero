@@ -52,15 +52,15 @@ input[type="checkbox"] + label:before {
   height: 16px;
   border: 2px solid #B23A48;
   position: absolute;
-  right: 55px;
-  top: 1.2px;
+  right: 60px;
+  top: 2px;
   transition: all .12s, border-color .08s;
 }
 
 input[type="checkbox"]:checked + label:before {
   width: 8px;
   top: -1px;
-  right: 60px;
+  right: 65px;
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(45deg);
