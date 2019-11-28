@@ -12,7 +12,7 @@ body {
 }
 
 #header {
-  background-color: #7D8491;
+  background-image: radial-gradient( circle 997px at 5.8% 11.8%,  rgba(0,201,235,1) 0%, rgba(145,0,228,1) 90% );
   height: 170px;
   font-size: 1.6rem;
 }
@@ -20,6 +20,7 @@ body {
   color: white;
   text-align: center;
   padding: 20px;
+  letter-spacing: 1px;
 }
 #header form {
   margin: auto;
@@ -74,7 +75,7 @@ input[type="checkbox"]:checked + label:before {
   justify-content: center;
 }
 #header div div {
-  background-color: #80CBC3;
+  background-color: #ffffff30;
   line-height: 2.5;
   width: 30%;
   text-align: center;

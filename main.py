@@ -408,16 +408,16 @@ def search():
 
     if name and exact:
         records = db.session.query(Record).filter(Record.name == name).all()
-        msg = f'選手: {name}の検索結果(完全一致)'
+        msg = f'選手: "{name}" の検索結果 (完全一致)'
     elif name and not exact:
         records = db.session.query(Record).filter(Record.name.like(f"%{name}%")).all()
-        msg = f'選手: {name}の検索結果(部分一致)'
+        msg = f'選手: "{name}" の検索結果 (部分一致)'
     elif team and exact:
         team_mates = db.session.query(Record).filter(Record.team == team).all()
-        msg = f'団体: {team}の検索結果(完全一致)'
+        msg = f'団体: "{team}" の検索結果 (完全一致)'
     elif team and not exact:
         team_mates = db.session.query(Record).filter(Record.team.like(f"%{team}%")).all()
-        msg = f'団体: {team}の検索結果(部分一致)'
+        msg = f'団体: "{team}" の検索結果 (部分一致)'
     else:
         records = []
         msg = ''
