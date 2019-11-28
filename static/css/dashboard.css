@@ -35,11 +35,13 @@ h1 {
   border-radius: 5px;
   line-height: 15px;
   margin: 1px;
+  cursor: pointer;
 }
 
 #tips span.univ {
   background-color: var(--c-blue);
   margin-right: 2px;
+  cursor: auto;
 }
 
 /* 数枚のカード全体を囲む */

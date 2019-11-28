@@ -38,7 +38,7 @@
       <div id="tips">
         <span class="univ">{{s.grade}}</span>
         {% for t in s.teams %}
-        <span>{{t}}</span>
+        <span onclick="search_team('{{t}}')">{{t}}</span>
         {% endfor %}
       </div>
     </div>
@@ -454,6 +454,14 @@
       }
     };
     var myChart = new Chart(ctxLine, lineConfig);
+  </script>
+  <script>
+  {% autoescape false %}
+    function search_team(team) {
+      var url = "/search?team=" + team;
+      location.href = url;
+    };
+  {% endautoescape %}
   </script>
 </body>
 

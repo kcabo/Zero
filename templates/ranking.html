@@ -153,7 +153,7 @@
         <td><a href="/dashboard?id={{id}}">{{name}}</a></td>
         <td>{{time}}</td>
         <td><span>{{grade}}</span></td>
-        <td>{{team}}</td>
+        <td onclick="search_team('{{team}}')">{{team}}</td>
       </tr>
       {% endfor %}
       </tbody></table>
@@ -226,6 +226,14 @@
       } else {
         location.href = url;
       };
+    };
+  {% endautoescape %}
+  </script>
+  <script>
+  {% autoescape false %}
+    function search_team(team) {
+      var url = "/search?team=" + team;
+      location.href = url;
     };
   {% endautoescape %}
   </script>

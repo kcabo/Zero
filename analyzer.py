@@ -131,7 +131,8 @@ class Candidate:
 def raise_candidates(records):
     fixed = map(lambda x:(x.id, x.sex, x.name, x.team, x.grade), records)
     df = pd.DataFrame(fixed, columns = ['id', 'sex', 'name', 'team', 'grade'])
-    unique = df.drop_duplicates(subset=['sex', 'name', 'grade'])
+    unique = df.drop_duplicates(subset=['sex', 'name', 'grade']).copy()
+    unique.sort_values(['sex', 'grade'], inplace=True)
 
     candidates = []
     for sex, name, grade in zip(unique['sex'], unique['name'], unique['grade']):
