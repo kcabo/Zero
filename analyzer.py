@@ -67,8 +67,8 @@ class Swimmer:
         self.s2["long_trend"] = self.scatter_points(df[(df['event'] == s2) & (df['pool'] == 'l')])
         self.s2["short_trend"] = self.scatter_points(df[(df['event'] == s2) & (df['pool'] == 's')])
 
-        # 種目で重複削除。これで残っている記録はすべてベストになる
-        df.drop_duplicates(['pool', 'event'], inplace=True)
+        df.sort_values(['time_val'], inplace=True) # タイム順速いに並び替え
+        df.drop_duplicates(['pool', 'event'], inplace=True) # 種目、水路をユニークにする。一番速いタイムのみ残る。これで残っている記録はすべてベストになる
 
         # 偏差値導出のためにS1のベストをvalueでぬきだす
         self.s1['long_best'] = self.first_val(df[(df['event'] == s1) & (df['pool'] == 'l')])

@@ -6,7 +6,7 @@ body {
   font-family: 'Roboto', 'Noto Sans JP', sans-serif;
   background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
   color: white;
-  max-width: 500px;
+  max-width: 800px;
   margin: auto;
 }
 
@@ -142,6 +142,9 @@ h2 {
 #update table td {
   /* width: 80%; */
   padding: 0 10px;
+}
+#update table td a {
+  color: white;
 }
 
 
