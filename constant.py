@@ -177,5 +177,10 @@ foreign_teams = [
     'Thailand',
     'TPE',
     'UKR',
-    'USA'
+    'USA',
+    'HUNGARY',
+    'ISRAEL',
+    'KOREA',
+    'THAILAND',
+    
 ]
