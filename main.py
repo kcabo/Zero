@@ -1,41 +1,23 @@
 # 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいと思うんだ
-# とかいってもやっぱスクレイパーを分離させたい
 import datetime
 import os
-import re
-import requests
-from time import sleep
 import threading
 
-from bs4 import BeautifulSoup, element
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 if os.name == 'nt': # ローカルのWindows環境なら、環境変数をその都度設定
     import env
+
 import analyzer
 from constant import style_2_num, distance_2_num, area_list, style_2_japanese, foreign_teams, event_2_num
-from format import del_space, del_numspace, format_time
+import scraper
 from task_manager import Takenoko, free, busy, get_status, notify_line
-
 
 app = Flask(__name__)
 app.config.from_object('config.Develop' if os.name == 'nt' else 'config.Product')
 db = SQLAlchemy(app)
-
 manegement_url = os.environ['ADMIN_URL']
-meet_link_ptn = re.compile(r"code=[0-9]{7}$")           # <a href="../../swims/ViewResult?h=V1000&amp;code=0119605"
-meet_caption_ptn = re.compile(r"(.+)　（(.+)） (.水路)") # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路
-event_link_ptn = re.compile(r"&code=(\d{7})&sex=(\d)&event=(\d)&distance=(\d)") # "/swims/ViewResult?h=V1100&code=0919601&sex=1&event=5&distance=4"
-
-# DOM探索木をURLから生成
-def pour_soup(url):
-    sleep(1)
-    req = requests.get(url)
-    req.encoding = "cp932"
-    return BeautifulSoup(req.text, "lxml")
-
-
 
 class Meet(db.Model):
     __tablename__ = 'meets'
@@ -53,37 +35,12 @@ class Meet(db.Model):
     def __str__(self):
         return str((self.id, self.meetid, self.name, self.pool, self.start))
 
-    def __init__(self, meet_id): # meetidを受け取り大会情報を持たせる
+    def __init__(self, meet_id):
         self.meetid = meet_id
         self.area = int(meet_id[:2])
         self.year = int(meet_id[2:4])
         self.code = int(meet_id[-2:])   # 下三桁
-        soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={meet_id}")
-        caption = soup.find("div", class_ = "headder").find_all("td", class_ = "p14b")
-        date = caption[0].string # 2019/04/27 - 2019/04/27  ←caption[0]
-        self.start = date[:10]
-        self.end = date[-10:]
-        matchOb = re.match(meet_caption_ptn, caption[1].string) # 茨城:第42回県高等学校春季　（取手ｸﾞﾘｰﾝｽﾎﾟｰﾂｾﾝﾀｰ） 長水路  ←caption[1]
-        self.name = matchOb.group(1)
-        self.place = matchOb.group(2)
-        self.pool = 0 if matchOb.group(3)=='短水路' else 1
-
-
-# これだけテーブルとして定義されない
-class Event:
-    def __init__(self, link):   # 一種目の情報とURL 1種目の結果一覧画面に紐付けられている
-        matchOb = re.search(event_link_ptn, link) # link = "/swims/ViewResult?h=V1100&code=0919601&sex=1&event=5&distance=4"
-        self.meet_id = matchOb.group(1)
-        self.url = "http://www.swim-record.com" + link
-        self.sex = int(matchOb.group(2))
-        self.style = int(matchOb.group(3))
-        self.distance = int(matchOb.group(4))
-
-    def parse_table(self):
-        soup = pour_soup(self.url)
-        table = soup.find_all("tr", align = "center", bgcolor = False)       # 中央寄せで背景なしクラス指定なし= レコード行
-        lap_tables = soup.find_all("tr", align = "right", id = True, style = True)# このtrは見出しも含むLAPSのテーブル全体
-        return table, lap_tables
+        self.start, self.end, self.name, self.place, self.pool = scraper.meet_info(meet_id)
 
 
 
@@ -103,25 +60,13 @@ class Record(db.Model): #個人種目の１記録
     def __str__(self):
         return str((self.id, self.meetid, self.sex, self.style, self.distance, self.name, self.team, self.grade, self.time))
 
-    def __init__(self, meet_id, sex, style, distance, row, lap_table):
+    def __init__(self, meet_id, sex, style, distance, rank, name, team, grade, time, laps):
         self.meetid = meet_id
         self.sex = sex
         self.style = style
         self.distance = distance
-        data = row.find_all("td")
-        self.name = data[1].string
-        self.team = data[2].string
-        self.grade = data[3].string
-        self.time = data[4].a.string if data[4].a is not None else ""
-        laps = lap_table.find_all("td", width = True)
-        self.laps = [lap.string for lap in laps]
-
-    def fix_raw_data(self):
-        self.name = del_space(self.name)
-        self.team = del_space(self.team)
-        self.grade = del_space(self.grade)
-        self.time = format_time(del_space(self.time))
-        self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
+        _, self.name, self.team, self.grade, self.time, self.laps = (
+            rank, name, team, grade, time, laps)
 
 class Relay(db.Model): #リレーの１記録
     __tablename__ = 'relays'
@@ -143,30 +88,14 @@ class Relay(db.Model): #リレーの１記録
     grade_3 = db.Column(db.String, nullable = True)                   # 第三泳者の学年
     grade_4 = db.Column(db.String, nullable = True)                   # 第四泳者の学年
 
-    def __init__(self, meet_id, sex, style, distance, row, lap_table):
+    def __init__(self, meet_id, sex, style, distance, rank, name, team, grade, time, laps):
         self.meetid = meet_id
         self.sex = sex
         self.style = style
         self.distance = distance
-        data = row.find_all("td")
-        self.rank = data[0].text # data[0].stringだとタグを含んだときにNoneが返されてしまう
-        swimmers = [del_numspace(name) for name in data[1].contents if isinstance(name, element.NavigableString)] # data[1].contentsはbrタグを含む配列
-        count_swimmers = len(swimmers)
-        assert count_swimmers == 1 or count_swimmers == 4
-        self.name_1 = swimmers[0] if count_swimmers == 4 else ""
-        self.name_2 = swimmers[1] if count_swimmers == 4 else ""
-        self.name_3 = swimmers[2] if count_swimmers == 4 else ""
-        self.name_4 = swimmers[3] if count_swimmers == 4 else ""
-        self.team = data[2].string
-        self.time = data[3].a.string if data[3].a is not None else ""
-        laps = lap_table.find_all("td", width = True)
-        self.laps = [lap.string for lap in laps]
-
-    def fix_raw_data(self):
-        self.rank = del_space(self.rank)
-        self.team = del_space(self.team)
-        self.time = format_time(del_space(self.time))
-        self.laps = ",".join([format_time(del_space(lap)) for lap in self.laps])
+        self.rank, names, self.team, _, self.time, self.laps = (
+            rank, name, team, grade, time, laps)
+        self.name_1, self.name_2, self.name_3, self.name_4 = names
 
 
 class Statistics(db.Model): #種目の平均値、標準偏差
@@ -180,7 +109,6 @@ class Statistics(db.Model): #種目の平均値、標準偏差
     average = db.Column(db.Float)                                     # タイムの平均値 100倍秒数値
     std = db.Column(db.Float)                                          # 標準偏差    100倍秒数値
     max500th = db.Column(db.String)                                   # 500番目のタイム。#:##.##書式文字列
-    # max5000th = db.Column(db.String)                                  # 5000番目のタイム。#:##.##書式文字列 設定しないかも
     count = db.Column(db.Integer)                                     # その種目のランキング化したあとの人数
 
     def __init__(self, pool, sex, style, distance, agegroup):
@@ -228,53 +156,29 @@ def calc_deviation(value, average, std):
     return round(res, 1)
 
 
-def add_records(target_meets_ids): # 対象の大会のインスタンス集合を受け取りそれらの記録すべて返す
-    """
-    記録をテーブルに追加する。
-    大会IDが格納されたリストを受け取り、１大会ごとにすべての記録を抽出し、RecordかRelayのインスタンスを生成する
-    """
-    initial_msg = f">>> {len(target_meets_ids)}の大会の全記録の抽出開始"
-    notify_line(initial_msg)
-    print(initial_msg)
+def add_records(target_meets_ids): # 大会IDのリストから１大会ごとにRecordかRelayの行を生成しDBに追加
+    notify_line(f">>> {len(target_meets_ids)}の大会の全記録の抽出開始")
     count_records = 0
-    for id in Takenoko(target_meets_ids, 20):
-        soup = pour_soup(f"http://www.swim-record.com/swims/ViewResult/?h=V1000&code={id}")
-        aTags = soup.find_all("a", class_=True)             # 100m自由形などへのリンクをすべてリストに格納
-        events = [Event(a["href"]) for a in aTags]          # リンクから種目のインスタンス生成
-        for e in events:
-            table, lap_tables = e.parse_table()
-            set_args_4_records = [(e.meet_id, e.sex, e.style, e.distance, row, lap_table) for row, lap_table in zip(table, lap_tables)]
-            if e.style <= 5: # 個人種目＝自由形・背泳ぎ・平泳ぎ・バタフライ・個人メドレー
+    for meet_id in Takenoko(target_meets_ids, 20):
+        for event in scraper.all_events(meet_id):
+            set_args_4_records = event.all_records()
+            if event.is_indivisual:
                 records = [Record(*args) for args in set_args_4_records]
             else:
                 records = [Relay(*args) for args in set_args_4_records]
             count_records += len(records)
-            for r in records:
-                r.fix_raw_data()
             db.session.add_all(records)
             db.session.commit()
 
     total = '{:,}'.format(count_query())
-    complete_msg = f'>>> 全{count_records}件の記録の保存完了 現在：{total}件'
-    notify_line(complete_msg)
-    print(complete_msg)
+    notify_line(f'>>> 全{count_records}件の記録の保存完了 現在：{total}件')
     free()
-
-
-# 特定の年度・地域で開催された大会IDのリストを作成するサブルーチン
-def find_meet(year, area):
-    url = f"http://www.swim-record.com/taikai/{year}/{area}.html"
-    soup = pour_soup(url)
-    #div内での一番最初のtableが競泳、そのなかでリンク先がコードになっているものを探す
-    meet_id_aTags = soup.find("div", class_ = "result_main").find("table", recursive = False).find_all("a", href = meet_link_ptn)
-    id_list = [a["href"][-7:] for a in meet_id_aTags] #大会コード七桁のみ抽出
-    return id_list
 
 def add_meets(year):
     print(f">>> 20{year}年開催の大会IDの収集を開始")
     meet_ids = []
     for area in Takenoko(area_list):
-        meet_ids.extend(find_meet(year, area))
+        meet_ids.extend(scraper.find_meet(year, area))
     print(f'>>> 20{year}年に開催される全{len(meet_ids)}の大会情報を取得中')
     meets = [Meet(id) for id in Takenoko(meet_ids, 20)]
     db.session.add_all(meets)
@@ -398,8 +302,8 @@ def ranking():
 @app.route('/search', methods=['GET','POST'])
 def search():
     if request.method == 'POST':
-        name = request.form.get('name', '').replace(' ','')
-        team = request.form.get('team', '').replace(' ','')
+        name = request.form.get('name', '').replace(' ','').replace('_','').replace('%','')
+        team = request.form.get('team', '').replace(' ','').replace('_','').replace('%','')
         exact = True if request.form.get('exact', '') == 'true' else False
     else:
         name = request.args.get('name')
@@ -450,6 +354,7 @@ def manegement(command=None):
 
     elif command == 'deleteForeign':
         count = db.session.query(Record).filter(Record.team.in_(foreign_teams)).count()
+        # リストでフィルターをかけているが、deleteの引数synchronize_sessionのデフォルト値'evaluate'ではこれをサポートしていない(らしい)からFalseを指定する
         db.session.query(Record).filter(Record.team.in_(foreign_teams)).delete(synchronize_session = False)
         db.session.commit()
         return f'外国人チームの記録を削除。件数：{count}'
