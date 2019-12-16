@@ -19,6 +19,7 @@ app.config.from_object('config.Develop' if os.name == 'nt' else 'config.Product'
 db = SQLAlchemy(app)
 manegement_url = os.environ['ADMIN_URL']
 
+
 class Meet(db.Model):
     __tablename__ = 'meets'
     id = db.Column(db.Integer, primary_key=True)                      # 連番で振られるid
@@ -237,7 +238,6 @@ def dashboard():
     return render_template('dashboard.html', s = swimmer)
 
 
-# TODO: リレーの記録も結合させる
 @app.route('/ranking',  methods = ['POST', 'GET'])
 def ranking():
     pool = request.args.get('pool', 1, type=int)
