@@ -19,6 +19,8 @@ app.config.from_object('config.Develop' if os.name == 'nt' else 'config.Product'
 db = SQLAlchemy(app)
 manegement_url = os.environ['ADMIN_URL']
 
+# 今からブランチ使いまーす
+# これはdevelopブランチにcommitします
 
 class Meet(db.Model):
     __tablename__ = 'meets'
