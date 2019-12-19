@@ -12,7 +12,7 @@ if os.name == 'nt': # ローカルのWindows環境なら、環境変数をその
 import analyzer
 from constant import style_2_num, distance_2_num, area_list, style_2_japanese, style_and_distance, japanese_grades
 import scraper
-from task_manager import Takenoko, free, busy, get_status, notify_line
+from task_manager import Takenoko, status, notify_line
 
 app = Flask(__name__)
 app.config.from_object('config.Develop' if os.name == 'nt' else 'config.Product')
@@ -103,7 +103,7 @@ def analyze_all():
         del records
         db.session.commit()
     notify_line('全種目の分析を完了')
-    free()
+    status.free()
 
 def calc_deviation(value, mean, std):
     answer = (value - mean) / std * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
@@ -126,7 +126,7 @@ def add_records(target_meets_ids): # 大会IDのリストから１大会ごと�
         db.session.commit()
 
     notify_line(f'>>> 全{count_records}件の記録の保存完了 現在：{format(total_count(), ",")}件')
-    free()
+    status.free()
 
 def add_meets(year):
     print(f">>> 20{year}年開催の大会IDの収集を開始")
@@ -139,7 +139,7 @@ def add_meets(year):
     db.session.add_all(meets)
     db.session.commit()
     print(f'>>> 全{len(meets)}の大会情報の保存が完了')
-    free()
+    status.free()
 
 def total_count():
     count = db.session.query(Record).count()
@@ -307,8 +307,8 @@ def search():
 
 
 def check_is_busy():
-    status = get_status()
-    is_busy = True if status == 'busy' else False
+    s = status.get_status()
+    is_busy = True if s == 'busy' else False
     return is_busy
 
 def all_threads():
@@ -401,7 +401,7 @@ def admin_with_threads(command): # 並列処理実行
             th = threading.Thread(target=analyze_all, name='stats')
             obj = 'analyze_all'
 
-        busy()
+        status.busy()
         db.session.commit()
         th.start()
     return render_template(
