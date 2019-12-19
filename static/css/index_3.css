@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:700|Noto+Sans+JP:300,700|Roboto:100,400,700,900&display=swap&subset=japanese');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:700|Noto+Sans+JP:300,400,700|Roboto:300,400,700&display=swap&subset=japanese');
 :root {
   --men: #4fc0e8;
   --women: #ed85c0;
@@ -8,7 +8,7 @@ html {
 }
 body {
   font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
 }
 
@@ -149,7 +149,7 @@ header .placeholder {
   left: 0;
   right: 0;
   margin: auto;
-  width: 70%;
+  width: 80%;
 }
 
 #hero form {
@@ -157,20 +157,21 @@ header .placeholder {
   display: block;
   background: #fffd;
   border-radius: 4px;
-  padding-left: 25px;
+  padding-left: 30px;
   box-shadow: 0 2px 10px rgba(0,0,0,.2);
 }
 #hero form input {
   outline: none;
   width: 100%;
   font-weight: bold;
-  line-height: 28px;
-  font-size: 1.2rem;
+  line-height: 32px;
+  font-size: 1.4rem;
 }
 #hero form i {
   position: absolute;
   left: 7px;
-  top: 8px;
+  top: 9px;
+  font-size: 1.4rem;
   color: #888;
 }
 

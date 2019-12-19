@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="email=no,telephone=no,address=no" />
+  <title>Admin | Swimmers Zero</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="/static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="/static/img/apple-touch-icon-180x180.png">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+  <div class="slashes">
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+  </div>
+
+  <header>
+    <!-- <div class="caution">
+      <p>Authorized Personnel Only</p>
+    </div> -->
+    <div class="caption">
+      <div class="rect"></div>
+      <div class="char">
+        <p>管理者用系統制御画面</p>
+        <p>Swimmers Zero System Control</p>
+      </div>
+      <div class="rect"></div>
+    </div>
+  </header>
+
+  {% if show_pane %}
+  <div id="pane">
+    <div class="buttons">
+      {% if is_done %}
+      <div><p>開始</p></div>
+      <div class="active"><p>完了</p></div>
+      {% else %}
+      <div class="active"><p>開始</p></div>
+      <div><p>完了</p></div>
+      {% endif %}
+    </div>
+    <div class="func">
+      <p>OBJECT</p>
+      <p>{{obj}}</p>
+      <p> >>> {{msg}}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if show_rejected %}
+  <div id="denied">
+    {% if invalid_url %}
+    <p>INVALID URL</p>
+    {% else %}
+    <p>SAFETY SYSTEM</p>
+    {% endif %}
+    <p>COMMAND REJECTED</p>
+  </div>
+  {% endif %}
+
+  <div id="threads">
+    <p>{{threads}}</p>
+  </div>
+  <div id="safe">
+    <div class="left">
+      <div class="scales l">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+      {% if is_busy %}
+      <p class="danger">火</p>
+      {% else %}
+      <p>安</p>
+      {% endif %}
+      <div class="scales r">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="sub">
+        {% if is_busy %}
+        <div class="small"><p>実装</p></div>
+        <div class="small"><p>実装</p></div>
+        {% else %}
+        <div class="small"><p>空</p></div>
+        <div class="small"><p>空</p></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="command">
+    <div class="hex" onclick="go('thread/meets')">
+      <img src="/static/img/hex.svg">
+      <p>MEETS</p>
+    </div>
+    <div class="hex" onclick="go('thread/records')">
+      <img src="/static/img/hex.svg">
+      <p>RECORDS</p>
+    </div>
+    <div class="hex" onclick="go('thread/stats')">
+      <img src="/static/img/hex.svg">
+      <p>STATS</p>
+    </div>
+    <div class="hex" onclick="go('foreign')">
+      <img src="/static/img/hex.svg">
+      <p>FOREIGN</p>
+    </div>
+    <div class="hex">
+      <img src="/static/img/hex.svg">
+      <p>GOTO TOP</p>
+      <a href="/"></a>
+    </div>
+  </div>
+
+  <div id="form">
+    <form method="get" action="" name="args">
+      <div class="row">
+        <p>range</p>
+        <input name="range" type="text">
+      </div>
+      <div class="row">
+        <p>from</p>
+        <input name="from" type="text">
+      </div>
+      <div class="row">
+        <p>to</p>
+        <input name="to" type="text">
+      </div>
+      <div class="row">
+        <p>year</p>
+        <input name="year" type="text">
+      </div>
+    </form>
+  </div>
+
+  <footer>
+
+  </footer>
+
+  <div class="slashes">
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+    <div class="slash"></div>
+  </div>
+
+
+  <script>
+  {% autoescape false %}
+  function check_empty(element) {
+    if(element.value == '') {
+      element.setAttribute('disabled', '0');
+    };
+  };
+  function go(target) {
+    var path = location.pathname;
+    var url = "{{admin_url}}" + '/' + target;
+    var forms = document.args;
+    for(var i = 0; i < 4; i++) {
+      var elm = forms[i];
+      check_empty(elm);
+    };
+    document.args.action = url;
+    document.args.submit();
+  };
+  {% endautoescape %}
+  </script>
+</body>
+
+</html>
