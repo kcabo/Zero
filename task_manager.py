@@ -57,8 +57,8 @@ def get_status():
     return status
 
 
-url = "https://notify-api.line.me/api/notify"
 def notify_line(message):
+    url = "https://notify-api.line.me/api/notify"
     print(message)
     access_token = os.environ['LINE_NOTIFY_ACCESS_TOKEN']
     headers = {'Authorization': 'Bearer ' + access_token}

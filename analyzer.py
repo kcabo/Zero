@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import re
 
+from constant import japanese_grades
+
 num_2_style = {
     1:"Fr",
     2:"Ba",
@@ -22,28 +24,35 @@ num_2_distance = {
     7:1500
 }
 
-fmt_ptn = re.compile('([0-9]{1,2}):([0-9]{2}).([0-9]{2})') #15分とかのときは：の前は2文字になる
-def fmt_2_val(fmt):
-    match = re.match(fmt_ptn, fmt)
-    min = int(match.group(1))
-    sec = int(match.group(2)) * 100 + int(match.group(3))
-    return min * 6000 + sec #100倍した秒数
+def val_2_fmt(val):
+    if val > 0:
+        min = val // 6000
+        hecto_seconds = val % 6000
+        sec = hecto_seconds // 100
+        centi_sec = hecto_seconds % 100
+        return f'{min}:{format(sec,"02")}.{format(centi_sec,"02")}'
+    else:
+        return ''
 
 class Swimmer:
     def __init__(self, records):
         converted = map(lambda x:(x.Record.id,
-                            num_2_style[x.Record.style],
-                            num_2_distance[x.Record.distance],
+                            x.Record.event,
                             x.Record.time,
                             'l' if x.Meet.pool == 1 else 's',
                             x.Meet.start,
                             x.Meet.name), records)
-        # 全レコード：id, スタイル　距離　記録　水路(l,m)　日付　大会名 のデータフレームを作成
-        df = pd.DataFrame(converted, columns = ['id', 'style', 'distance', 'time', 'pool', 'start', 'meet_name'])
-        df['event'] = df['distance'].astype(str) + df['style']          # 距離を文字列変換してから結合→50Frの形に
 
-        self.records = df.sort_values(['start', 'style', 'distance', 'time'], ascending=[False, True, True, True]) # 日付のみ新しい順に
-        df = df[df['time'] != ""] # 空白タイム削除
+        # 全レコード：id, 種目 百倍秒数　水路(l,m)　日付(整数)　大会名 のデータフレームを作成
+        df = pd.DataFrame(converted, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name'])
+        df['style'] = df['event_val'].map(lambda x : num_2_style[(x // 10) % 10])      # 3桁のeventのうちの真ん中の桁(泳法)を取り出し文字列に変換
+        df['distance'] = df['event_val'].map(lambda x : num_2_distance[x % 10])        # 3桁のうち1の位の距離を取り出し文字列変換
+        df['event'] = df['distance'].astype(str) + df['style']                         # 距離を文字列変換してから結合→50Frの形に
+        df['time'] = df['time_val'].map(val_2_fmt) # 読める形にフォーマット
+        df['start'] = df['start'].map(lambda x: datetime.datetime.strptime(str(x), '%Y%m%d').strftime('%Y/%m/%d'))
+
+        self.records = df.sort_values(['start', 'event_val', 'time_val'], ascending=[False, True, True]) # 日付のみ新しい順に
+        df = df[df['time_val'] > 0] # 空白タイム削除
 
         self.total_count = len(df)
         self.count_style_long = self.count_style(df, "l") # 各種目に何回出場したか
@@ -54,11 +63,11 @@ class Swimmer:
         s1 = event_counts.index[0] if len(event_counts) > 0 else ''  # 出場種目が棄権しか無いと得意種目すら無い
         s2 = event_counts.index[1] if len(event_counts) > 1 else ''  # 1種目しか出場しておらずS2が無いときは空白
         self.s1 = {'event_name': s1}
+        self.s1['event_number'] = df[df['event']==s1].iloc[0]['event_val'] # 偏差値導出用のEventnumber
         self.s2 = {'event_name': s2}
 
         from_date = datetime.datetime(2019,4,1) # 経過日数の基準となる日付
         df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化 基準日からの経過日数
-        df['time_val'] = df['time'].map(fmt_2_val) # 100倍の秒数変換した列を生成
         df.sort_values(['pool', 'event', 'days', 'time_val'], inplace=True) # すべて昇順で並び替え
         df.drop_duplicates(subset=['pool', 'event', 'days'], inplace=True) # 同じ日の同じレース（予選と決勝など）は早い方のタイムを残す
 
@@ -85,7 +94,7 @@ class Swimmer:
         self.bests = bests
 
 
-    def count_style(self, df, pool): # ['Fr', 'Ba', 'Br', 'Fly', 'IM'] の順のリストを生成
+    def count_style(self, df, pool): # ['Fr', 'Ba', 'Br', 'Fly', 'IM'] の順で出現頻度のリストを生成
         filtered = df[df['pool'] == pool]
         dic = filtered['style'].value_counts().to_dict()
         return [dic.get(s, 0) for s in ['Fr', 'Ba', 'Br', 'Fly', 'IM']]
@@ -124,13 +133,15 @@ class Candidate:
         self.id = df.iloc[0]['id']
         self.sex = 'men' if df.iloc[0]['sex'] == 1 else 'women'
         self.name = df.iloc[0]['name']
-        self.grade = df.iloc[0]['grade']
+        grade = df.iloc[0]['grade']
+        self.grade = japanese_grades[grade]
         teams = df['team'].unique()
         self.teams = teams.tolist()
 
 def raise_candidates(records):
-    fixed = map(lambda x:(x.id, x.sex, x.name, x.team, x.grade), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'sex', 'name', 'team', 'grade'])
+    fixed = map(lambda x:(x.id, x.event, x.name, x.team, x.grade), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'event', 'name', 'team', 'grade'])
+    df['sex'] = df['event'] // 100
     unique = df.drop_duplicates(subset=['sex', 'name', 'grade']).copy()
     unique.sort_values(['sex', 'name'], inplace=True)
 
@@ -141,34 +152,48 @@ def raise_candidates(records):
 
     return candidates
 
+def format_grade_and_time(df):
+    df['time'] = df['time_val'].map(val_2_fmt)
+    df['grade'] = df['grade'].map(lambda x: japanese_grades[x])
+    return df
+
 def output_ranking(records):
     fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time'])
-    df['time_val'] = df['time'].map(fmt_2_val) # 記録を100倍の秒数に
+    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time_val'])
     df.sort_values(['time_val'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
-    # df = df.replace({'grade': {'学':' '}})
     df.reset_index(drop=True, inplace=True)
     return df
 
+
 def compile_statistics(records, agegroup):
+    # agegroup ... 0全体・1小学・2中学・3高校・4大学・5一般
+    grades_list = [[], [1,2,3,4,5,6], [7,8,9], [10,11,12], [13,14,15,16,17,18], [19]]
     df = output_ranking(records)
-    if agegroup == '全体':
+    if agegroup == 0:
         vals = df['time_val']
-        max500th = df.at[499, 'time'] if len(df) >= 500 else '99:99.00'
+        border = int(df.at[499, 'time_val']) if len(df) >= 500 else 999999 # 500人もランキングがいなかったなら99万をセット
     else:
-        vals = df[df['grade'].str.startswith(agegroup)]['time_val'] # 大学、などで学年が始まる行のみ取り出し
-        max500th = ''
+        target_grades = grades_list[agegroup] # 対象の学年のリストを取り出す
+        vals = df[df['grade'].isin(target_grades)]['time_val']
+        border = 0
     count = len(vals)
-    if count < 2:
-        return None, None, None, count
+    if count < 2: # データ少ないと統計値計算できない
+        return None, None, None, None, None, None, count
     else:
+        # 外れ値除くための範囲を決める
         q1 = vals.quantile(.25)
         q3 = vals.quantile(.75)
         iqr = q3-q1
         lower_limit = q1 - iqr * 1.5
         upper_limit = q3 + iqr * 1.5
-        desc = vals[(vals > lower_limit) & (vals < upper_limit)].describe() # 外れ値除去
+
+        # 外れ値除外したやつの要約統計量を取得
+        desc = vals[(vals > lower_limit) & (vals < upper_limit)].describe()
+        mean = round(desc['mean'], 2) # 小数点第2位までで四捨五入
         std = round(desc['std'], 2)
-        average = round(desc['mean'], 2)
-        return average, std, max500th, count
+        new_q1 = desc['25%']
+        new_q2 = desc['50%']
+        new_q3 = desc['75%']
+
+        return mean, std, new_q1, new_q2, new_q3, border, count
