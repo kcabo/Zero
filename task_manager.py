@@ -37,24 +37,25 @@ class Takenoko:
         self.current += 1
         return self.list[index]
 
-path = 'memo/status'
-def update_status(status):
-    with open(path, 'w') as f:
-        f.write(status)
-    print(f'status updated: {status}')
+class Status:
+    path = 'memo/status'
+    def update_status(self, status):
+        with open(self.path, 'w') as f:
+            f.write(status)
+        print(f'status updated: {status}')
 
-def free():
-    update_status('free')
+    def free(self):
+        self.update_status('free')
 
-def busy():
-    update_status('busy')
+    def busy(self):
+        self.update_status('busy')
 
-def get_status():
-    with open(path, 'r') as f:
-        status = f.read()
-    if status not in ['busy', 'free']:
-        raise Exception('ステータスファイルの値が無効です！')
-    return status
+    def get_status(self):
+        with open(self.path, 'r') as f:
+            status = f.read()
+        if status not in ['busy', 'free']:
+            raise Exception('ステータスファイルの値が無効です！')
+        return status
 
 
 def notify_line(message):
@@ -66,5 +67,6 @@ def notify_line(message):
     r = requests.post(url, headers=headers, params=payload)
     return r
 
+status = Status()
 if __name__ == '__main__':
-    free()
+    status.free()
