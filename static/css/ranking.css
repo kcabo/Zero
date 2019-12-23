@@ -272,6 +272,13 @@ main {
   line-height: 1;
 }
 
+#config input[type=checkbox] {
+  display: none;
+}
+#filter:checked + .test {
+  background: olive
+}
+
 .modal {
   position: fixed;
   top: 100vh;
