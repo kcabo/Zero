@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="email=no,telephone=no,address=no" />
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <title>最新ランキング - Swimmers Zero</title>
+  <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
+  <meta name="robots" content="nofollow">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/css/ranking.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-149393969-2');
+  </script>
+  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div id="header-wrapper">
+    <header>
+      <div id="burger" onclick="activate(this);activate(menu)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+      <div class="placeholder"></div>
+    </header>
+  </div>
+
+  <div id="menu" class="">
+    <div id="search">
+      <form method="post" action="/search">
+        <input name="name" type="text" placeholder="選手を検索">
+        <input type="submit" value="">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+    <div class="item">
+    </div>
+  </div>
+
+  <main>
+
+    <div id="config">
+      <div id="group" class="deactivate">
+        <p class="current" onclick="activate(group);activate(overlay)">
+          <i id="arrow" class="fas fa-angle-right"></i>男子 長水路
+        </p>
+        <div class="items">
+          <p>男子 長水路</p>
+          <p>女子 長水路</p>
+          <p>女子 長水路</p>
+        </div>
+      </div>
+
+      <div class="title">
+        <div class="select" onclick="activate(selectEvents);activate(overlay)">
+          <i class="fas fa-cog"></i>
+          <p>種目変更</p>
+        </div>
+        <div class="event-name">
+          <p>2019年</p>
+          <p>50m 自由形</p>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+    <div id="phhh">
+
+    </div>
+
+  </main>
+
+  <div id="overlay"></div>
+
+  <div id="selectEvents" class="deactivate modal">
+    <div class="window">
+      <div class="events">
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>50</p></div>
+        </div>
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>100</p></div>
+        </div>
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>200</p></div>
+        </div>
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>400</p></div>
+        </div>
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>800</p></div>
+        </div>
+        <div class="card fr">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>1500</p></div>
+        </div>
+
+        <div class="card ba">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card ba">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card ba">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card br">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card br">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card br">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card fly">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>50</p></div>
+        </div>
+        <div class="card fly">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>100</p></div>
+        </div>
+        <div class="card fly">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>200</p></div>
+        </div>
+
+        <div class="card im">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>100</p></div>
+        </div>
+        <div class="card im">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>200</p></div>
+        </div>
+        <div class="card im">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>400</p></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="close">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
+  </div>
+
+  <footer>
+    <p><span>Reo</span> Kanzaki</p>
+    <img src="static/img/kcabo.svg" alt="kcabo">
+    <a href="https://kcabo.github.io/"></a>
+  </footer>
+
+
+
+  <script>
+    var deactivate_elms = document.getElementsByClassName('deactivate');
+    var overlay = document.getElementById('overlay');
+    var close = document.getElementsByClassName('close')[0];
+
+    function activate(target) {
+      target.classList.toggle("active");
+    };
+    function deactivate_all() {
+      for (var i = 0; i < deactivate_elms.length; i++) {
+        deactivate_elms[i].classList.remove("active");
+      };
+      overlay.classList.remove("active");
+    }
+
+    overlay.addEventListener('click', deactivate_all, false)
+    close.addEventListener('click', deactivate_all, false)
+
+  </script>
+</body>
+
+</html>

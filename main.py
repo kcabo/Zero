@@ -328,6 +328,7 @@ def admin_no_offer():
 @app.route(manegement_url + '/<command>')
 def admin_without_threads(command):
     msg = ''
+    obj = ''
     if command == 'create':
         db.create_all()
         obj = 'create_all'
@@ -412,7 +413,7 @@ def admin_with_threads(command): # 並列処理実行
         msg = msg,
         show_rejected = show_rejected,
         invalid_url = invalid_url,
-        is_busy = is_busy,
+        is_busy = True,
         threads = all_threads(),
         admin_url = manegement_url
     )
