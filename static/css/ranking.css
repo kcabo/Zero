@@ -180,7 +180,7 @@ main {
   opacity: 1;
 }
 
-#phhh { height: 300px;}
+#phhh { height: 600px;}
 
 #config {
   padding: 10px;
@@ -281,14 +281,16 @@ main {
   margin: auto;
   max-width: 800px;
   visibility: hidden;
-  transition: all .3s 0s;
+  transition: all .4s 0s;
   background: white;
   padding: 10px;
   border-radius: 15px;
+  z-index: 3;
+  opacity: 0;
 }
 .modal.active {
-  z-index: 10;
   visibility: visible;
+  opacity: 1;
   top: 100px;
 }
 .modal .close {
