@@ -1,0 +1,4236 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>Ranking | Swimmers Zero</title>
+  <meta charset="utf-8">
+  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <link rel="stylesheet" href="static/css/common.css">
+  <link rel="stylesheet" href="static/css/ranking_7.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-149393969-2');
+  </script>
+</head>
+
+<body>
+  <nav>
+    <a href="/"><img src="static/img/zero_logo_white_optimized.svg" alt="Zero" id="logo"></a>
+    <form id="search-container" method="post" action="/search">
+      <input name="name" type="text" placeholder="選手を検索">
+      <input type="submit" value=""><span></span>
+    </form>
+  </nav>
+
+  <main>
+
+    <label for="toggle">
+      <div id="header" class="men" ontouchstart="">
+        50m 自由形<span>/ 男子 長水路</span>
+      </div>
+    </label>
+
+    <input type="checkbox" id="toggle">
+    <div id="options">
+
+      <div id="tab">
+        <div class="men">
+          <a href="?pool=0&sex=1&style=Fr&amp;distance=50">男子<br>短水路</a>
+        </div>
+        <div class="men selected">
+          <a href="?pool=1&sex=1&style=Fr&amp;distance=50">男子<br>長水路</a>
+        </div>
+        <div class="women">
+          <a href="?pool=0&sex=2&style=Fr&amp;distance=50">女子<br>短水路</a>
+        </div>
+        <div class="women">
+          <a href="?pool=1&sex=2&style=Fr&amp;distance=50">女子<br>長水路</a>
+        </div>
+      </div>
+
+      <div id="style-buttons">
+        <div id="fr" class="row">
+          <span>自由形</span>
+          <div class="column">
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=50">50</a>
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=400">400</a>
+          </div>
+          <div class="column">
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=100">100</a>
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=800">800</a>
+          </div>
+          <div class="column">
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=200">200</a>
+            <a href="?pool=1&amp;sex=1&style=Fr&distance=1500">1500</a>
+          </div>
+        </div>
+        <div id="ba" class="row">
+          <span>背泳ぎ</span>
+          <a href="?pool=1&amp;sex=1&style=Ba&distance=50">50</a>
+          <a href="?pool=1&amp;sex=1&style=Ba&distance=100">100</a>
+          <a href="?pool=1&amp;sex=1&style=Ba&distance=200">200</a>
+        </div>
+        <div id="br" class="row">
+          <span>平泳ぎ</span>
+          <a href="?pool=1&amp;sex=1&style=Br&distance=50">50</a>
+          <a href="?pool=1&amp;sex=1&style=Br&distance=100">100</a>
+          <a href="?pool=1&amp;sex=1&style=Br&distance=200">200</a>
+        </div>
+        <div id="fly" class="row">
+          <span>バタフライ</span>
+          <a href="?pool=1&amp;sex=1&style=Fly&distance=50">50</a>
+          <a href="?pool=1&amp;sex=1&style=Fly&distance=100">100</a>
+          <a href="?pool=1&amp;sex=1&style=Fly&distance=200">200</a>
+        </div>
+        <div id="im" class="row">
+          <span>個人メドレー</span>
+          <a href="?pool=1&amp;sex=1&style=IM&distance=100">100</a>
+          <a href="?pool=1&amp;sex=1&style=IM&distance=200">200</a>
+          <a href="?pool=1&amp;sex=1&style=IM&distance=400">400</a>
+        </div>
+      </div>
+
+      <div id="filter">
+        <p>Filter</p>
+        <form method="post" action="?pool=1&amp;sex=1&style=Fr&amp;distance=50" name="gradeFilter">
+          <input type="checkbox" name="grade" value="1 "id="elm1" >
+          <label for="elm1">小学1</label>
+          <input type="checkbox" name="grade" value="2 "id="elm2" >
+          <label for="elm2">小学2</label>
+          <input type="checkbox" name="grade" value="3 "id="elm3" >
+          <label for="elm3">小学3</label>
+          <input type="checkbox" name="grade" value="4 "id="elm4" >
+          <label for="elm4">小学4</label>
+          <input type="checkbox" name="grade" value="5 "id="elm5" >
+          <label for="elm5">小学5</label>
+          <input type="checkbox" name="grade" value="6 "id="elm6" >
+          <label for="elm6">小学6</label>
+          <input type="checkbox" name="grade" value="7 "id="jrh1" >
+          <label for="jrh1">中学1</label>
+          <input type="checkbox" name="grade" value="8 "id="jrh2" >
+          <label for="jrh2">中学2</label>
+          <input type="checkbox" name="grade" value="9 "id="jrh3" >
+          <label for="jrh3">中学3</label>
+          <input type="checkbox" name="grade" value="10" id="snh1" >
+          <label for="snh1">高校1</label>
+          <input type="checkbox" name="grade" value="11" id="snh2" >
+          <label for="snh2">高校2</label>
+          <input type="checkbox" name="grade" value="12" id="snh3" >
+          <label for="snh3">高校3</label>
+          <input type="checkbox" name="grade" value="13" id="unv1" >
+          <label for="unv1">大学1</label>
+          <input type="checkbox" name="grade" value="14" id="unv2" >
+          <label for="unv2">大学2</label>
+          <input type="checkbox" name="grade" value="15" id="unv3" >
+          <label for="unv3">大学3</label>
+          <input type="checkbox" name="grade" value="16" id="unv4" >
+          <label for="unv4">大学4</label>
+          <input type="checkbox" name="grade" value="17" id="unv5" >
+          <label for="unv5">大学5</label>
+          <input type="checkbox" name="grade" value="18" id="unv6" >
+          <label for="unv6">大学6</label>
+          <input type="checkbox" name="grade" value="19" id="gen" >
+          <label for="gen">一般</label>
+          <input type="submit" value="絞り込む">
+        </form>
+      </div>
+
+    </div>
+
+    <table class="men"><tbody>
+
+      <tr>
+        <td><span>1</span></td>
+        <td><a href="/dashboard?id=2992">房野泰知</a></td>
+        <td>0:23.87</td>
+        <td><span>大学1</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>2</span></td>
+        <td><a href="/dashboard?id=13770">大谷遥斗</a></td>
+        <td>0:24.51</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('白鴎大足利')">白鴎大足利</td>
+      </tr>
+
+      <tr>
+        <td><span>3</span></td>
+        <td><a href="/dashboard?id=2993">中谷友</a></td>
+        <td>0:24.61</td>
+        <td><span>一般</span></td>
+        <td onclick="search_team('岡大教職')">岡大教職</td>
+      </tr>
+
+      <tr>
+        <td><span>4</span></td>
+        <td><a href="/dashboard?id=2994">三宅琉暉</a></td>
+        <td>0:24.62</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>5</span></td>
+        <td><a href="/dashboard?id=14948">設樂航希</a></td>
+        <td>0:24.67</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ流山')">ｾﾝﾄﾗﾙ流山</td>
+      </tr>
+
+      <tr>
+        <td><span>6</span></td>
+        <td><a href="/dashboard?id=2995">真部潤</a></td>
+        <td>0:24.77</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>7</span></td>
+        <td><a href="/dashboard?id=14949">砂村明彦</a></td>
+        <td>0:25.11</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ銚子')">ﾙﾈｻﾝｽ銚子</td>
+      </tr>
+
+      <tr>
+        <td><span>8</span></td>
+        <td><a href="/dashboard?id=2996">杉井郁哉</a></td>
+        <td>0:25.11</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>9</span></td>
+        <td><a href="/dashboard?id=14950">遠藤優太</a></td>
+        <td>0:25.13</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ｺﾅﾐ津田沼')">ｺﾅﾐ津田沼</td>
+      </tr>
+
+      <tr>
+        <td><span>10</span></td>
+        <td><a href="/dashboard?id=14951">加藤遥翔</a></td>
+        <td>0:25.17</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ﾒｶﾞﾛｽ柏')">ﾒｶﾞﾛｽ柏</td>
+      </tr>
+
+      <tr>
+        <td><span>11</span></td>
+        <td><a href="/dashboard?id=14952">久保翔希</a></td>
+        <td>0:25.24</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('VERDI')">VERDI</td>
+      </tr>
+
+      <tr>
+        <td><span>12</span></td>
+        <td><a href="/dashboard?id=14953">鏑木悠斗</a></td>
+        <td>0:25.26</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('柏洋･南')">柏洋･南</td>
+      </tr>
+
+      <tr>
+        <td><span>13</span></td>
+        <td><a href="/dashboard?id=13741">岩本幸大</a></td>
+        <td>0:25.39</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｽｳｨﾝ大田原')">ｽｳｨﾝ大田原</td>
+      </tr>
+
+      <tr>
+        <td><span>14</span></td>
+        <td><a href="/dashboard?id=13771">手塚友己</a></td>
+        <td>0:25.39</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>15</span></td>
+        <td><a href="/dashboard?id=6968">小林春樹</a></td>
+        <td>0:25.43</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('古河第三')">古河第三</td>
+      </tr>
+
+      <tr>
+        <td><span>16</span></td>
+        <td><a href="/dashboard?id=14954">中村海晟</a></td>
+        <td>0:25.47</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('花見川SC')">花見川SC</td>
+      </tr>
+
+      <tr>
+        <td><span>17</span></td>
+        <td><a href="/dashboard?id=2997">大槻優斗</a></td>
+        <td>0:25.55</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>18</span></td>
+        <td><a href="/dashboard?id=2998">松崎耀義</a></td>
+        <td>0:25.59</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('日生SS')">日生SS</td>
+      </tr>
+
+      <tr>
+        <td><span>19</span></td>
+        <td><a href="/dashboard?id=13742">松浦幸大</a></td>
+        <td>0:25.65</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>20</span></td>
+        <td><a href="/dashboard?id=6942">濵野崚太郎</a></td>
+        <td>0:25.70</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('鉾田第二')">鉾田第二</td>
+      </tr>
+
+      <tr>
+        <td><span>21</span></td>
+        <td><a href="/dashboard?id=350">松本竣汰</a></td>
+        <td>0:25.72</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('JSS柏原')">JSS柏原</td>
+      </tr>
+
+      <tr>
+        <td><span>22</span></td>
+        <td><a href="/dashboard?id=2999">村上太一</a></td>
+        <td>0:25.76</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>23</span></td>
+        <td><a href="/dashboard?id=13772">飯塚匠海</a></td>
+        <td>0:25.77</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>24</span></td>
+        <td><a href="/dashboard?id=13773">水沼颯太</a></td>
+        <td>0:25.80</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('FｰBIG')">FｰBIG</td>
+      </tr>
+
+      <tr>
+        <td><span>25</span></td>
+        <td><a href="/dashboard?id=3000">十川裕士</a></td>
+        <td>0:25.86</td>
+        <td><span>大学4</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>26</span></td>
+        <td><a href="/dashboard?id=13774">中三川侑汰</a></td>
+        <td>0:25.92</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('FｰBIG')">FｰBIG</td>
+      </tr>
+
+      <tr>
+        <td><span>27</span></td>
+        <td><a href="/dashboard?id=3001">野瀬大暉</a></td>
+        <td>0:25.97</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('OSK総社')">OSK総社</td>
+      </tr>
+
+      <tr>
+        <td><span>28</span></td>
+        <td><a href="/dashboard?id=6950">岡本大輝</a></td>
+        <td>0:26.01</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('藤代')">藤代</td>
+      </tr>
+
+      <tr>
+        <td><span>29</span></td>
+        <td><a href="/dashboard?id=6969">山越青空</a></td>
+        <td>0:26.03</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('古河第一')">古河第一</td>
+      </tr>
+
+      <tr>
+        <td><span>30</span></td>
+        <td><a href="/dashboard?id=3002">池嶋勇人</a></td>
+        <td>0:26.05</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('STY･SC')">STY･SC</td>
+      </tr>
+
+      <tr>
+        <td><span>31</span></td>
+        <td><a href="/dashboard?id=13775">福田紫悠</a></td>
+        <td>0:26.10</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>32</span></td>
+        <td><a href="/dashboard?id=3003">岡響希</a></td>
+        <td>0:26.12</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ妹尾')">ｵｰﾊﾞﾙ妹尾</td>
+      </tr>
+
+      <tr>
+        <td><span>33</span></td>
+        <td><a href="/dashboard?id=3004">根木悠一郎</a></td>
+        <td>0:26.16</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>34</span></td>
+        <td><a href="/dashboard?id=6970">山越春空</a></td>
+        <td>0:26.16</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('古河第二')">古河第二</td>
+      </tr>
+
+      <tr>
+        <td><span>35</span></td>
+        <td><a href="/dashboard?id=14955">田中優真</a></td>
+        <td>0:26.17</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｺﾅﾐ津田沼')">ｺﾅﾐ津田沼</td>
+      </tr>
+
+      <tr>
+        <td><span>36</span></td>
+        <td><a href="/dashboard?id=6943">風間智貴</a></td>
+        <td>0:26.19</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('清真学園')">清真学園</td>
+      </tr>
+
+      <tr>
+        <td><span>37</span></td>
+        <td><a href="/dashboard?id=351">花谷元汰</a></td>
+        <td>0:26.24</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>38</span></td>
+        <td><a href="/dashboard?id=14956">田嶋直志</a></td>
+        <td>0:26.26</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ流山')">ｾﾝﾄﾗﾙ流山</td>
+      </tr>
+
+      <tr>
+        <td><span>39</span></td>
+        <td><a href="/dashboard?id=14957">宮崎太志</a></td>
+        <td>0:26.31</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾀﾞﾝﾛｯﾌﾟS松戸')">ﾀﾞﾝﾛｯﾌﾟS松戸</td>
+      </tr>
+
+      <tr>
+        <td><span>40</span></td>
+        <td><a href="/dashboard?id=13776">中村優人</a></td>
+        <td>0:26.31</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ﾋﾞｯｸﾞﾂﾘｰ')">ﾋﾞｯｸﾞﾂﾘｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>41</span></td>
+        <td><a href="/dashboard?id=6971">菊池智哉</a></td>
+        <td>0:26.32</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('古河第一')">古河第一</td>
+      </tr>
+
+      <tr>
+        <td><span>42</span></td>
+        <td><a href="/dashboard?id=13777">原大輝</a></td>
+        <td>0:26.32</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ｱﾝﾀﾚｽSS')">ｱﾝﾀﾚｽSS</td>
+      </tr>
+
+      <tr>
+        <td><span>43</span></td>
+        <td><a href="/dashboard?id=3005">岡本将</a></td>
+        <td>0:26.41</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>44</span></td>
+        <td><a href="/dashboard?id=3006">友滝康介</a></td>
+        <td>0:26.45</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('福山SS')">福山SS</td>
+      </tr>
+
+      <tr>
+        <td><span>45</span></td>
+        <td><a href="/dashboard?id=6972">小林燦</a></td>
+        <td>0:26.46</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('竹園')">竹園</td>
+      </tr>
+
+      <tr>
+        <td><span>46</span></td>
+        <td><a href="/dashboard?id=6924">髙桑琉晟</a></td>
+        <td>0:26.46</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('緑岡')">緑岡</td>
+      </tr>
+
+      <tr>
+        <td><span>47</span></td>
+        <td><a href="/dashboard?id=13743">黒須大幹</a></td>
+        <td>0:26.49</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>48</span></td>
+        <td><a href="/dashboard?id=13744">溝口新大</a></td>
+        <td>0:26.49</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>49</span></td>
+        <td><a href="/dashboard?id=13745">中村伊吹</a></td>
+        <td>0:26.50</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｱﾝﾀﾚｽSS')">ｱﾝﾀﾚｽSS</td>
+      </tr>
+
+      <tr>
+        <td><span>50</span></td>
+        <td><a href="/dashboard?id=14958">工藤昌大</a></td>
+        <td>0:26.61</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙﾎﾟｰﾄ')">ｾﾝﾄﾗﾙﾎﾟｰﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>51</span></td>
+        <td><a href="/dashboard?id=3007">山口裕真</a></td>
+        <td>0:26.61</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ妹尾')">ｵｰﾊﾞﾙ妹尾</td>
+      </tr>
+
+      <tr>
+        <td><span>52</span></td>
+        <td><a href="/dashboard?id=14959">梶原孝太</a></td>
+        <td>0:26.67</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｺﾅﾐ五香')">ｺﾅﾐ五香</td>
+      </tr>
+
+      <tr>
+        <td><span>53</span></td>
+        <td><a href="/dashboard?id=3008">鶴丸治</a></td>
+        <td>0:26.68</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>54</span></td>
+        <td><a href="/dashboard?id=352">更屋大時</a></td>
+        <td>0:26.69</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>55</span></td>
+        <td><a href="/dashboard?id=3009">山口郁真</a></td>
+        <td>0:26.70</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>56</span></td>
+        <td><a href="/dashboard?id=6973">木野内将太</a></td>
+        <td>0:26.70</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('伊奈')">伊奈</td>
+      </tr>
+
+      <tr>
+        <td><span>57</span></td>
+        <td><a href="/dashboard?id=6916">大平拓監</a></td>
+        <td>0:26.71</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茨ｷﾘｽﾄ')">茨ｷﾘｽﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>58</span></td>
+        <td><a href="/dashboard?id=314">入江諒</a></td>
+        <td>0:26.73</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('TX東住吉')">TX東住吉</td>
+      </tr>
+
+      <tr>
+        <td><span>59</span></td>
+        <td><a href="/dashboard?id=315">五輪空雅</a></td>
+        <td>0:26.75</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>60</span></td>
+        <td><a href="/dashboard?id=353">道江雄大</a></td>
+        <td>0:26.75</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('岸和田SS')">岸和田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>61</span></td>
+        <td><a href="/dashboard?id=3010">淵本恵也</a></td>
+        <td>0:26.76</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>62</span></td>
+        <td><a href="/dashboard?id=3011">岩村優志</a></td>
+        <td>0:26.82</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>63</span></td>
+        <td><a href="/dashboard?id=14960">重久陽太</a></td>
+        <td>0:26.83</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾀﾞﾝﾛｯﾌﾟS松戸')">ﾀﾞﾝﾛｯﾌﾟS松戸</td>
+      </tr>
+
+      <tr>
+        <td><span>64</span></td>
+        <td><a href="/dashboard?id=6951">森田遥也</a></td>
+        <td>0:26.88</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('牛久')">牛久</td>
+      </tr>
+
+      <tr>
+        <td><span>65</span></td>
+        <td><a href="/dashboard?id=6952">塩谷大輝</a></td>
+        <td>0:26.89</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('つくば国際高')">つくば国際高</td>
+      </tr>
+
+      <tr>
+        <td><span>66</span></td>
+        <td><a href="/dashboard?id=6953">平田賢太朗</a></td>
+        <td>0:26.94</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('東洋大牛久')">東洋大牛久</td>
+      </tr>
+
+      <tr>
+        <td><span>67</span></td>
+        <td><a href="/dashboard?id=13746">脇田悠希</a></td>
+        <td>0:26.94</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('御幸ヶ原SS')">御幸ヶ原SS</td>
+      </tr>
+
+      <tr>
+        <td><span>68</span></td>
+        <td><a href="/dashboard?id=280">辻翔太</a></td>
+        <td>0:26.95</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>69</span></td>
+        <td><a href="/dashboard?id=6954">林悠輝</a></td>
+        <td>0:26.99</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('土浦第一')">土浦第一</td>
+      </tr>
+
+      <tr>
+        <td><span>70</span></td>
+        <td><a href="/dashboard?id=13778">北山智也</a></td>
+        <td>0:27.00</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>71</span></td>
+        <td><a href="/dashboard?id=6955">井坂行人</a></td>
+        <td>0:27.00</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('国際大東風高')">国際大東風高</td>
+      </tr>
+
+      <tr>
+        <td><span>72</span></td>
+        <td><a href="/dashboard?id=14961">大塚隼人</a></td>
+        <td>0:27.01</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｺﾅﾐ五井')">ｺﾅﾐ五井</td>
+      </tr>
+
+      <tr>
+        <td><span>73</span></td>
+        <td><a href="/dashboard?id=13779">松尾快兎</a></td>
+        <td>0:27.03</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('FｰBIG')">FｰBIG</td>
+      </tr>
+
+      <tr>
+        <td><span>74</span></td>
+        <td><a href="/dashboard?id=13747">村上結哉</a></td>
+        <td>0:27.04</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>75</span></td>
+        <td><a href="/dashboard?id=13689">法師人春龍</a></td>
+        <td>0:27.08</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('FｰBIG')">FｰBIG</td>
+      </tr>
+
+      <tr>
+        <td><span>76</span></td>
+        <td><a href="/dashboard?id=13748">富樫倖祐</a></td>
+        <td>0:27.08</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>77</span></td>
+        <td><a href="/dashboard?id=316">福田陽大</a></td>
+        <td>0:27.09</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>78</span></td>
+        <td><a href="/dashboard?id=3012">中川育海</a></td>
+        <td>0:27.11</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>79</span></td>
+        <td><a href="/dashboard?id=6974">人見啓斗</a></td>
+        <td>0:27.15</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('下妻第一')">下妻第一</td>
+      </tr>
+
+      <tr>
+        <td><span>80</span></td>
+        <td><a href="/dashboard?id=317">青山絢誠</a></td>
+        <td>0:27.16</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('のびやか')">のびやか</td>
+      </tr>
+
+      <tr>
+        <td><span>81</span></td>
+        <td><a href="/dashboard?id=318">三浦一輝</a></td>
+        <td>0:27.17</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('尾崎泉佐野')">尾崎泉佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>82</span></td>
+        <td><a href="/dashboard?id=14962">山上晃司</a></td>
+        <td>0:27.19</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｱｰﾃﾞﾙ')">ｱｰﾃﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>83</span></td>
+        <td><a href="/dashboard?id=13780">椎名亮太</a></td>
+        <td>0:27.19</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>84</span></td>
+        <td><a href="/dashboard?id=319">角谷大空</a></td>
+        <td>0:27.21</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>85</span></td>
+        <td><a href="/dashboard?id=320">松本煌士</a></td>
+        <td>0:27.22</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>86</span></td>
+        <td><a href="/dashboard?id=13781">深井玲央</a></td>
+        <td>0:27.25</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｽｳｨﾝ鹿沼')">ｽｳｨﾝ鹿沼</td>
+      </tr>
+
+      <tr>
+        <td><span>87</span></td>
+        <td><a href="/dashboard?id=321">衣笠駿介</a></td>
+        <td>0:27.32</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('高槻SS')">高槻SS</td>
+      </tr>
+
+      <tr>
+        <td><span>88</span></td>
+        <td><a href="/dashboard?id=6956">薄隼太</a></td>
+        <td>0:27.33</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('常総学院')">常総学院</td>
+      </tr>
+
+      <tr>
+        <td><span>89</span></td>
+        <td><a href="/dashboard?id=14963">加賀屋諒</a></td>
+        <td>0:27.34</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ流山')">ｾﾝﾄﾗﾙ流山</td>
+      </tr>
+
+      <tr>
+        <td><span>90</span></td>
+        <td><a href="/dashboard?id=281">磯部晃希</a></td>
+        <td>0:27.35</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>91</span></td>
+        <td><a href="/dashboard?id=14964">鳥海哲平</a></td>
+        <td>0:27.37</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS八街')">JSS八街</td>
+      </tr>
+
+      <tr>
+        <td><span>92</span></td>
+        <td><a href="/dashboard?id=13749">川村健太</a></td>
+        <td>0:27.37</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>93</span></td>
+        <td><a href="/dashboard?id=14965">小嶋涼太</a></td>
+        <td>0:27.43</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾｸﾘｰﾝｽﾊﾟ市川')">ｾｸﾘｰﾝｽﾊﾟ市川</td>
+      </tr>
+
+      <tr>
+        <td><span>94</span></td>
+        <td><a href="/dashboard?id=6925">小瀧愛太</a></td>
+        <td>0:27.49</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('水戸桜ﾉ牧')">水戸桜ﾉ牧</td>
+      </tr>
+
+      <tr>
+        <td><span>95</span></td>
+        <td><a href="/dashboard?id=13750">小玉智樹</a></td>
+        <td>0:27.53</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ佐野')">ｾﾝﾄﾗﾙ佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>96</span></td>
+        <td><a href="/dashboard?id=3013">池田大晟</a></td>
+        <td>0:27.54</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ﾙ･福山春日')">ﾙ･福山春日</td>
+      </tr>
+
+      <tr>
+        <td><span>97</span></td>
+        <td><a href="/dashboard?id=13751">小野航河</a></td>
+        <td>0:27.60</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>98</span></td>
+        <td><a href="/dashboard?id=6975">瀧井悠貴</a></td>
+        <td>0:27.60</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茗溪学園')">茗溪学園</td>
+      </tr>
+
+      <tr>
+        <td><span>99</span></td>
+        <td><a href="/dashboard?id=3014">大槻玲温</a></td>
+        <td>0:27.66</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>100</span></td>
+        <td><a href="/dashboard?id=13752">池田涼磨</a></td>
+        <td>0:27.67</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>101</span></td>
+        <td><a href="/dashboard?id=322">片桐大空</a></td>
+        <td>0:27.68</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ都島')">ｾﾝﾄﾗﾙ都島</td>
+      </tr>
+
+      <tr>
+        <td><span>102</span></td>
+        <td><a href="/dashboard?id=13753">黒﨑海星</a></td>
+        <td>0:27.70</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>103</span></td>
+        <td><a href="/dashboard?id=215">山下しおん</a></td>
+        <td>0:27.71</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>104</span></td>
+        <td><a href="/dashboard?id=3015">吉岡海音</a></td>
+        <td>0:27.76</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('安全SS')">安全SS</td>
+      </tr>
+
+      <tr>
+        <td><span>105</span></td>
+        <td><a href="/dashboard?id=3016">森乙海</a></td>
+        <td>0:27.78</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>106</span></td>
+        <td><a href="/dashboard?id=3017">木場翔太郎</a></td>
+        <td>0:27.81</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>107</span></td>
+        <td><a href="/dashboard?id=3018">池田陽</a></td>
+        <td>0:27.81</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｱｸﾛﾎﾟｰﾄ')">ｱｸﾛﾎﾟｰﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>108</span></td>
+        <td><a href="/dashboard?id=13754">山崎優斗</a></td>
+        <td>0:27.85</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('御幸ヶ原SS')">御幸ヶ原SS</td>
+      </tr>
+
+      <tr>
+        <td><span>109</span></td>
+        <td><a href="/dashboard?id=3019">久保翔</a></td>
+        <td>0:27.87</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>110</span></td>
+        <td><a href="/dashboard?id=323">横尾健史</a></td>
+        <td>0:27.89</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('交野SS')">交野SS</td>
+      </tr>
+
+      <tr>
+        <td><span>111</span></td>
+        <td><a href="/dashboard?id=13690">大橋亮太</a></td>
+        <td>0:27.91</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>112</span></td>
+        <td><a href="/dashboard?id=14966">猪山竜汰</a></td>
+        <td>0:27.92</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｺﾅﾐ津田沼')">ｺﾅﾐ津田沼</td>
+      </tr>
+
+      <tr>
+        <td><span>113</span></td>
+        <td><a href="/dashboard?id=354">山田凌雅</a></td>
+        <td>0:27.92</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>114</span></td>
+        <td><a href="/dashboard?id=282">水谷琉人</a></td>
+        <td>0:27.95</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｺﾅﾐ香里園')">ｺﾅﾐ香里園</td>
+      </tr>
+
+      <tr>
+        <td><span>115</span></td>
+        <td><a href="/dashboard?id=6917">長山浩之</a></td>
+        <td>0:27.97</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('太田第一')">太田第一</td>
+      </tr>
+
+      <tr>
+        <td><span>116</span></td>
+        <td><a href="/dashboard?id=283">茅野楼</a></td>
+        <td>0:27.98</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>117</span></td>
+        <td><a href="/dashboard?id=3020">岡本崚我</a></td>
+        <td>0:28.00</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｻﾝﾌﾗﾜｰSS')">ｻﾝﾌﾗﾜｰSS</td>
+      </tr>
+
+      <tr>
+        <td><span>118</span></td>
+        <td><a href="/dashboard?id=13782">小沼稜</a></td>
+        <td>0:28.04</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('白鴎大足利')">白鴎大足利</td>
+      </tr>
+
+      <tr>
+        <td><span>119</span></td>
+        <td><a href="/dashboard?id=324">山川啓太</a></td>
+        <td>0:28.06</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>120</span></td>
+        <td><a href="/dashboard?id=6944">木村昂平</a></td>
+        <td>0:28.06</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('清真学園')">清真学園</td>
+      </tr>
+
+      <tr>
+        <td><span>121</span></td>
+        <td><a href="/dashboard?id=3021">石井大貴</a></td>
+        <td>0:28.09</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>122</span></td>
+        <td><a href="/dashboard?id=325">三島遙仁</a></td>
+        <td>0:28.10</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>123</span></td>
+        <td><a href="/dashboard?id=3022">中桐滉一郎</a></td>
+        <td>0:28.13</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>124</span></td>
+        <td><a href="/dashboard?id=3023">守広一颯</a></td>
+        <td>0:28.14</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('OSK吉備')">OSK吉備</td>
+      </tr>
+
+      <tr>
+        <td><span>125</span></td>
+        <td><a href="/dashboard?id=326">髙洲誠祐</a></td>
+        <td>0:28.15</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>126</span></td>
+        <td><a href="/dashboard?id=3024">福田悠冴</a></td>
+        <td>0:28.16</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('STY･SC')">STY･SC</td>
+      </tr>
+
+      <tr>
+        <td><span>127</span></td>
+        <td><a href="/dashboard?id=6976">廣聡太</a></td>
+        <td>0:28.18</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('下妻第一')">下妻第一</td>
+      </tr>
+
+      <tr>
+        <td><span>128</span></td>
+        <td><a href="/dashboard?id=13755">加瀬奏翔</a></td>
+        <td>0:28.18</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>129</span></td>
+        <td><a href="/dashboard?id=327">村上慧悟</a></td>
+        <td>0:28.19</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>130</span></td>
+        <td><a href="/dashboard?id=6957">阿部祐真</a></td>
+        <td>0:28.21</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('取手第一')">取手第一</td>
+      </tr>
+
+      <tr>
+        <td><span>131</span></td>
+        <td><a href="/dashboard?id=284">末廣虎太郎</a></td>
+        <td>0:28.23</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>132</span></td>
+        <td><a href="/dashboard?id=6958">岡村岳英</a></td>
+        <td>0:28.26</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('常総学院')">常総学院</td>
+      </tr>
+
+      <tr>
+        <td><span>133</span></td>
+        <td><a href="/dashboard?id=285">村井啓伸</a></td>
+        <td>0:28.26</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>134</span></td>
+        <td><a href="/dashboard?id=3025">泉寛人</a></td>
+        <td>0:28.26</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ妹尾')">ｵｰﾊﾞﾙ妹尾</td>
+      </tr>
+
+      <tr>
+        <td><span>135</span></td>
+        <td><a href="/dashboard?id=3026">家岡大輔</a></td>
+        <td>0:28.27</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>136</span></td>
+        <td><a href="/dashboard?id=3027">中川裕嗣</a></td>
+        <td>0:28.29</td>
+        <td><span>大学2</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>137</span></td>
+        <td><a href="/dashboard?id=13691">関口颯斗</a></td>
+        <td>0:28.31</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>138</span></td>
+        <td><a href="/dashboard?id=3028">小川大智</a></td>
+        <td>0:28.34</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ玉野')">ｵｰﾊﾞﾙ玉野</td>
+      </tr>
+
+      <tr>
+        <td><span>139</span></td>
+        <td><a href="/dashboard?id=328">末谷宗太郎</a></td>
+        <td>0:28.34</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('TXﾐﾘｶ')">TXﾐﾘｶ</td>
+      </tr>
+
+      <tr>
+        <td><span>140</span></td>
+        <td><a href="/dashboard?id=6959">橋本航</a></td>
+        <td>0:28.36</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('取手第一')">取手第一</td>
+      </tr>
+
+      <tr>
+        <td><span>141</span></td>
+        <td><a href="/dashboard?id=14967">鈴木天翔</a></td>
+        <td>0:28.40</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('VERDI')">VERDI</td>
+      </tr>
+
+      <tr>
+        <td><span>142</span></td>
+        <td><a href="/dashboard?id=3029">末包隼</a></td>
+        <td>0:28.41</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ玉野')">ｵｰﾊﾞﾙ玉野</td>
+      </tr>
+
+      <tr>
+        <td><span>143</span></td>
+        <td><a href="/dashboard?id=6926">佐藤祐輔</a></td>
+        <td>0:28.46</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('常磐大高')">常磐大高</td>
+      </tr>
+
+      <tr>
+        <td><span>144</span></td>
+        <td><a href="/dashboard?id=329">立川歩</a></td>
+        <td>0:28.46</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('JSS山本')">JSS山本</td>
+      </tr>
+
+      <tr>
+        <td><span>145</span></td>
+        <td><a href="/dashboard?id=14968">加藤光</a></td>
+        <td>0:28.49</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ流山')">ｾﾝﾄﾗﾙ流山</td>
+      </tr>
+
+      <tr>
+        <td><span>146</span></td>
+        <td><a href="/dashboard?id=3030">石田悠人</a></td>
+        <td>0:28.52</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｱｸﾛﾎﾟｰﾄ')">ｱｸﾛﾎﾟｰﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>147</span></td>
+        <td><a href="/dashboard?id=3031">田中悠典</a></td>
+        <td>0:28.55</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('Aq新宮')">Aq新宮</td>
+      </tr>
+
+      <tr>
+        <td><span>148</span></td>
+        <td><a href="/dashboard?id=330">吉田太陽</a></td>
+        <td>0:28.58</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('JSS山本')">JSS山本</td>
+      </tr>
+
+      <tr>
+        <td><span>149</span></td>
+        <td><a href="/dashboard?id=331">中川心温</a></td>
+        <td>0:28.59</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ富田林')">ｲﾄﾏﾝ富田林</td>
+      </tr>
+
+      <tr>
+        <td><span>150</span></td>
+        <td><a href="/dashboard?id=332">柴原友生</a></td>
+        <td>0:28.60</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>151</span></td>
+        <td><a href="/dashboard?id=6927">関蓮馬</a></td>
+        <td>0:28.60</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('水戸工業')">水戸工業</td>
+      </tr>
+
+      <tr>
+        <td><span>152</span></td>
+        <td><a href="/dashboard?id=334">間悠歩</a></td>
+        <td>0:28.62</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('履正SC曽根')">履正SC曽根</td>
+      </tr>
+
+      <tr>
+        <td><span>153</span></td>
+        <td><a href="/dashboard?id=333">門口和樹</a></td>
+        <td>0:28.62</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾄﾞｰﾑ豊能ｼｰﾄｽ')">ﾄﾞｰﾑ豊能ｼｰﾄｽ</td>
+      </tr>
+
+      <tr>
+        <td><span>154</span></td>
+        <td><a href="/dashboard?id=3032">有友大昊</a></td>
+        <td>0:28.62</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>155</span></td>
+        <td><a href="/dashboard?id=286">丹治龍亮</a></td>
+        <td>0:28.67</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>156</span></td>
+        <td><a href="/dashboard?id=335">中田笙</a></td>
+        <td>0:28.67</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ岸和田')">ｲﾄﾏﾝ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>157</span></td>
+        <td><a href="/dashboard?id=3033">力石遥空</a></td>
+        <td>0:28.70</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ円山')">ｵｰﾊﾞﾙ円山</td>
+      </tr>
+
+      <tr>
+        <td><span>158</span></td>
+        <td><a href="/dashboard?id=13692">安楽拓真</a></td>
+        <td>0:28.72</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>159</span></td>
+        <td><a href="/dashboard?id=3034">木山喬介</a></td>
+        <td>0:28.78</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ﾙ･福山春日')">ﾙ･福山春日</td>
+      </tr>
+
+      <tr>
+        <td><span>160</span></td>
+        <td><a href="/dashboard?id=287">大野城</a></td>
+        <td>0:28.78</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>161</span></td>
+        <td><a href="/dashboard?id=6977">成田純也</a></td>
+        <td>0:28.81</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('下館第二')">下館第二</td>
+      </tr>
+
+      <tr>
+        <td><span>162</span></td>
+        <td><a href="/dashboard?id=3035">北田温大</a></td>
+        <td>0:28.82</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ玉野')">ｵｰﾊﾞﾙ玉野</td>
+      </tr>
+
+      <tr>
+        <td><span>163</span></td>
+        <td><a href="/dashboard?id=336">水野輝人</a></td>
+        <td>0:28.85</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>164</span></td>
+        <td><a href="/dashboard?id=6960">清水颯人</a></td>
+        <td>0:28.88</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('石岡第一')">石岡第一</td>
+      </tr>
+
+      <tr>
+        <td><span>165</span></td>
+        <td><a href="/dashboard?id=216">角田浬一</a></td>
+        <td>0:28.88</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>166</span></td>
+        <td><a href="/dashboard?id=13756">秋山幸輝</a></td>
+        <td>0:28.90</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>167</span></td>
+        <td><a href="/dashboard?id=3036">細川悠尋</a></td>
+        <td>0:28.93</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK吉備')">OSK吉備</td>
+      </tr>
+
+      <tr>
+        <td><span>168</span></td>
+        <td><a href="/dashboard?id=6978">畑沢旬輝</a></td>
+        <td>0:28.94</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('古河第二')">古河第二</td>
+      </tr>
+
+      <tr>
+        <td><span>169</span></td>
+        <td><a href="/dashboard?id=288">立山豪輝</a></td>
+        <td>0:28.95</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>170</span></td>
+        <td><a href="/dashboard?id=14969">原田歩</a></td>
+        <td>0:28.97</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙﾎﾟｰﾄ')">ｾﾝﾄﾗﾙﾎﾟｰﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>171</span></td>
+        <td><a href="/dashboard?id=3037">堀本瑛太</a></td>
+        <td>0:28.99</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>172</span></td>
+        <td><a href="/dashboard?id=289">北野寛樹</a></td>
+        <td>0:29.01</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｺﾅﾐ岸和田')">ｺﾅﾐ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>173</span></td>
+        <td><a href="/dashboard?id=290">川端倖生</a></td>
+        <td>0:29.02</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>174</span></td>
+        <td><a href="/dashboard?id=3038">三宅柊太朗</a></td>
+        <td>0:29.07</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('明誠学院')">明誠学院</td>
+      </tr>
+
+      <tr>
+        <td><span>175</span></td>
+        <td><a href="/dashboard?id=3039">大西悠太</a></td>
+        <td>0:29.07</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>176</span></td>
+        <td><a href="/dashboard?id=337">村田陽香</a></td>
+        <td>0:29.09</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('高槻SS')">高槻SS</td>
+      </tr>
+
+      <tr>
+        <td><span>177</span></td>
+        <td><a href="/dashboard?id=291">津隈圭祐</a></td>
+        <td>0:29.10</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ岸和田')">ｲﾄﾏﾝ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>178</span></td>
+        <td><a href="/dashboard?id=3040">杉莉音</a></td>
+        <td>0:29.12</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>179</span></td>
+        <td><a href="/dashboard?id=6928">矢田目和弥</a></td>
+        <td>0:29.13</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('茨城')">茨城</td>
+      </tr>
+
+      <tr>
+        <td><span>180</span></td>
+        <td><a href="/dashboard?id=6945">高崎伶麻</a></td>
+        <td>0:29.15</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('清真学園')">清真学園</td>
+      </tr>
+
+      <tr>
+        <td><span>181</span></td>
+        <td><a href="/dashboard?id=6961">平井誠洋</a></td>
+        <td>0:29.15</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('常総学院')">常総学院</td>
+      </tr>
+
+      <tr>
+        <td><span>182</span></td>
+        <td><a href="/dashboard?id=3041">中島颯太</a></td>
+        <td>0:29.16</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>183</span></td>
+        <td><a href="/dashboard?id=3042">葉廣嵐</a></td>
+        <td>0:29.17</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('OSK総社')">OSK総社</td>
+      </tr>
+
+      <tr>
+        <td><span>184</span></td>
+        <td><a href="/dashboard?id=13604">渡辺睦輝</a></td>
+        <td>0:29.17</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｻﾝﾗｲｽﾞｲﾝﾀｰ')">ｻﾝﾗｲｽﾞｲﾝﾀｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>185</span></td>
+        <td><a href="/dashboard?id=6979">三石歩夢</a></td>
+        <td>0:29.17</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('水海道第一')">水海道第一</td>
+      </tr>
+
+      <tr>
+        <td><span>186</span></td>
+        <td><a href="/dashboard?id=292">金大耀</a></td>
+        <td>0:29.18</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>187</span></td>
+        <td><a href="/dashboard?id=13605">井上亮</a></td>
+        <td>0:29.22</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>188</span></td>
+        <td><a href="/dashboard?id=13757">坂本颯</a></td>
+        <td>0:29.23</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾘﾌﾚ南河内')">ﾘﾌﾚ南河内</td>
+      </tr>
+
+      <tr>
+        <td><span>189</span></td>
+        <td><a href="/dashboard?id=6929">井上元晴</a></td>
+        <td>0:29.24</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('水戸第一')">水戸第一</td>
+      </tr>
+
+      <tr>
+        <td><span>190</span></td>
+        <td><a href="/dashboard?id=6930">八代真一</a></td>
+        <td>0:29.26</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('常磐大高')">常磐大高</td>
+      </tr>
+
+      <tr>
+        <td><span>191</span></td>
+        <td><a href="/dashboard?id=3043">小鍛治慧奎</a></td>
+        <td>0:29.27</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>192</span></td>
+        <td><a href="/dashboard?id=293">笠井蓮</a></td>
+        <td>0:29.27</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>193</span></td>
+        <td><a href="/dashboard?id=13758">平田琉偉</a></td>
+        <td>0:29.28</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS宇都宮')">JSS宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>194</span></td>
+        <td><a href="/dashboard?id=3044">池嶋怜士</a></td>
+        <td>0:29.30</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('STY･SC')">STY･SC</td>
+      </tr>
+
+      <tr>
+        <td><span>195</span></td>
+        <td><a href="/dashboard?id=3045">八木優翔</a></td>
+        <td>0:29.31</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>196</span></td>
+        <td><a href="/dashboard?id=13759">福田真央</a></td>
+        <td>0:29.32</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>197</span></td>
+        <td><a href="/dashboard?id=6962">坪田龍成</a></td>
+        <td>0:29.34</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('土浦第一')">土浦第一</td>
+      </tr>
+
+      <tr>
+        <td><span>198</span></td>
+        <td><a href="/dashboard?id=338">張星帆</a></td>
+        <td>0:29.34</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>199</span></td>
+        <td><a href="/dashboard?id=13760">若林春陽</a></td>
+        <td>0:29.35</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾘﾌﾚ南河内')">ﾘﾌﾚ南河内</td>
+      </tr>
+
+      <tr>
+        <td><span>200</span></td>
+        <td><a href="/dashboard?id=339">室隼人</a></td>
+        <td>0:29.35</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>201</span></td>
+        <td><a href="/dashboard?id=14970">越智由来規</a></td>
+        <td>0:29.36</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('KCC鴨川')">KCC鴨川</td>
+      </tr>
+
+      <tr>
+        <td><span>202</span></td>
+        <td><a href="/dashboard?id=3046">久保大晟</a></td>
+        <td>0:29.37</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('三原SS')">三原SS</td>
+      </tr>
+
+      <tr>
+        <td><span>203</span></td>
+        <td><a href="/dashboard?id=3047">中島颯斗</a></td>
+        <td>0:29.38</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>204</span></td>
+        <td><a href="/dashboard?id=6963">山田一樹</a></td>
+        <td>0:29.39</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('江戸川学園')">江戸川学園</td>
+      </tr>
+
+      <tr>
+        <td><span>205</span></td>
+        <td><a href="/dashboard?id=3048">濱口浩大</a></td>
+        <td>0:29.39</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾙ･福山春日')">ﾙ･福山春日</td>
+      </tr>
+
+      <tr>
+        <td><span>206</span></td>
+        <td><a href="/dashboard?id=3049">瀬尾唯翔</a></td>
+        <td>0:29.40</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>207</span></td>
+        <td><a href="/dashboard?id=13761">片岡亮空</a></td>
+        <td>0:29.41</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>208</span></td>
+        <td><a href="/dashboard?id=294">徳野陽太</a></td>
+        <td>0:29.42</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>209</span></td>
+        <td><a href="/dashboard?id=6931">古橋伸順</a></td>
+        <td>0:29.47</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茨城')">茨城</td>
+      </tr>
+
+      <tr>
+        <td><span>210</span></td>
+        <td><a href="/dashboard?id=3050">石原壮志</a></td>
+        <td>0:29.49</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｴｲﾌﾞﾙ岡山')">ｴｲﾌﾞﾙ岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>211</span></td>
+        <td><a href="/dashboard?id=14971">川上淳之介</a></td>
+        <td>0:29.51</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙｽﾎﾟｰﾂ')">ｾﾝﾄﾗﾙｽﾎﾟｰﾂ</td>
+      </tr>
+
+      <tr>
+        <td><span>212</span></td>
+        <td><a href="/dashboard?id=217">岩崎翔太</a></td>
+        <td>0:29.55</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>213</span></td>
+        <td><a href="/dashboard?id=13693">佐藤大暉</a></td>
+        <td>0:29.55</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS宇都宮')">JSS宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>214</span></td>
+        <td><a href="/dashboard?id=14972">大竹勇輝</a></td>
+        <td>0:29.57</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('天王台ﾐﾅﾄ')">天王台ﾐﾅﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>215</span></td>
+        <td><a href="/dashboard?id=3051">藤澤慶祐</a></td>
+        <td>0:29.58</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ妹尾')">ｵｰﾊﾞﾙ妹尾</td>
+      </tr>
+
+      <tr>
+        <td><span>216</span></td>
+        <td><a href="/dashboard?id=295">笹原天馬</a></td>
+        <td>0:29.59</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('尾崎泉佐野')">尾崎泉佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>217</span></td>
+        <td><a href="/dashboard?id=6980">吉原銀哉</a></td>
+        <td>0:29.60</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('下妻第一')">下妻第一</td>
+      </tr>
+
+      <tr>
+        <td><span>218</span></td>
+        <td><a href="/dashboard?id=3052">平島遼成</a></td>
+        <td>0:29.62</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>219</span></td>
+        <td><a href="/dashboard?id=14973">三浦大志</a></td>
+        <td>0:29.64</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('柏洋･南')">柏洋･南</td>
+      </tr>
+
+      <tr>
+        <td><span>220</span></td>
+        <td><a href="/dashboard?id=3053">三上桐吾</a></td>
+        <td>0:29.66</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('福山SS')">福山SS</td>
+      </tr>
+
+      <tr>
+        <td><span>221</span></td>
+        <td><a href="/dashboard?id=296">久代柊羽</a></td>
+        <td>0:29.66</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('KTV茨木')">KTV茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>222</span></td>
+        <td><a href="/dashboard?id=6932">堺陽向</a></td>
+        <td>0:29.67</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茨城')">茨城</td>
+      </tr>
+
+      <tr>
+        <td><span>223</span></td>
+        <td><a href="/dashboard?id=6964">野口蒼太</a></td>
+        <td>0:29.67</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('土浦第二')">土浦第二</td>
+      </tr>
+
+      <tr>
+        <td><span>224</span></td>
+        <td><a href="/dashboard?id=340">坪内和樹</a></td>
+        <td>0:29.69</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾒｲｽﾎﾟ茨木')">ﾒｲｽﾎﾟ茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>225</span></td>
+        <td><a href="/dashboard?id=218">白山幹太</a></td>
+        <td>0:29.69</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('KTV茨木')">KTV茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>226</span></td>
+        <td><a href="/dashboard?id=6981">高橋一誠</a></td>
+        <td>0:29.74</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('境')">境</td>
+      </tr>
+
+      <tr>
+        <td><span>227</span></td>
+        <td><a href="/dashboard?id=14974">岩崎洸</a></td>
+        <td>0:29.74</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｱｰﾃﾞﾙ')">ｱｰﾃﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>228</span></td>
+        <td><a href="/dashboard?id=297">松本琉希</a></td>
+        <td>0:29.74</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ富田林')">ｲﾄﾏﾝ富田林</td>
+      </tr>
+
+      <tr>
+        <td><span>229</span></td>
+        <td><a href="/dashboard?id=3054">小林恭也</a></td>
+        <td>0:29.74</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>230</span></td>
+        <td><a href="/dashboard?id=341">橋本彪雅</a></td>
+        <td>0:29.77</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('岸和田SS')">岸和田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>231</span></td>
+        <td><a href="/dashboard?id=298">岡田迅太</a></td>
+        <td>0:29.77</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('TX東住吉')">TX東住吉</td>
+      </tr>
+
+      <tr>
+        <td><span>232</span></td>
+        <td><a href="/dashboard?id=219">滝本駿</a></td>
+        <td>0:29.78</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('岸和田SS')">岸和田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>233</span></td>
+        <td><a href="/dashboard?id=6933">鈴木翔太</a></td>
+        <td>0:29.79</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('水戸工業')">水戸工業</td>
+      </tr>
+
+      <tr>
+        <td><span>234</span></td>
+        <td><a href="/dashboard?id=3056">木場崚介</a></td>
+        <td>0:29.80</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>235</span></td>
+        <td><a href="/dashboard?id=3055">山本来暉</a></td>
+        <td>0:29.80</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>236</span></td>
+        <td><a href="/dashboard?id=299">奥長勇人</a></td>
+        <td>0:29.84</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>237</span></td>
+        <td><a href="/dashboard?id=300">大月亮汰</a></td>
+        <td>0:29.84</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>238</span></td>
+        <td><a href="/dashboard?id=13694">飯田峻太朗</a></td>
+        <td>0:29.85</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>239</span></td>
+        <td><a href="/dashboard?id=220">神田惇生</a></td>
+        <td>0:29.85</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('D放出SC')">D放出SC</td>
+      </tr>
+
+      <tr>
+        <td><span>240</span></td>
+        <td><a href="/dashboard?id=13762">飯田勇人</a></td>
+        <td>0:29.86</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('JSS宇都宮')">JSS宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>241</span></td>
+        <td><a href="/dashboard?id=221">田中章太郎</a></td>
+        <td>0:29.86</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>242</span></td>
+        <td><a href="/dashboard?id=13695">富樫侑平</a></td>
+        <td>0:29.93</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>243</span></td>
+        <td><a href="/dashboard?id=3057">井上元仁</a></td>
+        <td>0:29.94</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('豊成SC')">豊成SC</td>
+      </tr>
+
+      <tr>
+        <td><span>244</span></td>
+        <td><a href="/dashboard?id=3058">萬代聖晴</a></td>
+        <td>0:29.95</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>245</span></td>
+        <td><a href="/dashboard?id=301">那須海斗</a></td>
+        <td>0:29.95</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ富田林')">ｲﾄﾏﾝ富田林</td>
+      </tr>
+
+      <tr>
+        <td><span>246</span></td>
+        <td><a href="/dashboard?id=342">伊東陸翔</a></td>
+        <td>0:29.98</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('交野SS')">交野SS</td>
+      </tr>
+
+      <tr>
+        <td><span>247</span></td>
+        <td><a href="/dashboard?id=6918">小峰史也</a></td>
+        <td>0:29.98</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('磯原郷英')">磯原郷英</td>
+      </tr>
+
+      <tr>
+        <td><span>248</span></td>
+        <td><a href="/dashboard?id=302">諏訪虎汰郎</a></td>
+        <td>0:29.99</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSSりもね')">JSSりもね</td>
+      </tr>
+
+      <tr>
+        <td><span>249</span></td>
+        <td><a href="/dashboard?id=6919">根本大輔</a></td>
+        <td>0:29.99</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('日立第一')">日立第一</td>
+      </tr>
+
+      <tr>
+        <td><span>250</span></td>
+        <td><a href="/dashboard?id=3059">平松慶大</a></td>
+        <td>0:30.01</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>251</span></td>
+        <td><a href="/dashboard?id=3060">三垣唯</a></td>
+        <td>0:30.05</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>252</span></td>
+        <td><a href="/dashboard?id=222">馬場俊輔</a></td>
+        <td>0:30.13</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>253</span></td>
+        <td><a href="/dashboard?id=3061">福島汰玖斗</a></td>
+        <td>0:30.14</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('豊成SC')">豊成SC</td>
+      </tr>
+
+      <tr>
+        <td><span>254</span></td>
+        <td><a href="/dashboard?id=13763">井澤昂己</a></td>
+        <td>0:30.17</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾘﾌﾚ上三川')">ﾘﾌﾚ上三川</td>
+      </tr>
+
+      <tr>
+        <td><span>255</span></td>
+        <td><a href="/dashboard?id=343">雲川健太郎</a></td>
+        <td>0:30.19</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('JSS柏原')">JSS柏原</td>
+      </tr>
+
+      <tr>
+        <td><span>256</span></td>
+        <td><a href="/dashboard?id=344">飯田騎士</a></td>
+        <td>0:30.19</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ都島')">ｾﾝﾄﾗﾙ都島</td>
+      </tr>
+
+      <tr>
+        <td><span>257</span></td>
+        <td><a href="/dashboard?id=303">関田幸資</a></td>
+        <td>0:30.19</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>258</span></td>
+        <td><a href="/dashboard?id=304">札辻衣瑠羽</a></td>
+        <td>0:30.20</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS柏原')">JSS柏原</td>
+      </tr>
+
+      <tr>
+        <td><span>259</span></td>
+        <td><a href="/dashboard?id=14975">横山哲</a></td>
+        <td>0:30.25</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS大原')">JSS大原</td>
+      </tr>
+
+      <tr>
+        <td><span>260</span></td>
+        <td><a href="/dashboard?id=223">梅原諒</a></td>
+        <td>0:30.27</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｺﾅﾐ光明池')">ｺﾅﾐ光明池</td>
+      </tr>
+
+      <tr>
+        <td><span>261</span></td>
+        <td><a href="/dashboard?id=3062">毛利陽成</a></td>
+        <td>0:30.27</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>262</span></td>
+        <td><a href="/dashboard?id=224">茅島悠斗</a></td>
+        <td>0:30.28</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>263</span></td>
+        <td><a href="/dashboard?id=225">渡辺新</a></td>
+        <td>0:30.30</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>264</span></td>
+        <td><a href="/dashboard?id=13606">白井太陽</a></td>
+        <td>0:30.31</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｻﾝﾗｲｽﾞｲﾝﾀｰ')">ｻﾝﾗｲｽﾞｲﾝﾀｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>265</span></td>
+        <td><a href="/dashboard?id=3063">荒川莉久</a></td>
+        <td>0:30.31</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｻﾝﾌﾗﾜｰSS')">ｻﾝﾌﾗﾜｰSS</td>
+      </tr>
+
+      <tr>
+        <td><span>266</span></td>
+        <td><a href="/dashboard?id=345">浜崎幸大</a></td>
+        <td>0:30.32</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｺﾅﾐ光明池')">ｺﾅﾐ光明池</td>
+      </tr>
+
+      <tr>
+        <td><span>267</span></td>
+        <td><a href="/dashboard?id=13764">大木駿</a></td>
+        <td>0:30.35</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾘﾌﾚ上三川')">ﾘﾌﾚ上三川</td>
+      </tr>
+
+      <tr>
+        <td><span>268</span></td>
+        <td><a href="/dashboard?id=6934">中島吉貴</a></td>
+        <td>0:30.36</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('勝田工業')">勝田工業</td>
+      </tr>
+
+      <tr>
+        <td><span>269</span></td>
+        <td><a href="/dashboard?id=226">松本惺也</a></td>
+        <td>0:30.37</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>270</span></td>
+        <td><a href="/dashboard?id=13696">渡邉結友</a></td>
+        <td>0:30.42</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｽｳｨﾝ鹿沼')">ｽｳｨﾝ鹿沼</td>
+      </tr>
+
+      <tr>
+        <td><span>271</span></td>
+        <td><a href="/dashboard?id=3066">伊藤桜也</a></td>
+        <td>0:30.42</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>272</span></td>
+        <td><a href="/dashboard?id=3064">浅井来斗</a></td>
+        <td>0:30.42</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>273</span></td>
+        <td><a href="/dashboard?id=3065">河野瑛甫</a></td>
+        <td>0:30.42</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('Aq相生')">Aq相生</td>
+      </tr>
+
+      <tr>
+        <td><span>274</span></td>
+        <td><a href="/dashboard?id=227">髙橋碧人</a></td>
+        <td>0:30.49</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('TX東住吉')">TX東住吉</td>
+      </tr>
+
+      <tr>
+        <td><span>275</span></td>
+        <td><a href="/dashboard?id=14976">溝口晋平</a></td>
+        <td>0:30.50</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('君津MSC')">君津MSC</td>
+      </tr>
+
+      <tr>
+        <td><span>276</span></td>
+        <td><a href="/dashboard?id=153">朝野絢登</a></td>
+        <td>0:30.53</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>277</span></td>
+        <td><a href="/dashboard?id=13697">鈴木一颯</a></td>
+        <td>0:30.53</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｳｲﾝｽﾞ栃木')">ｳｲﾝｽﾞ栃木</td>
+      </tr>
+
+      <tr>
+        <td><span>278</span></td>
+        <td><a href="/dashboard?id=3067">村田晴嶺</a></td>
+        <td>0:30.55</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>279</span></td>
+        <td><a href="/dashboard?id=228">高橋凌也</a></td>
+        <td>0:30.56</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾒｲｽﾎﾟ茨木')">ﾒｲｽﾎﾟ茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>280</span></td>
+        <td><a href="/dashboard?id=3068">中田清希</a></td>
+        <td>0:30.61</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>281</span></td>
+        <td><a href="/dashboard?id=229">中山悠汰</a></td>
+        <td>0:30.65</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>282</span></td>
+        <td><a href="/dashboard?id=13698">平出陽</a></td>
+        <td>0:30.67</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>283</span></td>
+        <td><a href="/dashboard?id=13699">的場康気</a></td>
+        <td>0:30.71</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>284</span></td>
+        <td><a href="/dashboard?id=346">西口太稀</a></td>
+        <td>0:30.72</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>285</span></td>
+        <td><a href="/dashboard?id=3069">難波利矩</a></td>
+        <td>0:30.73</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>286</span></td>
+        <td><a href="/dashboard?id=13700">小島陽成</a></td>
+        <td>0:30.76</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>287</span></td>
+        <td><a href="/dashboard?id=13765">生出惠</a></td>
+        <td>0:30.76</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾘﾌﾚ上三川')">ﾘﾌﾚ上三川</td>
+      </tr>
+
+      <tr>
+        <td><span>288</span></td>
+        <td><a href="/dashboard?id=230">澤田真</a></td>
+        <td>0:30.76</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>289</span></td>
+        <td><a href="/dashboard?id=6965">古矢聖人</a></td>
+        <td>0:30.82</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('江戸川学園')">江戸川学園</td>
+      </tr>
+
+      <tr>
+        <td><span>290</span></td>
+        <td><a href="/dashboard?id=3070">梅田恭一</a></td>
+        <td>0:30.85</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('福山SS')">福山SS</td>
+      </tr>
+
+      <tr>
+        <td><span>291</span></td>
+        <td><a href="/dashboard?id=6935">笹島一太</a></td>
+        <td>0:30.86</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('水戸第一')">水戸第一</td>
+      </tr>
+
+      <tr>
+        <td><span>292</span></td>
+        <td><a href="/dashboard?id=154">山見日向太</a></td>
+        <td>0:30.86</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('南YMCA')">南YMCA</td>
+      </tr>
+
+      <tr>
+        <td><span>293</span></td>
+        <td><a href="/dashboard?id=3071">小坂優太</a></td>
+        <td>0:30.92</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK吉備')">OSK吉備</td>
+      </tr>
+
+      <tr>
+        <td><span>294</span></td>
+        <td><a href="/dashboard?id=155">隅田陛大</a></td>
+        <td>0:30.98</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>295</span></td>
+        <td><a href="/dashboard?id=231">高野純</a></td>
+        <td>0:31.00</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｺｽﾊﾟさかい')">ｺｽﾊﾟさかい</td>
+      </tr>
+
+      <tr>
+        <td><span>296</span></td>
+        <td><a href="/dashboard?id=3072">黒瀬蒼空</a></td>
+        <td>0:31.02</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('真庭SC')">真庭SC</td>
+      </tr>
+
+      <tr>
+        <td><span>297</span></td>
+        <td><a href="/dashboard?id=232">橋本義貴</a></td>
+        <td>0:31.04</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｻﾝﾀﾏﾘｱ')">ｻﾝﾀﾏﾘｱ</td>
+      </tr>
+
+      <tr>
+        <td><span>298</span></td>
+        <td><a href="/dashboard?id=14977">野中祐玖</a></td>
+        <td>0:31.07</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('CACSS')">CACSS</td>
+      </tr>
+
+      <tr>
+        <td><span>299</span></td>
+        <td><a href="/dashboard?id=156">中田奏</a></td>
+        <td>0:31.07</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ岸和田')">ｲﾄﾏﾝ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>300</span></td>
+        <td><a href="/dashboard?id=6936">小泉雅裕</a></td>
+        <td>0:31.08</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('水戸工業')">水戸工業</td>
+      </tr>
+
+      <tr>
+        <td><span>301</span></td>
+        <td><a href="/dashboard?id=13607">小川大翔</a></td>
+        <td>0:31.09</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>302</span></td>
+        <td><a href="/dashboard?id=3073">竹内寛二郎</a></td>
+        <td>0:31.12</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>303</span></td>
+        <td><a href="/dashboard?id=233">谷川昴瑠</a></td>
+        <td>0:31.12</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>304</span></td>
+        <td><a href="/dashboard?id=3074">大西一輝</a></td>
+        <td>0:31.13</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>305</span></td>
+        <td><a href="/dashboard?id=157">木村元紀</a></td>
+        <td>0:31.14</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('TX東住吉')">TX東住吉</td>
+      </tr>
+
+      <tr>
+        <td><span>306</span></td>
+        <td><a href="/dashboard?id=3075">服部倫也</a></td>
+        <td>0:31.15</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾚｲSC岡山')">ﾚｲSC岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>307</span></td>
+        <td><a href="/dashboard?id=6937">泉崇斗</a></td>
+        <td>0:31.18</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('水戸桜ﾉ牧')">水戸桜ﾉ牧</td>
+      </tr>
+
+      <tr>
+        <td><span>308</span></td>
+        <td><a href="/dashboard?id=3076">山崎拓人</a></td>
+        <td>0:31.19</td>
+        <td><span>大学3</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>309</span></td>
+        <td><a href="/dashboard?id=234">岩村元嗣</a></td>
+        <td>0:31.21</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('MG泉南')">MG泉南</td>
+      </tr>
+
+      <tr>
+        <td><span>310</span></td>
+        <td><a href="/dashboard?id=305">恩田大地</a></td>
+        <td>0:31.27</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙみなと')">ｾﾝﾄﾗﾙみなと</td>
+      </tr>
+
+      <tr>
+        <td><span>311</span></td>
+        <td><a href="/dashboard?id=13701">須藤涼太</a></td>
+        <td>0:31.31</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>312</span></td>
+        <td><a href="/dashboard?id=3078">高山陸斗</a></td>
+        <td>0:31.32</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('真庭SC')">真庭SC</td>
+      </tr>
+
+      <tr>
+        <td><span>313</span></td>
+        <td><a href="/dashboard?id=3077">秋山卓也</a></td>
+        <td>0:31.32</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ円山')">ｵｰﾊﾞﾙ円山</td>
+      </tr>
+
+      <tr>
+        <td><span>314</span></td>
+        <td><a href="/dashboard?id=3079">小田晃成</a></td>
+        <td>0:31.34</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>315</span></td>
+        <td><a href="/dashboard?id=14978">右田暁大</a></td>
+        <td>0:31.34</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ幕張')">ﾙﾈｻﾝｽ幕張</td>
+      </tr>
+
+      <tr>
+        <td><span>316</span></td>
+        <td><a href="/dashboard?id=13702">八木沢樹紀</a></td>
+        <td>0:31.35</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('西那須ｲﾝﾀｰ')">西那須ｲﾝﾀｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>317</span></td>
+        <td><a href="/dashboard?id=347">篠原師月</a></td>
+        <td>0:31.36</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('尾崎SS')">尾崎SS</td>
+      </tr>
+
+      <tr>
+        <td><span>318</span></td>
+        <td><a href="/dashboard?id=3080">藤原遼太</a></td>
+        <td>0:31.36</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>319</span></td>
+        <td><a href="/dashboard?id=6966">松岡慶幸</a></td>
+        <td>0:31.37</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('江戸川学園')">江戸川学園</td>
+      </tr>
+
+      <tr>
+        <td><span>320</span></td>
+        <td><a href="/dashboard?id=235">福田夕晟</a></td>
+        <td>0:31.38</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>321</span></td>
+        <td><a href="/dashboard?id=3081">森脇聡太</a></td>
+        <td>0:31.38</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('真庭SC')">真庭SC</td>
+      </tr>
+
+      <tr>
+        <td><span>322</span></td>
+        <td><a href="/dashboard?id=13703">伊原大翔</a></td>
+        <td>0:31.40</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>323</span></td>
+        <td><a href="/dashboard?id=236">渡邊日葵</a></td>
+        <td>0:31.40</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>324</span></td>
+        <td><a href="/dashboard?id=306">上本佳輝</a></td>
+        <td>0:31.40</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>325</span></td>
+        <td><a href="/dashboard?id=158">藤井虹希</a></td>
+        <td>0:31.43</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾒｲｽﾎﾟ茨木')">ﾒｲｽﾎﾟ茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>326</span></td>
+        <td><a href="/dashboard?id=14979">石井赳大</a></td>
+        <td>0:31.44</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('曽谷ｾﾝﾄﾗﾙ')">曽谷ｾﾝﾄﾗﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>327</span></td>
+        <td><a href="/dashboard?id=6938">石川達也</a></td>
+        <td>0:31.47</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('緑岡')">緑岡</td>
+      </tr>
+
+      <tr>
+        <td><span>328</span></td>
+        <td><a href="/dashboard?id=3082">村澤遼大</a></td>
+        <td>0:31.48</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｻﾝﾌﾗﾜｰSS')">ｻﾝﾌﾗﾜｰSS</td>
+      </tr>
+
+      <tr>
+        <td><span>329</span></td>
+        <td><a href="/dashboard?id=307">川辺麗偉</a></td>
+        <td>0:31.49</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('BIG鶴見')">BIG鶴見</td>
+      </tr>
+
+      <tr>
+        <td><span>330</span></td>
+        <td><a href="/dashboard?id=237">松本来鷹</a></td>
+        <td>0:31.49</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>331</span></td>
+        <td><a href="/dashboard?id=14980">富樫寿俐</a></td>
+        <td>0:31.51</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾀﾞﾝﾛｯﾌﾟS松戸')">ﾀﾞﾝﾛｯﾌﾟS松戸</td>
+      </tr>
+
+      <tr>
+        <td><span>332</span></td>
+        <td><a href="/dashboard?id=308">鶴谷潤</a></td>
+        <td>0:31.55</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('高槻SS')">高槻SS</td>
+      </tr>
+
+      <tr>
+        <td><span>333</span></td>
+        <td><a href="/dashboard?id=3083">小野隼人</a></td>
+        <td>0:31.55</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>334</span></td>
+        <td><a href="/dashboard?id=14981">大野健太</a></td>
+        <td>0:31.61</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('CACSS')">CACSS</td>
+      </tr>
+
+      <tr>
+        <td><span>335</span></td>
+        <td><a href="/dashboard?id=6982">藤本隼輔</a></td>
+        <td>0:31.63</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茗溪学園')">茗溪学園</td>
+      </tr>
+
+      <tr>
+        <td><span>336</span></td>
+        <td><a href="/dashboard?id=14982">齋藤航輝</a></td>
+        <td>0:31.70</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('JSS大原')">JSS大原</td>
+      </tr>
+
+      <tr>
+        <td><span>337</span></td>
+        <td><a href="/dashboard?id=13704">小野琉宇</a></td>
+        <td>0:31.71</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾋﾞｯｸﾞﾂﾘｰ')">ﾋﾞｯｸﾞﾂﾘｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>338</span></td>
+        <td><a href="/dashboard?id=159">萩中裕樹</a></td>
+        <td>0:31.73</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺﾅﾐ香里園')">ｺﾅﾐ香里園</td>
+      </tr>
+
+      <tr>
+        <td><span>339</span></td>
+        <td><a href="/dashboard?id=309">一寺亨士</a></td>
+        <td>0:31.76</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾓﾓYMCA')">ﾓﾓYMCA</td>
+      </tr>
+
+      <tr>
+        <td><span>340</span></td>
+        <td><a href="/dashboard?id=160">渋谷怜央</a></td>
+        <td>0:31.78</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>341</span></td>
+        <td><a href="/dashboard?id=238">髙野幸輝</a></td>
+        <td>0:31.79</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('JSS柏原')">JSS柏原</td>
+      </tr>
+
+      <tr>
+        <td><span>342</span></td>
+        <td><a href="/dashboard?id=239">田原賢二郎</a></td>
+        <td>0:31.80</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>343</span></td>
+        <td><a href="/dashboard?id=161">櫻井遥翔</a></td>
+        <td>0:31.81</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>344</span></td>
+        <td><a href="/dashboard?id=240">宮本千裕</a></td>
+        <td>0:31.81</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('高槻SS')">高槻SS</td>
+      </tr>
+
+      <tr>
+        <td><span>345</span></td>
+        <td><a href="/dashboard?id=241">山ノ内晃成</a></td>
+        <td>0:31.84</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('D放出SC')">D放出SC</td>
+      </tr>
+
+      <tr>
+        <td><span>346</span></td>
+        <td><a href="/dashboard?id=242">木村有</a></td>
+        <td>0:31.85</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('大阪水泳学校')">大阪水泳学校</td>
+      </tr>
+
+      <tr>
+        <td><span>347</span></td>
+        <td><a href="/dashboard?id=3084">久志大輝</a></td>
+        <td>0:31.86</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾙ･福山春日')">ﾙ･福山春日</td>
+      </tr>
+
+      <tr>
+        <td><span>348</span></td>
+        <td><a href="/dashboard?id=14983">井上絢心</a></td>
+        <td>0:31.86</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ﾀﾞﾝﾛｯﾌﾟS松戸')">ﾀﾞﾝﾛｯﾌﾟS松戸</td>
+      </tr>
+
+      <tr>
+        <td><span>349</span></td>
+        <td><a href="/dashboard?id=3085">林巧</a></td>
+        <td>0:31.87</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｻﾝﾌﾗﾜｰSS')">ｻﾝﾌﾗﾜｰSS</td>
+      </tr>
+
+      <tr>
+        <td><span>350</span></td>
+        <td><a href="/dashboard?id=13705">関涼佑</a></td>
+        <td>0:31.88</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('JSS宇都宮')">JSS宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>351</span></td>
+        <td><a href="/dashboard?id=13766">印南蒼馬</a></td>
+        <td>0:31.90</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>352</span></td>
+        <td><a href="/dashboard?id=3086">国米利空</a></td>
+        <td>0:31.95</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾙ･福山春日')">ﾙ･福山春日</td>
+      </tr>
+
+      <tr>
+        <td><span>353</span></td>
+        <td><a href="/dashboard?id=6920">秋山拓未</a></td>
+        <td>0:31.95</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('太田第一')">太田第一</td>
+      </tr>
+
+      <tr>
+        <td><span>354</span></td>
+        <td><a href="/dashboard?id=162">長束柾希</a></td>
+        <td>0:31.95</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('JSS和泉中央')">JSS和泉中央</td>
+      </tr>
+
+      <tr>
+        <td><span>355</span></td>
+        <td><a href="/dashboard?id=3087">田中陽葵</a></td>
+        <td>0:31.97</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>356</span></td>
+        <td><a href="/dashboard?id=13706">佐藤悠生</a></td>
+        <td>0:31.98</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>357</span></td>
+        <td><a href="/dashboard?id=13707">大貫櫂斗</a></td>
+        <td>0:32.01</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>358</span></td>
+        <td><a href="/dashboard?id=243">良元憲剛</a></td>
+        <td>0:32.01</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>359</span></td>
+        <td><a href="/dashboard?id=3088">日野恵太</a></td>
+        <td>0:32.03</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('OSK吉備')">OSK吉備</td>
+      </tr>
+
+      <tr>
+        <td><span>360</span></td>
+        <td><a href="/dashboard?id=13708">堀奏祐</a></td>
+        <td>0:32.04</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>361</span></td>
+        <td><a href="/dashboard?id=163">由比幹太</a></td>
+        <td>0:32.04</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('星田SS')">星田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>362</span></td>
+        <td><a href="/dashboard?id=6946">内藏聖矢</a></td>
+        <td>0:32.06</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('鉾田第一')">鉾田第一</td>
+      </tr>
+
+      <tr>
+        <td><span>363</span></td>
+        <td><a href="/dashboard?id=3090">佐々木海成</a></td>
+        <td>0:32.07</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('OSK総社')">OSK総社</td>
+      </tr>
+
+      <tr>
+        <td><span>364</span></td>
+        <td><a href="/dashboard?id=3089">糸川凌音</a></td>
+        <td>0:32.07</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('B&amp;G宍道')">B&amp;G宍道</td>
+      </tr>
+
+      <tr>
+        <td><span>365</span></td>
+        <td><a href="/dashboard?id=13709">市川煌弥</a></td>
+        <td>0:32.08</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾋﾞｯｸﾞﾂﾘｰ')">ﾋﾞｯｸﾞﾂﾘｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>366</span></td>
+        <td><a href="/dashboard?id=310">大江航生</a></td>
+        <td>0:32.11</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>367</span></td>
+        <td><a href="/dashboard?id=13710">宇賀神音聖</a></td>
+        <td>0:32.12</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｽｳｨﾝ鹿沼')">ｽｳｨﾝ鹿沼</td>
+      </tr>
+
+      <tr>
+        <td><span>368</span></td>
+        <td><a href="/dashboard?id=13711">山中葵生</a></td>
+        <td>0:32.13</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS宇都宮')">JSS宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>369</span></td>
+        <td><a href="/dashboard?id=311">吉住夏翔</a></td>
+        <td>0:32.14</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('履正SC曽根')">履正SC曽根</td>
+      </tr>
+
+      <tr>
+        <td><span>370</span></td>
+        <td><a href="/dashboard?id=13712">草野結和</a></td>
+        <td>0:32.15</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>371</span></td>
+        <td><a href="/dashboard?id=6983">磯崎蓮</a></td>
+        <td>0:32.15</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('下館第一')">下館第一</td>
+      </tr>
+
+      <tr>
+        <td><span>372</span></td>
+        <td><a href="/dashboard?id=164">檜原英佑</a></td>
+        <td>0:32.21</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>373</span></td>
+        <td><a href="/dashboard?id=244">大塚飛美</a></td>
+        <td>0:32.22</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>374</span></td>
+        <td><a href="/dashboard?id=245">善住龍之介</a></td>
+        <td>0:32.24</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾓﾓYMCA')">ﾓﾓYMCA</td>
+      </tr>
+
+      <tr>
+        <td><span>375</span></td>
+        <td><a href="/dashboard?id=13608">佐藤純真</a></td>
+        <td>0:32.24</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｱﾝﾀﾚｽSS')">ｱﾝﾀﾚｽSS</td>
+      </tr>
+
+      <tr>
+        <td><span>376</span></td>
+        <td><a href="/dashboard?id=3091">藤原侑大</a></td>
+        <td>0:32.25</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('OSK吉備')">OSK吉備</td>
+      </tr>
+
+      <tr>
+        <td><span>377</span></td>
+        <td><a href="/dashboard?id=165">犬伏晴斗</a></td>
+        <td>0:32.30</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺｽﾊﾟさかい')">ｺｽﾊﾟさかい</td>
+      </tr>
+
+      <tr>
+        <td><span>378</span></td>
+        <td><a href="/dashboard?id=166">山本侑歩</a></td>
+        <td>0:32.31</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ富田林')">ｲﾄﾏﾝ富田林</td>
+      </tr>
+
+      <tr>
+        <td><span>379</span></td>
+        <td><a href="/dashboard?id=13713">稲見蘭</a></td>
+        <td>0:32.32</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>380</span></td>
+        <td><a href="/dashboard?id=92">飯田裕樹</a></td>
+        <td>0:32.33</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('交野SS')">交野SS</td>
+      </tr>
+
+      <tr>
+        <td><span>381</span></td>
+        <td><a href="/dashboard?id=246">東梅朋照</a></td>
+        <td>0:32.34</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>382</span></td>
+        <td><a href="/dashboard?id=247">山本琉生</a></td>
+        <td>0:32.34</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>383</span></td>
+        <td><a href="/dashboard?id=248">半田唯人</a></td>
+        <td>0:32.37</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>384</span></td>
+        <td><a href="/dashboard?id=13714">木暮悠太</a></td>
+        <td>0:32.38</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>385</span></td>
+        <td><a href="/dashboard?id=3092">原田琉希</a></td>
+        <td>0:32.39</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>386</span></td>
+        <td><a href="/dashboard?id=167">西濃慧</a></td>
+        <td>0:32.40</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('KTV茨木')">KTV茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>387</span></td>
+        <td><a href="/dashboard?id=6939">川﨑藍斗</a></td>
+        <td>0:32.43</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('緑岡')">緑岡</td>
+      </tr>
+
+      <tr>
+        <td><span>388</span></td>
+        <td><a href="/dashboard?id=93">南優翔</a></td>
+        <td>0:32.44</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ江坂')">ｲﾄﾏﾝ江坂</td>
+      </tr>
+
+      <tr>
+        <td><span>389</span></td>
+        <td><a href="/dashboard?id=249">林佑威</a></td>
+        <td>0:32.46</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙみなと')">ｾﾝﾄﾗﾙみなと</td>
+      </tr>
+
+      <tr>
+        <td><span>390</span></td>
+        <td><a href="/dashboard?id=3093">草地幹太</a></td>
+        <td>0:32.46</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('明誠学院')">明誠学院</td>
+      </tr>
+
+      <tr>
+        <td><span>391</span></td>
+        <td><a href="/dashboard?id=168">稲本逢時</a></td>
+        <td>0:32.46</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>392</span></td>
+        <td><a href="/dashboard?id=13715">荻原悠希</a></td>
+        <td>0:32.47</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>393</span></td>
+        <td><a href="/dashboard?id=169">岡本樹希</a></td>
+        <td>0:32.49</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｱｲﾗﾝﾄﾞ高槻')">ｱｲﾗﾝﾄﾞ高槻</td>
+      </tr>
+
+      <tr>
+        <td><span>394</span></td>
+        <td><a href="/dashboard?id=94">土井晄弥</a></td>
+        <td>0:32.49</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('のびやか')">のびやか</td>
+      </tr>
+
+      <tr>
+        <td><span>395</span></td>
+        <td><a href="/dashboard?id=13609">早乙女然</a></td>
+        <td>0:32.51</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｻﾝﾗｲｽﾞｲﾝﾀｰ')">ｻﾝﾗｲｽﾞｲﾝﾀｰ</td>
+      </tr>
+
+      <tr>
+        <td><span>396</span></td>
+        <td><a href="/dashboard?id=13610">佐藤青空</a></td>
+        <td>0:32.52</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｽｳｨﾝ鹿沼')">ｽｳｨﾝ鹿沼</td>
+      </tr>
+
+      <tr>
+        <td><span>397</span></td>
+        <td><a href="/dashboard?id=312">今村冠太</a></td>
+        <td>0:32.53</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('尾崎SS')">尾崎SS</td>
+      </tr>
+
+      <tr>
+        <td><span>398</span></td>
+        <td><a href="/dashboard?id=250">二十里太亮</a></td>
+        <td>0:32.53</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾒｲｽﾎﾟ茨木')">ﾒｲｽﾎﾟ茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>399</span></td>
+        <td><a href="/dashboard?id=251">明松憲伸</a></td>
+        <td>0:32.54</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('尾崎泉佐野')">尾崎泉佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>400</span></td>
+        <td><a href="/dashboard?id=14984">小磯雄太</a></td>
+        <td>0:32.55</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('KCC鴨川')">KCC鴨川</td>
+      </tr>
+
+      <tr>
+        <td><span>401</span></td>
+        <td><a href="/dashboard?id=252">神川大輔</a></td>
+        <td>0:32.56</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>402</span></td>
+        <td><a href="/dashboard?id=3094">小笹瑞貴</a></td>
+        <td>0:32.60</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｴｲﾌﾞﾙ岡山')">ｴｲﾌﾞﾙ岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>403</span></td>
+        <td><a href="/dashboard?id=170">梶尾嵩</a></td>
+        <td>0:32.60</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('履正SC曽根')">履正SC曽根</td>
+      </tr>
+
+      <tr>
+        <td><span>404</span></td>
+        <td><a href="/dashboard?id=13716">竹澤勇弥</a></td>
+        <td>0:32.63</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>405</span></td>
+        <td><a href="/dashboard?id=253">片桐大翔</a></td>
+        <td>0:32.64</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ都島')">ｾﾝﾄﾗﾙ都島</td>
+      </tr>
+
+      <tr>
+        <td><span>406</span></td>
+        <td><a href="/dashboard?id=14985">枝松宏幸</a></td>
+        <td>0:32.66</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ谷津')">ｾﾝﾄﾗﾙ谷津</td>
+      </tr>
+
+      <tr>
+        <td><span>407</span></td>
+        <td><a href="/dashboard?id=3095">大野龍平</a></td>
+        <td>0:32.67</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('こうでら')">こうでら</td>
+      </tr>
+
+      <tr>
+        <td><span>408</span></td>
+        <td><a href="/dashboard?id=95">山岡礼人</a></td>
+        <td>0:32.69</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>409</span></td>
+        <td><a href="/dashboard?id=3096">角田直也</a></td>
+        <td>0:32.69</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('和気SC')">和気SC</td>
+      </tr>
+
+      <tr>
+        <td><span>410</span></td>
+        <td><a href="/dashboard?id=254">杉本健</a></td>
+        <td>0:32.70</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>411</span></td>
+        <td><a href="/dashboard?id=3097">佐々木佑成</a></td>
+        <td>0:32.72</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('OSK総社')">OSK総社</td>
+      </tr>
+
+      <tr>
+        <td><span>412</span></td>
+        <td><a href="/dashboard?id=96">恩塚甫未</a></td>
+        <td>0:32.75</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>413</span></td>
+        <td><a href="/dashboard?id=171">大野蓮旺</a></td>
+        <td>0:32.76</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS柏原')">JSS柏原</td>
+      </tr>
+
+      <tr>
+        <td><span>414</span></td>
+        <td><a href="/dashboard?id=172">竹之下椋</a></td>
+        <td>0:32.77</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>415</span></td>
+        <td><a href="/dashboard?id=173">渡邉海智</a></td>
+        <td>0:32.79</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺﾅﾐ香里園')">ｺﾅﾐ香里園</td>
+      </tr>
+
+      <tr>
+        <td><span>416</span></td>
+        <td><a href="/dashboard?id=174">安栗虎太郎</a></td>
+        <td>0:32.81</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>417</span></td>
+        <td><a href="/dashboard?id=255">東山拓生</a></td>
+        <td>0:32.83</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>418</span></td>
+        <td><a href="/dashboard?id=175">鬼塚玲亮</a></td>
+        <td>0:32.87</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ岸和田')">ｲﾄﾏﾝ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>419</span></td>
+        <td><a href="/dashboard?id=3098">中里蓮</a></td>
+        <td>0:32.87</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>420</span></td>
+        <td><a href="/dashboard?id=13717">齋藤寛太</a></td>
+        <td>0:32.89</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>421</span></td>
+        <td><a href="/dashboard?id=3099">森脇亮雅</a></td>
+        <td>0:32.89</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('真庭SC')">真庭SC</td>
+      </tr>
+
+      <tr>
+        <td><span>422</span></td>
+        <td><a href="/dashboard?id=13611">松下哲大</a></td>
+        <td>0:32.93</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>423</span></td>
+        <td><a href="/dashboard?id=176">駒木優翔</a></td>
+        <td>0:32.93</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺｽﾊﾟさかい')">ｺｽﾊﾟさかい</td>
+      </tr>
+
+      <tr>
+        <td><span>424</span></td>
+        <td><a href="/dashboard?id=3100">杉井良冴</a></td>
+        <td>0:32.94</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ玉島')">ﾙﾈｻﾝｽ玉島</td>
+      </tr>
+
+      <tr>
+        <td><span>425</span></td>
+        <td><a href="/dashboard?id=3101">都守凌平</a></td>
+        <td>0:32.94</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('JSS津山')">JSS津山</td>
+      </tr>
+
+      <tr>
+        <td><span>426</span></td>
+        <td><a href="/dashboard?id=14986">佐藤史隆</a></td>
+        <td>0:32.96</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('柏洋･江')">柏洋･江</td>
+      </tr>
+
+      <tr>
+        <td><span>427</span></td>
+        <td><a href="/dashboard?id=177">山下龍</a></td>
+        <td>0:32.97</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺﾅﾐ香里園')">ｺﾅﾐ香里園</td>
+      </tr>
+
+      <tr>
+        <td><span>428</span></td>
+        <td><a href="/dashboard?id=13612">飯塚勇心</a></td>
+        <td>0:32.97</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>429</span></td>
+        <td><a href="/dashboard?id=3102">伊原功晴</a></td>
+        <td>0:32.97</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｻﾝﾌﾗﾜｰSS')">ｻﾝﾌﾗﾜｰSS</td>
+      </tr>
+
+      <tr>
+        <td><span>430</span></td>
+        <td><a href="/dashboard?id=97">沖村義正</a></td>
+        <td>0:32.98</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>431</span></td>
+        <td><a href="/dashboard?id=256">多久和太子</a></td>
+        <td>0:33.00</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>432</span></td>
+        <td><a href="/dashboard?id=13718">大西純平</a></td>
+        <td>0:33.01</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝｲｰｸﾞﾙ')">ｲﾄﾏﾝｲｰｸﾞﾙ</td>
+      </tr>
+
+      <tr>
+        <td><span>433</span></td>
+        <td><a href="/dashboard?id=3103">光森爽玖</a></td>
+        <td>0:33.04</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('B&amp;G宍道')">B&amp;G宍道</td>
+      </tr>
+
+      <tr>
+        <td><span>434</span></td>
+        <td><a href="/dashboard?id=3104">内田直翔</a></td>
+        <td>0:33.06</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('STY･SC')">STY･SC</td>
+      </tr>
+
+      <tr>
+        <td><span>435</span></td>
+        <td><a href="/dashboard?id=14987">山﨑啓輔</a></td>
+        <td>0:33.07</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ八日市')">ﾙﾈｻﾝｽ八日市</td>
+      </tr>
+
+      <tr>
+        <td><span>436</span></td>
+        <td><a href="/dashboard?id=13719">手塚彪斗</a></td>
+        <td>0:33.08</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('IMAICHI')">IMAICHI</td>
+      </tr>
+
+      <tr>
+        <td><span>437</span></td>
+        <td><a href="/dashboard?id=178">西田蓮央</a></td>
+        <td>0:33.09</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ富田林')">ｲﾄﾏﾝ富田林</td>
+      </tr>
+
+      <tr>
+        <td><span>438</span></td>
+        <td><a href="/dashboard?id=258">藤田智誠</a></td>
+        <td>0:33.12</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>439</span></td>
+        <td><a href="/dashboard?id=257">伊藤有魅</a></td>
+        <td>0:33.12</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>440</span></td>
+        <td><a href="/dashboard?id=41">山田晴樹</a></td>
+        <td>0:33.13</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('ﾒｲｽﾎﾟ茨木')">ﾒｲｽﾎﾟ茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>441</span></td>
+        <td><a href="/dashboard?id=259">林祐月</a></td>
+        <td>0:33.14</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>442</span></td>
+        <td><a href="/dashboard?id=13613">ケインズ満柊</a></td>
+        <td>0:33.14</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('御幸ヶ原SS')">御幸ヶ原SS</td>
+      </tr>
+
+      <tr>
+        <td><span>443</span></td>
+        <td><a href="/dashboard?id=14988">川上健之介</a></td>
+        <td>0:33.15</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙｽﾎﾟｰﾂ')">ｾﾝﾄﾗﾙｽﾎﾟｰﾂ</td>
+      </tr>
+
+      <tr>
+        <td><span>444</span></td>
+        <td><a href="/dashboard?id=13767">福田流歌</a></td>
+        <td>0:33.17</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>445</span></td>
+        <td><a href="/dashboard?id=13614">近澤昊二</a></td>
+        <td>0:33.21</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('FｰBIG')">FｰBIG</td>
+      </tr>
+
+      <tr>
+        <td><span>446</span></td>
+        <td><a href="/dashboard?id=13615">武者秀明</a></td>
+        <td>0:33.21</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('御幸ヶ原SS')">御幸ヶ原SS</td>
+      </tr>
+
+      <tr>
+        <td><span>447</span></td>
+        <td><a href="/dashboard?id=3105">藤山大輝</a></td>
+        <td>0:33.22</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>448</span></td>
+        <td><a href="/dashboard?id=98">中真志朗</a></td>
+        <td>0:33.23</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('大阪水泳学校')">大阪水泳学校</td>
+      </tr>
+
+      <tr>
+        <td><span>449</span></td>
+        <td><a href="/dashboard?id=3106">大西惟悠</a></td>
+        <td>0:33.29</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>450</span></td>
+        <td><a href="/dashboard?id=3107">中島清士郎</a></td>
+        <td>0:33.32</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺﾅﾐ岡山')">ｺﾅﾐ岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>451</span></td>
+        <td><a href="/dashboard?id=179">古石稜多</a></td>
+        <td>0:33.32</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('履正SC曽根')">履正SC曽根</td>
+      </tr>
+
+      <tr>
+        <td><span>452</span></td>
+        <td><a href="/dashboard?id=99">柏木敬仁</a></td>
+        <td>0:33.35</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>453</span></td>
+        <td><a href="/dashboard?id=100">木下颯優</a></td>
+        <td>0:33.39</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ滝谷')">ｲﾄﾏﾝ滝谷</td>
+      </tr>
+
+      <tr>
+        <td><span>454</span></td>
+        <td><a href="/dashboard?id=13720">西東由裕</a></td>
+        <td>0:33.41</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ宇都宮')">ｾﾝﾄﾗﾙ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>455</span></td>
+        <td><a href="/dashboard?id=180">中谷駿介</a></td>
+        <td>0:33.41</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ堺')">ｲﾄﾏﾝ堺</td>
+      </tr>
+
+      <tr>
+        <td><span>456</span></td>
+        <td><a href="/dashboard?id=3108">松本悠希</a></td>
+        <td>0:33.43</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>457</span></td>
+        <td><a href="/dashboard?id=13616">横田璃</a></td>
+        <td>0:33.43</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>458</span></td>
+        <td><a href="/dashboard?id=13617">長島慎太</a></td>
+        <td>0:33.47</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>459</span></td>
+        <td><a href="/dashboard?id=3109">杉浦亘</a></td>
+        <td>0:33.47</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('B&amp;G宍道')">B&amp;G宍道</td>
+      </tr>
+
+      <tr>
+        <td><span>460</span></td>
+        <td><a href="/dashboard?id=3110">佐々木海翔</a></td>
+        <td>0:33.51</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｱｸﾛﾎﾟｰﾄ')">ｱｸﾛﾎﾟｰﾄ</td>
+      </tr>
+
+      <tr>
+        <td><span>461</span></td>
+        <td><a href="/dashboard?id=181">長岡克興</a></td>
+        <td>0:33.54</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾊﾟｼｵ福島')">ﾊﾟｼｵ福島</td>
+      </tr>
+
+      <tr>
+        <td><span>462</span></td>
+        <td><a href="/dashboard?id=6984">萩原陽来</a></td>
+        <td>0:33.55</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('茗溪学園')">茗溪学園</td>
+      </tr>
+
+      <tr>
+        <td><span>463</span></td>
+        <td><a href="/dashboard?id=13618">髙橋琉生</a></td>
+        <td>0:33.57</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>464</span></td>
+        <td><a href="/dashboard?id=260">笠原大輔</a></td>
+        <td>0:33.58</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾏｯｸ堺一条')">ﾏｯｸ堺一条</td>
+      </tr>
+
+      <tr>
+        <td><span>465</span></td>
+        <td><a href="/dashboard?id=13619">池田粋斗</a></td>
+        <td>0:33.63</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('SC山前')">SC山前</td>
+      </tr>
+
+      <tr>
+        <td><span>466</span></td>
+        <td><a href="/dashboard?id=3111">川崎僚大</a></td>
+        <td>0:33.64</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('OSK総社')">OSK総社</td>
+      </tr>
+
+      <tr>
+        <td><span>467</span></td>
+        <td><a href="/dashboard?id=261">吉川青空</a></td>
+        <td>0:33.65</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝひばり')">ｲﾄﾏﾝひばり</td>
+      </tr>
+
+      <tr>
+        <td><span>468</span></td>
+        <td><a href="/dashboard?id=262">玉井涼平</a></td>
+        <td>0:33.66</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙみなと')">ｾﾝﾄﾗﾙみなと</td>
+      </tr>
+
+      <tr>
+        <td><span>469</span></td>
+        <td><a href="/dashboard?id=101">藤﨑創一朗</a></td>
+        <td>0:33.66</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>470</span></td>
+        <td><a href="/dashboard?id=102">林龍信</a></td>
+        <td>0:33.69</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｺﾅﾐ香里園')">ｺﾅﾐ香里園</td>
+      </tr>
+
+      <tr>
+        <td><span>471</span></td>
+        <td><a href="/dashboard?id=182">中島隼</a></td>
+        <td>0:33.69</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺｽﾊﾟよみうり')">ｺｽﾊﾟよみうり</td>
+      </tr>
+
+      <tr>
+        <td><span>472</span></td>
+        <td><a href="/dashboard?id=3112">川上蒼太</a></td>
+        <td>0:33.72</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｺﾅﾐ岡山')">ｺﾅﾐ岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>473</span></td>
+        <td><a href="/dashboard?id=103">中野恭佑</a></td>
+        <td>0:33.73</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('岸和田SS')">岸和田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>474</span></td>
+        <td><a href="/dashboard?id=3113">横山陽也</a></td>
+        <td>0:33.73</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>475</span></td>
+        <td><a href="/dashboard?id=104">石原大凱</a></td>
+        <td>0:33.77</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>476</span></td>
+        <td><a href="/dashboard?id=3114">赤木遥翔</a></td>
+        <td>0:33.77</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('みずしまSS')">みずしまSS</td>
+      </tr>
+
+      <tr>
+        <td><span>477</span></td>
+        <td><a href="/dashboard?id=13721">寺﨑友俊</a></td>
+        <td>0:33.77</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('宝木SC')">宝木SC</td>
+      </tr>
+
+      <tr>
+        <td><span>478</span></td>
+        <td><a href="/dashboard?id=183">髙洲仁成</a></td>
+        <td>0:33.78</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ守口')">ｲﾄﾏﾝ守口</td>
+      </tr>
+
+      <tr>
+        <td><span>479</span></td>
+        <td><a href="/dashboard?id=184">丹野凜翔</a></td>
+        <td>0:33.82</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('大阪水泳学校')">大阪水泳学校</td>
+      </tr>
+
+      <tr>
+        <td><span>480</span></td>
+        <td><a href="/dashboard?id=263">八木椋</a></td>
+        <td>0:33.84</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('KTV茨木')">KTV茨木</td>
+      </tr>
+
+      <tr>
+        <td><span>481</span></td>
+        <td><a href="/dashboard?id=13723">和田佳大</a></td>
+        <td>0:33.85</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('NSP芳賀')">NSP芳賀</td>
+      </tr>
+
+      <tr>
+        <td><span>482</span></td>
+        <td><a href="/dashboard?id=13722">秋山侑輝</a></td>
+        <td>0:33.85</td>
+        <td><span>小学6</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>483</span></td>
+        <td><a href="/dashboard?id=3115">早田伊輝</a></td>
+        <td>0:33.87</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｴｲﾌﾞﾙ岡山')">ｴｲﾌﾞﾙ岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>484</span></td>
+        <td><a href="/dashboard?id=3116">大塚紘平</a></td>
+        <td>0:33.88</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('こうでら')">こうでら</td>
+      </tr>
+
+      <tr>
+        <td><span>485</span></td>
+        <td><a href="/dashboard?id=13724">杉山太飛</a></td>
+        <td>0:33.88</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('ﾊﾟｼﾌｨｯｸ真岡')">ﾊﾟｼﾌｨｯｸ真岡</td>
+      </tr>
+
+      <tr>
+        <td><span>486</span></td>
+        <td><a href="/dashboard?id=313">中村和希</a></td>
+        <td>0:33.89</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('岸和田SS')">岸和田SS</td>
+      </tr>
+
+      <tr>
+        <td><span>487</span></td>
+        <td><a href="/dashboard?id=3117">片岡利章</a></td>
+        <td>0:33.90</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('みずしまSS')">みずしまSS</td>
+      </tr>
+
+      <tr>
+        <td><span>488</span></td>
+        <td><a href="/dashboard?id=185">青山惺雅</a></td>
+        <td>0:33.90</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('のびやか')">のびやか</td>
+      </tr>
+
+      <tr>
+        <td><span>489</span></td>
+        <td><a href="/dashboard?id=105">谷吏玖斗</a></td>
+        <td>0:33.90</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('菊水SS')">菊水SS</td>
+      </tr>
+
+      <tr>
+        <td><span>490</span></td>
+        <td><a href="/dashboard?id=14989">田島颯人</a></td>
+        <td>0:33.90</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙｽﾎﾟｰﾂ')">ｾﾝﾄﾗﾙｽﾎﾟｰﾂ</td>
+      </tr>
+
+      <tr>
+        <td><span>491</span></td>
+        <td><a href="/dashboard?id=264">山岡俐斗</a></td>
+        <td>0:33.92</td>
+        <td><span>中学1</span></td>
+        <td onclick="search_team('HOS小阪')">HOS小阪</td>
+      </tr>
+
+      <tr>
+        <td><span>492</span></td>
+        <td><a href="/dashboard?id=13620">佐藤祐玖</a></td>
+        <td>0:33.95</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('SGC･佐野')">SGC･佐野</td>
+      </tr>
+
+      <tr>
+        <td><span>493</span></td>
+        <td><a href="/dashboard?id=106">藤岡祐</a></td>
+        <td>0:33.95</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ岸和田')">ｲﾄﾏﾝ岸和田</td>
+      </tr>
+
+      <tr>
+        <td><span>494</span></td>
+        <td><a href="/dashboard?id=107">山本翔太</a></td>
+        <td>0:33.96</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('北畠SH')">北畠SH</td>
+      </tr>
+
+      <tr>
+        <td><span>495</span></td>
+        <td><a href="/dashboard?id=3118">井上翔太</a></td>
+        <td>0:33.96</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('和気SC')">和気SC</td>
+      </tr>
+
+      <tr>
+        <td><span>496</span></td>
+        <td><a href="/dashboard?id=3119">松本奈樹</a></td>
+        <td>0:33.97</td>
+        <td><span>小学3</span></td>
+        <td onclick="search_team('ﾚｲSC倉敷')">ﾚｲSC倉敷</td>
+      </tr>
+
+      <tr>
+        <td><span>497</span></td>
+        <td><a href="/dashboard?id=13621">黒後拓哉</a></td>
+        <td>0:33.97</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('ｽｳｨﾝ宇都宮')">ｽｳｨﾝ宇都宮</td>
+      </tr>
+
+      <tr>
+        <td><span>498</span></td>
+        <td><a href="/dashboard?id=42">長谷川凌真</a></td>
+        <td>0:33.98</td>
+        <td><span>小学4</span></td>
+        <td onclick="search_team('JSS山本')">JSS山本</td>
+      </tr>
+
+      <tr>
+        <td><span>499</span></td>
+        <td><a href="/dashboard?id=108">川口裕大</a></td>
+        <td>0:34.00</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ｲﾄﾏﾝ')">ｲﾄﾏﾝ</td>
+      </tr>
+
+      <tr>
+        <td><span>500</span></td>
+        <td><a href="/dashboard?id=186">廣澤陽翔</a></td>
+        <td>0:34.00</td>
+        <td><span>小学5</span></td>
+        <td onclick="search_team('ﾓﾓYMCA')">ﾓﾓYMCA</td>
+      </tr>
+
+      </tbody></table>
+
+      <div class="page_btns men">
+
+        <span onclick="jump_page(1)">1</span>
+
+        <span onclick="jump_page(2)">2</span>
+
+      </div>
+
+    </main>
+
+  <div id="page_down" onclick="go_bottom()">
+    <div></div>
+  </div>
+
+  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0
+      58-18 88-18s
+      58 18 88 18
+      58-18 88-18
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
+    </g>
+  </svg>
+  <div id="footer">
+    <p>Created by Reo Kanzaki</p>
+  </div>
+
+  <!-- ajaxやるまで使っちゃや―よ -->
+  <!-- <script src="static/js/jquery-3.4.1.min.js"></script> -->
+  <script>
+    function go_bottom(){
+      var doc = document.documentElement;
+      var bottom = doc.scrollHeight - doc.clientHeight;
+      window.scroll(0, bottom);
+    };
+  </script>
+  <script>
+    var pg = document.getElementsByClassName('page_btns');
+    for(var i=0; i<2; i++){
+      for(var j=0; j<2; j++){
+        var e = pg[i].children[j];
+        if(e.textContent == '1'){
+          e.classList.add('current');
+        };
+      };
+    };
+  </script>
+  <script>
+
+    function jump_page(page) {
+      var flag = false;
+      var url = "?pool=1&sex=1&style=Fr&distance=50&page=" + page;
+      for (var i = 0; i < 19; i++){
+        if(document.gradeFilter.grade[i].checked) {
+          flag = true;
+          break;
+        };
+      };
+      if(flag) {
+        document.gradeFilter.action = url;
+        document.gradeFilter.submit();
+      } else {
+        location.href = url;
+      };
+    };
+
+  </script>
+  <script>
+
+    function search_team(team) {
+      var url = "/search?team=" + team;
+      location.href = url;
+    };
+
+  </script>
+</body>
+
+</html>

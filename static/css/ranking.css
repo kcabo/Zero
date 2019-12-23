@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:700|Noto+Sans+JP:300,400,700|Roboto:300,400,700&display=swap&subset=japanese');
+:root {
+  --men: #4fc0e8;
+  --women: #ed85c0;
+  --main: #0496FF;
+  --fr: #03A9F4;
+  --ba: #20bf6b;
+  --br: #3867d6;
+  --fly: #fa8231;
+  --im: #8b54d0;
+}
+/* https://coolors.co/39a9dd-33bf74-c9613e-f9904a-8c5ac9 */
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#header-wrapper {
+  border-bottom: solid .5px #eee;
+  width: 100%;
+}
+header {
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: auto;
+}
+
+header #burger {
+  cursor: pointer;
+  position: relative;
+  width: 22px;
+  height: 14px;
+  margin: 8px 0;
+}
+header #burger span {
+  display: inline-block;
+  transition: all .4s;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #222;
+  border-radius: 4px;
+}
+header #burger span:nth-of-type(1) {
+  top: 0;
+}
+header #burger span:nth-of-type(2) {
+  top: 6px;
+}
+header #burger span:nth-of-type(3) {
+  bottom: 0;
+}
+
+header #burger.active span:nth-of-type(1) {
+  transform: translateY(6px) rotate(-315deg);
+}
+header #burger.active span:nth-of-type(2) {
+  opacity: 0;
+}
+header #burger.active span:nth-of-type(3) {
+  transform: translateY(-6px) rotate(315deg);
+}
+
+header a img {
+  height: 30px;
+}
+header .placeholder {
+  width: 22px;
+}
+
+#menu {
+  height: 0px;
+  opacity: 0;
+  transition: all .4s;
+  box-shadow: 0px 12px 12px -12px rgba(0,0,0,0.2);
+  border-bottom: solid 0.5px #eee;
+}
+#menu.active {
+  height: 150px;
+  opacity: 1;
+}
+#menu #search {
+  width: 100%;
+  padding: 10px
+}
+#menu form {
+  width: 55%;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 5px;
+  background: #F1F3F5;
+  position: relative;
+  display: flex;
+}
+#menu form input:nth-child(1) {
+  display: block;
+  outline: none;
+  margin-left: -8%;
+  line-height: 2;
+  font-size: 1.6rem;
+  transform: scale(0.7);
+  letter-spacing: 1px;
+  width: 85%;
+  font-weight: bold;
+}
+#menu form input:nth-child(2) {
+  outline: none;
+  cursor: pointer;
+  display: block;
+  width: 15%;
+}
+#menu form i {
+  position: absolute;
+  top: calc(50% - 8px);
+  right: 10px;
+  font-size: 16px;
+  color: #aaa;
+}
+
+
+footer {
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  background: #eee;
+}
+footer p {
+  text-align: right;
+  padding: 0 30px;
+  font-size: 2rem;
+  width: 100%;
+  border-bottom: 2px solid #222;
+}
+footer p span {
+  font-weight: bold;
+}
+footer img {
+  height: 35px;
+  position: absolute;
+  background: #eee;
+  padding: 0 10px;
+  top: 42px;
+  left: 10%;
+}
+footer a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* ここまで共通 */
+
+#overlay {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.16);
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .5s 0s;
+}
+#overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+#phhh { height: 300px;}
+
+#config {
+  padding: 10px;
+  user-select: none;
+}
+#config #group {
+  position: relative;
+  margin-bottom: 10px;
+  width: 140px;
+}
+#config #group.active {
+  z-index: 2;
+}
+#config #group p {
+  font-size: 1.4rem;
+  line-height: 38px;
+  text-align: center;
+  color: #111;
+  font-weight: lighter;
+  cursor: pointer;
+  background: white;
+}
+
+#config p.current {
+  width: 100%;
+  /* box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); */
+  /* border-radius: 4px; */
+  border-bottom: solid .5px #aaa;
+}
+#config .current i {
+  position: absolute;
+  font-size: 20px;
+  color: #888;
+  top: 9px;
+  left: 12px;
+  transition: all .2s;
+}
+#config #group.active i {
+  transform: rotate(90deg);
+}
+
+#config .items {
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  box-sizing: border-box;
+  transition: all .4s;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.16);
+}
+#config #group.active .items {
+  visibility: visible;
+  opacity: 1;
+}
+#config #group p:hover {
+  background: #f0f0f0;
+}
+
+#config .title {
+  display: flex;
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+#config .title .select {
+  width: 60px;
+  height: 60px;
+  background: var(--main);
+  padding-top: 15px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  margin-right: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+}
+#config .title .select i {
+  font-size: 1.8rem;
+}
+#config .title .select p {
+}
+#config .event-name p:first-child {
+  color: #222;
+  font-size: 1.3rem;
+  padding-top: 8px;
+}
+#config .event-name p:last-child {
+  color: #222;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.modal {
+  position: fixed;
+  top: 100vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 800px;
+  visibility: hidden;
+  transition: all .3s 0s;
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+}
+.modal.active {
+  z-index: 10;
+  visibility: visible;
+  top: 100px;
+}
+.modal .close {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--main);
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  font-size: 2rem;
+  line-height: 2;
+  cursor: pointer;
+}
+.modal .window {
+  height: 92%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  padding: 4px;
+}
+.modal .window::-webkit-scrollbar {
+    display:none;
+}
+#selectEvents .events {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#selectEvents .events .card {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+  background: var(--fr);
+  height: 50px;
+  width: 32%;
+  border-radius: 4px;
+  position: relative;
+  margin: 2px;
+  cursor: pointer;
+  padding: 0 3px;
+}
+#selectEvents .events .card.fr {
+  background: var(--fr);
+}
+#selectEvents .events .card.ba {
+  background: var(--ba);
+}
+#selectEvents .events .card.br {
+  background: var(--br);
+}
+#selectEvents .events .card.fly {
+  background: var(--fly);
+}
+#selectEvents .events .card.im {
+  background: var(--im);
+}
+#selectEvents .events .card img {
+  display: block;
+  width: 40px;
+  margin-top: 4px;
+}
+#selectEvents .events .card div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 45px;
+  margin: auto;
+  height: 37px;
+}
+#selectEvents .events .card p {
+  color: white;
+  font-weight: lighter;
+}
+#selectEvents .events .card p:last-child {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+#selectEvents .events .card p:last-child::after {
+  content: 'm';
+  font-size: 1.3rem;
+}
