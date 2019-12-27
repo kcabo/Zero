@@ -163,115 +163,6 @@ main {
   margin: auto;
 }
 
-/* ここまで共通 */
-
-#overlay {
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.16);
-  z-index: 1;
-  visibility: hidden;
-  opacity: 0;
-  transition: all .5s 0s;
-}
-#overlay.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-#phhh { height: 80vh}
-
-#config input[type=checkbox] {
-  display: none;
-}
-#filter:checked + .test {
-  background: olive
-}
-
-h1 {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: lighter;
-  padding: 10px;
-}
-#setting {
-  padding: 0 15px;
-  font-size: 1.6rem;
-  text-align: center;
-  line-height: 40px;
-  max-width: 400px;
-  margin: auto;
-}
-
-#setting .selectStyle {
-  color: var(--main);
-  margin-bottom: 5px;
-  cursor: pointer;
-  border: solid 1px var(--main);
-  transition: all .4s;
-}
-#setting .selectStyle:hover {
-  background: var(--main);
-  color: white;
-}
-#setting .selectStyle i {
-  padding-right: 5px;
-}
-#setting .row {
-  display: flex;
-  justify-content: center;
-}
-#setting .button {
-  width: 32%;
-  position: relative;
-  color: #333;
-}
-#setting .button + .button {
-  border-left: solid .8px #ddd;
-}
-#setting .button > p {
-  background: white;
-  overflow: hidden;
-  cursor: pointer;
-}
-#setting .button i {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  color: #777;
-  padding-right: 4px;
-  transition: transform .2s, top .2s .2s;
-}
-#setting .button.active i {
-  top: 14px;
-  transform: rotate(90deg);
-}
-#setting .button p:hover {
-  background: #eee;
-}
-#setting .button .items {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  background: white;
-  cursor: pointer;
-  transition: opacity .5s;
-  border-top: solid .5px #ddd;
-}
-#setting .button.active .items {
-  visibility: visible;
-  opacity: 1;
-  z-index: 2;
-}
-#setting .button.active{
-  background: #fafafa;
-  z-index: 2;
-}
-
-
 
 .modal {
   position: fixed;
@@ -317,6 +208,155 @@ h1 {
 .modal .window::-webkit-scrollbar {
     display:none;
 }
+
+/* ここまで共通 */
+
+#overlay {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.16);
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .5s 0s;
+}
+#overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+#phhh {
+  height: 80vh;
+  text-align: right;
+}
+
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: lighter;
+  padding: 10px;
+}
+#setting {
+  padding: 0 15px;
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 40px;
+  max-width: 400px;
+  margin: auto;
+}
+
+#setting .selectStyle {
+  color: var(--main);
+  cursor: pointer;
+  border: solid 1px var(--main);
+  transition: all .4s;
+}
+#setting .selectStyle:hover {
+  background: var(--main);
+  color: white;
+}
+#setting .selectStyle i {
+  padding-right: 5px;
+}
+#setting .row {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+#setting .button {
+  width: 32%;
+  position: relative;
+  color: #333;
+}
+#setting .button + .button {
+  border-left: solid .8px #ddd;
+}
+#setting .button > p {
+  background: white;
+  overflow: hidden;
+  cursor: pointer;
+}
+#setting .button i {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  color: #777;
+  padding-right: 4px;
+  transition: transform .2s, top .2s .2s;
+}
+#setting .button.active i {
+  top: 14px;
+  transform: rotate(90deg);
+}
+#setting .button p:hover {
+  background: #eee;
+}
+#setting .button .items {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  background: white;
+  cursor: pointer;
+  transition: opacity .5s;
+  border-top: solid .5px #ddd;
+}
+#setting .button.active .items {
+  visibility: visible;
+  opacity: 1;
+  z-index: 2;
+}
+#setting .button.active{
+  background: #fafafa;
+  z-index: 2;
+}
+#setting .gradeFilter {
+  margin-top: 8px;
+  /* border-top: solid .8px #ddd;
+  border-bottom: solid .8px #ddd; */
+  font-size: 1.5rem;
+  line-height: 36px;
+}
+#setting .gradeFilter input[type=checkbox] {
+  display: none;
+}
+#setting .grades {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  transition: all .4s;
+}
+#filter:checked + .grades {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+}
+#setting .school {
+  display: flex;
+  border-top: solid .4px #dfdfdf;
+}
+#setting .school p {
+  width: 20%;
+}
+#setting .school .nums {
+  width: 80%;
+}
+#setting .nums label {
+  display: inline-block;
+  width: 30%;
+}
+#setting .school:not(:last-child) .nums label::after {
+  content: ' 年生';
+  font-size: 1.1rem;
+}
+#setting .nums label.active {
+  background: red;
+}
+
+
 #selectEvents .events {
   display: flex;
   justify-content: center;
