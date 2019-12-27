@@ -49,6 +49,52 @@
 
   <main>
 
+
+    <h1>50m 自由形</h1>
+
+    <div id="setting">
+
+      <p class="selectStyle">
+        種目を変更する
+      </p>
+
+      <div class="row">
+        <div id="year" class="button deactivate">
+          <p onclick="activate(year);activate(overlay)">
+            <i class="fas fa-angle-right"></i>
+            2019.4~
+          </p>
+          <div class="items">
+            <p>2018.4~</p>
+          </div>
+        </div>
+
+        <div id="sex" class="button deactivate">
+          <p onclick="activate(sex);activate(overlay)">
+            <i class="fas fa-angle-right"></i>
+            男子
+          </p>
+          <div class="items">
+            <p>女子</p>
+          </div>
+        </div>
+
+        <div id="pool" class="button deactivate">
+          <p onclick="activate(pool);activate(overlay)">
+            <i class="fas fa-angle-right"></i>
+            長水路
+          </p>
+          <div class="items">
+            <p>短水路</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p>学年フィルター</p>
+    </div>
+
+
     <div id="config">
       <div id="group" class="deactivate">
         <p class="current" onclick="activate(group);activate(overlay)">
@@ -77,7 +123,7 @@
         <span>ボタン２</span>
       </label>
       <input type="checkbox" id="filter" checked>
-      
+
       <div class="test"> a </div>
 
 

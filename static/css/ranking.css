@@ -279,6 +279,82 @@ main {
   background: olive
 }
 
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: lighter;
+  padding: 10px;
+}
+#setting {
+  padding: 0 15px;
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 40px;
+  max-width: 400px;
+  margin: auto;
+}
+
+#setting .selectStyle {
+  color: white;
+  border-radius: 100px;
+  background: var(--main);
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+#setting .row {
+  display: flex;
+  justify-content: center;
+}
+#setting .button {
+  width: 32%;
+  position: relative;
+  color: #333;
+}
+#setting .button + .button {
+  border-left: solid .8px #ddd;
+}
+#setting .button > p {
+  background: white;
+  overflow: hidden;
+  cursor: pointer;
+}
+#setting .button i {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #777;
+  padding-right: 4px;
+  transition: all .2s;
+}
+#setting .button.active i {
+  top: 15px;
+  left: 10px;
+  transform: rotate(90deg);
+}
+#setting .button p:hover {
+  background: #eee;
+}
+#setting .button .items {
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  background: white;
+  cursor: pointer;
+  /* border-radius: 100px; */
+}
+#setting .button.active .items {
+  border-top: solid .5px #ddd;
+  visibility: visible;
+  z-index: 2;
+}
+#setting .button.active{
+  background: #fafafa;
+  z-index: 2;
+}
+
+
+
 .modal {
   position: fixed;
   top: 100vh;
