@@ -54,6 +54,11 @@
 
     <div id="setting">
 
+      <div class="selectStyle" onclick="activate(selectEvents);activate(overlay)">
+        <i class="fas fa-cog"></i>
+        種目を変更する
+      </div>
+
       <div class="row">
         <div id="year" class="button deactivate">
           <p onclick="activate(year);activate(overlay)">
@@ -92,28 +97,6 @@
 
 
     <div id="config">
-      <div id="group" class="deactivate">
-        <p class="current" onclick="activate(group);activate(overlay)">
-          <i id="arrow" class="fas fa-angle-right"></i>男子 長水路
-        </p>
-        <div class="items">
-          <p>男子 長水路</p>
-          <p>女子 長水路</p>
-          <p>女子 長水路</p>
-        </div>
-      </div>
-
-      <div class="title">
-        <div class="select" onclick="activate(selectEvents);activate(overlay)">
-          <i class="fas fa-cog"></i>
-          <p>種目変更</p>
-        </div>
-        <div class="event-name">
-          <p>2019年</p>
-          <p>50m 自由形</p>
-        </div>
-
-      </div>
 
       <label for="filter">
         <span>ボタン２</span>
@@ -126,9 +109,7 @@
     </div>
 
 
-    <div id="phhh">
-      p
-    </div>
+    <div id="phhh"> p </div>
 
   </main>
 
@@ -137,6 +118,7 @@
   <div id="selectEvents" class="deactivate modal">
     <div class="window">
       <div class="events">
+        <p>種目一覧</p>
         <div class="card fr">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>50</p></div>
