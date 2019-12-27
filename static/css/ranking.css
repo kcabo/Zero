@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:700|Noto+Sans+JP:300,400,700|Roboto:300,400,700&display=swap&subset=japanese');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:300,400,700|Roboto:300,400,700&display=swap&subset=japanese');
 :root {
   --men: #4fc0e8;
   --women: #ed85c0;
@@ -313,18 +313,51 @@ h1 {
   background: #fafafa;
   z-index: 2;
 }
+
 #setting .gradeFilter {
   margin-top: 8px;
   /* border-top: solid .8px #ddd;
   border-bottom: solid .8px #ddd; */
-  font-size: 1.5rem;
-  line-height: 36px;
+  font-size: 1.4rem;
+  line-height: 32px;
 }
 #setting .gradeFilter input[type=checkbox] {
   display: none;
 }
 #setting .gradeFilter > label {
-  text-align: right;
+  position: relative;
+}
+#setting .gradeFilter .toggle {
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+#setting .gradeFilter .toggle::before {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  border-radius: 40px;
+  border: solid 1.5px #aaa;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 20px;
+}
+#setting .gradeFilter .toggle::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 20px;
+}
+#filter:checked ~ label p::after {
+  left: 40px;
 }
 #setting .grades {
   visibility: hidden;
@@ -332,21 +365,23 @@ h1 {
   height: 0;
   transition: all .4s;
 }
-#filter:checked + .grades {
+#filter:checked ~ .grades {
   visibility: visible;
   height: auto;
   opacity: 1;
 }
 #setting .school {
   display: flex;
-  border-top: solid .4px #dfdfdf;
+  border-top: solid .6px #dfdfdf;
+}
+#setting .school:last-child {
+  border-bottom: solid .6px #dfdfdf;
 }
 #setting .school p {
   width: 20%;
   background: #444;
   color: white;
-  font-size: 1.4rem;
-  /* border-bottom: solid .2px white; */
+  font-weight: bold;
 }
 #setting .school .nums {
   width: 80%;
@@ -354,38 +389,22 @@ h1 {
 #setting .nums label {
   display: inline-block;
   width: 30%;
-  position: relative;
+  margin: 2px;
 }
-#setting .school:not(:last-child) .nums label::after {
-  content: ' 年生';
-  font-size: 1.1rem;
+#setting .nums span {
+  display: inline-block;
+  width: 90%;
+  border-radius: 8px;
+  letter-spacing: 2px;
+  transition: all .2s;
+  cursor: pointer;
 }
-#setting .nums input + span::after {
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 0;
-  bottom: 0;
-  left: 4px;
-  width: 13px;
-  height: 13px;
-  margin: auto;
-  border-radius: 50%;
-  border: solid 1px #aaa;
-}
-#setting .nums input:checked + span::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 0;
-  bottom: 0;
-  left: 6.5px;
-  width: 8px;
-  height: 8px;
-  margin: auto;
-  border-radius: 50%;
+#setting .nums input:checked + span {
   background: var(--main);
+  color: white;
+  font-weight: bold;
 }
+
 
 
 #selectEvents .events {
