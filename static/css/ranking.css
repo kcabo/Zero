@@ -528,7 +528,7 @@ td:nth-child(2) {
 td:nth-child(2) a {
   text-decoration: none;
   color: var(--women);
-  /* font-weight: bold; */
+  font-weight: bold;
 }
 td:nth-child(3) {
   width: 20%;
@@ -545,8 +545,8 @@ td:nth-child(4) span {
   width: 45px;
   text-align: center;
   line-height: 20px;
-  border: solid 1px var(--main);
-  color: var(--main);
+  border: solid 1px var(--women);
+  color: var(--women);
   font-size: 1.1rem;
   letter-spacing: .6px;
 }
