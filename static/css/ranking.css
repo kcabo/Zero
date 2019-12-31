@@ -209,6 +209,13 @@ main {
     display:none;
 }
 
+@media screen and (min-width:800px) {
+  #ranking {
+    /* margin-top: 2000px;
+    transform: scale(1.2); */
+  }
+}
+
 /* ここまで共通 */
 
 #overlay {
@@ -472,12 +479,15 @@ h1 {
   padding: 8px 15px;
   margin: 10px 0;
   background: #f3f7fa;
+  --border: solid .4px #eee;
+  --border-bold: solid 1.4px #eee;
+  --link: #3E92CC;
 }
 
 table {
   font-size: 1.3rem;
   border-collapse: separate;
-  border-spacing: 0 3px;
+  border-spacing: 0 2px;
   width: 100%;
   max-width: 600px;
   margin: auto;
@@ -493,36 +503,36 @@ table tr {
 }
 td {
   /* box-shadow: 0px 8px 50px -8px rgba(0, 0, 0, 0.16), 0px -8px 50px -8px rgba(0, 0, 0, 0.16); */
-  border-top: solid .5px #eee;
-  border-bottom: solid .5px #eee;
+  border-top: var(--border);
+  border-bottom: var(--border-bold);
 }
 table i {
   font-size: 1rem;
   padding-left: 5px;
-  color: #3E92CC;
+  color: var(--link);
 }
 td:nth-child(1) {
-  width: 10%;
+  width: 12%;
   text-align: center;
   color: #aaa;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   font-weight: bold;
-  border-left: solid .5px #eee;
+  border-left: var(--border);
 }
 td:nth-child(2) {
   padding-left: 4px;
-  width: 25%;
+  width: 28%;
 }
 td:nth-child(2) a {
   text-decoration: none;
-  color: #3E92CC;
+  color: var(--link);
   font-weight: bold;
 }
 td:nth-child(3) {
   width: 20%;
   font-weight: bold;
-  color: #222;
+  color: #446;
 }
 td:nth-child(4) {
   width: 15%;
@@ -530,14 +540,14 @@ td:nth-child(4) {
 }
 td:nth-child(4) span {
   border-radius: 5px;
-  /* border: solid .5px #4659f0; */
   display: inline-block;
-  width: 40px;
+  width: 45px;
   text-align: center;
   line-height: 20px;
   color: #fff;
-  background: #3E92CC;
+  background: var(--link);
   font-size: 1.1rem;
+  letter-spacing: .6px;
 }
 td:nth-child(5) {
   width: 20%;
@@ -545,38 +555,8 @@ td:nth-child(5) {
   font-size: 1.1rem;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  border-right: solid .5px #eee;
+  border-right: var(--border-bold);
 }
-
-/*
-.table {
-  margin: 20px 10px;
-
-}
-
-.table .row {
-  display: flex;
-  font-size: 1.3rem;
-  border: solid .5px #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  height: 30px;
-  overflow: hidden;
-  background-image: linear-gradient(270deg, #ABDCFF 10%, #0396FF 100%);
-}
-
-.rank {
-  width: 14%;
-  position: relative;
-}
-.rank p {
-  color: #ffffff66;
-  font-size: 2.6rem;
-  font-weight: bold;
-  position: absolute;
-  bottom: -4px;
-  left: 30%;
-} */
 
 .testa {
   background: blue;
