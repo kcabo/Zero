@@ -492,7 +492,7 @@ table tr {
   transform: scale(1);
 }
 td {
-  box-shadow: 0px 8px 10px -8px rgba(0, 0, 0, 0.2), 0px -8px 10px -8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 50px -8px rgba(0, 0, 0, 0.16), 0px -8px 50px -8px rgba(0, 0, 0, 0.16);
 }
 td:nth-child(1) {
   width: 10%;
