@@ -511,7 +511,7 @@ td {
 table i {
   font-size: 1rem;
   padding-left: 5px;
-  color: var(--men);
+  color: var(--women);
 }
 td:nth-child(1) {
   width: 15%;
@@ -527,7 +527,7 @@ td:nth-child(2) {
 }
 td:nth-child(2) a {
   text-decoration: none;
-  color: var(--men);
+  color: var(--women);
   /* font-weight: bold; */
 }
 td:nth-child(3) {
@@ -545,8 +545,8 @@ td:nth-child(4) span {
   width: 45px;
   text-align: center;
   line-height: 20px;
-  border: solid 1px var(--link);
-  color: var(--link);
+  border: solid 1px var(--main);
+  color: var(--main);
   font-size: 1.1rem;
   letter-spacing: .6px;
 }
