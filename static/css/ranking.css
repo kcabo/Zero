@@ -455,7 +455,7 @@ h1 {
 }
 #selectEvents .events .card p {
   color: white;
-  font-weight: lighter;
+  /* font-weight: lighter; */
 }
 #selectEvents .events .card p:last-child {
   font-size: 1.8rem;
@@ -468,26 +468,45 @@ h1 {
 
 table {
   margin: 10px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border-collapse: separate;
-  border-spacing: 0 5px;
+  border-spacing: 0 3px;
+  background: #f3f7fa;
+  padding: 10px;
+  /* display: block; */
 }
 
 table tr {
-  border: solid .5px #222;
+  background: white;
+  /* border: solid .5px #222; */
   /* margin: 23px; */
   /* background: #53e0e9; */
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  /* display: block; */
+  margin: 5px;
+  /* width: 400px; */
   height: 30px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.16);
+  /* box-shadow: 2px 2px 8px rgba(0,0,0,0.28); */
+  overflow: hidden;
 
 }
-td {
-  /* border-top  : solid 2px olive; */
-  width: 18%;
-
+td:nth-child(1) {
+  /* width: 80px; */
+}
+td:nth-child(2) {
+  width: 30%;
+}
+td:nth-child(3) {
+  width: 25%;
+}
+td:nth-child(4) {
+  width: 15%;
+}
+td:nth-child(5) {
+  width: 20%;
 }
 
+/*
 .table {
   margin: 20px 10px;
 
@@ -496,7 +515,7 @@ td {
 .table .row {
   display: flex;
   font-size: 1.3rem;
-  /* border: solid .5px #ddd; */
+  border: solid .5px #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   height: 30px;
@@ -515,7 +534,7 @@ td {
   position: absolute;
   bottom: -4px;
   left: 30%;
-}
+} */
 
 .testa {
   background: blue;
