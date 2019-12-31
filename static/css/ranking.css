@@ -477,7 +477,7 @@ h1 {
 table {
   font-size: 1.3rem;
   border-collapse: separate;
-  border-spacing: 0 4px;
+  border-spacing: 0 5px;
   width: 100%;
   max-width: 600px;
   margin: auto;
@@ -491,8 +491,13 @@ table tr {
   /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); */
   transform: scale(1);
 }
-td {
+/* td {
   box-shadow: 0px 8px 50px -8px rgba(0, 0, 0, 0.16), 0px -8px 50px -8px rgba(0, 0, 0, 0.16);
+} */
+table i {
+  font-size: 1rem;
+  padding-left: 5px;
+  color: #3E92CC88;
 }
 td:nth-child(1) {
   width: 10%;
@@ -507,11 +512,12 @@ td:nth-child(2) {
 }
 td:nth-child(2) a {
   text-decoration: none;
-  color: #3772FF;
-  /* font-weight: bold; */
+  color: #3E92CC;
+  font-weight: bold;
 }
 td:nth-child(3) {
   width: 20%;
+  font-weight: bold;
 }
 td:nth-child(4) {
   width: 15%;
@@ -525,7 +531,7 @@ td:nth-child(4) span {
   text-align: center;
   line-height: 20px;
   color: #fff;
-  background: #20BF55;
+  background: #3E92CC;
   font-size: 1.1rem;
 }
 td:nth-child(5) {
