@@ -471,13 +471,13 @@ h1 {
   width: 100%;
   padding: 8px 15px;
   margin: 10px 0;
-    background: #f3f7fa;
+  background: #f3f7fa;
 }
 
 table {
   font-size: 1.3rem;
   border-collapse: separate;
-  border-spacing: 0 5px;
+  border-spacing: 0 3px;
   width: 100%;
   max-width: 600px;
   margin: auto;
@@ -486,7 +486,7 @@ table {
 table tr {
   background: white;
   /* height: 30px; */
-  line-height: 35px;
+  line-height: 36px;
   overflow: hidden;
   /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); */
   transform: scale(1);
@@ -522,6 +522,7 @@ td:nth-child(2) a {
 td:nth-child(3) {
   width: 20%;
   font-weight: bold;
+  color: #222;
 }
 td:nth-child(4) {
   width: 15%;
