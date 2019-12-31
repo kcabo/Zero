@@ -12,6 +12,7 @@
   <meta name="robots" content="nofollow">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <link rel="stylesheet" href="static/css/ranking.css">
+  <link rel="stylesheet" href="static/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -93,9 +94,10 @@
       </div>
 
       <div class="gradeFilter">
-        <input type="checkbox" id="filter" checked>
+        <input type="checkbox" id="filter">
         <label for="filter">
           <p class="toggle">
+            <span><span>
             学年で絞り込む
           </p>
         </label>
@@ -142,14 +144,155 @@
             <p>一般</p>
             <div class="nums">
               <label><input type="checkbox" name="grade" value="1"><span>一般</span></label>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+
+    <div class="table">
+
+      <div class="row">
+        <div class="rank"><p>1</p></div>
+        <div class="name"><a href="/dashboard?id=2992">房野泰知</a></div>
+        <div class="time">0:23.87</div>
+        <div class="grade">大学1</div>
+        <div class="team">岡山大学</div>
+      </div>
+
+      <div class="row">
+        <div class="rank"><p>1</p></div>
+        <div class="name"><a href="/dashboard?id=2992">房野泰知</a></div>
+        <div class="time">0:23.87</div>
+        <div class="grade">大学1</div>
+        <div class="team">岡山大学</div>
+      </div>
+    </div>
+
+
+    <table class="men"><tbody>
+
+      <tr>
+        <td><span>1</span></td>
+        <td><a href="/dashboard?id=2992">房野泰知</a></td>
+        <td>0:23.87</td>
+        <td><span>大学1</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>1</span></td>
+        <td><a href="/dashboard?id=2992">房野泰知</a></td>
+        <td>0:23.87</td>
+        <td><span>大学1</span></td>
+        <td onclick="search_team('岡山大学')">岡山大学</td>
+      </tr>
+
+      <tr>
+        <td><span>2</span></td>
+        <td><a href="/dashboard?id=13770">大谷遥斗</a></td>
+        <td>0:24.51</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('白鴎大足利')">白鴎大足利</td>
+      </tr>
+
+      <tr>
+        <td><span>3</span></td>
+        <td><a href="/dashboard?id=2993">中谷友</a></td>
+        <td>0:24.61</td>
+        <td><span>一般</span></td>
+        <td onclick="search_team('岡大教職')">岡大教職</td>
+      </tr>
+
+      <tr>
+        <td><span>4</span></td>
+        <td><a href="/dashboard?id=2994">三宅琉暉</a></td>
+        <td>0:24.62</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ｵｰﾊﾞﾙ総社')">ｵｰﾊﾞﾙ総社</td>
+      </tr>
+
+      <tr>
+        <td><span>5</span></td>
+        <td><a href="/dashboard?id=14948">設樂航希</a></td>
+        <td>0:24.67</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('ｾﾝﾄﾗﾙ流山')">ｾﾝﾄﾗﾙ流山</td>
+      </tr>
+
+      <tr>
+        <td><span>6</span></td>
+        <td><a href="/dashboard?id=2995">真部潤</a></td>
+        <td>0:24.77</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('OSK藤原')">OSK藤原</td>
+      </tr>
+
+      <tr>
+        <td><span>7</span></td>
+        <td><a href="/dashboard?id=14949">砂村明彦</a></td>
+        <td>0:25.11</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('ﾙﾈｻﾝｽ銚子')">ﾙﾈｻﾝｽ銚子</td>
+      </tr>
+
+      <tr>
+        <td><span>8</span></td>
+        <td><a href="/dashboard?id=2996">杉井郁哉</a></td>
+        <td>0:25.11</td>
+        <td><span>高校3</span></td>
+        <td onclick="search_team('OSK岡山')">OSK岡山</td>
+      </tr>
+
+      <tr>
+        <td><span>9</span></td>
+        <td><a href="/dashboard?id=14950">遠藤優太</a></td>
+        <td>0:25.13</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ｺﾅﾐ津田沼')">ｺﾅﾐ津田沼</td>
+      </tr>
+
+      <tr>
+        <td><span>10</span></td>
+        <td><a href="/dashboard?id=14951">加藤遥翔</a></td>
+        <td>0:25.17</td>
+        <td><span>高校2</span></td>
+        <td onclick="search_team('ﾒｶﾞﾛｽ柏')">ﾒｶﾞﾛｽ柏</td>
+      </tr>
+
+      <tr>
+        <td><span>11</span></td>
+        <td><a href="/dashboard?id=14952">久保翔希</a></td>
+        <td>0:25.24</td>
+        <td><span>中学3</span></td>
+        <td onclick="search_team('VERDI')">VERDI</td>
+      </tr>
+
+      <tr>
+        <td><span>12</span></td>
+        <td><a href="/dashboard?id=14953">鏑木悠斗</a></td>
+        <td>0:25.26</td>
+        <td><span>高校1</span></td>
+        <td onclick="search_team('柏洋･南')">柏洋･南</td>
+      </tr>
+
+      <tr>
+        <td><span>13</span></td>
+        <td><a href="/dashboard?id=13741">岩本幸大</a></td>
+        <td>0:25.39</td>
+        <td><span>中学2</span></td>
+        <td onclick="search_team('ｽｳｨﾝ大田原')">ｽｳｨﾝ大田原</td>
+      </tr>
+
+    </tbody></table>
+
+
+  <div data-aos="fade-up" class="testa">
+    test
   </div>
 
 
-    <div id="phhh"> p </div>
 
   </main>
 
@@ -250,7 +393,10 @@
   </footer>
 
 
-
+  <script src="static/js/aos.js"></script>
+  <script>
+    AOS.init({once: true});
+  </script>
   <script>
     var deactivate_elms = document.getElementsByClassName('deactivate');
     var overlay = document.getElementById('overlay');
