@@ -536,7 +536,7 @@ td:nth-child(1) span {
   font-weight: bold;
 }
 td:nth-child(2) {
-  width: 25%;
+  width: 27%;
 }
 td:nth-child(2) a {
   text-decoration: none;
@@ -574,22 +574,22 @@ tr.top10 {
   line-height: 50px;
 }
 tr.top10 td:nth-child(1) span {
-  color: #e2e7eb;
+  color: #e7edf4;
   background: none;
   font-size: 4rem;
   line-height: 1;
   /* opacity: .2; */
   position: absolute;
-  bottom: -8px;
+  bottom: -7px;
   left: 3px;
   display: block;
   letter-spacing: -2px;
 }
 tr.top10 i {display: none;}
 tr.top10 td:nth-child(2) a {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   /* font-weight: normal; */
-  /* color: white; */
+  /* color: #; */
 }
 tr.top10 td:nth-child(3) {
   font-size: 1.5rem;
@@ -598,12 +598,12 @@ tr.top10 td:nth-child(2)::after {
   content: '';
   width: 45%;
   height: 50px;
-  background: var(--sex);
+  background: linear-gradient(90deg, var(--sex), transparent);
   position: absolute;
   left: 16%;
   z-index: 0;
-  opacity: .1;
-  transform: skewX(-10deg);
+  opacity: .2;
+  transform: skewX(-8deg);
 }
 
 .testa {
