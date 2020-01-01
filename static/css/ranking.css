@@ -501,7 +501,7 @@ tr.new td:nth-child(1) span::after {
   padding: 0 3px;
   border-radius: 2px;
   letter-spacing: 1px;
-  background: #FF3C38dd;
+  background: #FF3C38;
   color: white;
   position: absolute;
   left: -8px;
