@@ -500,18 +500,15 @@ tr {
 tr.new::after {
   content: 'NEW';
   font-size: 0.6rem;
-  /* width: 50px; */
-  /* height: 20px; */
   line-height: 1.6;
   padding: 0 3px;
   border-radius: 2px;
   letter-spacing: 1px;
-  background: #FF3C38;
+  background: #FF3C38dd;
   color: white;
   position: absolute;
-  left: -5px;
-  /* top: 5%; */
-  display: none;
+  left: -8px;
+  margin-top: 6px;
 }
 table i {
   font-size: 1rem;
@@ -522,6 +519,8 @@ td:nth-child(1) {
   width: 18%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  position: relative;
+  overflow: hidden;
 }
 td:nth-child(1) span {
   width: 100%;
@@ -569,6 +568,42 @@ td:nth-child(5) {
   font-size: 1rem;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+tr.top10 {
+  line-height: 50px;
+}
+tr.top10 td:nth-child(1) span {
+  color: #e2e7eb;
+  background: none;
+  font-size: 4rem;
+  line-height: 1;
+  /* opacity: .2; */
+  position: absolute;
+  bottom: -8px;
+  left: 3px;
+  display: block;
+  letter-spacing: -2px;
+}
+tr.top10 i {display: none;}
+tr.top10 td:nth-child(2) a {
+  font-size: 1.6rem;
+  /* font-weight: normal; */
+  /* color: white; */
+}
+tr.top10 td:nth-child(3) {
+  font-size: 1.5rem;
+}
+tr.top10 td:nth-child(2)::after {
+  content: '';
+  width: 45%;
+  height: 50px;
+  background: var(--sex);
+  position: absolute;
+  left: 16%;
+  z-index: 0;
+  opacity: .1;
+  transform: skewX(-10deg);
 }
 
 .testa {
