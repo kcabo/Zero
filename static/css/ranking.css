@@ -272,25 +272,24 @@ h1 {
   position: relative;
   color: #333;
 }
-#setting .button + .button {
-  border-left: solid .8px #ddd;
-}
+
 #setting .button > p {
   background: white;
   overflow: hidden;
   cursor: pointer;
 }
 #setting .button i {
-  position: absolute;
+  /* position: absolute;
   top: 12px;
   left: 14px;
   color: #777;
   padding-right: 4px;
-  transition: transform .2s, top .2s .2s;
+  transition: transform .2s, top .2s .2s; */
+  padding-left: 2px;
 }
 #setting .button.active i {
   top: 14px;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
 }
 #setting .button p:hover {
   background: #eee;
@@ -331,7 +330,7 @@ h1 {
 #setting .gradeFilter .toggle {
   width: 100%;
   height: 100%;
-  background: #eee;
+  /* background: #eee; */
 }
 #setting .gradeFilter .toggle::before {
   content: '';
@@ -462,7 +461,6 @@ h1 {
 }
 #selectEvents .events .card p {
   color: white;
-  /* font-weight: lighter; */
 }
 #selectEvents .events .card p:last-child {
   font-size: 1.8rem;
@@ -476,8 +474,7 @@ h1 {
 
 #ranking {
   width: 100%;
-  padding: 8px 15px;
-  margin: 10px 0;
+  padding: 20px 15px;
   background: #f3f7fa;
   --link: #3E92CC;
   --sex: var(--men);
@@ -497,7 +494,7 @@ tr {
   line-height: 36px;
   overflow: hidden;
 }
-tr.new::after {
+tr.new td:nth-child(1) span::after {
   content: 'NEW';
   font-size: 0.6rem;
   line-height: 1.6;
@@ -508,7 +505,7 @@ tr.new::after {
   color: white;
   position: absolute;
   left: -8px;
-  margin-top: 6px;
+  margin-top: -4px;
 }
 table i {
   font-size: 1rem;
@@ -520,7 +517,6 @@ td:nth-child(1) {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   position: relative;
-  overflow: hidden;
 }
 td:nth-child(1) span {
   width: 100%;
@@ -596,21 +592,4 @@ tr.top10 td:nth-child(2) a {
 }
 tr.top10 td:nth-child(3) {
   font-size: 1.5rem;
-}
-/* tr.top10 td:nth-child(2)::after {
-  content: '';
-  width: 5%;
-  height: 50px;
-  background: linear-gradient(90deg, blue, transparent);
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  opacity: .2;
-  transform: skewX(-8deg);
-} */
-
-.testa {
-  background: blue;
-  height: 40px;
-  margin: 50px 10px;
 }
