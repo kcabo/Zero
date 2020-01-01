@@ -94,7 +94,7 @@
       </div>
 
       <div id="gradeFilter">
-        <input type="checkbox" id="toggle" checked>
+        <input type="checkbox" id="toggle">
         <label for="toggle">
           <p>
             <span class="tg-back"></span>
@@ -248,10 +248,15 @@
 
       </tbody></table>
 
+      <p class="load">さらに読み込む<i class="fas fa-sync-alt"></i></p>
+
     </div>
 
 
+
   </main>
+
+  <div id="pageDown" onclick="go_bottom()"><i class="fas fa-arrow-down"></i></div>
 
   <div id="overlay"></div>
 
@@ -371,6 +376,12 @@
 
     overlay.addEventListener('click', deactivate_all, false)
     close.addEventListener('click', deactivate_all, false)
+
+    function go_bottom(){
+      var doc = document.documentElement;
+      var bottom = doc.scrollHeight - doc.clientHeight;
+      window.scroll(0, bottom);
+    };
 
   </script>
 </body>
