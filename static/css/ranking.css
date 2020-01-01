@@ -314,97 +314,86 @@ h1 {
   z-index: 2;
 }
 
-#setting .gradeFilter {
-  margin-top: 8px;
-  /* border-top: solid .8px #ddd;
-  border-bottom: solid .8px #ddd; */
-  font-size: 1.4rem;
-  line-height: 32px;
+#gradeFilter {
+  margin-bottom: 10px;
 }
-#setting .gradeFilter input[type=checkbox] {
-  display: none;
-}
-#setting .gradeFilter > label {
+#gradeFilter p {
   position: relative;
 }
-#setting .gradeFilter .toggle {
-  width: 100%;
-  height: 100%;
-  /* background: #eee; */
-}
-#setting .gradeFilter .toggle::before {
-  content: '';
+#gradeFilter .tg-back {
   position: absolute;
   width: 40px;
   height: 20px;
   border-radius: 40px;
-  border: solid 1.5px #aaa;
+  background: #e5e5e5;
   top: 0;
   bottom: 0;
   margin: auto;
   left: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
-#setting .gradeFilter .toggle::after {
-  content: '';
+#gradeFilter .tg-front {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: white;
   top: 0;
   bottom: 0;
   margin: auto;
   left: 20px;
-}
-#filter:checked ~ label p::after {
-  left: 40px;
-}
-#setting .grades {
-  visibility: hidden;
-  opacity: 0;
-  height: 0;
+  background: white;
+  border: solid 1px #d4d4d6;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   transition: all .4s;
 }
-#filter:checked ~ .grades {
-  visibility: visible;
-  height: auto;
-  opacity: 1;
+#toggle {
+  display: none;
 }
-#setting .school {
-  display: flex;
-  border-top: solid .6px #dfdfdf;
+#toggle:checked ~ label .tg-back {
+  background: var(--main);
 }
-#setting .school:last-child {
-  border-bottom: solid .6px #dfdfdf;
+#toggle:checked ~ label .tg-front {
+  left: 40px;
 }
-#setting .school p {
-  width: 20%;
-  background: #444;
-  color: white;
-  font-weight: bold;
+#gradeFilter .selectGrades {
+  border: solid 1px #d4d4d4;
+  padding: 5px 0;
+  display: none;
 }
-#setting .school .nums {
-  width: 80%;
+#toggle:checked ~ .selectGrades {
+  display: block;
 }
-#setting .nums label {
+#gradeFilter input {
+  display: none;
+}
+#gradeFilter .school label span {
   display: inline-block;
-  width: 30%;
+  width: 45px;
+  line-height: 1.8;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0);
+  background: #e5e5e5;
+  color: #aaa;
   margin: 2px;
-}
-#setting .nums span {
-  display: inline-block;
-  width: 90%;
-  border-radius: 8px;
-  letter-spacing: 2px;
-  transition: all .2s;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: all .4s;
 }
-#setting .nums input:checked + span {
+#gradeFilter .school input:checked + span {
   background: var(--main);
   color: white;
-  font-weight: bold;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
-
+#gradeFilter .submit {
+  background-image: linear-gradient(180deg,  rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
+  color: white;
+  width: 90px;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
 
 
 #selectEvents .events {

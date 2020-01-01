@@ -11,6 +11,7 @@
   <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
   <meta name="robots" content="nofollow">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="static/css/ranking.css">
   <link rel="stylesheet" href="static/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
@@ -20,7 +21,6 @@
     gtag('js', new Date());
     gtag('config', 'UA-149393969-2');
   </script>
-  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -93,60 +93,49 @@
 
       </div>
 
-      <div class="gradeFilter">
-        <input type="checkbox" id="filter">
-        <label for="filter">
-          <p class="toggle">
-            <span><span>
-            学年で絞り込む
+      <div id="gradeFilter">
+        <input type="checkbox" id="toggle" checked>
+        <label for="toggle">
+          <p>
+            <span class="tg-back"></span>
+            <span class="tg-front"></span>
+            学年で絞り込み
           </p>
         </label>
-        <div class="grades">
+        <div class="selectGrades">
           <div class="school">
-            <p>小学生</p>
-            <div class="nums">
-              <label><input type="checkbox" name="grade" value="1"><span>小1</span></label>
-              <label><input type="checkbox" name="grade" value="2"><span>小2</span></label>
-              <label><input type="checkbox" name="grade" value="3"><span>小3</span></label>
-              <label><input type="checkbox" name="grade" value="4"><span>小4</span></label>
-              <label><input type="checkbox" name="grade" value="5"><span>小5</span></label>
-              <label><input type="checkbox" name="grade" value="6"><span>小6</span></label>
-            </div>
+            <label><input type="checkbox" name="grade" value="1"><span>小1</span></label>
+            <label><input type="checkbox" name="grade" value="2"><span>小2</span></label>
+            <label><input type="checkbox" name="grade" value="3"><span>小3</span></label>
+            <label><input type="checkbox" name="grade" value="4"><span>小4</span></label>
+            <label><input type="checkbox" name="grade" value="5"><span>小5</span></label>
+            <label><input type="checkbox" name="grade" value="6"><span>小6</span></label>
           </div>
           <div class="school">
-            <p>中学生</p>
-            <div class="nums">
-              <label><input type="checkbox" name="grade" value="1"><span>中1</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>中2</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>中3</span></label>
-            </div>
+            <label><input type="checkbox" name="grade" value="1"><span>中1</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>中2</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>中3</span></label>
           </div>
           <div class="school">
-            <p>高校生</p>
-            <div class="nums">
-              <label><input type="checkbox" name="grade" value="1"><span>高1</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>高2</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>高3</span></label>
-            </div>
+            <label><input type="checkbox" name="grade" value="1"><span>高1</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>高2</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>高3</span></label>
           </div>
           <div class="school">
-            <p>大学生</p>
-            <div class="nums">
-              <label><input type="checkbox" name="grade" value="1"><span>大1</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>大2</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>大3</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>大4</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>大5</span></label>
-              <label><input type="checkbox" name="grade" value="1"><span>大6</span></label>
-            </div>
+            <label><input type="checkbox" name="grade" value="1"><span>大1</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>大2</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>大3</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>大4</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>大5</span></label>
+            <label><input type="checkbox" name="grade" value="1"><span>大6</span></label>
           </div>
           <div class="school">
-            <p>一般</p>
-            <div class="nums">
-              <label><input type="checkbox" name="grade" value="1"><span>一般</span></label>
-            </div>
+            <label><input type="checkbox" name="grade" value="1"><span>一般</span></label>
           </div>
+          <p class="submit">絞り込む</p>
         </div>
+
+
       </div>
     </div>
 
