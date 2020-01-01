@@ -479,11 +479,8 @@ h1 {
   padding: 8px 15px;
   margin: 10px 0;
   background: #f3f7fa;
-  --border: solid .4px #eee;
-  --border-bold: solid 1.4px #eee;
-  --border: 0px;
-  --border-bold: 0px;
   --link: #3E92CC;
+  --sex: var(--men);
 }
 
 table {
@@ -495,68 +492,83 @@ table {
   margin: auto;
   position: relative;
 }
-
 tr {
   background: white;
   line-height: 36px;
   overflow: hidden;
 }
 tr.new::after {
-
-}
-td {
-  border-top: var(--border);
-  border-bottom: var(--border-bold);
+  content: 'NEW';
+  font-size: 0.6rem;
+  /* width: 50px; */
+  /* height: 20px; */
+  line-height: 1.6;
+  padding: 0 3px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  background: #FF3C38;
+  color: white;
+  position: absolute;
+  left: -5px;
+  /* top: 5%; */
+  display: none;
 }
 table i {
   font-size: 1rem;
   padding-left: 5px;
-  color: var(--women);
+  color: var(--sex);
 }
 td:nth-child(1) {
-  width: 15%;
-  text-align: center;
-  color: #aaa;
+  width: 18%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+td:nth-child(1) span {
+  width: 100%;
+  display: inline-block;
+  background: var(--sex);
+  line-height: 1.4;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  text-align: center;
+  color: white;
+  width: 70%;
+  font-size: 1.2rem;
   font-weight: bold;
-  border-left: var(--border);
 }
 td:nth-child(2) {
-  width: 28%;
+  width: 25%;
 }
 td:nth-child(2) a {
   text-decoration: none;
-  color: var(--women);
+  color: var(--sex);
   font-weight: bold;
 }
 td:nth-child(3) {
   width: 20%;
   font-weight: bold;
-  color: #446;
+  color: #444;
 }
 td:nth-child(4) {
   width: 15%;
-
 }
 td:nth-child(4) span {
   border-radius: 5px;
   display: inline-block;
   width: 45px;
   text-align: center;
-  line-height: 20px;
-  border: solid 1px var(--women);
-  color: var(--women);
-  font-size: 1.1rem;
-  letter-spacing: .6px;
+  line-height: 16px;
+  border: solid .6px var(--sex);
+  color: var(--sex);
+  font-size: 1rem;
+  letter-spacing: 1px;
 }
 td:nth-child(5) {
-  width: 20%;
-  color: #888;
-  font-size: 1.1rem;
+  width: 25%;
+  color: #aaa;
+  font-size: 1rem;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  border-right: var(--border-bold);
 }
 
 .testa {
