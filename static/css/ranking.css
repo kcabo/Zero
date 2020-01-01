@@ -497,7 +497,7 @@ tr {
   line-height: 36px;
   overflow: hidden;
 }
-td.new::after {
+tr.new::after {
   content: 'NEW';
   font-size: 0.6rem;
   line-height: 1.6;
@@ -516,7 +516,7 @@ table i {
   color: var(--sex);
 }
 td:nth-child(1) {
-  width: 20%;
+  width: 18%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   position: relative;
@@ -577,18 +577,19 @@ tr.top10 td:nth-child(1) {
   border-left: solid 3px var(--sex);
 }
 tr.top10 td:nth-child(1) span {
-  color: #eff2f6;
+  color: #eff2f5;
   background: none;
   font-size: 4rem;
   line-height: 1;
-  /* opacity: .2; */
   position: absolute;
   bottom: -7px;
   left: 3px;
   display: block;
-  letter-spacing: -2px;
+  letter-spacing: -4px;
 }
-/* tr.top10 i {display: none;} */
+tr.top10 i {
+  padding-left: 3px;
+}
 tr.top10 td:nth-child(2) a {
   font-size: 1.5rem;
   /* font-weight: normal; */
