@@ -67,7 +67,7 @@
             <i class="fas fa-angle-down"></i>
           </p>
           <div class="items">
-            <p onclick="alert(0)">18年度</p>
+            <p onclick="jump_page(current_event, 18, current_pool)">18年度</p>
           </div>
         </div>
 
@@ -77,7 +77,7 @@
             <i class="fas fa-angle-down"></i>
           </p>
           <div class="items">
-            <p>女子</p>
+            <p onclick="jump_page(200 + current_style, current_year, current_pool)">女子</p>
           </div>
         </div>
 
@@ -87,15 +87,15 @@
             <i class="fas fa-angle-down"></i>
           </p>
           <div class="items">
-            <p>短水路</p>
+            <p onclick="jump_page(current_event, current_year, 0)">短水路</p>
           </div>
         </div>
 
       </div>
 
       <div id="gradeFilter">
-        <input type="checkbox" id="toggle">
-        <label for="toggle">
+        <input type="checkbox" id="showGrade">
+        <label for="showGrade">
           <p>
             <span class="tg-back"></span>
             <span class="tg-front"></span>
@@ -103,35 +103,37 @@
           </p>
         </label>
         <div class="selectGrades">
-          <div class="school">
-            <label><input type="checkbox" name="grade" value="1"><span>小1</span></label>
-            <label><input type="checkbox" name="grade" value="2"><span>小2</span></label>
-            <label><input type="checkbox" name="grade" value="3"><span>小3</span></label>
-            <label><input type="checkbox" name="grade" value="4"><span>小4</span></label>
-            <label><input type="checkbox" name="grade" value="5"><span>小5</span></label>
-            <label><input type="checkbox" name="grade" value="6"><span>小6</span></label>
-          </div>
-          <div class="school">
-            <label><input type="checkbox" name="grade" value="1"><span>中1</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>中2</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>中3</span></label>
-          </div>
-          <div class="school">
-            <label><input type="checkbox" name="grade" value="1"><span>高1</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>高2</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>高3</span></label>
-          </div>
-          <div class="school">
-            <label><input type="checkbox" name="grade" value="1"><span>大1</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>大2</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>大3</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>大4</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>大5</span></label>
-            <label><input type="checkbox" name="grade" value="1"><span>大6</span></label>
-          </div>
-          <div class="school">
-            <label><input type="checkbox" name="grade" value="1"><span>一般</span></label>
-          </div>
+          <form method="post" name="grades">
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="1"><span>小1</span></label>
+              <label><input type="checkbox" name="grade" value="2"><span>小2</span></label>
+              <label><input type="checkbox" name="grade" value="3"><span>小3</span></label>
+              <label><input type="checkbox" name="grade" value="4"><span>小4</span></label>
+              <label><input type="checkbox" name="grade" value="5"><span>小5</span></label>
+              <label><input type="checkbox" name="grade" value="6"><span>小6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="7"><span>中1</span></label>
+              <label><input type="checkbox" name="grade" value="8"><span>中2</span></label>
+              <label><input type="checkbox" name="grade" value="9"><span>中3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="10"><span>高1</span></label>
+              <label><input type="checkbox" name="grade" value="11"><span>高2</span></label>
+              <label><input type="checkbox" name="grade" value="12"><span>高3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="13"><span>大1</span></label>
+              <label><input type="checkbox" name="grade" value="14"><span>大2</span></label>
+              <label><input type="checkbox" name="grade" value="15"><span>大3</span></label>
+              <label><input type="checkbox" name="grade" value="16"><span>大4</span></label>
+              <label><input type="checkbox" name="grade" value="17"><span>大5</span></label>
+              <label><input type="checkbox" name="grade" value="18"><span>大6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="19"><span>一般</span></label>
+            </div>
+          </form>
           <p class="submit">絞り込む</p>
         </div>
 
@@ -144,7 +146,7 @@
       <table><tbody>
         <tr data-aos="fade-up" class="top10">
           <td><span>1</span></td>
-          <td><a href="/dashboard?id=2992">房野泰あ知<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td><a href="/dashboard?id=2992">房野泰aさaあ知<i class="fas fa-chevron-circle-right"></i></a></td>
           <td>0:23.87</td>
           <td><span>大学1</span></td>
           <td>岡山大学</td>
@@ -158,7 +160,7 @@
           <td>白鴎大足利</td>
         </tr>
 
-        <tr data-aos="fade-up" class="top10">
+        <tr data-aos="fade-up" class="top10" onclick="activate(detail);activate(overlay)">
           <td><span>10</span></td>
           <td><a href="/dashboard?id=2993">中谷友<i class="fas fa-chevron-circle-right"></i></a></td>
           <td>0:24.61</td>
@@ -166,7 +168,7 @@
           <td>岡大教職</td>
         </tr>
 
-        <tr data-aos="fade-up" class="new">
+        <tr data-aos="fade-up" class="new" onclick="activate(detail);activate(overlay)">
           <td><span>4</span></td>
           <td><a href="/dashboard?id=2994">三宅琉暉<i class="fas fa-chevron-circle-right"></i></a></td>
           <td>0:24.62</td>
@@ -264,85 +266,109 @@
     <div class="window">
       <div class="events">
         <p>種目一覧</p>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(12)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>50</p></div>
         </div>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(13)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>100</p></div>
         </div>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(14)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>200</p></div>
         </div>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(15)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>400</p></div>
         </div>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(16)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>800</p></div>
         </div>
-        <div class="card fr">
+        <div class="card fr" onclick="change_style(17)">
           <img src="static/img/Fr.svg" alt="自由形">
           <div><p>自由形</p><p>1500</p></div>
         </div>
 
-        <div class="card ba">
+        <div class="card ba" onclick="change_style(22)">
           <img src="static/img/Ba.svg" alt="背泳ぎ">
           <div><p>背泳ぎ</p><p>50</p></div>
         </div>
-        <div class="card ba">
+        <div class="card ba" onclick="change_style(23)">
           <img src="static/img/Ba.svg" alt="背泳ぎ">
           <div><p>背泳ぎ</p><p>100</p></div>
         </div>
-        <div class="card ba">
+        <div class="card ba" onclick="change_style(24)">
           <img src="static/img/Ba.svg" alt="背泳ぎ">
           <div><p>背泳ぎ</p><p>200</p></div>
         </div>
 
-        <div class="card br">
+        <div class="card br" onclick="change_style(32)">
           <img src="static/img/Br.svg" alt="平泳ぎ">
           <div><p>平泳ぎ</p><p>50</p></div>
         </div>
-        <div class="card br">
+        <div class="card br" onclick="change_style(33)">
           <img src="static/img/Br.svg" alt="平泳ぎ">
           <div><p>平泳ぎ</p><p>100</p></div>
         </div>
-        <div class="card br">
+        <div class="card br" onclick="change_style(34)">
           <img src="static/img/Br.svg" alt="平泳ぎ">
           <div><p>平泳ぎ</p><p>200</p></div>
         </div>
 
-        <div class="card fly">
+        <div class="card fly" onclick="change_style(42)">
           <img src="static/img/Fly.svg" alt="バタフライ">
           <div><p>バタフライ</p><p>50</p></div>
         </div>
-        <div class="card fly">
+        <div class="card fly" onclick="change_style(43)">
           <img src="static/img/Fly.svg" alt="バタフライ">
           <div><p>バタフライ</p><p>100</p></div>
         </div>
-        <div class="card fly">
+        <div class="card fly" onclick="change_style(44)">
           <img src="static/img/Fly.svg" alt="バタフライ">
           <div><p>バタフライ</p><p>200</p></div>
         </div>
 
-        <div class="card im">
+        <div class="card im" onclick="change_style(53)">
           <img src="static/img/IM.svg" alt="個人メドレー">
           <div><p>個人メドレー</p><p>100</p></div>
         </div>
-        <div class="card im">
+        <div class="card im" onclick="change_style(54)">
           <img src="static/img/IM.svg" alt="個人メドレー">
           <div><p>個人メドレー</p><p>200</p></div>
         </div>
-        <div class="card im">
+        <div class="card im" onclick="change_style(55)">
           <img src="static/img/IM.svg" alt="個人メドレー">
           <div><p>個人メドレー</p><p>400</p></div>
         </div>
       </div>
     </div>
 
+    <p class="close">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
+  </div>
+
+  <div id="detail" class="deactivate modal">
+    <div class="window">
+      <div class="result">
+        <p>記録</p>
+        <p>何年何月何日～何年何月何日
+        </p><p>神奈川県 件高校水泳大会
+        </p><p>＠横浜国際プール 長水路
+        </p><p>50m 個人メドレー
+        </p><p>第何位
+        </p><p>神崎伶央
+        </p><p>大学２年
+        </p><p>銀泳会
+        </p><p>0:26.82
+        </p><p>0:26.82,1:09.27
+        </p><p>ラップグラフ
+        </p><p>全体偏差値72
+        </p><p>大学生偏差値61
+      </div>
+    </div>
     <p class="close">
       <i class="fas fa-window-close"></i> 閉じる
     </p>
@@ -358,6 +384,29 @@
   <script src="static/js/aos.js"></script>
   <script>
     AOS.init({once: true});
+  </script>
+  <script>
+    var current_year = 19;
+    var current_sex = 100;
+    var current_pool = 1;
+    var current_style = 12;
+    var current_event = current_sex + current_style;
+
+    function change_style(style_num) {
+      jump_page(current_sex + style_num, current_year, current_pool);
+    }
+
+    function jump_page(event_num, year_num, pool_num) {
+      var elm_show = document.getElementById('showGrade');
+      var url = `?event=${event_num}&year=${year_num}&pool=${pool_num}`;
+      if(elm_show.checked) {
+        document.grades.action = url;
+        // document.grades.submit();
+        alert(url);
+      } else {
+        location.href = url;
+      };
+    }
   </script>
   <script>
     var deactivate_elms = document.getElementsByClassName('deactivate');

@@ -315,10 +315,14 @@ h1 {
 }
 
 #gradeFilter {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-#gradeFilter p {
+#gradeFilter > label p {
   position: relative;
+  text-align: left;
+  padding-left: 70px;
+  color: #555;
+  font-size: 1.3rem;
 }
 #gradeFilter .tg-back {
   position: absolute;
@@ -326,7 +330,7 @@ h1 {
   height: 20px;
   border-radius: 40px;
   background: #e5e5e5;
-  top: 0;
+  top: -3px;
   bottom: 0;
   margin: auto;
   left: 20px;
@@ -338,7 +342,7 @@ h1 {
   height: 22px;
   border-radius: 50%;
   background: white;
-  top: 0;
+  top: -3px;
   bottom: 0;
   margin: auto;
   left: 20px;
@@ -347,21 +351,23 @@ h1 {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   transition: all .4s;
 }
-#toggle {
+#showGrade {
   display: none;
 }
-#toggle:checked ~ label .tg-back {
+#showGrade:checked ~ label .tg-back {
   background: var(--main);
 }
-#toggle:checked ~ label .tg-front {
+#showGrade:checked ~ label .tg-front {
   left: 40px;
 }
 #gradeFilter .selectGrades {
-  border: solid 1px #d4d4d4;
-  padding: 5px 0;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 8px 0;
   display: none;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
 }
-#toggle:checked ~ .selectGrades {
+#showGrade:checked ~ .selectGrades {
   display: block;
 }
 #gradeFilter input {
@@ -376,7 +382,7 @@ h1 {
   background: #e5e5e5;
   color: #aaa;
   margin: 2px;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all .4s;
 }
@@ -390,7 +396,7 @@ h1 {
   color: white;
   width: 90px;
   border-radius: 5px;
-  margin: auto;
+  margin: 6px auto;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
@@ -484,6 +490,15 @@ h1 {
   font-size: 1.3rem;
 }
 
+#detail .result > p {
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  color: #222;
+  padding: 10px;
+}
+
 
 #ranking {
   width: 100%;
@@ -520,6 +535,9 @@ tr.new td:nth-child(1) span::after {
   left: -8px;
   margin-top: -4px;
 }
+tr.new.top10 td:nth-child(1) span::after {
+  margin-top: -10px;
+}
 table i {
   font-size: 1rem;
   padding-left: 5px;
@@ -546,6 +564,7 @@ td:nth-child(1) span {
 }
 td:nth-child(2) {
   width: 28%;
+  line-height: 1;
 }
 td:nth-child(2) a {
   text-decoration: none;
