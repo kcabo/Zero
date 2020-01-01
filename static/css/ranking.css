@@ -497,7 +497,7 @@ tr {
   line-height: 36px;
   overflow: hidden;
 }
-tr.new::after {
+td.new::after {
   content: 'NEW';
   font-size: 0.6rem;
   line-height: 1.6;
@@ -516,7 +516,7 @@ table i {
   color: var(--sex);
 }
 td:nth-child(1) {
-  width: 18%;
+  width: 20%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   position: relative;
@@ -536,7 +536,7 @@ td:nth-child(1) span {
   font-weight: bold;
 }
 td:nth-child(2) {
-  width: 27%;
+  width: 28%;
 }
 td:nth-child(2) a {
   text-decoration: none;
