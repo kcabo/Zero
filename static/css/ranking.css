@@ -9,6 +9,8 @@
   --br: #3867d6;
   --fly: #fa8231;
   --im: #8b54d0;
+  --grade: #1E88E5;
+  --team: #FFB300;
 }
 /* https://coolors.co/39a9dd-33bf74-c9613e-f9904a-8c5ac9 */
 html {
@@ -490,14 +492,159 @@ h1 {
   font-size: 1.3rem;
 }
 
-#detail .result > p {
-  width: 100%;
-  font-size: 2rem;
-  text-align: center;
-  font-weight: bold;
-  color: #222;
-  padding: 10px;
+#detail .result {
+  font-size: 1.2rem;
 }
+#detail .meetInfo {
+  width: 100%;
+  margin: auto;
+}
+#detail .meetInfo > p {
+  position: relative;
+}
+#res_start {
+  font-size: 1.3rem;
+  padding-left: 20px;
+}
+#res_end {
+  color: #777;
+}
+#res_area {
+  position: absolute;
+  right: 20px;
+  background: var(--feeble);
+  color: var(--main);
+  display: inline-block;
+  width: 60px;
+  line-height: 2;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1rem;
+}
+#res_meet {
+  font-size: 1.6rem;
+  text-align: center;
+  /* padding-top: 10px; */
+  line-height: 1.6;
+  font-weight: bold;
+}
+#detail .place {
+  text-align: center;
+}
+#detail .place i {
+  color: #777;
+  padding-right: 2px;
+}
+#res_place {
+  color: #777;
+}
+#res_pool {
+  margin-left: 10px;
+  background: #0d0730;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#detail .event {
+  margin-top: 17px;
+  background: var(--fr);
+  position: relative;
+  width: 48%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#detail .event img {
+  width: 40px;
+  position: absolute;
+  top: -6px;
+}
+#res_event {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 30px;
+  padding-left: 40px;
+}
+#detail .swimmer {
+  padding-left: 15px;
+  padding-top: 7px;
+}
+#detail .swimmer i:nth-of-type(1) {
+  color: #888;
+  font-size: 1rem;
+  line-height: 1;
+}
+#detail .swimmer a {
+  text-decoration: none;
+  color: black;
+}
+#res_name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+#res_grade {
+  margin-left: 20px;
+  background: var(--grade);
+  color: white;
+  display: inline-block;
+  width: 48px;
+  line-height: 1.6;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+#detail .swimmer a.team {
+  margin-left: 5px;
+  background: var(--team);
+  color: white;
+  display: inline-block;
+  padding: 0 5px;
+  line-height: 1.6;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+#detail .swimmer a.team i {
+  color: white;
+  padding-left: 1px;
+  font-size: 0.9rem;
+}
+#res_time {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.6;
+  margin: 5px 0;
+  border-top: solid #ddd 1px;
+  border-bottom: solid  1px #ddd;
+}
+#detail .cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#detail .card {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 90px;
+  margin: 0 4px;
+  padding: 5px;
+  text-align: center;
+}
+#detail .card p:first-child {
+  color: #aaa;
+  font-size: .9rem;
+}
+#detail .card p:last-child {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding-top: 2px;
+  line-height: 1;
+}
+
 
 
 #ranking {
@@ -621,7 +768,6 @@ tr.top10 i {
 }
 tr.top10 td:nth-child(2) a {
   font-size: 1.5rem;
-  /* font-weight: normal; */
 }
 tr.top10 td:nth-child(3) {
   font-size: 1.5rem;
