@@ -503,11 +503,12 @@ h1 {
   position: relative;
 }
 #res_start {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   padding-left: 20px;
 }
 #res_end {
   color: #777;
+  font-size: 1rem;
 }
 #res_area {
   position: absolute;
@@ -515,8 +516,7 @@ h1 {
   background: var(--feeble);
   color: var(--main);
   display: inline-block;
-  width: 60px;
-  line-height: 2;
+  padding: 1px 14px;
   border-radius: 5px;
   text-align: center;
   font-size: 1rem;
@@ -524,36 +524,43 @@ h1 {
 #res_meet {
   font-size: 1.6rem;
   text-align: center;
-  /* padding-top: 10px; */
+  padding-top: 3px;
   line-height: 1.6;
   font-weight: bold;
 }
 #detail .place {
   text-align: center;
+  color: #777;
+  font-size: 1.1rem;
 }
 #detail .place i {
-  color: #777;
   padding-right: 2px;
 }
-#res_place {
-  color: #777;
-}
-#res_pool {
+#detail .place i:last-of-type {
   margin-left: 10px;
-  background: #0d0730;
-  color: white;
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 1rem;
 }
 
 #detail .event {
-  margin-top: 17px;
-  background: var(--fr);
+  margin-top: 25px;
   position: relative;
-  width: 48%;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  width: 180px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+#detail .event.fr {
+  background: var(--fr);
+}
+#detail .event.ba {
+  background: var(--ba);
+}
+#detail .event.br {
+  background: var(--br);
+}
+#detail .event.fly {
+  background: var(--fly);
+}
+#detail .event.im {
+  background: var(--im);
 }
 #detail .event img {
   width: 40px;
@@ -572,16 +579,16 @@ h1 {
   padding-top: 7px;
 }
 #detail .swimmer i:nth-of-type(1) {
-  color: #888;
-  font-size: 1rem;
-  line-height: 1;
+  color: #666;
+  font-size: 1.3rem;
+  padding-left: 3px;
 }
 #detail .swimmer a {
   text-decoration: none;
   color: black;
 }
 #res_name {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
@@ -612,14 +619,22 @@ h1 {
   padding-left: 1px;
   font-size: 0.9rem;
 }
-#res_time {
+#detail .result_time {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  line-height: 1.6;
-  margin: 5px 0;
-  border-top: solid #ddd 1px;
-  border-bottom: solid  1px #ddd;
+  line-height: 30px;
+  margin: 7px 0;
+  border-top: solid #eee .7px;
+  border-bottom: solid  .7px #eee;
+  position: relative;
+}
+#detail .result_time i {
+  font-size: 1.6rem;
+  position: absolute;
+  top: 6.5px;
+  left: calc(50% - 60px);
+  color: #555;
 }
 #detail .cards {
   display: flex;
@@ -641,8 +656,35 @@ h1 {
 #detail .card p:last-child {
   font-size: 1.8rem;
   font-weight: bold;
-  padding-top: 2px;
+  padding-top: 4px;
   line-height: 1;
+}
+#detail .lapcap {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
+#detail .lapcap i {
+  padding-right: 7px;
+}
+#detail .laps {
+  display: flex;
+  justify-content: center;
+}
+#detail .column {
+  font-size: 1.4rem;
+  line-height: 3rem;
+  width: 90px;
+  text-align: center;
+  font-weight: bold;
+}
+#detail .column p:nth-child(2n) {
+  background: #D1EBFF;
+}
+#detail .column p:nth-child(2n + 1) {
+  background: #f6fbff;
 }
 
 
@@ -654,8 +696,7 @@ h1 {
   --link: #3E92CC;
   --sex: var(--men);
 }
-
-table {
+#ranking table {
   font-size: 1.3rem;
   border-collapse: separate;
   border-spacing: 0 4px;
@@ -664,12 +705,12 @@ table {
   margin: auto;
   position: relative;
 }
-tr {
+#ranking tr {
   background: white;
   line-height: 36px;
   overflow: hidden;
 }
-tr.new td:nth-child(1) span::after {
+#ranking tr.new td:nth-child(1) span::after {
   content: 'NEW';
   font-size: 0.6rem;
   line-height: 1.6;
@@ -682,22 +723,22 @@ tr.new td:nth-child(1) span::after {
   left: -8px;
   margin-top: -4px;
 }
-tr.new.top10 td:nth-child(1) span::after {
+#ranking tr.new.top10 td:nth-child(1) span::after {
   margin-top: -10px;
   left: -13px;
 }
-table i {
+#ranking table i {
   font-size: 1rem;
   padding-left: 5px;
   color: var(--sex);
 }
-td:nth-child(1) {
+#ranking td:nth-child(1) {
   width: 18%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   position: relative;
 }
-td:nth-child(1) span {
+#ranking td:nth-child(1) span {
   width: 100%;
   display: inline-block;
   background: var(--sex);
@@ -710,24 +751,24 @@ td:nth-child(1) span {
   font-size: 1.2rem;
   font-weight: bold;
 }
-td:nth-child(2) {
+#ranking td:nth-child(2) {
   width: 28%;
   line-height: 1;
 }
-td:nth-child(2) a {
+#ranking td:nth-child(2) a {
   text-decoration: none;
   color: var(--sex);
   font-weight: bold;
 }
-td:nth-child(3) {
+#ranking td:nth-child(3) {
   width: 20%;
   font-weight: bold;
   color: #444;
 }
-td:nth-child(4) {
+#ranking td:nth-child(4) {
   width: 15%;
 }
-td:nth-child(4) span {
+#ranking td:nth-child(4) span {
   border-radius: 5px;
   display: inline-block;
   width: 45px;
@@ -738,7 +779,7 @@ td:nth-child(4) span {
   font-size: 1rem;
   letter-spacing: 1px;
 }
-td:nth-child(5) {
+#ranking td:nth-child(5) {
   width: 25%;
   color: #aaa;
   font-size: 1rem;
@@ -746,13 +787,13 @@ td:nth-child(5) {
   border-bottom-right-radius: 5px;
 }
 
-tr.top10 {
+#ranking tr.top10 {
   line-height: 50px;
 }
-tr.top10 td:nth-child(1) {
+#ranking tr.top10 td:nth-child(1) {
   border-left: solid 3px var(--sex);
 }
-tr.top10 td:nth-child(1) span {
+#ranking tr.top10 td:nth-child(1) span {
   color: #eff2f5;
   background: none;
   font-size: 4rem;
@@ -763,13 +804,13 @@ tr.top10 td:nth-child(1) span {
   display: block;
   letter-spacing: -4px;
 }
-tr.top10 i {
+#ranking tr.top10 i {
   padding-left: 3px;
 }
-tr.top10 td:nth-child(2) a {
+#ranking tr.top10 td:nth-child(2) a {
   font-size: 1.5rem;
 }
-tr.top10 td:nth-child(3) {
+#ranking tr.top10 td:nth-child(3) {
   font-size: 1.5rem;
 }
 

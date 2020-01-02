@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="static/css/ranking.css">
-  <!-- <link rel="stylesheet" href="static/css/aos.css"> -->
+  <link rel="stylesheet" href="static/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -252,7 +252,7 @@
 
   <div id="pageDown" onclick="go_bottom()"><i class="fas fa-arrow-down"></i></div>
 
-  <div id="overlay" class="active"></div>
+  <div id="overlay" class=""></div>
 
   <div id="selectEvents" class="deactivate modal">
     <div class="window">
@@ -337,12 +337,12 @@
       </div>
     </div>
 
-    <p class="close">
+    <p class="close" onclick="deactivate_all()">
       <i class="fas fa-window-close"></i> 閉じる
     </p>
   </div>
 
-  <div id="detail" class="deactivate modal active">
+  <div id="detail" class="deactivate modal ">
     <div class="window">
       <div class="result">
         <div class="meetInfo">
@@ -355,13 +355,14 @@
           <p class="place">
             <i class="fas fa-map-marker-alt"></i>
             <span id="res_place">相模原市立総合水泳場</span>
+            <i class="fas fa-flag"></i>
             <span id="res_pool">短水路</span>
           </p>
         </div>
 
-        <div class="event">
+        <div class="event fr">
           <img src="static/img/fr.svg" alt="fr">
-          <span id="res_event">50m 自由形</span>
+          <span id="res_event">400m 個人メドレー</span>
         </div>
 
         <p class="swimmer">
@@ -376,7 +377,10 @@
           </a>
         </p>
 
-        <p id="res_time">0:25.98</p>
+        <p class="result_time">
+          <i class="fas fa-stopwatch"></i>
+          <span id="res_time">0:25.98</span>
+        </p>
 
         <div class="cards">
           <div class="card">
@@ -393,9 +397,25 @@
           </div>
         </div>
 
+        <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+        <div class="laps">
+          <div class="column">
+            <p>0:29.12</p>
+            <p>1:01.11</p>
+            <p>1:29.12</p>
+            <p>2:09.99</p>
+          </div>
+          <div class="column">
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+          </div>
+        </div>
+
       </div>
     </div>
-    <p class="close">
+    <p class="close" onclick="deactivate_all()">
       <i class="fas fa-window-close"></i> 閉じる
     </p>
   </div>
@@ -407,9 +427,9 @@
   </footer>
 
 
-  <!-- <script src="static/js/aos.js"></script> -->
+  <script src="static/js/aos.js"></script>
   <script>
-    // AOS.init({once: true});
+    AOS.init({once: true});
   </script>
   <script>
     var current_year = 19;
@@ -441,7 +461,6 @@
   <script>
     var deactivate_elms = document.getElementsByClassName('deactivate');
     var overlay = document.getElementById('overlay');
-    var close = document.getElementsByClassName('close')[0];
 
     function activate(target) {
       target.classList.toggle("active");
@@ -454,7 +473,6 @@
     }
 
     overlay.addEventListener('click', deactivate_all, false)
-    close.addEventListener('click', deactivate_all, false)
 
     function go_bottom(){
       var doc = document.documentElement;
