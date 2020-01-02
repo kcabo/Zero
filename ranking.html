@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="static/css/ranking.css">
-  <link rel="stylesheet" href="static/css/aos.css">
+  <!-- <link rel="stylesheet" href="static/css/aos.css"> -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -62,30 +62,21 @@
 
       <div class="row">
         <div id="year" class="button deactivate">
-          <p onclick="activate(year);activate(overlay)">
-            19年度
-            <i class="fas fa-angle-down"></i>
-          </p>
+          <p onclick="activate(year);activate(overlay)">19年度<i class="fas fa-angle-down"></i></p>
           <div class="items">
             <p onclick="jump_page(current_event, 18, current_pool)">18年度</p>
           </div>
         </div>
 
         <div id="sex" class="button deactivate">
-          <p onclick="activate(sex);activate(overlay)">
-            男子
-            <i class="fas fa-angle-down"></i>
-          </p>
+          <p onclick="activate(sex);activate(overlay)">男子<i class="fas fa-angle-down"></i></p>
           <div class="items">
             <p onclick="jump_page(200 + current_style, current_year, current_pool)">女子</p>
           </div>
         </div>
 
         <div id="pool" class="button deactivate">
-          <p onclick="activate(pool);activate(overlay)">
-            長水路
-            <i class="fas fa-angle-down"></i>
-          </p>
+          <p onclick="activate(pool);activate(overlay)">長水路<i class="fas fa-angle-down"></i></p>
           <div class="items">
             <p onclick="jump_page(current_event, current_year, 0)">短水路</p>
           </div>
@@ -134,7 +125,7 @@
               <label><input type="checkbox" name="grade" value="19"><span>一般</span></label>
             </div>
           </form>
-          <p class="submit">絞り込む</p>
+          <p class="submit" onclick="jump_page(current_event, current_year, current_pool)">絞り込む</p>
         </div>
 
 
@@ -248,9 +239,10 @@
           <td>ｽｳｨﾝ大田原</td>
         </tr>
 
+
       </tbody></table>
 
-      <p class="load">さらに読み込む<i class="fas fa-sync-alt"></i></p>
+      <p class="load" onclick="add_elements()">さらに読み込む<i class="fas fa-sync-alt"></i></p>
 
     </div>
 
@@ -381,9 +373,9 @@
   </footer>
 
 
-  <script src="static/js/aos.js"></script>
+  <!-- <script src="static/js/aos.js"></script> -->
   <script>
-    AOS.init({once: true});
+    // AOS.init({once: true});
   </script>
   <script>
     var current_year = 19;
@@ -431,6 +423,47 @@
       var bottom = doc.scrollHeight - doc.clientHeight;
       window.scroll(0, bottom);
     };
+
+  </script>
+  <script>
+
+  var test_elem = `<tr data-aos="fade-up">
+    <td><span>13</span></td>
+    <td><a href="/dashboard?id=13741">神崎伶央<i class="fas fa-chevron-circle-right"></i></a></td>
+    <td>0:25.39</td>
+    <td><span>大学2</span></td>
+    <td>銀泳会</td>
+  </tr>`;
+
+  var inhtml = `
+    <td><span>13</span></td>
+    <td><a href="/dashboard?id=13741">神崎伶央<i class="fas fa-chevron-circle-right"></i></a></td>
+    <td>0:25.39</td>
+    <td><span>大学2</span></td>
+    <td>銀泳会</td>`;
+
+  // var test_elem = '<tr></tr>'
+
+  function add_elements() {
+    alert(test_elem);
+    var table_body = document.getElementsByTagName('tbody')[0];
+    var html = [];
+    for(var i = 0; i < 10000; i++) {
+      html.push(test_elem);
+    };
+    table_body.innerHTML = table_body.innerHTML + html.join('');
+    // var container = document.getElementById('additional');
+    // container.innerHTML = html.join('');
+
+    // var table_body = document.getElementsByTagName('tbody')[0];
+    // for(var i = 0; i<10000; i++) {
+    //   var el = document.createElement('TR');
+    //  el.innerHTML = inhtml;
+    //  table_body.appendChild(el);
+    // }
+
+  };
+
 
   </script>
 </body>

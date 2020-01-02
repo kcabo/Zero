@@ -537,6 +537,7 @@ tr.new td:nth-child(1) span::after {
 }
 tr.new.top10 td:nth-child(1) span::after {
   margin-top: -10px;
+  left: -13px;
 }
 table i {
   font-size: 1rem;
@@ -610,7 +611,7 @@ tr.top10 td:nth-child(1) span {
   font-size: 4rem;
   line-height: 1;
   position: absolute;
-  bottom: -7px;
+  bottom: -6.5px;
   left: 3px;
   display: block;
   letter-spacing: -4px;
