@@ -152,14 +152,17 @@ def raise_candidates(records):
 
     return candidates
 
-def format_grade_and_time(df):
+def format_ranking(df):
     df['time'] = df['time_val'].map(val_2_fmt)
     df['grade'] = df['grade'].map(lambda x: japanese_grades[x])
+    week_ago = datetime.date.today() - datetime.timedelta(days=7)
+    week_ago_int = int(week_ago.strftime('%Y%m%d'))
+    df['new'] = df['start'] >= week_ago_int
     return df
 
 def output_ranking(records):
-    fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time_val'])
+    fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time, x.Meet.start), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time_val', 'start'])
     df.sort_values(['time_val'], inplace=True)
     df.drop_duplicates(subset=['name','grade'], inplace=True)
     df.reset_index(drop=True, inplace=True)
@@ -197,3 +200,42 @@ def compile_statistics(records, agegroup):
         new_q3 = desc['75%']
 
         return mean, std, new_q1, new_q2, new_q3, border, count
+
+def detail_dictionary(target):
+    from constant import area_dict, FormatEvent
+    yobi = ["月","火","水","木","金","土","日"]
+    start = datetime.datetime.strptime(str(target.Meet.start), '%Y%m%d')
+    end = datetime.datetime.strptime(str(target.Meet.end), '%Y%m%d')
+    my_event = FormatEvent(target.Record.event)
+    res = {}
+    res['start'] = start.strftime('%Y/%m/%d') + '(' + yobi[start.weekday()] + ')'
+    res['end'] = '~' + end.strftime('%m/%d') + '(' + yobi[end.weekday()] + ')'
+    res['area'] = area_dict[target.Meet.area]
+    res['meet'] = target.Meet.name
+    res['place'] = target.Meet.place
+    res['pool'] = '長水路' if target.Meet.pool == 1 else '短水路'
+    res['event'] = my_event.jpn_event
+    res['name'] = target.Record.name
+    res['grade'] = japanese_grades[target.Record.grade]
+    res['team'] = target.Record.team
+    res['time'] = val_2_fmt(target.Record.time)
+    res['rank'] = target.Record.rank
+    res['devrange'] = f'偏差値({res["grade"][0:2]})' # 最初の二文字
+    res['style'] = my_event.eng_style
+    res['id'] = target.Record.id
+
+    laps_raw = target.Record.laps
+    laps = [int(l) for l in laps_raw.split(',')]
+    res['laps1'] = [val_2_fmt(l) for l in laps]
+    res['laps2'] = [val_2_fmt(l) for l in calc_between_time(laps)]
+
+    return res
+
+def calc_between_time(laps): # ['0:32.83', '1:01.38','1:32.83', '2:11.38'];
+    between = []
+    for i in range(len(laps)):
+        if i == 0:
+            between.append(0)
+        else:
+            between.append(laps[i] - laps[i-1])
+    return between
