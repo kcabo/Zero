@@ -78,11 +78,11 @@
         <div class="numeric-data">
           <div class="child">
             <p>総レース数</p>
-            <p>32</p>
+            <p data-aos="flip-up">32</p>
           </div>
           <div class="child">
             <p>50Fr偏差値</p>
-            <p>62.3</p>
+            <p data-aos="flip-up">62.3</p>
           </div>
         </div>
 
@@ -117,7 +117,7 @@
       }
     </script>
 
-    <h2><i class="fas fa-crosshairs"></i>50m自由形の調子</h2>
+    <h2><i class="far fa-chart-bar"></i>50m自由形の調子</h2>
     <div class="trend card">
       <p>淡色が短水路</p>
       <div class="wrap">
@@ -127,45 +127,55 @@
       </div>
     </div>
 
+    <h2><i class="far fa-chart-bar"></i>100m自由形の調子</h2>
+    <div class="trend card">
+      <p>淡色が短水路</p>
+      <div class="wrap">
+        <div class="chartarea">
+          <canvas id="trend2" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
     <h2><i class="fas fa-crosshairs"></i>ベストタイム一覧</h2>
     <div id="bests">
 
-      <div class="card">
+      <div class="card" data-aos="flip-left">
         <div class="head ba">
           <img src="static/img/ba.svg" alt="泳法">
           <p>自由形</p>
         </div>
         <div class="content">
-          <div class="row"><p class="caption">短</p><p class="caption">長</p></div>
+          <div class="row"><p class="caption">短水路</p><p class="caption">長水路</p></div>
           <div class="row">
-            <div class="cell">
+            <div class="cell" onclick="show_detail()">
               <p></p>
               <p></p>
             </div>
             <div class="nav">50</div>
-            <div class="cell">
+            <div class="cell" onclick="show_detail()">
               <p>0:21.28</p>
               <p>2019/10/26</p>
             </div>
           </div>
           <div class="row">
-            <div class="cell">
+            <div class="cell" onclick="show_detail()">
               <p>0:21.28</p>
               <p>2019/10/26</p>
             </div>
             <div class="nav">100</div>
-            <div class="cell">
+            <div class="cell" onclick="show_detail()">
               <p>0:21.28</p>
               <p>2019/10/26</p>
             </div>
           </div>
           <div class="row">
-            <div class="cell">
+            <div class="cell" onclick="show_detail()">
               <p></p>
               <p></p>
             </div>
             <div class="nav">200</div>
-            <div class="cell">
+            <div class="cell" onclick="show_detail(12)">
               <p>0:21.28</p>
               <p>2019/10/26</p>
             </div>
@@ -174,10 +184,98 @@
       </div>
 
 
+      <div class="card" data-aos="flip-left">
+        <div class="head im">
+          <img src="static/img/im.svg" alt="泳法">
+          <p>自由形</p>
+        </div>
+        <div class="content">
+          <div class="row"><p class="caption">短水路</p><p class="caption">長水路</p></div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">50</div>
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+            <div class="nav">100</div>
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">200</div>
+            <div class="cell" onclick="show_detail(12)">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-aos="flip-left">
+        <div class="head fly">
+          <img src="static/img/fly.svg" alt="泳法">
+          <p>自由形</p>
+        </div>
+        <div class="content">
+          <div class="row"><p class="caption">短水路</p><p class="caption">長水路</p></div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">50</div>
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+            <div class="nav">100</div>
+            <div class="cell" onclick="show_detail()">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">200</div>
+            <div class="cell" onclick="show_detail(12)">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
 
 
-    <h2>全記録</h2>
+    <h2><i class="far fa-address-card"></i>全記録</h2>
 
     <div id="records" class="card">
       <table>
@@ -315,224 +413,52 @@
   </script>
   <script src="static/js/aos.js"></script>
   <script>
-    AOS.init({once: true, offset: 0, duration: 300});
+    AOS.init({once: true, offset: 0, duration: 500});
   </script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>
   var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
   var trend1 = document.getElementById("trend1").getContext('2d');
+  var trend2 = document.getElementById("trend2").getContext('2d');
   var colorE1 = '#4cc4eb';
-  var colorE2 = '#48cfad';
-  var colorE3 = '#a0d468';
-  var colorE4 = '#ffce54';
-  var tDegree = '11';
-  var lineWidth = 2;
-  var datasets = [{
-      label: '長',
-      data: [{x:1,y:71},{x:59,y:16},{x:68,y:0},{x:94,y:55},{x:123,y:56},{x:166,y:41},{x:202,y:86},{x:229,y:100}],
-      pointStyle: 'circle',
-      borderColor: colorE1,
-      backgroundColor: colorE1 + tDegree,
-      showLine: true,
-      borderWidth: lineWidth,
-      pointBackgroundColor: '#fff',
-      pointRadius: 2.5,
-    },
-    {
-      label: '短',
-      data: [{x:1,y:70},{x:59,y:79},{x:68,y:26},{x:123,y:0},{x:166,y:83},{x:229,y:100}],
-      pointStyle: 'rectRot',
-      borderColor: colorE2,
-      backgroundColor: colorE2 + tDegree,
-      showLine: true,
-      borderWidth: lineWidth,
-      pointBackgroundColor: '#fff',
-      pointRadius: 2.8,
-    }
-  ];
+  var colorE2 = '#bbe1ed';
+  var colorE3 = '#48cfad';
+  var colorE4 = '#b4ede0';
+  var tDegree = '10';
+  var lineWidth = 1.6;
 
-  var lineConfig = {
-    type: 'scatter',
-    data: {
-      datasets: datasets
-    },
-    options: {
-      tooltips: {
-        enabled: false
-      },
-      elements: {
-        line: {
-          tension: 0.15,
-        },
-      },
-      legend: {
-        display: false,
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: 244,
-            stepSize: 1,
-            autoSkip: false,
-            maxRotation: 0,
-            callback: function(value, index, values) {
-              // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
-              var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
-              if (i >= 0) {
-                return jMonths[i]
-              } else {
-                return null
-              }
-            }
-          },
-          gridLines: {
-            borderDash: [3],
-            zeroLineBorderDash: [3],
-            tickMarkLength: 8,
-            color: '#aaa',
-            zeroLineColor: '#aaa',
-            lineWidth: 0.5,
-            zeroLineWidth: 0.5,
-          }
-        }],
-        yAxes: [{
-          display: false,
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: 102,
-            stepSize: 1,
-          }
-        }]
-      },
-      animation: {
-        duration: 1500,
-        easing: 'easeOutQuint',
-      }
-    }
-  };
-  var myChart = new Chart(trend1, lineConfig);
+  var e1_long_data = [{x:1,y:71},{x:59,y:16},{x:68,y:0},{x:94,y:55},{x:123,y:56},{x:166,y:41},{x:202,y:86},{x:229,y:100}];
+  var e1_short_data = [{x:1,y:70},{x:59,y:79},{x:68,y:26},{x:123,y:0},{x:166,y:83},{x:229,y:100}];
+  var e2_long_data = [{x:1,y:71},{x:59,y:16},{x:68,y:0},{x:94,y:55},{x:123,y:56},{x:166,y:41},{x:202,y:86},{x:229,y:100}];
+  var e2_short_data = [{x:1,y:70},{x:59,y:79},{x:68,y:26},{x:123,y:0},{x:166,y:83},{x:229,y:100}];
 
-  </script>
-  <script>
-    var colorLong = '#4cc4eb';
-    var colorShort = '#48cfad';
-    var tDegree = '33'
-    var gray = '#555';
-    var lineWidth = 1.2;
+  set_line_chart(trend1, e1_long_data, e1_short_data, colorE1, colorE2);
+  set_line_chart(trend2, e2_long_data, e2_short_data, colorE3, colorE4);
 
-    var ctxBar = document.getElementById("bar").getContext('2d');
-    var dataLong = {{s.count_style_long}};
-    var dataShort = {{s.count_style_short}};
-    var barConfig = {
-      type: 'bar',
-      data: {
-        labels: ['Fr', 'Ba', 'Br', 'Fly', 'IM'],
-        datasets: [{
-          data: dataLong,
-          label: '長水路',
-          borderColor: colorLong,
-          backgroundColor: colorLong + tDegree,
-          borderWidth: lineWidth,
-        }, {
-          data: dataShort,
-          label: '短水路',
-          borderColor: colorShort,
-          backgroundColor: colorShort + tDegree,
-          borderWidth: lineWidth,
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            stacked: true,
-            ticks: {
-              fontColor: gray,
-              min: 0,
-              suggestedMax: 20,
-              stepSize: 5,
-              padding: -5,
-            },
-            gridLines: {
-              display: false
-            },
-          }],
-          xAxes: [{
-            stacked: true,
-            ticks: {
-              fontColor: gray,
-              padding: -7,
-            },
-            gridLines: {
-              display: false
-            }
-          }],
-        },
-        legend: {
-          display: false
-        },
-        animation: {
-          duration: 1500,
-          easing: 'easeOutQuint',
-        }
-      }
-    };
-    var bar = new Chart(ctxBar, barConfig);
-
-    var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
-    var ctxLine = document.getElementById("lineChart").getContext('2d');
-    var colorE1 = '#4cc4eb';
-    var colorE2 = '#48cfad';
-    var colorE3 = '#a0d468';
-    var colorE4 = '#ffce54';
-    var tDegree = '11';
-    var lineWidth = 2;
+  function set_line_chart(element, long_data, short_data, long_color, short_color) {
     var datasets = [{
-        label: '長 {{s.s1["event_name"]}}',
-        data: [{{s.s1["long_trend"]}}],
+        label: '長水路',
+        data: long_data,
         pointStyle: 'circle',
-        borderColor: colorE1,
-        backgroundColor: colorE1 + tDegree,
+        borderColor: long_color,
+        backgroundColor: long_color + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.2,
+      },
+      {
+        label: '短水路',
+        data: short_data,
+        pointStyle: 'rectRot',
+        borderColor: short_color,
+        backgroundColor: short_color + tDegree,
         showLine: true,
         borderWidth: lineWidth,
         pointBackgroundColor: '#fff',
         pointRadius: 2.5,
-      },
-      {
-        label: '短 {{s.s1["event_name"]}}',
-        data: [{{s.s1["short_trend"]}}],
-        pointStyle: 'rectRot',
-        borderColor: colorE2,
-        backgroundColor: colorE2 + tDegree,
-        showLine: true,
-        borderWidth: lineWidth,
-        pointBackgroundColor: '#fff',
-        pointRadius: 2.8,
-      },
-      {
-        label: '長 {{s.s2["event_name"]}}',
-        data: [{{s.s2["long_trend"]}}],
-        pointStyle: 'circle',
-        borderColor: colorE3,
-        backgroundColor: colorE3 + tDegree,
-        showLine: true,
-        borderWidth: lineWidth,
-        pointBackgroundColor: '#fff',
-        pointRadius: 2.5,
-      },
-      {
-        label: '短 {{s.s2["event_name"]}}',
-        data: [{{s.s2["short_trend"]}}],
-        pointStyle: 'rectRot',
-        borderColor: colorE4,
-        backgroundColor: colorE4 + tDegree,
-        showLine: true,
-        borderWidth: lineWidth,
-        pointBackgroundColor: '#fff',
-        pointRadius: 2.8,
       }
     ];
 
@@ -542,26 +468,22 @@
         datasets: datasets
       },
       options: {
-        // tooltips: {
-        //   enabled: false
-        // },
+        tooltips: {
+          enabled: false
+        },
         elements: {
           line: {
             tension: 0.15,
           },
         },
         legend: {
-          position: 'bottom',
-          labels: {
-            boxWidth: 10,
-            fontSize: 11,
-          }
+          display: false,
         },
         scales: {
           xAxes: [{
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 244,
+              suggestedMax: 275,
               stepSize: 1,
               autoSkip: false,
               maxRotation: 0,
@@ -600,18 +522,21 @@
         }
       }
     };
-    var myChart = new Chart(ctxLine, lineConfig);
-  </script>
-  <script>
-    document.getElementsByClassName('trend')[0].getElementsByClassName('wrap')[0].scrollLeft = 400;
+    var myChart = new Chart(element, lineConfig);
+  }
+
+  document.getElementsByClassName('trend')[0].getElementsByClassName('wrap')[0].scrollLeft = 400;
+  document.getElementsByClassName('trend')[1].getElementsByClassName('wrap')[0].scrollLeft = 400;
   </script>
   <script>
 
     function show_detail(r_id) {
-      var data = {id: r_id};
-      activate(detail);
-      activate(overlay);
-      post_data(data);
+      if (r_id) {
+        var data = {id: r_id};
+        activate(detail);
+        activate(overlay);
+        post_data(data);
+      }
     }
 
     function post_data(data) {
@@ -658,9 +583,6 @@
       };
       return content;
     }
-
-
-
 
   </script>
 </body>
