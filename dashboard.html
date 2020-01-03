@@ -281,7 +281,7 @@
       <table>
         <tbody>
           <!-- {% for r in s.records.itertuples() %}
-          <tr>
+          <tr onclick="show_detail()">
             <td><span class="{{r.style}}">{{r.event}}</span></td>
             <td>{{r.time}}</td>
             <td><span pool={{r.pool}}>{% if r.pool == 1 %}長{% else %}短{% endif %}</span></td>
@@ -289,7 +289,7 @@
           </tr>
           {% endfor %} -->
 
-          <tr>
+          <tr oc>
           <td><span class="Fly">50Fly</span></td>
           <td>0:22.66</td>
           <td><span pool=0>短</span></td>
