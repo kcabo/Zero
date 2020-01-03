@@ -604,7 +604,7 @@ h2 i {
 }
 .trend .chartarea {
   margin: auto;
-  width: 500px;
+  width: 400px;
 }
 .trend canvas {
   width: 100%;
@@ -618,6 +618,7 @@ h2 i {
 #bests {
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
   max-width: 800px;
   margin: auto;
 }
