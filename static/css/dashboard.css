@@ -162,12 +162,6 @@ footer a {
   height: 100%;
 }
 
-main {
-  max-width: 1000px;
-  margin: auto;
-}
-
-
 .modal {
   position: fixed;
   top: 100vh;
@@ -213,12 +207,6 @@ main {
     display:none;
 }
 
-@media screen and (min-width:800px) {
-  #ranking {
-    /* margin-top: 2000px;
-    transform: scale(1.2); */
-  }
-}
 
 #overlay {
   position: fixed;
@@ -436,6 +424,7 @@ main {
 
 main {
   background-color: var(--bg);
+  padding-bottom: 20px;
 }
 
 /* 選手名 */
@@ -556,7 +545,7 @@ main {
   position: relative;
 }
 #about .participate .event span {
-  width: 1%;
+  width: 0%;
   height: 100%;
   display: inline-block;
   position: absolute;
@@ -578,46 +567,59 @@ main {
 }
 
 h2 {
-  margin-top: 10px;
-  margin-bottom: 2px;
-  margin-left: 10px;
+  margin: 18px 10px 3px;
   font-weight: normal;
   text-align: center;
   font-size: 1.6rem;
   vertical-align: middle;
 }
 h2 i {
-  padding-right: 3px;
-  color: #555;
+  padding-right: 5px;
+  /* color: #555; */
   font-size: 1.3rem;
   padding-top: 6px;
   vertical-align: top;
 }
 .trend {
   margin: 0 10px;
-  padding: 10px;
+  padding: 6px;
+  max-width: 800px;
+  position: relative;
+}
+.trend > p {
+  position: absolute;
+  background: var(--main);
+  color: white;
+  padding: 1px 5px;
+  opacity: .6;
 }
 .trend .wrap {
-  /* border: solid 1px black; */
+  border: solid 1px #eee;
   overflow-x: auto;
+  /* box-shadow: 18px 0px 15px -15px rgba(0, 0, 0, 0.1) inset, -18px 0px 15px -15px rgba(0, 0, 0, 0.1) inset; */
+  padding: 10px;
 }
 .trend .wrap::-webkit-scrollbar {
-  width: 0px;
+  display: none;
 }
 .trend .chartarea {
-  /* width: 450px; */
-  /* width: 90%; */
-  /* height: 200px; */
-  /* margin: auto; */
-  width: 600px;
+  margin: auto;
+  width: 500px;
 }
 .trend canvas {
   width: 100%;
+}
+@media screen and (min-width:800px) {
+  .trend {
+    margin: auto;
+  }
 }
 
 #bests {
   white-space: nowrap;
   overflow-x: auto;
+  max-width: 800px;
+  margin: auto;
 }
 #bests::-webkit-scrollbar {
   width: 0px;
@@ -649,6 +651,7 @@ h2 i {
 #bests .head img {
   display: block;
   width: 60px;
+  padding-top: 2px;
   margin: auto;
 }
 #bests .head p {
@@ -657,8 +660,8 @@ h2 i {
   margin-top: -8px;
 }
 #bests .content {
-  padding: 5px 10px;
-  height: 140px;
+  padding: 4px 10px;
+  height: 129.45px;
 }
 #bests .row {
   display: flex;
@@ -667,17 +670,17 @@ h2 i {
   text-align: center;
 }
 #bests .row .caption {
-  margin: 5px 23px;
-  width: 18px;
-  line-height: 18px;
-  border-radius: 2px;
-  background: #1D3557;
-  color: white;
+  margin-bottom: 6px;
+  line-height: 17px;
+  width: 65px;
+  line-height: 1.4;
+  /* border-bottom: solid .5px #ddd; */
+  color: #999;
   font-size: 1rem;
 }
 #bests .row:not(:first-child) {
   height: 30px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 #bests .row .cell {
   width: 35%;
@@ -685,6 +688,7 @@ h2 i {
 #bests .row .cell p:last-child {
   color: #aaa;
   font-size: 1rem;
+  line-height: 1;
 }
 #bests .row .nav {
   width: 40px;
@@ -704,10 +708,10 @@ h2 i {
 
 
 #records {
-  padding: 2px;
+  padding: 0 2px;
   width: 90%;
-  max-width: 600px;
-  margin: 10px auto;
+  max-width: 800px;
+  margin: auto;
 }
 #records table {
   width: 96%;
