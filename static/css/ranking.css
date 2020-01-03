@@ -281,17 +281,11 @@ h1 {
   cursor: pointer;
 }
 #setting .button i {
-  /* position: absolute;
-  top: 12px;
-  left: 14px;
-  color: #777;
-  padding-right: 4px;
-  transition: transform .2s, top .2s .2s; */
-  padding-left: 2px;
+  transition: all .4s;
+  padding-left: 6px;
 }
 #setting .button.active i {
-  top: 14px;
-  /* transform: rotate(90deg); */
+  transform: rotateX(180deg);
 }
 #setting .button p:hover {
   background: #eee;
@@ -317,6 +311,7 @@ h1 {
 }
 
 #gradeFilter {
+  margin-top: 10px;
   margin-bottom: 15px;
 }
 #gradeFilter > label p {
@@ -328,11 +323,11 @@ h1 {
 }
 #gradeFilter .tg-back {
   position: absolute;
-  width: 40px;
-  height: 20px;
+  width: 37px;
+  height: 18px;
   border-radius: 40px;
   background: #e5e5e5;
-  top: -3px;
+  top: -1px;
   bottom: 0;
   margin: auto;
   left: 20px;
@@ -340,11 +335,11 @@ h1 {
 }
 #gradeFilter .tg-front {
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: white;
-  top: -3px;
+  top: 0px;
   bottom: 0;
   margin: auto;
   left: 20px;
@@ -360,7 +355,7 @@ h1 {
   background: var(--main);
 }
 #showGrade:checked ~ label .tg-front {
-  left: 40px;
+  left: 38px;
 }
 #gradeFilter .selectGrades {
   background: #fafafa;
@@ -499,8 +494,10 @@ h1 {
   width: 100%;
   margin: auto;
 }
-#detail .meetInfo > p {
+#detail .meetInfo p:first-child {
+  max-width: 400px;
   position: relative;
+  margin: auto;
 }
 #res_start {
   font-size: 1.2rem;
@@ -537,7 +534,7 @@ h1 {
   padding-right: 2px;
 }
 #detail .place i:last-of-type {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 #detail .event {
@@ -547,19 +544,19 @@ h1 {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-#detail .event.fr {
+#detail .event[swim-style = fr] {
   background: var(--fr);
 }
-#detail .event.ba {
+#detail .event[swim-style = ba] {
   background: var(--ba);
 }
-#detail .event.br {
+#detail .event[swim-style = br] {
   background: var(--br);
 }
-#detail .event.fly {
+#detail .event[swim-style = fly] {
   background: var(--fly);
 }
-#detail .event.im {
+#detail .event[swim-style = im] {
   background: var(--im);
 }
 #detail .event img {
@@ -694,7 +691,12 @@ h1 {
   padding: 15px;
   background: #f3f7fa;
   --link: #3E92CC;
+}
+#ranking[sex = "1"] {
   --sex: var(--men);
+}
+#ranking[sex = "2"] {
+  --sex: var(--women);
 }
 #ranking table {
   font-size: 1.3rem;

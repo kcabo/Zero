@@ -3,14 +3,14 @@ import datetime
 import os
 import threading
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 if os.name == 'nt': # ローカルのWindows環境なら、環境変数をその都度設定
     import env
 
 import analyzer
-from constant import style_2_num, distance_2_num, area_list, style_2_japanese, style_and_distance, japanese_grades
+from constant import FormatEvent, style_2_num, distance_2_num, area_list, style_2_japanese, style_and_distance, japanese_grades
 import scraper
 from task_manager import Takenoko, status, notify_line
 
@@ -105,9 +105,12 @@ def analyze_all():
     notify_line('全種目の分析を完了')
     status.free()
 
-def calc_deviation(value, mean, std):
-    answer = (value - mean) / std * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
-    return round(answer, 1)
+def calc_deviation(value, mean, std): # value が無効の場合ハイフン
+    if value:
+        answer = (value - mean) / std * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
+        return round(answer, 1)
+    else:
+        return '-'
 
 
 def add_records(target_meets_ids): # 大会IDのリストから１大会ごとにRecordの行を生成しDBに追加
@@ -192,72 +195,97 @@ def dashboard():
         agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5]
         agegroup = agegroup_list[grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
         stats = db.session.query(Stats).filter_by(event=int(target_event_num), agegroup=agegroup).order_by(Stats.pool).all() # 1番目が短水路、2番目が長水路になる
-        swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].mean, stats[0].std) if swimmer.s1['short_best'] is not None else '-'
-        swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].mean, stats[1].std) if swimmer.s1['long_best'] is not None else '-'
+        swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].mean, stats[0].std)
+        swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].mean, stats[1].std)
 
     return render_template('dashboard.html', s = swimmer)
 
 
 @app.route('/ranking',  methods = ['POST', 'GET'])
 def ranking():
+    event = request.args.get('event', 112, type=int)
+    year = request.args.get('year', 19, type=int)
     pool = request.args.get('pool', 1, type=int)
-    sex = request.args.get('sex', 1, type=int)
-    style = request.args.get('style', 'Fr')
-    distance = request.args.get('distance', 50, type=int)
-    page = request.args.get('page', 1, type=int)
+    all = request.args.get('all', 0, type=int)
+    # sex = request.args.get('sex', 1, type=int)
+    # style = request.args.get('style', 'Fr')
+    # distance = request.args.get('distance', 50, type=int)
+    # event = sex * 100 + style_2_num[style] * 10 + distance_2_num[distance]
+    # page = request.args.get('page', 1, type=int)
     grades = request.form.getlist("grade", type=int) # POST時のフォームの内容が格納されるGET時は空リスト
-    event = sex * 100 + style_2_num[style] * 10 + distance_2_num[distance]
-    ranking_length = 0
+    # ranking_length = 0
 
-    if grades:
+    if grades: # 学年絞り込み指定ある時
         records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.grade.in_(grades), Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool)
+                .filter(Record.event==event, Record.grade.in_(grades), Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
                 .all())
-    elif page == 1:
+    elif all == 0: # もっとみる、を押す前
         target_event = db.session.query(Stats).filter_by(pool=pool, event=event, agegroup=0).one()
         time_limit = target_event.border
         records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.time > 0, Record.time <= time_limit, Record.meetid == Meet.meetid, Meet.pool == pool)
+                .filter(Record.event==event, Record.time > 0, Record.time <= time_limit, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
                 .all())
-        ranking_length = target_event.count
+        # ranking_length = target_event.count
     else:
         records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool)
+                .filter(Record.event==event, Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
                 .all())
 
-    df_ = analyzer.output_ranking(records)
-    if ranking_length == 0:
-        ranking_length = len(df_)
-    data_from = 500*(page-1)
-    data_till = 500*page
-    df = analyzer.format_grade_and_time(df_[data_from:data_till]) # 1ページ目なら[0:500] 学年とタイムを文字列変換
+    # df_ = analyzer.output_ranking(records)
+    # if ranking_length == 0:
+    #     ranking_length = len(df_)
+    # data_from = 500*(page-1)
+    # data_till = 500*page
+    # df = analyzer.format_grade_and_time(df_[data_from:data_till]) # 1ページ目なら[0:500] 学年とタイムを文字列変換
     # {% for rank, id, name, time, grade, team in ranking %}
-    ranking = zip(range(data_from+1, data_till+1), df['id'], df['name'], df['time'], df['grade'], df['team'])
+    # ranking = zip(range(data_from+1, data_till+1), df['id'], df['name'], df['time'], df['grade'], df['team'])
 
-    max_page = (ranking_length - 1) // 500 + 1
-    group = f'pool={pool}&sex={sex}'
-    group_bools = [' selected' if pool==0 and sex==1 else '',
-                ' selected' if pool==1 and sex==1 else '',
-                ' selected' if pool==0 and sex==2 else '',
-                ' selected' if pool==1 and sex==2 else '']
-    current_event = f'style={style}&distance={distance}'
-    str_sex = 'men' if sex == 1 else 'women'
-    jpn_group = f'{"男子" if sex == 1 else "女子"} {"長水路" if pool == 1 else "短水路"}'
-    jpn_event = f'{distance}m {style_2_japanese[style]}'
+    df = analyzer.format_ranking(analyzer.output_ranking(records))
+    # {% for id, new, name, time, grade, team in ranking %}
+    ranking = zip(df['id'], df['new'], df['name'], df['time'], df['grade'], df['team'])
 
+    my_event = FormatEvent(event)
+    # max_page = (ranking_length - 1) // 500 + 1
+    # group = f'pool={pool}&sex={sex}'
+    # group_bools = [' selected' if pool==0 and sex==1 else '',
+    #             ' selected' if pool==1 and sex==1 else '',
+    #             ' selected' if pool==0 and sex==2 else '',
+    #             ' selected' if pool==1 and sex==2 else '']
+    # current_event = f'style={style}&distance={distance}'
+    # str_sex = 'men' if sex == 1 else 'women'
+    # jpn_group = f'{"男子" if sex == 1 else "女子"} {"長水路" if pool == 1 else "短水路"}'
+    # jpn_event = f'{distance}m {style_2_japanese[style]}'
     return render_template(
             'ranking.html',
             ranking = ranking,
-            group = group,
-            group_bools = group_bools,
-            current_event = current_event,
-            jpn_group = jpn_group,
-            jpn_event = jpn_event,
-            str_sex = str_sex,
+            # group = group,
+            # group_bools = group_bools,
+            # current_event = current_event,
+            # jpn_group = jpn_group,
+            jpn_event = my_event.jpn_event,
+            year = year,
+            sex = event // 100,
+            pool = pool,
+            style = event % 100,
+            # str_sex = str_sex,
             grades = grades,
-            current_page = page,
-            max_page = max_page)
+            # current_page = page,
+            all = all)
 
+
+@app.route('/api', methods=['POST'])
+def result_detail():
+    body = request.get_json()
+    id = body['id']
+    target = db.session.query(Record, Meet).filter(Record.id==id, Record.meetid == Meet.meetid).first()
+    res = analyzer.detail_dictionary(target)
+    agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5] # 0全体・1小学・2中学・3高校・4大学・5一般
+    agegroup = agegroup_list[target.Record.grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
+    stats_agegroup = db.session.query(Stats).filter_by(event=target.Record.event, agegroup=agegroup, pool=target.Meet.pool).first()
+    stats_whole = db.session.query(Stats).filter_by(event=target.Record.event, agegroup=0, pool=target.Meet.pool).first()
+    res['dev1'] = calc_deviation(target.Record.time, stats_whole.mean, stats_whole.std)
+    res['dev2'] = calc_deviation(target.Record.time, stats_agegroup.mean, stats_agegroup.std)
+    return jsonify(res)
 
 @app.route('/search', methods=['GET','POST'])
 def search():

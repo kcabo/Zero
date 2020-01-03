@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html>
 <head>
-  <title>Ranking | Swimmers Zero</title>
   <meta charset="utf-8">
-  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="email=no,telephone=no,address=no" />
   <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
   <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>最新ランキング - Swimmers Zero</title>
+  <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
+  <meta name="robots" content="nofollow">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-  <link rel="stylesheet" href="static/css/common.css">
-  <link rel="stylesheet" href="static/css/ranking_7.css">
+  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="static/css/ranking.css">
+  <link rel="stylesheet" href="static/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,221 +22,444 @@
     gtag('config', 'UA-149393969-2');
   </script>
 </head>
-
 <body>
-  <nav>
-    <a href="/"><img src="static/img/zero_logo_white_optimized.svg" alt="Zero" id="logo"></a>
-    <form id="search-container" method="post" action="/search">
-      <input name="name" type="text" placeholder="選手を検索">
-      <input type="submit" value=""><span></span>
-    </form>
-  </nav>
+
+  <div id="header-wrapper">
+    <header>
+      <div id="burger" onclick="activate(this);activate(menu)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+      <div class="placeholder"></div>
+    </header>
+  </div>
+
+  <div id="menu" class="">
+    <div id="search">
+      <form method="post" action="/search">
+        <input name="name" type="text" placeholder="選手を検索">
+        <input type="submit" value="">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+    <div class="item">
+    </div>
+  </div>
 
   <main>
 
-    <label for="toggle">
-      <div id="header" class="{{str_sex}}" ontouchstart="">
-        {{jpn_event}}<span>/ {{jpn_group}}</span>
-      </div>
-    </label>
 
-    <input type="checkbox" id="toggle">
-    <div id="options">
+    <h1>{{jpn_event}}</h1>
 
-      <div id="tab">
-        <div class="men{{group_bools[0]}}">
-          <a href="?pool=0&sex=1&{{current_event}}">男子<br>短水路</a>
-        </div>
-        <div class="men{{group_bools[1]}}">
-          <a href="?pool=1&sex=1&{{current_event}}">男子<br>長水路</a>
-        </div>
-        <div class="women{{group_bools[2]}}">
-          <a href="?pool=0&sex=2&{{current_event}}">女子<br>短水路</a>
-        </div>
-        <div class="women{{group_bools[3]}}">
-          <a href="?pool=1&sex=2&{{current_event}}">女子<br>長水路</a>
-        </div>
+    <div id="setting">
+
+      <div class="selectStyle" onclick="activate(selectEvents);activate(overlay)">
+        <i class="fas fa-cog"></i>
+        種目を変更する
       </div>
 
-      <div id="style-buttons">
-        <div id="fr" class="row">
-          <span>自由形</span>
-          <div class="column">
-            <a href="?{{group}}&style=Fr&distance=50">50</a>
-            <a href="?{{group}}&style=Fr&distance=400">400</a>
-          </div>
-          <div class="column">
-            <a href="?{{group}}&style=Fr&distance=100">100</a>
-            <a href="?{{group}}&style=Fr&distance=800">800</a>
-          </div>
-          <div class="column">
-            <a href="?{{group}}&style=Fr&distance=200">200</a>
-            <a href="?{{group}}&style=Fr&distance=1500">1500</a>
-          </div>
+      <div class="row">
+        <div id="year" class="button deactivate">
+          {% if year == 19 %}
+          <p onclick="activate(year);activate(overlay)">19年度<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, 18, current_pool)">18年度</p></div>
+          {% elif year == 18 %}
+          <p onclick="activate(year);activate(overlay)">18年度<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, 19, current_pool)">19年度</p></div>
+          {% endif %}
         </div>
-        <div id="ba" class="row">
-          <span>背泳ぎ</span>
-          <a href="?{{group}}&style=Ba&distance=50">50</a>
-          <a href="?{{group}}&style=Ba&distance=100">100</a>
-          <a href="?{{group}}&style=Ba&distance=200">200</a>
+
+        <div id="sex" class="button deactivate">
+          {% if sex == 1 %}
+          <p onclick="activate(sex);activate(overlay)">男子<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(200 + current_style, current_year, current_pool)">女子</p></div>
+          {% else %}
+          <p onclick="activate(sex);activate(overlay)">女子<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(100 + current_style, current_year, current_pool)">男子</p></div>
+          {% endif %}
         </div>
-        <div id="br" class="row">
-          <span>平泳ぎ</span>
-          <a href="?{{group}}&style=Br&distance=50">50</a>
-          <a href="?{{group}}&style=Br&distance=100">100</a>
-          <a href="?{{group}}&style=Br&distance=200">200</a>
+
+        <div id="pool" class="button deactivate">
+          {% if pool == 1 %}
+          <p onclick="activate(pool);activate(overlay)">長水路<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, current_year, 0)">短水路</p></div>
+          {% else %}
+          <p onclick="activate(pool);activate(overlay)">短水路<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, current_year, 1)">長水路</p></div>
+          {% endif %}
         </div>
-        <div id="fly" class="row">
-          <span>バタフライ</span>
-          <a href="?{{group}}&style=Fly&distance=50">50</a>
-          <a href="?{{group}}&style=Fly&distance=100">100</a>
-          <a href="?{{group}}&style=Fly&distance=200">200</a>
-        </div>
-        <div id="im" class="row">
-          <span>個人メドレー</span>
-          <a href="?{{group}}&style=IM&distance=100">100</a>
-          <a href="?{{group}}&style=IM&distance=200">200</a>
-          <a href="?{{group}}&style=IM&distance=400">400</a>
-        </div>
+
       </div>
 
-      <div id="filter">
-        <p>Filter</p>
-        <form method="post" action="?{{group}}&{{current_event}}" name="gradeFilter">
-          <input type="checkbox" name="grade" value="1 "id="elm1" {% if 1 in grades %}checked{% endif %}>
-          <label for="elm1">小学1</label>
-          <input type="checkbox" name="grade" value="2 "id="elm2" {% if 2 in grades %}checked{% endif %}>
-          <label for="elm2">小学2</label>
-          <input type="checkbox" name="grade" value="3 "id="elm3" {% if 3 in grades %}checked{% endif %}>
-          <label for="elm3">小学3</label>
-          <input type="checkbox" name="grade" value="4 "id="elm4" {% if 4 in grades %}checked{% endif %}>
-          <label for="elm4">小学4</label>
-          <input type="checkbox" name="grade" value="5 "id="elm5" {% if 5 in grades %}checked{% endif %}>
-          <label for="elm5">小学5</label>
-          <input type="checkbox" name="grade" value="6 "id="elm6" {% if 6 in grades %}checked{% endif %}>
-          <label for="elm6">小学6</label>
-          <input type="checkbox" name="grade" value="7 "id="jrh1" {% if 7 in grades %}checked{% endif %}>
-          <label for="jrh1">中学1</label>
-          <input type="checkbox" name="grade" value="8 "id="jrh2" {% if 8 in grades %}checked{% endif %}>
-          <label for="jrh2">中学2</label>
-          <input type="checkbox" name="grade" value="9 "id="jrh3" {% if 9 in grades %}checked{% endif %}>
-          <label for="jrh3">中学3</label>
-          <input type="checkbox" name="grade" value="10" id="snh1" {% if 10 in grades %}checked{% endif %}>
-          <label for="snh1">高校1</label>
-          <input type="checkbox" name="grade" value="11" id="snh2" {% if 11 in grades %}checked{% endif %}>
-          <label for="snh2">高校2</label>
-          <input type="checkbox" name="grade" value="12" id="snh3" {% if 12 in grades %}checked{% endif %}>
-          <label for="snh3">高校3</label>
-          <input type="checkbox" name="grade" value="13" id="unv1" {% if 13 in grades %}checked{% endif %}>
-          <label for="unv1">大学1</label>
-          <input type="checkbox" name="grade" value="14" id="unv2" {% if 14 in grades %}checked{% endif %}>
-          <label for="unv2">大学2</label>
-          <input type="checkbox" name="grade" value="15" id="unv3" {% if 15 in grades %}checked{% endif %}>
-          <label for="unv3">大学3</label>
-          <input type="checkbox" name="grade" value="16" id="unv4" {% if 16 in grades %}checked{% endif %}>
-          <label for="unv4">大学4</label>
-          <input type="checkbox" name="grade" value="17" id="unv5" {% if 17 in grades %}checked{% endif %}>
-          <label for="unv5">大学5</label>
-          <input type="checkbox" name="grade" value="18" id="unv6" {% if 18 in grades %}checked{% endif %}>
-          <label for="unv6">大学6</label>
-          <input type="checkbox" name="grade" value="19" id="gen" {% if 19 in grades %}checked{% endif %}>
-          <label for="gen">一般</label>
-          <input type="submit" value="絞り込む">
-        </form>
-      </div>
+      <div id="gradeFilter">
+        <input type="checkbox" id="showGrade" {% if grades %}checked{% endif %}>
+        <label for="showGrade">
+          <p>
+            <span class="tg-back"></span>
+            <span class="tg-front"></span>
+            学年で絞り込み
+          </p>
+        </label>
+        <div class="selectGrades">
+          <form method="post" name="grades">
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="1" {% if 1 in grades %}checked{% endif %}><span>小1</span></label>
+              <label><input type="checkbox" name="grade" value="2" {% if 2 in grades %}checked{% endif %}><span>小2</span></label>
+              <label><input type="checkbox" name="grade" value="3" {% if 3 in grades %}checked{% endif %}><span>小3</span></label>
+              <label><input type="checkbox" name="grade" value="4" {% if 4 in grades %}checked{% endif %}><span>小4</span></label>
+              <label><input type="checkbox" name="grade" value="5" {% if 5 in grades %}checked{% endif %}><span>小5</span></label>
+              <label><input type="checkbox" name="grade" value="6" {% if 6 in grades %}checked{% endif %}><span>小6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="7" {% if 7 in grades %}checked{% endif %}><span>中1</span></label>
+              <label><input type="checkbox" name="grade" value="8" {% if 8 in grades %}checked{% endif %}><span>中2</span></label>
+              <label><input type="checkbox" name="grade" value="9" {% if 9 in grades %}checked{% endif %}><span>中3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="10" {% if 10 in grades %}checked{% endif %}><span>高1</span></label>
+              <label><input type="checkbox" name="grade" value="11" {% if 11 in grades %}checked{% endif %}><span>高2</span></label>
+              <label><input type="checkbox" name="grade" value="12" {% if 12 in grades %}checked{% endif %}><span>高3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="13" {% if 13 in grades %}checked{% endif %}><span>大1</span></label>
+              <label><input type="checkbox" name="grade" value="14" {% if 14 in grades %}checked{% endif %}><span>大2</span></label>
+              <label><input type="checkbox" name="grade" value="15" {% if 15 in grades %}checked{% endif %}><span>大3</span></label>
+              <label><input type="checkbox" name="grade" value="16" {% if 16 in grades %}checked{% endif %}><span>大4</span></label>
+              <label><input type="checkbox" name="grade" value="17" {% if 17 in grades %}checked{% endif %}><span>大5</span></label>
+              <label><input type="checkbox" name="grade" value="18" {% if 18 in grades %}checked{% endif %}><span>大6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="19" {% if 19 in grades %}checked{% endif %}><span>一般</span></label>
+            </div>
+          </form>
+          <p class="submit" onclick="jump_page(current_event, current_year, current_pool)">絞り込む</p>
+        </div>
 
+
+      </div>
     </div>
 
-    <table class="{{str_sex}}"><tbody>
-      {% for rank, id, name, time, grade, team in ranking %}
-      <tr>
-        <td><span>{{rank}}</span></td>
-        <td><a href="/dashboard?id={{id}}">{{name}}</a></td>
-        <td>{{time}}</td>
-        <td><span>{{grade}}</span></td>
-        <td onclick="search_team('{{team}}')">{{team}}</td>
-      </tr>
-      {% endfor %}
+
+    <div id="ranking" sex={{sex}}>
+      <table><tbody>
+        <!-- <tr data-aos="fade-up" class="top10 new" onclick="show_detail(560)">
+          <td><span>2</span></td>
+          <td><a href="/dashboard?id=13770">大谷遥斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.51</td>
+          <td><span>高校2</span></td>
+          <td>白鴎大足利</td>
+        </tr> -->
+        {% for id, new, name, time, grade, team in ranking %}
+        <tr class="{% if loop.index <= 10 %}top10{% endif %} {% if new %}new{% endif %}" onclick="show_detail({{id}})" data-aos="fade-up">
+          <td><span>{{loop.index}}</span></td>
+          <td><a href="/dashboard?id={{id}}">{{name}}<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>{{time}}</td>
+          <td><span>{{grade}}</span></td>
+          <td>{{team}}</td>
+        </tr>
+        {% endfor %}
+
       </tbody></table>
 
-      <div class="page_btns {{str_sex}}">
-        {% for i in range(1, max_page+1) %}
-        <span onclick="jump_page({{i}})">{{i}}</span>
-        {% endfor %}
+      {% if all == 0 %}
+      <p class="load" onclick="jump_page(current_event, current_year, current_pool, 1)">さらに読み込む<i class="fas fa-sync-alt"></i></p>
+      {% endif %}
+    </div>
+
+
+
+  </main>
+
+  <div id="pageDown" onclick="go_bottom()"><i class="fas fa-arrow-down"></i></div>
+
+  <div id="overlay" class=""></div>
+
+  <div id="selectEvents" class="deactivate modal">
+    <div class="window">
+      <div class="events">
+        <p>種目一覧</p>
+        <div class="card fr" onclick="change_style(12)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>50</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(13)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>100</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(14)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>200</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(15)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>400</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(16)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>800</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(17)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>1500</p></div>
+        </div>
+
+        <div class="card ba" onclick="change_style(22)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card ba" onclick="change_style(23)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card ba" onclick="change_style(24)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card br" onclick="change_style(32)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card br" onclick="change_style(33)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card br" onclick="change_style(34)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card fly" onclick="change_style(42)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>50</p></div>
+        </div>
+        <div class="card fly" onclick="change_style(43)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>100</p></div>
+        </div>
+        <div class="card fly" onclick="change_style(44)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>200</p></div>
+        </div>
+
+        <div class="card im" onclick="change_style(53)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>100</p></div>
+        </div>
+        <div class="card im" onclick="change_style(54)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>200</p></div>
+        </div>
+        <div class="card im" onclick="change_style(55)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>400</p></div>
+        </div>
       </div>
+    </div>
 
-    </main>
-
-  <div id="page_down" onclick="go_bottom()">
-    <div></div>
+    <p class="close" onclick="deactivate_all()">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
   </div>
 
-  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
-    <defs>
-      <path id="gentle-wave" d="M-160 44c30 0
-      58-18 88-18s
-      58 18 88 18
-      58-18 88-18
-      58 18 88 18
-      v44h-352z" />
-    </defs>
-    <g class="parallax">
-      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
-      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
-      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
-    </g>
-  </svg>
-  <div id="footer">
-    <p>Created by Reo Kanzaki</p>
+  <div id="detail" class="deactivate modal ">
+    <div class="window">
+      <div class="result">
+        <div class="meetInfo">
+          <p>
+            <span id="res_start">2019/12/24(土)</span>
+            <span id="res_end">~12/25(日)</span>
+            <span id="res_area">神奈川</span>
+          </p>
+          <p id="res_meet">第21回かながわゆめ国体開催記念招待</p>
+          <p class="place">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="res_place">相模原市立総合水泳場</span>
+            <i class="fas fa-flag"></i>
+            <span id="res_pool">短水路</span>
+          </p>
+        </div>
+
+        <div class="event" swim-style="im">
+          <img src="static/img/fr.svg" alt="style">
+          <span id="res_event">400m 個人メドレー</span>
+        </div>
+
+        <p class="swimmer">
+          <a href="#">
+            <span id="res_name">神崎伶央</span>
+            <i class="fas fa-external-link-alt"></i>
+          </a>
+          <span id="res_grade">大学2</span>
+          <a href="#" class="team">
+            <span id="res_team">銀泳会</span>
+            <i class="fas fa-external-link-alt"></i>
+          </a>
+        </p>
+
+        <p class="result_time">
+          <i class="fas fa-stopwatch"></i>
+          <span id="res_time">0:25.98</span>
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <p>順位</p>
+            <p id="res_rank">2位</p>
+          </div>
+          <div class="card">
+            <p>偏差値(全体)</p>
+            <p id="res_dev1">67</p>
+          </div>
+          <div class="card">
+            <p id="res_devrange">偏差値(大学)</p>
+            <p id="res_dev2">59</p>
+          </div>
+        </div>
+
+        <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+        <div class="laps">
+          <div class="column">
+            <p>0:29.12</p>
+            <p>1:01.11</p>
+            <p>1:29.12</p>
+            <p>2:09.99</p>
+          </div>
+          <div class="column">
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="close" onclick="deactivate_all()">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
   </div>
 
-  <!-- ajaxやるまで使っちゃや―よ -->
-  <!-- <script src="static/js/jquery-3.4.1.min.js"></script> -->
+  <footer>
+    <p><span>Reo</span> Kanzaki</p>
+    <img src="static/img/kcabo.svg" alt="kcabo">
+    <a href="https://kcabo.github.io/"></a>
+  </footer>
+
+
+  <script src="static/js/aos.js"></script>
   <script>
+    AOS.init({once: true, offset: 0, duration: 300});
+  </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    var current_year = {{year}};
+    var current_sex = {{sex}};
+    var current_pool = {{pool}};
+    var current_style = {{style}};
+    var current_event = `${current_sex}${current_style}`;
+
+    function change_style(style_num) {
+      jump_page(`${current_sex}${style_num}`, current_year, current_pool);
+    }
+
+    function jump_page(event_num, year_num, pool_num, whole_data) {
+      var elm_show = document.getElementById('showGrade');
+      if(whole_data) {
+        var url = `?event=${event_num}&year=${year_num}&pool=${pool_num}&all=1`;
+      } else {
+        var url = `?event=${event_num}&year=${year_num}&pool=${pool_num}`;
+      };
+      if(elm_show.checked) {
+        document.grades.action = url;
+        document.grades.submit();
+      } else {
+        location.href = url;
+      };
+    }
+  </script>
+  <script>
+    var deactivate_elms = document.getElementsByClassName('deactivate');
+    var overlay = document.getElementById('overlay');
+
+    function activate(target) {
+      target.classList.toggle("active");
+    };
+    function deactivate_all() {
+      for (var i = 0; i < deactivate_elms.length; i++) {
+        deactivate_elms[i].classList.remove("active");
+      };
+      overlay.classList.remove("active");
+    }
+
+    overlay.addEventListener('click', deactivate_all, false)
+
     function go_bottom(){
       var doc = document.documentElement;
       var bottom = doc.scrollHeight - doc.clientHeight;
       window.scroll(0, bottom);
     };
+
   </script>
   <script>
-    var pg = document.getElementsByClassName('page_btns');
-    for(var i=0; i<2; i++){
-      for(var j=0; j<{{max_page}}; j++){
-        var e = pg[i].children[j];
-        if(e.textContent == '{{current_page}}'){
-          e.classList.add('current');
+
+    function show_detail(r_id) {
+      var data = {id: r_id};
+      activate(detail);
+      activate(overlay);
+      post_data(data);
+    }
+
+    function post_data(data) {
+      axios.post('/api', data)
+        .then(res => apply_data(res.data))
+        .catch(err => alert(err))
+        // .finally(res => console.log('finally'))
+    }
+
+    function apply_data(data) {
+      document.getElementById('res_start').innerHTML = data['start'];
+      document.getElementById('res_end').innerHTML = data['end'];
+      document.getElementById('res_area').innerHTML = data['area'];
+      document.getElementById('res_meet').innerHTML = data['meet'];
+      document.getElementById('res_place').innerHTML = data['place'];
+      document.getElementById('res_pool').innerHTML = data['pool'];
+      document.getElementById('res_event').innerHTML = data['event'];
+      document.getElementById('res_name').innerHTML = data['name'];
+      document.getElementById('res_grade').innerHTML = data['grade'];
+      document.getElementById('res_team').innerHTML = data['team'];
+      document.getElementById('res_time').innerHTML = data['time'];
+      document.getElementById('res_rank').innerHTML = data['rank'];
+      document.getElementById('res_dev1').innerHTML = data['dev1'];
+      document.getElementById('res_devrange').innerHTML = data['devrange'];
+      document.getElementById('res_dev2').innerHTML = data['dev2'];
+
+      document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
+      document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
+      document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?id=${data['id']}`);
+      document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?team=${data['team']}`);
+
+      document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
+      document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
+    }
+
+    function format_laps(laps) {
+      var content = '';
+      for(var lap of laps) {
+        if(lap == '') {
+          content += `<p>-</p>`
+        } else {
+          content += `<p>${lap}</p>`
         };
       };
-    };
-  </script>
-  <script>
-  {% autoescape false %}
-    function jump_page(page) {
-      var flag = false;
-      var url = "?{{group}}&{{current_event}}&page=" + page;
-      for (var i = 0; i < 19; i++){
-        if(document.gradeFilter.grade[i].checked) {
-          flag = true;
-          break;
-        };
-      };
-      if(flag) {
-        document.gradeFilter.action = url;
-        document.gradeFilter.submit();
-      } else {
-        location.href = url;
-      };
-    };
-  {% endautoescape %}
-  </script>
-  <script>
-  {% autoescape false %}
-    function search_team(team) {
-      var url = "/search?team=" + team;
-      location.href = url;
-    };
-  {% endautoescape %}
+      return content;
+    }
+
+
+
+
   </script>
 </body>
 
