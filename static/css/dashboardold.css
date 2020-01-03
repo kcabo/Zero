@@ -235,260 +235,6 @@ main {
   visibility: visible;
   opacity: 1;
 }
-
-/* ここまで共通 */
-
-h1 {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: normal;
-  padding: 10px;
-}
-#setting {
-  padding: 0 15px;
-  font-size: 1.4rem;
-  text-align: center;
-  line-height: 32px;
-  max-width: 400px;
-  margin: auto;
-}
-
-#setting .selectStyle {
-  color: var(--main);
-  cursor: pointer;
-  border: solid 1px var(--main);
-  transition: all .4s;
-}
-#setting .selectStyle:hover {
-  background: var(--main);
-  color: white;
-}
-#setting .selectStyle i {
-  padding-right: 5px;
-}
-#setting .row {
-  display: flex;
-  justify-content: center;
-  margin: 5px 0;
-}
-#setting .button {
-  width: 32%;
-  position: relative;
-  color: #333;
-}
-
-#setting .button > p {
-  background: white;
-  overflow: hidden;
-  cursor: pointer;
-}
-#setting .button i {
-  transition: all .4s;
-  padding-left: 6px;
-}
-#setting .button.active i {
-  transform: rotateX(180deg);
-}
-#setting .button p:hover {
-  background: #eee;
-}
-#setting .button .items {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  background: white;
-  cursor: pointer;
-  transition: opacity .5s;
-  border-top: solid .5px #ddd;
-}
-#setting .button.active .items {
-  visibility: visible;
-  opacity: 1;
-  z-index: 2;
-}
-#setting .button.active{
-  background: #fafafa;
-  z-index: 2;
-}
-
-#gradeFilter {
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-#gradeFilter > label p {
-  position: relative;
-  text-align: left;
-  padding-left: 70px;
-  color: #555;
-  font-size: 1.3rem;
-}
-#gradeFilter .tg-back {
-  position: absolute;
-  width: 37px;
-  height: 18px;
-  border-radius: 40px;
-  background: #e5e5e5;
-  top: -1px;
-  bottom: 0;
-  margin: auto;
-  left: 20px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-#gradeFilter .tg-front {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: white;
-  top: 0px;
-  bottom: 0;
-  margin: auto;
-  left: 20px;
-  background: white;
-  border: solid 1px #d4d4d6;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  transition: all .4s;
-}
-#showGrade {
-  display: none;
-}
-#showGrade:checked ~ label .tg-back {
-  background: var(--main);
-}
-#showGrade:checked ~ label .tg-front {
-  left: 38px;
-}
-#gradeFilter .selectGrades {
-  background: #fafafa;
-  border-radius: 10px;
-  padding: 8px 0;
-  display: none;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
-}
-#showGrade:checked ~ .selectGrades {
-  display: block;
-}
-#gradeFilter input {
-  display: none;
-}
-#gradeFilter .school label span {
-  display: inline-block;
-  width: 45px;
-  line-height: 1.8;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0);
-  background: #e5e5e5;
-  color: #aaa;
-  margin: 2px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: all .4s;
-}
-#gradeFilter .school input:checked + span {
-  background: var(--main);
-  color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-#gradeFilter .submit {
-  background-image: linear-gradient(180deg,  rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
-  color: white;
-  width: 90px;
-  border-radius: 5px;
-  margin: 6px auto;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-#pageDown {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  background: black;
-  cursor: pointer;
-  opacity: .3;
-  z-index: 2;
-}
-#pageDown i {
-  color: white;
-  font-size: 30px;
-  line-height: 40px;
-  text-align: center;
-  display: inline-block;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-#selectEvents .events {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-#selectEvents .events > p {
-  width: 100%;
-  font-size: 2rem;
-  text-align: center;
-  font-weight: bold;
-  color: #222;
-  padding: 10px;
-}
-#selectEvents .events .card {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-  background: var(--fr);
-  height: 50px;
-  width: 32%;
-  border-radius: 4px;
-  position: relative;
-  margin: 2px;
-  cursor: pointer;
-  padding: 0 3px;
-}
-#selectEvents .events .card.fr {
-  background: var(--fr);
-}
-#selectEvents .events .card.ba {
-  background: var(--ba);
-}
-#selectEvents .events .card.br {
-  background: var(--br);
-}
-#selectEvents .events .card.fly {
-  background: var(--fly);
-}
-#selectEvents .events .card.im {
-  background: var(--im);
-}
-#selectEvents .events .card img {
-  display: block;
-  width: 40px;
-  margin-top: 4px;
-}
-#selectEvents .events .card div {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 45px;
-  margin: auto;
-  height: 37px;
-}
-#selectEvents .events .card p {
-  color: white;
-}
-#selectEvents .events .card p:last-child {
-  font-size: 1.8rem;
-  line-height: 1;
-}
-#selectEvents .events .card p:last-child::after {
-  content: 'm';
-  font-size: 1.3rem;
-}
-
 #detail .result {
   font-size: 1.2rem;
 }
@@ -688,150 +434,356 @@ h1 {
 
 
 
-#ranking {
-  width: 100%;
-  padding: 15px;
-  background: var(--bg);
+main {
+  background-color: #f4f4f4ee
 }
-#ranking[sex = "1"] {
-  --sex: var(--men);
+
+/* 選手名 */
+#swimmer-info {
+  box-shadow: 0 2px 5px #ccc;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  background-color: white;
 }
-#ranking[sex = "2"] {
-  --sex: var(--women);
+
+#p-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 10px;
 }
-#ranking table {
-  font-size: 1.3rem;
-  border-collapse: separate;
-  border-spacing: 0 4px;
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-  position: relative;
+#swimmer-info .column {
+  margin-left: 8px;
 }
-#ranking tr {
-  background: white;
-  line-height: 36px;
-  overflow: hidden;
+h1 {
+  font-size: 25px;
+  letter-spacing: 3px;
+  font-weight: bold;
+  line-height: 1.2;
 }
-#ranking tr.new td:nth-child(1) span::after {
-  content: 'NEW';
-  font-size: 0.6rem;
-  line-height: 1.6;
-  padding: 0 3px;
-  border-radius: 2px;
-  letter-spacing: 1px;
-  background: #FF3C38;
-  color: white;
-  position: absolute;
-  left: -8px;
-  margin-top: -4px;
-}
-#ranking tr.new.top10 td:nth-child(1) span::after {
-  margin-top: -10px;
-  left: -13px;
-}
-#ranking table i {
-  font-size: 1rem;
-  padding-left: 5px;
-  color: var(--sex);
-}
-#ranking td:nth-child(1) {
-  width: 18%;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  position: relative;
-}
-#ranking td:nth-child(1) span {
-  width: 100%;
+
+#tips span {
   display: inline-block;
-  background: var(--sex);
-  line-height: 1.4;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  text-align: center;
+  font-size: 1.1rem;
+  background-color: var(--team);
   color: white;
-  width: 70%;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-#ranking td:nth-child(2) {
-  width: 28%;
-  line-height: 1;
-}
-#ranking td:nth-child(2) a {
-  text-decoration: none;
-  color: var(--sex);
-  font-weight: bold;
-}
-#ranking td:nth-child(3) {
-  width: 20%;
-  font-weight: bold;
-  color: #444;
-}
-#ranking td:nth-child(4) {
-  width: 15%;
-}
-#ranking td:nth-child(4) span {
+  padding: 0 10px;
   border-radius: 5px;
-  display: inline-block;
-  width: 45px;
-  text-align: center;
-  line-height: 16px;
-  border: solid .6px var(--sex);
-  color: var(--sex);
-  font-size: 1rem;
-  letter-spacing: 1px;
-}
-#ranking td:nth-child(5) {
-  width: 25%;
-  color: #aaa;
-  font-size: 1rem;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-#ranking tr.top10 {
-  line-height: 50px;
-}
-#ranking tr.top10 td:nth-child(1) {
-  border-left: solid 3px var(--sex);
-}
-#ranking tr.top10 td:nth-child(1) span {
-  color: #eff2f5;
-  background: none;
-  font-size: 4rem;
-  line-height: 1;
-  position: absolute;
-  bottom: -6.5px;
-  left: 3px;
-  display: block;
-  letter-spacing: -4px;
-}
-#ranking tr.top10 i {
-  padding-left: 3px;
-}
-#ranking tr.top10 td:nth-child(2) a {
-  font-size: 1.5rem;
-}
-#ranking tr.top10 td:nth-child(3) {
-  font-size: 1.5rem;
-}
-
-#ranking .load {
-  border: solid 1px #aaa;
-  color: #aaa;
-  border-radius: 50px;
-  text-align: center;
-  width: 80%;
-  margin: auto;
-  margin-top: 12px;
-  font-size: 1.3rem;
-  line-height: 2.3;
+  line-height: 15px;
+  margin: 1px;
   cursor: pointer;
 }
-#ranking .load i {
-  padding-left: 5px;
+
+#tips span.univ {
+  background-color: var(--grade);
+  margin-right: 2px;
+  cursor: auto;
 }
-#ranking .load:hover {
-  background: #eee;
+
+/* 数枚のカード全体を囲む */
+.cards {
+  width: 90%;
+  margin: auto;
+  padding-top: 15px;
+  max-width: 600px;
+}
+.card {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+
+/* 各種目の出場回数などを表示する段 */
+#participate {
+  display: flex;
+  justify-content: space-between;
+}
+#bar-container {
+  width: 65%;
+  max-width: 400px;
+  padding: 20px 20px 18px 12px;
+}
+#participate .column {
+  width: 34%;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#participate .column .card {
+  width: 100%;
+  /* max-width: 400px; */
+  padding: 6px 12px;
+  height: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#participate .card .caption {
+  font-size: 10px;
+  color: #aaa;
+}
+#participate .card .data {
+  /* letter-spacing: -1px; */
+  font-size: 2.3rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #37474F;
+}
+#participate .card .data span {
+  font-size: 12px;
+  padding-left: 5px;
+  letter-spacing: -0.4px;
+
+}
+
+
+/* 調子の段 */
+#condition {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+#condition h2 {
+  font-size: 14px;
+  color: #555;
+  padding-top: 5px;
+}
+#condition p {
+  font-size: 10px;
+  color: #aaa;
+}
+
+#line-container {
+  padding: 10px;
+}
+
+@media screen and (min-width:1024px) {
+  .cards {
+    display: flex;
+    justify-content: center;
+    max-width: none;
+  }
+  #participate {
+    width: 45%;
+  }
+  #bar-container {
+    width: 300px;
+    max-width: 400px;
+  }
+  #participate .column {
+    width: 200px;
+  }
+  #condition {
+    width: 40%;
+    margin: 0 10px;
+    max-width: 500px;
+  }
+}
+
+
+/* 見出し */
+.caption-container {
+  position: relative;
+  margin-top: 20px;
+  height: 80px;
+}
+.caption-container .circle {
+  position: absolute;
+  top: 0;
+  left: -25px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--c-sky);
+  z-index: -1;
+}
+.caption-container h3 {
+  font-size: 37px;
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+.caption-container h3::first-letter {
+  font-size: 50px;
+  color: white;
+}
+
+/* ベスト横スクロール */
+#bests {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+#bests::-webkit-scrollbar {
+  width: 0px;
+}
+#bests .card {
+  display: inline-block;
+  overflow: hidden;
+  margin: 10px 3px;
+}
+#bests .header {
+  width: 200px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+}
+#bests .header.Fr {
+  background-color: var(--fr);
+}
+#bests .header.Ba {
+  background-color: var(--ba);
+}
+#bests .header.Br {
+  background-color: var(--br);
+}
+#bests .header.Fly {
+  background-color: var(--fly);
+}
+#bests .header.IM {
+  background-color: var(--im);
+}
+
+#bests .header img {
+  width: 60px;
+  margin: 0 auto;
+}
+#bests .header p {
+  margin-top: -8px;
+}
+#bests .best_container {
+  width: 200px;
+}
+#bests table {
+  width: 92%;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 14px;
+  color: #222;
+  border-collapse: collapse;
+  height: 150px;
+}
+#bests thead td, tbody th{
+  font-size: 10px;
+  color: white;
+}
+#bests thead td span{
+  background-color: #1D3557;
+  padding: 2px 18px;
+  border-radius: 4px;
+}
+#bests tbody th span {
+  background-color: #AAB3C0;
+  display: inline-block;
+  width: 90%;
+  line-height: 1.7;
+  border-radius: 4px;
+
+}
+#bests tbody th {
+  width: 28%;
+  font-weight: normal;
+  padding-top: 8px;
+}
+
+#bests tbody tr:nth-child(2n+1) td {
+  /* border: 0.1px #111 solid; */
+  height: 30px;
+  padding-top: 12px;
+}
+#bests tbody tr:nth-child(2n) td {
+  font-size: 10px;
+  line-height: 0.8;
+  padding-bottom: 5px;
+  color: #444;
+}
+
+
+/* レコード一覧 */
+#records {
+  padding: 2px;
+  width: 90%;
+  margin: 10px auto;
+}
+#records table {
+  width: 96%;
+  margin: 5px auto;
+  text-align: center;
+  font-size: 13px;
+  line-height: 2.8;
+  color: #222;
+  border-collapse: collapse;
+  max-width: 500px;
+}
+#records tr ~ tr {
+  border-top: 0.5px #eee solid;
+}
+#records tr td:nth-child(1) {
+  width: 60px;
+}
+#records tr td:nth-child(1) span {
+  display: inline-block;
+  width: 55px;
+  color: white;
+  border-radius: 12px;
+  line-height: 1.8;
+  letter-spacing: .5px;
+  font-weight: bold;
+}
+#records tr td:nth-child(1) span.Fr {
+  background-color: var(--fr);
+}
+#records tr td:nth-child(1) span.Ba {
+  background-color: var(--ba);
+}
+#records tr td:nth-child(1) span.Br {
+  background-color: var(--br);
+}
+#records tr td:nth-child(1) span.Fly {
+  background-color: var(--fly);
+}
+#records tr td:nth-child(1) span.IM {
+  background-color: var(--im);
+}
+#records tr td:nth-child(2) {
+  font-size: 16px;
+  width: 30%;
+  font-weight: bold;
+  color: #222;
+  /* letter-spacing: -0.3px; */
+}
+#records tr td:nth-child(3) {
+  width: 12%;
+}
+#records tr td:nth-child(3) span {
+  padding: 2px 3.4px;
+  border-radius: 3px;
+  border: 1px #1D3557 solid;
+}
+#records tr td:nth-child(3) span.s {
+  color: #182C48;
+  font-weight: 650;
+}
+#records tr td:nth-child(3) span.l {
+  color: white;
+  background-color: #1D3557;
+}
+#records tr td:nth-child(4) {
+  text-align: left;
+  max-width: 140px;
+  color: #aaa;
+  font-size: 10px;
+  line-height: 1;
+  width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="email=no,telephone=no,address=no" />
+  <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+  <title>最新ランキング - Swimmers Zero</title>
+  <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
+  <meta name="robots" content="nofollow">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+  <link rel="stylesheet" href="static/css/aos.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-149393969-2');
+  </script>
+</head>
+<body>
+
+  <div id="header-wrapper">
+    <header>
+      <div id="burger" onclick="activate(this);activate(menu)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+      <div class="placeholder"></div>
+    </header>
+  </div>
+
+  <div id="menu" class="">
+    <div id="search">
+      <form method="post" action="/search">
+        <input name="name" type="text" placeholder="選手を検索">
+        <input type="submit" value="">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+    <div class="item">
+    </div>
+  </div>
+
+
+  <main>
+
+    <div id="about"><div class="wrap">
+      <img src="static/img/men.svg" alt="sex">
+      <h1>神崎伶央</h1>
+      <p class="tips">
+        <span>中学2</span>
+        <a href="/search?team=守山南中学">守山南中学</a>
+        <a href="/search?team=守山南中学">守山南中学</a>
+      </p>
+      <div class="icons">
+        <i class="fas fa-fist-raised"></i>
+        <i class="fas fa-chess-king"></i>
+      </div>
+
+      <div class="row">
+
+        <div class="gauge">
+          <div class="mask"></div>
+        </div>
+
+        <div class="numeric-data">
+          <div class="child">
+            <p>総レース数</p>
+            <p>32</p>
+          </div>
+          <div class="child">
+            <p>50Fr偏差値</p>
+            <p>62.3</p>
+          </div>
+        </div>
+
+        <div class="participate">
+          <div class="event">
+            <p>自由形</p><p><span class="fr"></span></p>
+          </div>
+          <div class="event">
+            <p>背泳ぎ</p><p><span class="ba"></span></p>
+          </div>
+          <div class="event">
+            <p>平泳ぎ</p><p><span class="br"></span></p>
+          </div>
+          <div class="event">
+            <p>バタフライ</p><p><span class="fly"></span></p>
+          </div>
+          <div class="event">
+            <p>個人メドレー</p><p><span class="im"></span></p>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+    <script>
+      document.getElementsByClassName('mask')[0].style.height = '10px'
+
+
+    </script>
+
+    <h2>50m自由形の調子</h2>
+    <div class="trend card">
+      <p>淡色が短水路</p>
+      <div class="wrap">
+        <div class="chartarea">
+          <canvas id="trend1" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <h2>ベストタイム一覧</h2>
+    <div id="bests">
+
+      <div class="card">
+        <div class="head ba">
+          <img src="static/img/ba.svg" alt="泳法">
+          <p>自由形</p>
+        </div>
+        <div class="content">
+          <div class="row"><p class="caption">短</p><p class="caption">長</p></div>
+          <div class="row">
+            <div class="cell">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">50</div>
+            <div class="cell">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+            <div class="nav">100</div>
+            <div class="cell">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="cell">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">200</div>
+            <div class="cell">
+              <p>0:21.28</p>
+              <p>2019/10/26</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <h2>全記録</h2>
+
+    <div id="records" class="card">
+      <table>
+        <tbody>
+          <!-- {% for r in s.records.itertuples() %}
+          <tr>
+            <td><span class="{{r.style}}">{{r.event}}</span></td>
+            <td>{{r.time}}</td>
+            <td><span pool={{r.pool}}>{% if r.pool == 1 %}長{% else %}短{% endif %}</span></td>
+            <td>{{r.start}}<br>{{r.meet_name}}</td>
+          </tr>
+          {% endfor %} -->
+
+          <tr>
+          <td><span class="Fly">50Fly</span></td>
+          <td>0:22.66</td>
+          <td><span pool=0>短</span></td>
+          <td>2019/12/08<br>新潟:JSSﾌﾘｯﾊﾟｰｽﾞｶｯﾌﾟ記録会</td>
+        </tr>
+        <tr>
+          <td><span class="Fly">100Fly</span></td>
+          <td>0:50.46</td>
+          <td><span pool=0>短</span></td>
+          <td>2019/12/08<br>新潟:JSSﾌﾘｯﾊﾟｰｽﾞｶｯﾌﾟ記録会</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <div id="overlay" class=""></div>
+
+  <div id="detail" class="deactivate modal ">
+    <div class="window">
+      <div class="result">
+        <div class="meetInfo">
+          <p>
+            <span id="res_start">2019/12/24(土)</span>
+            <span id="res_end">~12/25(日)</span>
+            <span id="res_area">神奈川</span>
+          </p>
+          <p id="res_meet">第21回かながわゆめ国体開催記念招待</p>
+          <p class="place">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="res_place">相模原市立総合水泳場</span>
+            <i class="fas fa-flag"></i>
+            <span id="res_pool">短水路</span>
+          </p>
+        </div>
+
+        <div class="event" swim-style="im">
+          <img src="static/img/fr.svg" alt="style">
+          <span id="res_event">400m 個人メドレー</span>
+        </div>
+
+        <p class="swimmer">
+          <a href="#">
+            <span id="res_name">神崎伶央</span>
+            <i class="fas fa-external-link-alt"></i>
+          </a>
+          <span id="res_grade">大学2</span>
+          <a href="#" class="team">
+            <span id="res_team">銀泳会</span>
+            <i class="fas fa-external-link-alt"></i>
+          </a>
+        </p>
+
+        <p class="result_time">
+          <i class="fas fa-stopwatch"></i>
+          <span id="res_time">0:25.98</span>
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <p>順位</p>
+            <p id="res_rank">2位</p>
+          </div>
+          <div class="card">
+            <p>偏差値(全体)</p>
+            <p id="res_dev1">67</p>
+          </div>
+          <div class="card">
+            <p id="res_devrange">偏差値(大学)</p>
+            <p id="res_dev2">59</p>
+          </div>
+        </div>
+
+        <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+        <div class="laps">
+          <div class="column">
+            <p>0:29.12</p>
+            <p>1:01.11</p>
+            <p>1:29.12</p>
+            <p>2:09.99</p>
+          </div>
+          <div class="column">
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+            <p>0:29.12</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="close" onclick="deactivate_all()">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
+  </div>
+
+  <footer>
+    <p><span>Reo</span> Kanzaki</p>
+    <img src="static/img/kcabo.svg" alt="kcabo">
+    <a href="https://kcabo.github.io/"></a>
+  </footer>
+
+  <script>
+    function activate(target) {
+      target.classList.toggle("active");
+    };
+
+    var deactivate_elms = document.getElementsByClassName('deactivate');
+    var overlay = document.getElementById('overlay');
+
+    function deactivate_all() {
+      for (var i = 0; i < deactivate_elms.length; i++) {
+        deactivate_elms[i].classList.remove("active");
+      };
+      overlay.classList.remove("active");
+    }
+
+    overlay.addEventListener('click', deactivate_all, false)
+
+  </script>
+  <script src="static/js/aos.js"></script>
+  <script>
+    AOS.init({once: true, offset: 0, duration: 300});
+  </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script>
+  var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+  var trend1 = document.getElementById("trend1").getContext('2d');
+  var colorE1 = '#4cc4eb';
+  var colorE2 = '#48cfad';
+  var colorE3 = '#a0d468';
+  var colorE4 = '#ffce54';
+  var tDegree = '11';
+  var lineWidth = 2;
+  var datasets = [{
+      label: '長',
+      data: [{x:1,y:71},{x:59,y:16},{x:68,y:0},{x:94,y:55},{x:123,y:56},{x:166,y:41},{x:202,y:86},{x:229,y:100}],
+      pointStyle: 'circle',
+      borderColor: colorE1,
+      backgroundColor: colorE1 + tDegree,
+      showLine: true,
+      borderWidth: lineWidth,
+      pointBackgroundColor: '#fff',
+      pointRadius: 2.5,
+    },
+    {
+      label: '短',
+      data: [{x:1,y:70},{x:59,y:79},{x:68,y:26},{x:123,y:0},{x:166,y:83},{x:229,y:100}],
+      pointStyle: 'rectRot',
+      borderColor: colorE2,
+      backgroundColor: colorE2 + tDegree,
+      showLine: true,
+      borderWidth: lineWidth,
+      pointBackgroundColor: '#fff',
+      pointRadius: 2.8,
+    }
+  ];
+
+  var lineConfig = {
+    type: 'scatter',
+    data: {
+      datasets: datasets
+    },
+    options: {
+      tooltips: {
+        enabled: false
+      },
+      elements: {
+        line: {
+          tension: 0.15,
+        },
+      },
+      legend: {
+        display: false,
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            suggestedMin: 0,
+            suggestedMax: 244,
+            stepSize: 1,
+            autoSkip: false,
+            maxRotation: 0,
+            callback: function(value, index, values) {
+              // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
+              var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+              if (i >= 0) {
+                return jMonths[i]
+              } else {
+                return null
+              }
+            }
+          },
+          gridLines: {
+            borderDash: [3],
+            zeroLineBorderDash: [3],
+            tickMarkLength: 8,
+            color: '#aaa',
+            zeroLineColor: '#aaa',
+            lineWidth: 0.5,
+            zeroLineWidth: 0.5,
+          }
+        }],
+        yAxes: [{
+          display: false,
+          ticks: {
+            suggestedMin: 0,
+            suggestedMax: 102,
+            stepSize: 1,
+          }
+        }]
+      },
+      animation: {
+        duration: 1500,
+        easing: 'easeOutQuint',
+      }
+    }
+  };
+  var myChart = new Chart(trend1, lineConfig);
+
+  </script>
+  <script>
+    var colorLong = '#4cc4eb';
+    var colorShort = '#48cfad';
+    var tDegree = '33'
+    var gray = '#555';
+    var lineWidth = 1.2;
+
+    var ctxBar = document.getElementById("bar").getContext('2d');
+    var dataLong = {{s.count_style_long}};
+    var dataShort = {{s.count_style_short}};
+    var barConfig = {
+      type: 'bar',
+      data: {
+        labels: ['Fr', 'Ba', 'Br', 'Fly', 'IM'],
+        datasets: [{
+          data: dataLong,
+          label: '長水路',
+          borderColor: colorLong,
+          backgroundColor: colorLong + tDegree,
+          borderWidth: lineWidth,
+        }, {
+          data: dataShort,
+          label: '短水路',
+          borderColor: colorShort,
+          backgroundColor: colorShort + tDegree,
+          borderWidth: lineWidth,
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              fontColor: gray,
+              min: 0,
+              suggestedMax: 20,
+              stepSize: 5,
+              padding: -5,
+            },
+            gridLines: {
+              display: false
+            },
+          }],
+          xAxes: [{
+            stacked: true,
+            ticks: {
+              fontColor: gray,
+              padding: -7,
+            },
+            gridLines: {
+              display: false
+            }
+          }],
+        },
+        legend: {
+          display: false
+        },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint',
+        }
+      }
+    };
+    var bar = new Chart(ctxBar, barConfig);
+
+    var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+    var ctxLine = document.getElementById("lineChart").getContext('2d');
+    var colorE1 = '#4cc4eb';
+    var colorE2 = '#48cfad';
+    var colorE3 = '#a0d468';
+    var colorE4 = '#ffce54';
+    var tDegree = '11';
+    var lineWidth = 2;
+    var datasets = [{
+        label: '長 {{s.s1["event_name"]}}',
+        data: [{{s.s1["long_trend"]}}],
+        pointStyle: 'circle',
+        borderColor: colorE1,
+        backgroundColor: colorE1 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.5,
+      },
+      {
+        label: '短 {{s.s1["event_name"]}}',
+        data: [{{s.s1["short_trend"]}}],
+        pointStyle: 'rectRot',
+        borderColor: colorE2,
+        backgroundColor: colorE2 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.8,
+      },
+      {
+        label: '長 {{s.s2["event_name"]}}',
+        data: [{{s.s2["long_trend"]}}],
+        pointStyle: 'circle',
+        borderColor: colorE3,
+        backgroundColor: colorE3 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.5,
+      },
+      {
+        label: '短 {{s.s2["event_name"]}}',
+        data: [{{s.s2["short_trend"]}}],
+        pointStyle: 'rectRot',
+        borderColor: colorE4,
+        backgroundColor: colorE4 + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.8,
+      }
+    ];
+
+    var lineConfig = {
+      type: 'scatter',
+      data: {
+        datasets: datasets
+      },
+      options: {
+        // tooltips: {
+        //   enabled: false
+        // },
+        elements: {
+          line: {
+            tension: 0.15,
+          },
+        },
+        legend: {
+          position: 'bottom',
+          labels: {
+            boxWidth: 10,
+            fontSize: 11,
+          }
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 244,
+              stepSize: 1,
+              autoSkip: false,
+              maxRotation: 0,
+              callback: function(value, index, values) {
+                // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
+                var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+                if (i >= 0) {
+                  return jMonths[i]
+                } else {
+                  return null
+                }
+              }
+            },
+            gridLines: {
+              borderDash: [3],
+              zeroLineBorderDash: [3],
+              tickMarkLength: 8,
+              color: '#aaa',
+              zeroLineColor: '#aaa',
+              lineWidth: 0.5,
+              zeroLineWidth: 0.5,
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 102,
+              stepSize: 1,
+            }
+          }]
+        },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint',
+        }
+      }
+    };
+    var myChart = new Chart(ctxLine, lineConfig);
+  </script>
+  <script>
+    document.getElementsByClassName('trend')[0].getElementsByClassName('wrap')[0].scrollLeft = 400;
+  </script>
+  <script>
+
+    function show_detail(r_id) {
+      var data = {id: r_id};
+      activate(detail);
+      activate(overlay);
+      post_data(data);
+    }
+
+    function post_data(data) {
+      axios.post('/api', data)
+        .then(res => apply_data(res.data))
+        .catch(err => alert(err))
+        // .finally(res => console.log('finally'))
+    }
+
+    function apply_data(data) {
+      document.getElementById('res_start').innerHTML = data['start'];
+      document.getElementById('res_end').innerHTML = data['end'];
+      document.getElementById('res_area').innerHTML = data['area'];
+      document.getElementById('res_meet').innerHTML = data['meet'];
+      document.getElementById('res_place').innerHTML = data['place'];
+      document.getElementById('res_pool').innerHTML = data['pool'];
+      document.getElementById('res_event').innerHTML = data['event'];
+      document.getElementById('res_name').innerHTML = data['name'];
+      document.getElementById('res_grade').innerHTML = data['grade'];
+      document.getElementById('res_team').innerHTML = data['team'];
+      document.getElementById('res_time').innerHTML = data['time'];
+      document.getElementById('res_rank').innerHTML = data['rank'];
+      document.getElementById('res_dev1').innerHTML = data['dev1'];
+      document.getElementById('res_devrange').innerHTML = data['devrange'];
+      document.getElementById('res_dev2').innerHTML = data['dev2'];
+
+      document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
+      document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
+      document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?id=${data['id']}`);
+      document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?team=${data['team']}`);
+
+      document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
+      document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
+    }
+
+    function format_laps(laps) {
+      var content = '';
+      for(var lap of laps) {
+        if(lap == '') {
+          content += `<p>-</p>`
+        } else {
+          content += `<p>${lap}</p>`
+        };
+      };
+      return content;
+    }
+
+
+
+
+  </script>
+</body>
+
+</html>

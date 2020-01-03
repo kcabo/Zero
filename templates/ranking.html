@@ -348,7 +348,11 @@
     <a href="https://kcabo.github.io/"></a>
   </footer>
 
-
+  <script>
+    function activate(target) {
+      target.classList.toggle("active");
+    };
+  </script>
   <script src="static/js/aos.js"></script>
   <script>
     AOS.init({once: true, offset: 0, duration: 300});
@@ -384,9 +388,6 @@
     var deactivate_elms = document.getElementsByClassName('deactivate');
     var overlay = document.getElementById('overlay');
 
-    function activate(target) {
-      target.classList.toggle("active");
-    };
     function deactivate_all() {
       for (var i = 0; i < deactivate_elms.length; i++) {
         deactivate_elms[i].classList.remove("active");

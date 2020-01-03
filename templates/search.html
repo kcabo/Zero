@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html>
 <head>
-  <title>Search | Swimmers Zero</title>
   <meta charset="utf-8">
-  <meta name="description" content="水泳選手の記録の分析を数百万の大会結果から出力します。">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="email=no,telephone=no,address=no" />
   <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
   <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>検索 - Swimmers Zero</title>
+  <meta name="description" content="日本全国の競泳レースを毎日自動解析。ランキングや選手個人の分析結果をご覧いただけます。">
+  <meta name="robots" content="nofollow">
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-  <link rel="stylesheet" href="static/css/common.css">
-  <link rel="stylesheet" href="static/css/search_4.css">
+  <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="static/css/search.css">
+  <link rel="stylesheet" href="static/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,16 +22,31 @@
     gtag('config', 'UA-149393969-2');
   </script>
 </head>
-
 <body>
-  <nav>
-    <a href="/"><img src="static/img/logo.svg" alt="Zero" id="logo"></a>
-    <form id="search-container" method="post" action="/search">
-      <input name="name" type="text" placeholder="選手を検索">
-      <input type="submit" value=""><span></span>
-    </form>
-  </nav>
 
+  <div id="header-wrapper">
+    <header>
+      <div id="burger" onclick="activate(this);activate(menu)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+      <div class="placeholder"></div>
+    </header>
+  </div>
+
+  <div id="menu" class="">
+    <div id="search">
+      <form method="post" action="/search">
+        <input name="name" type="text" placeholder="選手を検索">
+        <input type="submit" value="">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+    <div class="item">
+    </div>
+  </div>
 
   <main>
 
@@ -74,42 +90,35 @@
 
 
 
-  <svg class="editorial" viewBox="0 24 150 28" preserveAspectRatio="none">
-    <defs>
-      <path id="gentle-wave" d="M-160 44c30 0
-      58-18 88-18s
-      58 18 88 18
-      58-18 88-18
-      58 18 88 18
-      v44h-352z" />
-    </defs>
-    <g class="parallax">
-      <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
-      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
-      <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa" />
-    </g>
-  </svg>
-  <div id="footer">
-    <p>Created by Reo Kanzaki</p>
-  </div>
+  <footer>
+    <p><span>Reo</span> Kanzaki</p>
+    <img src="static/img/kcabo.svg" alt="kcabo">
+    <a href="https://kcabo.github.io/"></a>
+  </footer>
 
   <script>
-  {% autoescape false %}
+    function activate(target) {
+      target.classList.toggle("active");
+    };
+  </script>
+  <script src="static/js/aos.js"></script>
+  <script>
+    AOS.init({once: true, offset: 0, duration: 300});
+  </script>
+
+  <script>
     function postForm(isTeam) {
       if(isTeam){
         document.query.name.name = "team";
       };
       document.query.submit();
     };
-  {% endautoescape %}
   </script>
   <script>
-  {% autoescape false %}
     function search_team(team) {
       var url = "/search?team=" + team;
       location.href = url;
     };
-  {% endautoescape %}
   </script>
 
 </body>
