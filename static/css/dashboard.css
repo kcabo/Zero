@@ -492,7 +492,7 @@ main {
   right: 10px;
 }
 #about .icons i {
-  margin: 0 2px;
+  margin: 0 1px;
   font-size: 1.3rem;
   color: white;
   background-image: linear-gradient( 109.6deg,  rgba(119,44,232,0.68) 11.5%, rgba(119,44,232,1) 91.2% );
@@ -516,12 +516,13 @@ main {
   position: relative;
 }
 #about .gauge .mask {
-  height: 20px;
+  height: 100px;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   background: #ddd;
+  transition: all 1.5s;
 }
 #about .numeric-data {
   margin: 5px 10px;
@@ -555,13 +556,14 @@ main {
   position: relative;
 }
 #about .participate .event span {
-  width: 20%;
+  width: 1%;
   height: 100%;
   display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 3px;
+  transition: all 1.5s;
 }
 #about .participate .event .fr {background: var(--fr);}
 #about .participate .event .ba {background: var(--ba);}
@@ -587,7 +589,7 @@ h2 {
   padding: 10px;
 }
 .trend .wrap {
-  border: solid 1px black;
+  /* border: solid 1px black; */
   overflow-x: auto;
 }
 .trend .wrap::-webkit-scrollbar {
