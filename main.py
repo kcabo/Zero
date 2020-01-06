@@ -10,7 +10,7 @@ if os.name == 'nt': # ローカルのWindows環境なら、環境変数をその
     import env
 
 import analyzer
-from constant import FormatEvent, style_2_num, distance_2_num, area_list, style_2_japanese, style_and_distance, japanese_grades
+from constant import FormatEvent, japanese_grades
 import scraper
 from task_manager import Takenoko, status, notify_line
 
@@ -82,6 +82,7 @@ class Stats(db.Model): #種目の平均値、標準偏差
 
 
 def initialize_stats_table():
+    from constant import style_and_distance
     for pool in [0, 1]:
         for sex in [1, 2]:
             for sd in style_and_distance:
@@ -134,8 +135,8 @@ def add_records(target_meets_ids): # 大会IDのリストから１大会ごと�
 def add_meets(year):
     print(f">>> 20{year}年開催の大会IDの収集を開始")
     meet_ids = [] # 整数型を入れる
-    for area in Takenoko(area_list): # area_listには01などの文字列が格納
-        meet_ids.extend(scraper.find_meet(year, area))
+    for area_int in Takenoko(list(range(1, 54)) + [70,80]): # 1から53までと全国70国際80がarea番号になる
+        meet_ids.extend(scraper.find_meet(year, format(area_int, '02'))) # ゼロ埋め
     print(f'>>> 20{year}年に開催される全{len(meet_ids)}の大会情報を取得中')
     meets = [Meet(id) for id in Takenoko(meet_ids, 20)]
     db.session.query(Meet).filter_by(year = year).delete() # 同じ年度を二重に登録しないように削除する
@@ -171,9 +172,9 @@ def dashboard():
     grade = target.grade # 整数
 
     # 取得した選手の名前・学年でフィルタリングしてrecordsテーブルから取得
-    # 同時にそれぞれのrecordのmeetidからMeetを内部結合
+    # 同時にそれぞれのrecordのmeetidからMeetを内部結合 年度はとりま19年に指定
     records = (db.session.query(Record, Meet)
-            .filter(Record.name == name, Record.grade == grade, Record.meetid == Meet.meetid)
+            .filter(Record.name == name, Record.grade == grade, Record.meetid == Meet.meetid, Meet.year == 19)
             .all())
 
     # 見出しの選手情報：     性別　名前　学年　所属一覧
@@ -185,18 +186,26 @@ def dashboard():
     swimmer.grade = japanese_grades[grade]
     swimmer.teams = teams
 
-    # S1偏差値の導出
-    s1_event = swimmer.s1['event_name']
-    if s1_event == '':
-        swimmer.dev_long, swimmer.dev_short = '', ''
-    else:
-        target_event_num = swimmer.s1['event_number']
+    # 偏差値の導出
+    event_code = swimmer.e1.code
+    if event_code:
         # 0全体・1小学・2中学・3高校・4大学・5一般
         agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5]
         agegroup = agegroup_list[grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
-        stats = db.session.query(Stats).filter_by(event=int(target_event_num), agegroup=agegroup).order_by(Stats.pool).all() # 1番目が短水路、2番目が長水路になる
-        swimmer.dev_short = calc_deviation(swimmer.s1['short_best'], stats[0].mean, stats[0].std)
-        swimmer.dev_long = calc_deviation(swimmer.s1['long_best'], stats[1].mean, stats[1].std)
+        stats = db.session.query(Stats).filter_by(event=event_code, agegroup=agegroup).order_by(Stats.pool).all() # 1番目が短水路、2番目が長水路になる
+        dev_short = calc_deviation(swimmer.e1bests[0][0], stats[0].mean, stats[0].std) if swimmer.e1bests[0] else '-'
+        dev_long = calc_deviation(swimmer.e1bests[1][0], stats[1].mean, stats[1].std) if swimmer.e1bests[1] else '-'
+        swimmer.deviation = dev_long if dev_long != '-' else dev_short
+    else:
+        swimmer.deviation = '-'
+
+    if swimmer.deviation == '-':
+        mask_height = 100
+    elif swimmer.deviation >= 75:
+        mask_height = 0
+    else:
+        mask_height = 75 - swimmer.deviation
+    swimmer.mask_height = mask_height
 
     return render_template('dashboard.html', s = swimmer)
 
@@ -231,7 +240,7 @@ def ranking():
     return render_template(
             'ranking.html',
             ranking = ranking,
-            jpn_event = my_event.jpn_event,
+            jpn_event = my_event.jpn_event(),
             year = year,
             sex = event // 100,
             pool = pool,

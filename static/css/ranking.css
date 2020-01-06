@@ -546,19 +546,19 @@ h1 {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-#detail .event[swim-style = fr] {
+#detail .event[swim-style = Fr] {
   background: var(--fr);
 }
-#detail .event[swim-style = ba] {
+#detail .event[swim-style = Ba] {
   background: var(--ba);
 }
-#detail .event[swim-style = br] {
+#detail .event[swim-style = Br] {
   background: var(--br);
 }
-#detail .event[swim-style = fly] {
+#detail .event[swim-style = Fly] {
   background: var(--fly);
 }
-#detail .event[swim-style = im] {
+#detail .event[swim-style = IM] {
   background: var(--im);
 }
 #detail .event img {
