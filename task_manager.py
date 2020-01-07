@@ -61,6 +61,8 @@ class Status:
 def notify_line(message):
     url = "https://notify-api.line.me/api/notify"
     print(message)
+    if os.name == 'nt':
+        message = '<local>' + message
     access_token = os.environ['LINE_NOTIFY_ACCESS_TOKEN']
     headers = {'Authorization': 'Bearer ' + access_token}
     payload = {'message': message, 'notificationDisabled': True}
