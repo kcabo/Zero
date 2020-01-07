@@ -1,4 +1,3 @@
-# 循環importなんてするくらいならひとつのモジュールに統合させたほうがPythonらしいと思うんだ
 import datetime
 import os
 import threading
@@ -108,7 +107,7 @@ def analyze_all(year):
 
 def calc_deviation(value, mean, std): # 無効の場合ハイフン
     if value and mean and std:
-        answer = (value - mean) / std * -10 + 50 #数値が少ないほうが高くしたいので－10かけ
+        answer = (value - mean) / std * -10 + 50 # 数値が少ないほうが高くしたいので－10かけ
         return round(answer, 1)
     else:
         return '-'
@@ -135,7 +134,8 @@ def add_records(target_meets_ids): # 大会IDのリストから１大会ごと�
 def add_meets(year):
     print(f">>> 20{year}年開催の大会IDの収集を開始")
     meet_ids = [] # 整数型を入れる
-    for area_int in Takenoko(list(range(1, 54)) + [70,80]): # 1から53までと全国70国際80がarea番号になる
+    # for area_int in Takenoko(list(range(1, 54)) + [70,80]): # 1から53までと全国70国際80がarea番号になる
+    for area_int in Takenoko(range(14,16)): # ローカル用
         meet_ids.extend(scraper.find_meet(year, format(area_int, '02'))) # ゼロ埋め
     print(f'>>> 20{year}年に開催される全{len(meet_ids)}の大会情報を取得中')
     meets = [Meet(id) for id in Takenoko(meet_ids, 20)]

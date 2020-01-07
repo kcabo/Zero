@@ -1,26 +1,6 @@
 import datetime
 import pandas as pd
-
 from constant import japanese_grades, FormatEvent
-
-# num_2_style = {
-#     1:"Fr",
-#     2:"Ba",
-#     3:"Br",
-#     4:"Fly",
-#     5:"IM",
-#     6:"FR",
-#     7:"MR"
-# }
-# num_2_distance = {
-#     1:25,
-#     2:50,
-#     3:100,
-#     4:200,
-#     5:400,
-#     6:800,
-#     7:1500
-# }
 
 def val_2_fmt(val):
     if val > 0:
@@ -81,11 +61,7 @@ class BestResult:
 class Swimmer:
     def __init__(self, records):
         converted = map(lambda x:(x.Record.id, x.Record.event, x.Record.time, x.Meet.pool, x.Meet.start, x.Meet.name), records)
-        # 全レコード：id, 種目 百倍秒数　水路　日付(整数)　大会名 のデータフレームを作成
         df = pd.DataFrame(converted, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name'])
-        # df['style'] = df['event_val'].map(lambda x : num_2_style[(x // 10) % 10])      # 3桁のeventのうちの真ん中の桁(泳法)を取り出し文字列に変換
-        # df['distance'] = df['event_val'].map(lambda x : num_2_distance[x % 10])        # 3桁のうち1の位の距離を取り出し文字列変換
-        # df['event'] = df['distance'].astype(str) + df['style']                         # 距離を文字列変換してから結合→50Frの形に
         df['event'] = df['event_val'].map(lambda x: FormatEvent(x))
         df['time'] = df['time_val'].map(val_2_fmt) # 読める形にフォーマット
         df['start'] = df['start'].map(lambda x: datetime.datetime.strptime(str(x), '%Y%m%d').strftime('%Y/%m/%d')) # 日付を文字列型でフォーマット
@@ -101,9 +77,6 @@ class Swimmer:
         event_counts = df['event_val'].value_counts()
         e1 = event_counts.index[0] if len(event_counts) > 0 else 0  # 出場種目が棄権しか無いと得意種目すら無い
         e2 = event_counts.index[1] if len(event_counts) > 1 else 0 # 1種目しか出場しておらずS2が無いときは空白
-        # self.s1 = {'event_name': s1}
-        # self.s1['event_number'] = df[df['event']==s1].iloc[0]['event_val'] # 偏差値導出用のEventnumber
-        # self.s2 = {'event_name': s2}
 
         from_date = datetime.datetime(2019,4,1) # 経過日数の基準となる日付
         df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化 基準日からの経過日数
@@ -116,11 +89,6 @@ class Swimmer:
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 0)]))
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 1)]))
 
-        # self.s1["long_trend"] = self.scatter_points(df[(df['event'] == s1) & (df['pool'] == 'l')])
-        # self.s1["short_trend"] = self.scatter_points(df[(df['event'] == s1) & (df['pool'] == 's')])
-        # self.s2["long_trend"] = self.scatter_points(df[(df['event'] == s2) & (df['pool'] == 'l')])
-        # self.s2["short_trend"] = self.scatter_points(df[(df['event'] == s2) & (df['pool'] == 's')])
-
         df.sort_values(['time_val', 'pool'], inplace=True) # タイム順速いに並び替え
         df.drop_duplicates(['pool', 'event_val'], inplace=True) # 種目、水路をユニークにする。一番速いタイムのみ残る。これで残っている記録はすべてベストになる
 
@@ -131,9 +99,6 @@ class Swimmer:
                     df['time_val'][(df['event_val'] == e1) & (df['pool'] == 1)].tolist())
         self.e2bests = (df['time_val'][(df['event_val'] == e2) & (df['pool'] == 0)].tolist(),
                     df['time_val'][(df['event_val'] == e2) & (df['pool'] == 1)].tolist())
-        # self.s1['long_best'] = self.first_val(df[(df['event'] == s1) & (df['pool'] == 'l')])
-        # self.s1['short_best'] = self.first_val(df[(df['event'] == s1) & (df['pool'] == 's')])
-
 
         # 6カテゴリ(5種目＋長距離)のベストをカードごとのインスタンスとして作成
         cards = []
@@ -144,43 +109,6 @@ class Swimmer:
         cards.append(BestsCard(df, [42, 43, 44]))
         cards.append(BestsCard(df, [53, 54, 55]))
         self.cards = [card for card in cards if card.events] # ベストのないカードはeventsアトリビュートがFalse
-
-        # bests = {}
-        # bests['Fr_sprint'] = self.bests_dictionary(df[df['event'].isin(['50Fr','100Fr', '200Fr'])], ['50Fr','100Fr', '200Fr'])
-        # bests['Fr_endurance'] = self.bests_dictionary(df[df['event'].isin(['400Fr','800Fr', '1500Fr'])], ['400Fr','800Fr', '1500Fr'])
-        # bests['Ba'] = self.bests_dictionary(df[df['style'] == 'Ba'], ['50Ba','100Ba', '200Ba'])
-        # bests['Br'] = self.bests_dictionary(df[df['style'] == 'Br'], ['50Br','100Br', '200Br'])
-        # bests['Fly'] = self.bests_dictionary(df[df['style'] == 'Fly'], ['50Fly','100Fly', '200Fly'])
-        # bests['IM'] = self.bests_dictionary(df[df['style'] == 'IM'], ['100IM','200IM', '400IM'])
-        # self.bests = bests
-
-    # def scatter_points(self, df):
-    #     if len(df) == 0:
-    #         return '' # 記録なし
-    #     else:
-    #         max = df['time_val'].max()
-    #         min = df['time_val'].min()
-    #         if max == min: # 最大と最小が等しいときはy値は50で固定(ゼロ除算が発生し標準化できないから)
-    #             points = [f"{{x:{days},y:50}}" for days in df['days']] # グラフのパラメータを文字列で作成
-    #         else:
-    #             normalized = df['time_val'].map(lambda x:((max - x)*100)/(max - min)) # ワーストを0,ベストを100として標準化
-    #             points = [f"{{x:{days},y:{int(n)}}}" for days, n in zip(df['days'], normalized)] # グラフのパラメータを文字列で作成
-    #         return ','.join(points)
-    #
-    # def first_val(self, df):
-    #     return None if len(df) == 0 else df.iloc[0]['time_val']
-    #
-    # def bests_dictionary(self, df, keys):
-    #     if len(df) == 0:
-    #         return False
-    #     else:
-    #         dic = {}
-    #         for key in keys:
-    #             dic["l-" + key] = ['', '']
-    #             dic["s-" + key] = ['', ''] # 初期値に空白文字を設定
-    #         for event, time, start, pool in zip(df['event'], df['time'], df['start'], df['pool']):
-    #             dic[pool + "-" + event] = [time, start] # 上書き
-    #         return dic
 
 
 class Candidate:
