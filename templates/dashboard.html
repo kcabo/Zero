@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% include "head.html" %}
+  {% include "partial/head.html" %}
   <title>{{s.name}}【個人分析結果】 | Swimmers Zero</title>
   <link rel="stylesheet" href="static/css/dashboard.css">
 </head>
 <body>
-  {% include "header.html" %}
+  {% include "partial/header.html" %}
   <main>
 
     <div id="about"><div class="wrap">
@@ -143,8 +143,8 @@
 
   </main>
 
-  {% include "footer.html" %}
-  {% include "ajax.html" %}
+  {% include "partial/footer.html" %}
+  {% include "partial/ajax.html" %}
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>

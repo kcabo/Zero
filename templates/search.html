@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% include "head.html" %}
+  {% include "partial/head.html" %}
   <title>検索結果【スイマー検索】 | Swimmers Zero</title>
   <link rel="stylesheet" href="static/css/search.css">
 </head>
 <body>
-  {% include "header.html" %}
+  {% include "partial/header.html" %}
   <main>
 
     <div id="header">
@@ -25,7 +25,7 @@
 
     <div id="results">
       {% for c in candidates %}
-      <div class="card {{c.sex}}">
+      <div class="card {{c.sex}}" data-aos="fade-right">
         <img src="static/img/{{c.sex}}.svg" alt="{{c.sex}}">
         <a href="/dashboard?id={{c.id}}">{{c.name}}</a>
         <div>
@@ -47,7 +47,7 @@
 
   </main>
 
-  {% include "footer.html" %}
+  {% include "partial/footer.html" %}
 
   <script>
     function postForm(isTeam) {
