@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% include "head.html" %}
+  {% include "partial/head.html" %}
   <title>{{jpn_event}}【最新競泳ランキング】 | Swimmers Zero</title>
   <link rel="stylesheet" href="static/css/ranking.css">
 </head>
 <body>
-  {% include "header.html" %}
+  {% include "partial/header.html" %}
   <main>
 
     <h1>{{jpn_event}}</h1>
@@ -102,7 +102,7 @@
     <div id="ranking" sex={{sex}}>
       <table><tbody>
         {% for id, new, name, time, grade, team in ranking %}
-        <tr class="{% if loop.index <= 10 %}top10{% endif %} {% if new %}new{% endif %}" onclick="show_detail({{id}})" data-aos="fade-up">
+        <tr class="{% if loop.index <= 10 %}top10{% endif %} {% if new %}new{% endif %}" onclick="show_detail({{id}})">
           <td><span>{{loop.index}}</span></td>
           <td><a href="/dashboard?id={{id}}">{{name}}<i class="fas fa-chevron-circle-right"></i></a></td>
           <td>{{time}}</td>
@@ -209,8 +209,8 @@
     </p>
   </div>
 
-  {% include "footer.html" %}
-  {% include "ajax.html" %}
+  {% include "partial/footer.html" %}
+  {% include "partial/ajax.html" %}
 
   <script>
     var current_year = {{year}};

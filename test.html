@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="email=no,telephone=no,address=no">
+<link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+<link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+<meta name="description" content="あなたの泳力はどれくらい？数百万のレースデータを分析しビジュアル化。水泳連盟公式よりも早くランキングを作成。日本全国の水泳大会を毎日解析しています。どなたでも無料で最新のランキングや選手個人の分析結果をご覧いただけます。">
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="static/css/aos.css">
+<link rel="stylesheet" href="static/css/common.css">
+  <title>房野泰知【個人分析結果】 | Swimmers Zero</title>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+</head>
+<body data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0" cz-shortcut-listen="true">
+  <div id="header-wrapper">
+  <header>
+    <div id="burger" onclick="activate(this);activate(menu)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+    <div class="placeholder"></div>
+  </header>
+</div>
+
+<div id="menu" class="">
+  <div id="search">
+    <form method="post" action="/search">
+      <input name="name" type="text" placeholder="選手を検索">
+      <input type="submit" value="">
+      <i class="fas fa-search"></i>
+    </form>
+  </div>
+  <div class="item">
+  </div>
+</div>
+  <main>
+
+    <div id="about"><div class="wrap">
+      <img src="static/img/men.svg" alt="sex">
+      <h1>房野泰知</h1>
+      <p class="tips">
+        <span>大学1</span>
+
+        <a href="/search?team=岡山大学">岡山大学</a>
+
+      </p>
+      <div class="icons">
+        <i class="fas fa-fist-raised"></i>
+        <i class="fas fa-chess-king"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-dragon"></i>
+        <i class="fas fa-pen-nib"></i>
+        <i class="fas fa-users"></i>
+        <i class="fas fa-pastafarianism"></i>
+      </div>
+
+      <div class="row">
+        <div class="gauge">
+          <div class="mask" style="height: 100px;"></div>
+        </div>
+        <div class="numeric-data">
+          <div class="child">
+            <p>総レース数</p>
+            <p data-aos="flip-up" class="aos-init aos-animate">2</p>
+          </div>
+          <div class="child">
+            <p>100Ba偏差値</p>
+            <p data-aos="flip-up" class="aos-init aos-animate">-</p>
+          </div>
+        </div>
+
+        <div class="participate">
+          <div class="event">
+            <p>自由形</p><p><span class="fr" style="width: 50%;"></span></p>
+          </div>
+          <div class="event">
+            <p>背泳ぎ</p><p><span class="ba" style="width: 50%;"></span></p>
+          </div>
+          <div class="event">
+            <p>平泳ぎ</p><p><span class="br" style="width: 0%;"></span></p>
+          </div>
+          <div class="event">
+            <p>バタフライ</p><p><span class="fly" style="width: 0%;"></span></p>
+          </div>
+          <div class="event">
+            <p>個人メドレー</p><p><span class="im" style="width: 0%;"></span></p>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+    <script>
+      window.onload = function() {
+      document.getElementsByClassName('mask')[0].style.height = '100px'
+      document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '50%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '50%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '0%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '0%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '0%';
+      }
+    </script>
+
+    <h2><i class="far fa-chart-bar"></i>100m 背泳ぎの調子</h2>
+    <div class="trend card">
+      <p>淡色が短水路</p>
+      <div class="wrap">
+        <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <canvas id="trend1" height="275" style="display: block; height: 200px; width: 400px;" width="550" class="chartjs-render-monitor"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <h2><i class="far fa-chart-bar"></i>50m 自由形の調子</h2>
+    <div class="trend card">
+      <p>淡色が短水路</p>
+      <div class="wrap">
+        <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <canvas id="trend2" height="275" width="550" class="chartjs-render-monitor" style="display: block; height: 200px; width: 400px;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <h2><i class="fas fa-crosshairs"></i>ベストタイム一覧</h2>
+    <div id="bests">
+
+      <div class="card aos-init aos-animate" data-aos="flip-left">
+        <div class="head Fr">
+          <img src="static/img/Fr.svg" alt="泳法">
+          <p>自由形</p>
+        </div>
+        <div class="content">
+          <div class="row"><p class="caption">短水路</p><p class="caption">長水路</p></div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">50</div>
+            <div class="cell" onclick="show_detail(2992)">
+              <p>0:23.87</p>
+              <p>2019/12/14</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">100</div>
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">200</div>
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card aos-init aos-animate" data-aos="flip-left">
+        <div class="head Ba">
+          <img src="static/img/Ba.svg" alt="泳法">
+          <p>背泳ぎ</p>
+        </div>
+        <div class="content">
+          <div class="row"><p class="caption">短水路</p><p class="caption">長水路</p></div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">50</div>
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">100</div>
+            <div class="cell" onclick="show_detail(3672)">
+              <p>1:03.23</p>
+              <p>2019/12/14</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+            <div class="nav">200</div>
+            <div class="cell" onclick="show_detail()">
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <h2><i class="far fa-address-card"></i>全記録</h2>
+
+    <div id="records" class="card">
+      <table>
+        <tbody>
+
+          <tr onclick="show_detail(2992)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.87</td>
+            <td><span pool="1">長</span></td>
+            <td>2019/12/14<br>岡山:県長水路記録会</td>
+          </tr>
+
+          <tr onclick="show_detail(3672)">
+            <td><span style-num="2">100Ba</span></td>
+            <td>1:03.23</td>
+            <td><span pool="1">長</span></td>
+            <td>2019/12/14<br>岡山:県長水路記録会</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer>
+  <p><span>Reo</span> Kanzaki</p>
+  <img src="static/img/kcabo.svg" alt="kcabo">
+  <a href="https://kcabo.github.io/"></a>
+</footer>
+
+<script>
+  function activate(target) {
+    target.classList.toggle("active");
+  };
+</script>
+<script src="static/js/aos.js"></script>
+<script>
+  AOS.init({once: true, offset: 0, duration: 600});
+</script>
+  <div id="overlay" class=""></div>
+
+<div id="detail" class="deactivate modal ">
+  <div class="window">
+    <div class="result">
+      <div class="meetInfo">
+        <p>
+          <span id="res_start">2019/12/24(土)</span>
+          <span id="res_end">~12/25(日)</span>
+          <span id="res_area">神奈川</span>
+        </p>
+        <p id="res_meet">第21回かながわゆめ国体開催記念招待</p>
+        <p class="place">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="res_place">相模原市立総合水泳場</span>
+          <i class="fas fa-flag"></i>
+          <span id="res_pool">短水路</span>
+        </p>
+      </div>
+
+      <div class="event" swim-style="IM">
+        <img src="static/img/fr.svg" alt="style">
+        <span id="res_event">400m 個人メドレー</span>
+      </div>
+
+      <p class="swimmer">
+        <a href="#">
+          <span id="res_name">神崎伶央</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <span id="res_grade">大学2</span>
+        <a href="#" class="team">
+          <span id="res_team">銀泳会</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </p>
+
+      <p class="result_time">
+        <i class="fas fa-stopwatch"></i>
+        <span id="res_time">0:25.98</span>
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <p>順位</p>
+          <p id="res_rank">2位</p>
+        </div>
+        <div class="card">
+          <p>偏差値(全体)</p>
+          <p id="res_dev1">67</p>
+        </div>
+        <div class="card">
+          <p id="res_devrange">偏差値(大学)</p>
+          <p id="res_dev2">59</p>
+        </div>
+      </div>
+
+      <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+      <div class="laps">
+        <div class="column">
+          <p>0:29.12</p>
+          <p>1:01.11</p>
+          <p>1:29.12</p>
+          <p>2:09.99</p>
+        </div>
+        <div class="column">
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="close" onclick="deactivate_all()">
+    <i class="fas fa-window-close"></i> 閉じる
+  </p>
+</div>
+
+<script>
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+
+  overlay.addEventListener('click', deactivate_all, false)
+
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+  function show_detail(r_id) {
+    if (r_id) {
+      var data = {id: r_id};
+      activate(detail);
+      activate(overlay);
+      post_data(data);
+    }
+  }
+
+  function post_data(data) {
+    axios.post('/api', data)
+      .then(res => apply_data(res.data))
+      .catch(err => alert(err))
+      // .finally(res => console.log('finally'))
+  }
+
+  function apply_data(data) {
+    document.getElementById('res_start').innerHTML = data['start'];
+    document.getElementById('res_end').innerHTML = data['end'];
+    document.getElementById('res_area').innerHTML = data['area'];
+    document.getElementById('res_meet').innerHTML = data['meet'];
+    document.getElementById('res_place').innerHTML = data['place'];
+    document.getElementById('res_pool').innerHTML = data['pool'];
+    document.getElementById('res_event').innerHTML = data['event'];
+    document.getElementById('res_name').innerHTML = data['name'];
+    document.getElementById('res_grade').innerHTML = data['grade'];
+    document.getElementById('res_team').innerHTML = data['team'];
+    document.getElementById('res_time').innerHTML = data['time'];
+    document.getElementById('res_rank').innerHTML = data['rank'];
+    document.getElementById('res_dev1').innerHTML = data['dev1'];
+    document.getElementById('res_devrange').innerHTML = data['devrange'];
+    document.getElementById('res_dev2').innerHTML = data['dev2'];
+
+    document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
+    document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?id=${data['id']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?team=${data['team']}`);
+
+    document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
+    document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
+  }
+
+  function format_laps(laps) {
+    var content = '';
+    for(var lap of laps) {
+      if(lap == '') {
+        content += `<p>-</p>`
+      } else {
+        content += `<p>${lap}</p>`
+      };
+    };
+    return content;
+  }
+
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script>
+  var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+  var trend1 = document.getElementById("trend1").getContext('2d');
+  var trend2 = document.getElementById("trend2").getContext('2d');
+  var colorE1 = '#4cc4eb';
+  var colorE2 = '#bbe1ed';
+  var colorE3 = '#48cfad';
+  var colorE4 = '#b4ede0';
+  var tDegree = '10';
+  var lineWidth = 1.6;
+
+  var e1_short_data = [];
+  var e1_long_data = [{x:257,y:50}];
+  var e2_short_data = [];
+  var e2_long_data = [{x:257,y:50}];
+
+  set_line_chart(trend1, e1_long_data, e1_short_data, colorE1, colorE2);
+  set_line_chart(trend2, e2_long_data, e2_short_data, colorE3, colorE4);
+
+  function set_line_chart(element, long_data, short_data, long_color, short_color) {
+    var datasets = [{
+        label: '長水路',
+        data: long_data,
+        pointStyle: 'circle',
+        borderColor: long_color,
+        backgroundColor: long_color + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.2,
+      },
+      {
+        label: '短水路',
+        data: short_data,
+        pointStyle: 'rectRot',
+        borderColor: short_color,
+        backgroundColor: short_color + tDegree,
+        showLine: true,
+        borderWidth: lineWidth,
+        pointBackgroundColor: '#fff',
+        pointRadius: 2.5,
+      }
+    ];
+
+    var lineConfig = {
+      type: 'scatter',
+      data: {
+        datasets: datasets
+      },
+      options: {
+        tooltips: {
+          enabled: false
+        },
+        elements: {
+          line: {
+            tension: 0.15,
+          },
+        },
+        legend: {
+          display: false,
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 275,
+              stepSize: 1,
+              autoSkip: false,
+              maxRotation: 0,
+              callback: function(value, index, values) {
+                // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
+                var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+                if (i >= 0) {
+                  return jMonths[i]
+                } else {
+                  return null
+                }
+              }
+            },
+            gridLines: {
+              borderDash: [3],
+              zeroLineBorderDash: [3],
+              tickMarkLength: 8,
+              color: '#aaa',
+              zeroLineColor: '#aaa',
+              lineWidth: 0.5,
+              zeroLineWidth: 0.5,
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 102,
+              stepSize: 1,
+            }
+          }]
+        },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint',
+        }
+      }
+    };
+    var myChart = new Chart(element, lineConfig);
+  }
+
+  document.getElementsByClassName('trend')[0].getElementsByClassName('wrap')[0].scrollLeft = 400;
+  document.getElementsByClassName('trend')[1].getElementsByClassName('wrap')[0].scrollLeft = 400;
+  </script>
+
+
+
+</body></html>
