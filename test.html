@@ -43,7 +43,8 @@
 
     <div id="about"><div class="wrap">
       <img src="static/img/men.svg" alt="sex">
-      <h1>房野泰知</h1>
+      <!-- 変更 -->
+      <h1><span></span>房野泰知</h1>
       <p class="tips">
         <span>大学1</span>
 
@@ -67,29 +68,29 @@
         <div class="numeric-data">
           <div class="child">
             <p>総レース数</p>
-            <p data-aos="flip-up" class="aos-init aos-animate">2</p>
+            <p data-aos="flip-up">2</p>
           </div>
           <div class="child">
             <p>100Ba偏差値</p>
-            <p data-aos="flip-up" class="aos-init aos-animate">-</p>
+            <p data-aos="flip-up">65.2</p>
           </div>
         </div>
 
         <div class="participate">
           <div class="event">
-            <p>自由形</p><p><span class="fr" style="width: 50%;"></span></p>
+            <p>自由形</p><p><span class="fr"></span></p>
           </div>
           <div class="event">
-            <p>背泳ぎ</p><p><span class="ba" style="width: 50%;"></span></p>
+            <p>背泳ぎ</p><p><span class="ba"></span></p>
           </div>
           <div class="event">
-            <p>平泳ぎ</p><p><span class="br" style="width: 0%;"></span></p>
+            <p>平泳ぎ</p><p><span class="br"></span></p>
           </div>
           <div class="event">
-            <p>バタフライ</p><p><span class="fly" style="width: 0%;"></span></p>
+            <p>バタフライ</p><p><span class="fly"></span></p>
           </div>
           <div class="event">
-            <p>個人メドレー</p><p><span class="im" style="width: 0%;"></span></p>
+            <p>個人メドレー</p><p><span class="im"></span></p>
           </div>
         </div>
 
@@ -97,12 +98,14 @@
     </div></div>
     <script>
       window.onload = function() {
-      document.getElementsByClassName('mask')[0].style.height = '100px'
+      document.getElementsByClassName('mask')[0].style.height = '20px'
       document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '50%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '50%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '0%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '0%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '0%';
+      document.getElementsByTagName('h1')[0].classList.add('start');
+      document.getElementsByClassName('icons')[0].classList.add('start');
       }
     </script>
 
@@ -115,6 +118,22 @@
         </div>
       </div>
     </div>
+    <div class="trend-row">
+      <p class="caption card">長水路</p>
+      <div class="time card">
+        <p>ベストタイム</p>
+        <p>1:02.28</p>
+      </div>
+      <div class="rank card">
+        <p>同学年順位</p>
+        <p>38位<span>13272人中</span></p>
+      </div>
+      <div class="rank card">
+        <p>全体順位</p>
+        <p>38位<span>13272人中</span></p>
+      </div>
+    </div>
+
 
     <h2><i class="far fa-chart-bar"></i>50m 自由形の調子</h2>
     <div class="trend card">
@@ -129,7 +148,7 @@
     <h2><i class="fas fa-crosshairs"></i>ベストタイム一覧</h2>
     <div id="bests">
 
-      <div class="card aos-init aos-animate" data-aos="flip-left">
+      <div class="card" data-aos="flip-left">
         <div class="head Fr">
           <img src="static/img/Fr.svg" alt="泳法">
           <p>自由形</p>
@@ -176,7 +195,7 @@
         </div>
       </div>
 
-      <div class="card aos-init aos-animate" data-aos="flip-left">
+      <div class="card" data-aos="flip-left">
         <div class="head Ba">
           <img src="static/img/Ba.svg" alt="泳法">
           <p>背泳ぎ</p>
