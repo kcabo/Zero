@@ -10,8 +10,8 @@
   <main>
 
     <div id="about"><div class="wrap">
-      <img src="static/img/{{s.sex}}.svg" alt="sex">
-      <h1>{{s.name}}</h1>
+      <i class="user {{s.sex}} fas fa-user-circle"></i>
+      <h1><span></span>{{s.name}}</h1>
       <p class="tips">
         <span>{{s.grade}}</span>
         {% for t in s.teams %}
@@ -73,6 +73,19 @@
       document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '{{s.count_race[4]}}%';
       }
     </script>
+
+    <div class="trend-container">
+      <h2><i class="fas fa-poll"></i></i>{{s.e1.jpn_event()}}の調子</h2>
+      <div class="trend card">
+        <p>(淡色が短水路)</p>
+        <div class="wrap">
+          <div class="chartarea">
+            <canvas id="trend1" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <h2><i class="far fa-chart-bar"></i>{{s.e1.jpn_event()}}の調子</h2>
     <div class="trend card">
