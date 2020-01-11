@@ -117,7 +117,8 @@ class Candidate:
         self.sex = 'men' if df.iloc[0]['sex'] == 1 else 'women'
         self.name = df.iloc[0]['name']
         grade = df.iloc[0]['grade']
-        self.grade = japanese_grades[grade]
+        self.grade = grade
+        self.grade_jp = japanese_grades[grade]
         teams = df['team'].unique()
         self.teams = teams.tolist()
 
@@ -137,7 +138,7 @@ def raise_candidates(records):
 
 def format_ranking(df):
     df['time'] = df['time_val'].map(val_2_fmt)
-    df['grade'] = df['grade'].map(lambda x: japanese_grades[x])
+    df['grade_jp'] = df['grade'].map(lambda x: japanese_grades[x])
     week_ago = datetime.date.today() - datetime.timedelta(days=7)
     week_ago_int = int(week_ago.strftime('%Y%m%d'))
     df['new'] = df['start'] >= week_ago_int
@@ -199,13 +200,13 @@ def detail_dictionary(target):
     res['pool'] = '長水路' if target.Meet.pool == 1 else '短水路'
     res['event'] = my_event.jpn_event()
     res['name'] = target.Record.name
-    res['grade'] = japanese_grades[target.Record.grade]
+    res['grade_jp'] = japanese_grades[target.Record.grade]
     res['team'] = target.Record.team
     res['time'] = val_2_fmt(target.Record.time)
     res['rank'] = target.Record.rank
     res['devrange'] = f'偏差値({res["grade"][0:2]})' # 最初の二文字
     res['style'] = my_event.eng_style()
-    res['id'] = target.Record.id
+    res['grade'] = target.Record.grade
 
     laps_raw = target.Record.laps
     laps = [int(l) for l in laps_raw.split(',')]

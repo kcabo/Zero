@@ -120,7 +120,7 @@
     document.getElementById('res_pool').innerHTML = data['pool'];
     document.getElementById('res_event').innerHTML = data['event'];
     document.getElementById('res_name').innerHTML = data['name'];
-    document.getElementById('res_grade').innerHTML = data['grade'];
+    document.getElementById('res_grade').innerHTML = data['grade_jp'];
     document.getElementById('res_team').innerHTML = data['team'];
     document.getElementById('res_time').innerHTML = data['time'];
     document.getElementById('res_rank').innerHTML = data['rank'];
@@ -130,8 +130,8 @@
 
     document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
     document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?id=${data['id']}`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?team=${data['team']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?name=${data['name']}&grade=${data['grade']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?query=${data['team']}`);
 
     document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
     document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);

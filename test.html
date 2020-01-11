@@ -109,30 +109,61 @@
       }
     </script>
 
-    <h2><i class="far fa-chart-bar"></i>100m 背泳ぎの調子</h2>
-    <div class="trend card">
-      <p>淡色が短水路</p>
-      <div class="wrap">
-        <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-          <canvas id="trend1" height="275" style="display: block; height: 200px; width: 400px;" width="550" class="chartjs-render-monitor"></canvas>
+    <!-- 変更 -->
+    <div class="trend-container">
+      <h2><i class="far fa-chart-bar"></i>100m 背泳ぎの調子</h2>
+      <div class="trend card">
+        <p>(淡色が短水路)</p>
+        <div class="wrap">
+          <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas id="trend1" height="275" style="display: block; height: 200px; width: 400px;" width="550" class="chartjs-render-monitor"></canvas>
+          </div>
         </div>
       </div>
+      <div class="ranking">
+        <div class="item">
+          <p class="pool">長</p>
+          <div class="card">
+            <div class="cell">
+              <p>ベストタイム</p>
+              <p>1:02.28</p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p>31228</p>
+              <p>132732</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p>38</p>
+              <p>34273</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <p class="pool">短</p>
+          <div class="card">
+            <div class="cell">
+              <p>ベストタイム</p>
+              <p>1:02.28</p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p>38</p>
+              <p>13272</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p>38</p>
+              <p>34273</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
-    <div class="trend-row">
-      <p class="caption card">長水路</p>
-      <div class="time card">
-        <p>ベストタイム</p>
-        <p>1:02.28</p>
-      </div>
-      <div class="rank card">
-        <p>同学年順位</p>
-        <p>38位<span>13272人中</span></p>
-      </div>
-      <div class="rank card">
-        <p>全体順位</p>
-        <p>38位<span>13272人中</span></p>
-      </div>
-    </div>
+
 
 
     <h2><i class="far fa-chart-bar"></i>50m 自由形の調子</h2>
@@ -145,7 +176,9 @@
       </div>
     </div>
 
-    <h2><i class="fas fa-crosshairs"></i>ベストタイム一覧</h2>
+
+    <!-- 変更 -->
+    <h2><i class="fas fa-dumbbell"></i></i>ベストタイム一覧</h2>
     <div id="bests">
 
       <div class="card" data-aos="flip-left">
