@@ -546,6 +546,8 @@
               stepSize: 1,
               autoSkip: false,
               maxRotation: 0,
+              fontSize: 12,
+              fontColor: '#ccc',
               callback: function(value, index, values) {
                 // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
                 var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
@@ -556,12 +558,13 @@
                 }
               }
             },
+            // 変更
             gridLines: {
               borderDash: [3],
               zeroLineBorderDash: [3],
               tickMarkLength: 8,
-              color: '#aaa',
-              zeroLineColor: '#aaa',
+              color: '#ccc',
+              zeroLineColor: '#ccc',
               lineWidth: 0.5,
               zeroLineWidth: 0.5,
             }
