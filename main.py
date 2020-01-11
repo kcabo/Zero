@@ -179,7 +179,8 @@ def dashboard():
     del records # メモリ削減。効果ないかも
     swimmer.sex = 'men' if sex == 1 else 'women'
     swimmer.name = name
-    swimmer.grade = japanese_grades[grade]
+    swimmer.grade_jp = japanese_grades[grade]
+    swimmer.grade = grade
     swimmer.teams = teams
 
     # 偏差値の導出
@@ -189,19 +190,37 @@ def dashboard():
         agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5]
         agegroup = agegroup_list[grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
         stats = db.session.query(Stats).filter_by(event=event_code, agegroup=agegroup).order_by(Stats.pool).all() # 1番目が短水路、2番目が長水路になる
-        dev_short = calc_deviation(swimmer.e1bests[0][0], stats[0].mean, stats[0].std) if swimmer.e1bests[0] else '-'
-        dev_long = calc_deviation(swimmer.e1bests[1][0], stats[1].mean, stats[1].std) if swimmer.e1bests[1] else '-'
-        swimmer.deviation = dev_long if dev_long != '-' else dev_short
+        dev_short = calc_deviation(swimmer.e1bests[0], stats[0].mean, stats[0].std)
+        dev_long = calc_deviation(swimmer.e1bests[1], stats[1].mean, stats[1].std)
+        deviation = dev_long if dev_long != '-' else dev_short
     else:
-        swimmer.deviation = '-'
+        deviation = '-'
 
-    if swimmer.deviation == '-':
+    if deviation == '-':
         mask_height = 100
-    elif swimmer.deviation >= 75:
+    elif deviation >= 75:
         mask_height = 0
     else:
-        mask_height = 75 - swimmer.deviation
+        mask_height = 75 - deviation
+    swimmer.deviation = deviation
     swimmer.mask_height = mask_height
+
+    # バッジの格納
+    icons = []
+    if [True for t in teams if t in ['JPN', 'JAPAN', '日本']]:
+        icons.append('fa-users')
+    if [True for t in teams if t in ['慶應義塾大', 'KEIO', '慶應義塾大学', '慶応', '慶応女子', '慶應志木', '慶應', '慶應湘南藤沢', '慶應湘南', '慶應普通部', '銀泳会']]:
+        icons.append('fa-pen-nib')
+    if name == '神崎伶央':
+        icons.append('fa-pastafarianism')
+    if deviation >= 65:
+        icons.append('fa-star')
+    if deviation >= 70:
+        icons.append('fa-chess-king')
+    if swimmer.total_count >= 50:
+        icons.append('fa-fist-raised')
+    # <i class="fas fa-dragon"></i>
+    swimmer.icons = icons
 
     return render_template('dashboard.html', s = swimmer)
 
@@ -245,7 +264,7 @@ def ranking():
             all = all)
 
 
-@app.route('/api', methods=['POST'])
+@app.route('/apiResult', methods=['POST'])
 def result_detail():
     body = request.get_json()
     id = body['id']
@@ -258,6 +277,58 @@ def result_detail():
     res['dev1'] = calc_deviation(target.Record.time, stats_whole.mean, stats_whole.std)
     res['dev2'] = calc_deviation(target.Record.time, stats_agegroup.mean, stats_agegroup.std)
     return jsonify(res)
+
+
+@app.route('/apiRank', methods=['POST'])
+def time_and_rank():
+    body = request.get_json()
+    index = body['index']
+    time_val = body['time_val']
+    event = body['event_code']
+    pool = body['pool']
+    grade = body['grade']
+    year = 19
+
+    if event:
+        target_stats = db.session.query(Stats).filter_by(event=event, agegroup=0, pool=pool).one()
+        whole_count = target_stats.count
+        same_count = (db.session.query(Record, Meet)
+                .filter(Record.event == event, Record.time > 0, Record.grade == grade, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
+                .distinct(Record.name)
+                .count())
+    else:
+        whole_count = '-'
+        same_count = '-'
+
+    if time_val:
+        # 自分より速いスイマーの数を数える
+        whole_count_faster_swimmer = (db.session.query(Record, Meet)
+                .filter(Record.event == event, Record.time > 0, Record.time < time_val, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
+                .distinct(Record.name, Record.grade)
+                .count())
+        whole_ranking = whole_count_faster_swimmer + 1
+
+        same_count_faster_swimmer = (db.session.query(Record, Meet)
+                .filter(Record.event == event, Record.time > 0, Record.time < time_val, Record.grade == grade, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
+                .distinct(Record.name)
+                .count())
+        same_ranking = same_count_faster_swimmer + 1
+
+    else:
+        whole_ranking = '-'
+        same_ranking = '-'
+
+    time = analyzer.val_2_fmt(time_val)
+
+    rtn = {
+        'index': index,
+        'time': time if time else '-',
+        'same_ranking': same_ranking,
+        'same_count': same_count,
+        'whole_ranking': whole_ranking,
+        'whole_count': whole_count
+    }
+    return jsonify(rtn)
 
 
 @app.route('/search')

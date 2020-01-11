@@ -223,13 +223,13 @@ h2 i {
 .trend-container .ranking {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  max-width: 900px;
+  justify-content: space-between;
+  max-width: 800px;
   margin: auto;
 }
 .ranking .item {
   width: 100%;
-  max-width: 400px;
+  max-width: 385px;
   margin: 4px 0;
   position: relative;
 
@@ -274,7 +274,7 @@ h2 i {
 }
 .ranking .cell p:nth-child(3) {
   position: absolute;
-  top: 3px;
+  top: 2px;
   left: 35px;
   color: #888;
 }

@@ -7,7 +7,11 @@ class FormatEvent:
 
     def jpn_event(self):
         styles = ['', '自由形', '背泳ぎ', '平泳ぎ', 'バタフライ', '個人メドレー']
-        return f'{self.distance}m {styles[self.style]}'
+        style = styles[self.style]
+        if style:
+            return f'{self.distance}m {style}'
+        else:
+            return '-'
 
     def jpn_style(self):
         styles = ['', '自由形', '背泳ぎ', '平泳ぎ', 'バタフライ', '個人メドレー']
