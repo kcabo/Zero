@@ -1,0 +1,4469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="email=no,telephone=no,address=no" />
+<link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+<link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+<meta name="description" content="あなたの泳力はどれくらい？数百万のレースデータを分析しビジュアル化。水泳連盟公式よりも早くランキングを作成。日本全国の水泳大会を毎日解析しています。どなたでも無料で最新のランキングや選手個人の分析結果をご覧いただけます。">
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-149393969-2');
+</script>
+<link rel="stylesheet" href="static/css/aos.css">
+<link rel="stylesheet" href="static/css/common.css">
+  <title>50m 自由形【最新競泳ランキング】 | Swimmers Zero</title>
+  <link rel="stylesheet" href="static/css/ranking.css">
+</head>
+<body>
+  <div id="header-wrapper">
+  <header>
+    <div id="burger" onclick="activate(this);activate(menu)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+    <div class="placeholder"></div>
+  </header>
+</div>
+
+<div id="menu" class="">
+  <div id="search">
+    <form method="get" action="/search">
+      <input name="query" type="text" placeholder="選手やチームを検索">
+      <input type="submit" value="">
+      <i class="fas fa-search"></i>
+    </form>
+  </div>
+  <div class="item">
+  </div>
+</div>
+  <main>
+
+    <h1>50m 自由形</h1>
+
+    <div id="setting">
+
+      <div class="selectStyle" onclick="activate(selectEvents);activate(overlay)">
+        <i class="fas fa-cog"></i>
+        種目を変更する
+      </div>
+
+      <div class="row">
+        <div id="year" class="button deactivate">
+
+          <p onclick="activate(year);activate(overlay)">19年度<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, 18, current_pool)">18年度</p></div>
+
+        </div>
+
+        <div id="sex" class="button deactivate">
+
+          <p onclick="activate(sex);activate(overlay)">男子<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(200 + current_style, current_year, current_pool)">女子</p></div>
+
+        </div>
+
+        <div id="pool" class="button deactivate">
+
+          <p onclick="activate(pool);activate(overlay)">長水路<i class="fas fa-angle-down"></i></p>
+          <div class="items"><p onclick="jump_page(current_event, current_year, 0)">短水路</p></div>
+
+        </div>
+
+      </div>
+
+      <div id="gradeFilter">
+        <input type="checkbox" id="showGrade" >
+        <label for="showGrade">
+          <p>
+            <span class="tg-back"></span>
+            <span class="tg-front"></span>
+            学年で絞り込む
+          </p>
+        </label>
+        <div class="selectGrades">
+          <form method="post" name="grades">
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="1" ><span>小1</span></label>
+              <label><input type="checkbox" name="grade" value="2" ><span>小2</span></label>
+              <label><input type="checkbox" name="grade" value="3" ><span>小3</span></label>
+              <label><input type="checkbox" name="grade" value="4" ><span>小4</span></label>
+              <label><input type="checkbox" name="grade" value="5" ><span>小5</span></label>
+              <label><input type="checkbox" name="grade" value="6" ><span>小6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="7" ><span>中1</span></label>
+              <label><input type="checkbox" name="grade" value="8" ><span>中2</span></label>
+              <label><input type="checkbox" name="grade" value="9" ><span>中3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="10" ><span>高1</span></label>
+              <label><input type="checkbox" name="grade" value="11" ><span>高2</span></label>
+              <label><input type="checkbox" name="grade" value="12" ><span>高3</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="13" ><span>大1</span></label>
+              <label><input type="checkbox" name="grade" value="14" ><span>大2</span></label>
+              <label><input type="checkbox" name="grade" value="15" ><span>大3</span></label>
+              <label><input type="checkbox" name="grade" value="16" ><span>大4</span></label>
+              <label><input type="checkbox" name="grade" value="17" ><span>大5</span></label>
+              <label><input type="checkbox" name="grade" value="18" ><span>大6</span></label>
+            </div>
+            <div class="school">
+              <label><input type="checkbox" name="grade" value="19" ><span>一般</span></label>
+            </div>
+          </form>
+          <p class="submit" onclick="jump_page(current_event, current_year, current_pool)">絞り込む</p>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="ranking" sex=1>
+      <table><tbody>
+
+        <tr class="top10 " onclick="show_detail(35632)">
+          <td><span>1</span></td>
+          <td><a href="/dashboard?name=猿山翔太&grade=12">猿山翔太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:22.98</td>
+          <td><span>高校3</span></td>
+          <td>常総学院</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(35573)">
+          <td><span>2</span></td>
+          <td><a href="/dashboard?name=須田悠介&grade=12">須田悠介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.18</td>
+          <td><span>高校3</span></td>
+          <td>湘南工大附</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(35633)">
+          <td><span>3</span></td>
+          <td><a href="/dashboard?name=田中厚吉&grade=11">田中厚吉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.37</td>
+          <td><span>高校2</span></td>
+          <td>日大豊山</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(42535)">
+          <td><span>4</span></td>
+          <td><a href="/dashboard?name=川﨑駿&grade=19">川﨑駿<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.42</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(21889)">
+          <td><span>5</span></td>
+          <td><a href="/dashboard?name=樋口陽太&grade=15">樋口陽太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.64</td>
+          <td><span>大学3</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(21890)">
+          <td><span>6</span></td>
+          <td><a href="/dashboard?name=市川誉紹&grade=14">市川誉紹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.65</td>
+          <td><span>大学2</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(35576)">
+          <td><span>7</span></td>
+          <td><a href="/dashboard?name=岩崎世那&grade=12">岩崎世那<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.69</td>
+          <td><span>高校3</span></td>
+          <td>都留</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(21891)">
+          <td><span>8</span></td>
+          <td><a href="/dashboard?name=金澤蓮&grade=16">金澤蓮<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.72</td>
+          <td><span>大学4</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(35577)">
+          <td><span>9</span></td>
+          <td><a href="/dashboard?name=成川輝&grade=12">成川輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.73</td>
+          <td><span>高校3</span></td>
+          <td>東京成徳大高</td>
+        </tr>
+
+        <tr class="top10 " onclick="show_detail(14365)">
+          <td><span>10</span></td>
+          <td><a href="/dashboard?name=日髙颯哉&grade=11">日髙颯哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.73</td>
+          <td><span>高校2</span></td>
+          <td>協栄MD相模原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30287)">
+          <td><span>11</span></td>
+          <td><a href="/dashboard?name=水野尊登&grade=11">水野尊登<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.78</td>
+          <td><span>高校2</span></td>
+          <td>法政二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21892)">
+          <td><span>12</span></td>
+          <td><a href="/dashboard?name=木矢翔太&grade=13">木矢翔太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.82</td>
+          <td><span>大学1</span></td>
+          <td>神奈中秦野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42488)">
+          <td><span>13</span></td>
+          <td><a href="/dashboard?name=大野孝之&grade=19">大野孝之<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.87</td>
+          <td><span>一般</span></td>
+          <td>富士通</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35579)">
+          <td><span>14</span></td>
+          <td><a href="/dashboard?name=熊澤将大&grade=12">熊澤将大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.88</td>
+          <td><span>高校3</span></td>
+          <td>熊谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21893)">
+          <td><span>15</span></td>
+          <td><a href="/dashboard?name=中山貴裕&grade=19">中山貴裕<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.93</td>
+          <td><span>一般</span></td>
+          <td>富士通</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50656)">
+          <td><span>16</span></td>
+          <td><a href="/dashboard?name=内山慎太郎&grade=19">内山慎太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:23.94</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35581)">
+          <td><span>17</span></td>
+          <td><a href="/dashboard?name=三輪颯人&grade=11">三輪颯人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.02</td>
+          <td><span>高校2</span></td>
+          <td>武蔵野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30288)">
+          <td><span>18</span></td>
+          <td><a href="/dashboard?name=松原寛汰&grade=11">松原寛汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.02</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14398)">
+          <td><span>19</span></td>
+          <td><a href="/dashboard?name=三橋拓也&grade=12">三橋拓也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.03</td>
+          <td><span>高校3</span></td>
+          <td>ｺﾅﾐ林間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42805)">
+          <td><span>20</span></td>
+          <td><a href="/dashboard?name=森本陸翔&grade=14">森本陸翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.03</td>
+          <td><span>大学2</span></td>
+          <td>山梨学院大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35583)">
+          <td><span>21</span></td>
+          <td><a href="/dashboard?name=髙橋明裕&grade=11">髙橋明裕<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.08</td>
+          <td><span>高校2</span></td>
+          <td>淑徳</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35585)">
+          <td><span>22</span></td>
+          <td><a href="/dashboard?name=佐々木駿&grade=12">佐々木駿<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.11</td>
+          <td><span>高校3</span></td>
+          <td>武相</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35584)">
+          <td><span>23</span></td>
+          <td><a href="/dashboard?name=前田英俊&grade=12">前田英俊<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.11</td>
+          <td><span>高校3</span></td>
+          <td>渋谷幕張</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50657)">
+          <td><span>24</span></td>
+          <td><a href="/dashboard?name=松山元哉&grade=12">松山元哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.14</td>
+          <td><span>高校3</span></td>
+          <td>湘南工大附</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50658)">
+          <td><span>25</span></td>
+          <td><a href="/dashboard?name=丸山渓太&grade=11">丸山渓太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.14</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50659)">
+          <td><span>26</span></td>
+          <td><a href="/dashboard?name=中村優介&grade=19">中村優介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.15</td>
+          <td><span>一般</span></td>
+          <td>茗水会</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21894)">
+          <td><span>27</span></td>
+          <td><a href="/dashboard?name=末永亨馬&grade=13">末永亨馬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.16</td>
+          <td><span>大学1</span></td>
+          <td>NECGSC溝の口</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35586)">
+          <td><span>28</span></td>
+          <td><a href="/dashboard?name=奥山丈太郎&grade=12">奥山丈太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.18</td>
+          <td><span>高校3</span></td>
+          <td>慶應志木</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21896)">
+          <td><span>29</span></td>
+          <td><a href="/dashboard?name=田北峻&grade=13">田北峻<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.18</td>
+          <td><span>大学1</span></td>
+          <td>東海大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35587)">
+          <td><span>30</span></td>
+          <td><a href="/dashboard?name=西條智也&grade=11">西條智也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.20</td>
+          <td><span>高校2</span></td>
+          <td>千葉商大付</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50660)">
+          <td><span>31</span></td>
+          <td><a href="/dashboard?name=岩田尭久&grade=16">岩田尭久<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.20</td>
+          <td><span>大学4</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35588)">
+          <td><span>32</span></td>
+          <td><a href="/dashboard?name=畑中駿汰&grade=12">畑中駿汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.21</td>
+          <td><span>高校3</span></td>
+          <td>坂戸西</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37779)">
+          <td><span>33</span></td>
+          <td><a href="/dashboard?name=西川知希&grade=9">西川知希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.21</td>
+          <td><span>中学3</span></td>
+          <td>西高津</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35589)">
+          <td><span>34</span></td>
+          <td><a href="/dashboard?name=秋生航輝&grade=12">秋生航輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.23</td>
+          <td><span>高校3</span></td>
+          <td>佐倉東</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30013)">
+          <td><span>35</span></td>
+          <td><a href="/dashboard?name=椎橋遊理&grade=11">椎橋遊理<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.27</td>
+          <td><span>高校2</span></td>
+          <td>桐光学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30292)">
+          <td><span>36</span></td>
+          <td><a href="/dashboard?name=伊藤廉&grade=12">伊藤廉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.27</td>
+          <td><span>高校3</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21897)">
+          <td><span>37</span></td>
+          <td><a href="/dashboard?name=山下泰幸&grade=15">山下泰幸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.28</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35591)">
+          <td><span>38</span></td>
+          <td><a href="/dashboard?name=福島悠貴&grade=12">福島悠貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.29</td>
+          <td><span>高校3</span></td>
+          <td>白鴎大足利</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21898)">
+          <td><span>39</span></td>
+          <td><a href="/dashboard?name=川田大夢&grade=15">川田大夢<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.31</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21899)">
+          <td><span>40</span></td>
+          <td><a href="/dashboard?name=角俊介&grade=13">角俊介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.31</td>
+          <td><span>大学1</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21900)">
+          <td><span>41</span></td>
+          <td><a href="/dashboard?name=渕雅顕&grade=15">渕雅顕<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.33</td>
+          <td><span>大学3</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35592)">
+          <td><span>42</span></td>
+          <td><a href="/dashboard?name=田中直太朗&grade=10">田中直太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.33</td>
+          <td><span>高校1</span></td>
+          <td>埼玉栄</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35593)">
+          <td><span>43</span></td>
+          <td><a href="/dashboard?name=黒古大樹&grade=10">黒古大樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.34</td>
+          <td><span>高校1</span></td>
+          <td>前橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35594)">
+          <td><span>44</span></td>
+          <td><a href="/dashboard?name=奥田壮太&grade=12">奥田壮太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.35</td>
+          <td><span>高校3</span></td>
+          <td>花咲徳栄</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35595)">
+          <td><span>45</span></td>
+          <td><a href="/dashboard?name=設樂航希&grade=10">設樂航希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.38</td>
+          <td><span>高校1</span></td>
+          <td>柏南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50661)">
+          <td><span>46</span></td>
+          <td><a href="/dashboard?name=岡村修朋&grade=10">岡村修朋<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.40</td>
+          <td><span>高校1</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35596)">
+          <td><span>47</span></td>
+          <td><a href="/dashboard?name=大谷幸輝&grade=12">大谷幸輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.42</td>
+          <td><span>高校3</span></td>
+          <td>市立船橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50662)">
+          <td><span>48</span></td>
+          <td><a href="/dashboard?name=武田紘平&grade=19">武田紘平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.43</td>
+          <td><span>一般</span></td>
+          <td>茗水会</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35598)">
+          <td><span>49</span></td>
+          <td><a href="/dashboard?name=鈴木雄策&grade=12">鈴木雄策<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.46</td>
+          <td><span>高校3</span></td>
+          <td>早稲田実業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30294)">
+          <td><span>50</span></td>
+          <td><a href="/dashboard?name=神谷琉成&grade=12">神谷琉成<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.46</td>
+          <td><span>高校3</span></td>
+          <td>法政二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35599)">
+          <td><span>51</span></td>
+          <td><a href="/dashboard?name=永藤修一&grade=11">永藤修一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.48</td>
+          <td><span>高校2</span></td>
+          <td>成田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35600)">
+          <td><span>52</span></td>
+          <td><a href="/dashboard?name=内藤雄也&grade=12">内藤雄也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.49</td>
+          <td><span>高校3</span></td>
+          <td>花咲徳栄</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35601)">
+          <td><span>53</span></td>
+          <td><a href="/dashboard?name=福田樹&grade=12">福田樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.50</td>
+          <td><span>高校3</span></td>
+          <td>八王子</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35602)">
+          <td><span>54</span></td>
+          <td><a href="/dashboard?name=有賀一路&grade=10">有賀一路<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.52</td>
+          <td><span>高校1</span></td>
+          <td>武蔵野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42806)">
+          <td><span>55</span></td>
+          <td><a href="/dashboard?name=田村麗&grade=14">田村麗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.52</td>
+          <td><span>大学2</span></td>
+          <td>山梨学院大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35603)">
+          <td><span>56</span></td>
+          <td><a href="/dashboard?name=坂本樹&grade=11">坂本樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.53</td>
+          <td><span>高校2</span></td>
+          <td>熊谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46599)">
+          <td><span>57</span></td>
+          <td><a href="/dashboard?name=松原光佑&grade=9">松原光佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.56</td>
+          <td><span>中学3</span></td>
+          <td>大津</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14369)">
+          <td><span>58</span></td>
+          <td><a href="/dashboard?name=田中一颯&grade=11">田中一颯<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.57</td>
+          <td><span>高校2</span></td>
+          <td>ｱｸﾗﾌﾞ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21905)">
+          <td><span>59</span></td>
+          <td><a href="/dashboard?name=村上鉄平&grade=19">村上鉄平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.58</td>
+          <td><span>一般</span></td>
+          <td>ｺﾅﾐ天王町</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14370)">
+          <td><span>60</span></td>
+          <td><a href="/dashboard?name=小嶋壮&grade=10">小嶋壮<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.58</td>
+          <td><span>高校1</span></td>
+          <td>NECGSC玉川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14400)">
+          <td><span>61</span></td>
+          <td><a href="/dashboard?name=井上晴輝&grade=12">井上晴輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.58</td>
+          <td><span>高校3</span></td>
+          <td>ﾚｵSS厚木</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50663)">
+          <td><span>62</span></td>
+          <td><a href="/dashboard?name=菊池泰雅&grade=15">菊池泰雅<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.59</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30018)">
+          <td><span>63</span></td>
+          <td><a href="/dashboard?name=竹鼻涼太&grade=10">竹鼻涼太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.66</td>
+          <td><span>高校1</span></td>
+          <td>法政二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50664)">
+          <td><span>64</span></td>
+          <td><a href="/dashboard?name=高野隼也&grade=13">高野隼也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.67</td>
+          <td><span>大学1</span></td>
+          <td>東海大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50665)">
+          <td><span>65</span></td>
+          <td><a href="/dashboard?name=村上海渡&grade=12">村上海渡<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.68</td>
+          <td><span>高校3</span></td>
+          <td>ｻﾞﾊﾞｽ鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21906)">
+          <td><span>66</span></td>
+          <td><a href="/dashboard?name=鈴木遼一朗&grade=13">鈴木遼一朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.68</td>
+          <td><span>大学1</span></td>
+          <td>SPﾎｳﾄｸ金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(49039)">
+          <td><span>67</span></td>
+          <td><a href="/dashboard?name=乙部碧衣&grade=11">乙部碧衣<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.70</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30019)">
+          <td><span>68</span></td>
+          <td><a href="/dashboard?name=寺田昌太&grade=12">寺田昌太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.71</td>
+          <td><span>高校3</span></td>
+          <td>桐蔭学園中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(49040)">
+          <td><span>69</span></td>
+          <td><a href="/dashboard?name=松山琉哉&grade=12">松山琉哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.72</td>
+          <td><span>高校3</span></td>
+          <td>南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21907)">
+          <td><span>70</span></td>
+          <td><a href="/dashboard?name=早田真宙&grade=14">早田真宙<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.74</td>
+          <td><span>大学2</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35607)">
+          <td><span>71</span></td>
+          <td><a href="/dashboard?name=稲吉大千&grade=12">稲吉大千<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.76</td>
+          <td><span>高校3</span></td>
+          <td>戸山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21908)">
+          <td><span>72</span></td>
+          <td><a href="/dashboard?name=高橋英祐&grade=11">高橋英祐<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.76</td>
+          <td><span>高校2</span></td>
+          <td>NECGSC玉川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21909)">
+          <td><span>73</span></td>
+          <td><a href="/dashboard?name=深山元聡&grade=19">深山元聡<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.77</td>
+          <td><span>一般</span></td>
+          <td>富士通</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30020)">
+          <td><span>74</span></td>
+          <td><a href="/dashboard?name=長島翔太&grade=12">長島翔太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.78</td>
+          <td><span>高校3</span></td>
+          <td>みなと総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21910)">
+          <td><span>75</span></td>
+          <td><a href="/dashboard?name=寺田拓未&grade=16">寺田拓未<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.78</td>
+          <td><span>大学4</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43421)">
+          <td><span>76</span></td>
+          <td><a href="/dashboard?name=門倉光宏&grade=10">門倉光宏<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.83</td>
+          <td><span>高校1</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37612)">
+          <td><span>77</span></td>
+          <td><a href="/dashboard?name=井上慶人&grade=9">井上慶人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.84</td>
+          <td><span>中学3</span></td>
+          <td>谷口</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50667)">
+          <td><span>78</span></td>
+          <td><a href="/dashboard?name=星合謙一郎&grade=10">星合謙一郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.85</td>
+          <td><span>高校1</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21911)">
+          <td><span>79</span></td>
+          <td><a href="/dashboard?name=鎌田優吾&grade=13">鎌田優吾<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.91</td>
+          <td><span>大学1</span></td>
+          <td>東海大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35608)">
+          <td><span>80</span></td>
+          <td><a href="/dashboard?name=猪股大地&grade=11">猪股大地<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.93</td>
+          <td><span>高校2</span></td>
+          <td>東洋大牛久</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35609)">
+          <td><span>81</span></td>
+          <td><a href="/dashboard?name=山越青空&grade=12">山越青空<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.94</td>
+          <td><span>高校3</span></td>
+          <td>古河第一</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37613)">
+          <td><span>82</span></td>
+          <td><a href="/dashboard?name=伊勢空翔&grade=8">伊勢空翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.97</td>
+          <td><span>中学2</span></td>
+          <td>大野南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42536)">
+          <td><span>83</span></td>
+          <td><a href="/dashboard?name=伊澤賢司&grade=19">伊澤賢司<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:24.97</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37780)">
+          <td><span>84</span></td>
+          <td><a href="/dashboard?name=横内鼓太郎&grade=9">横内鼓太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.01</td>
+          <td><span>中学3</span></td>
+          <td>浦島丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21914)">
+          <td><span>85</span></td>
+          <td><a href="/dashboard?name=村中薫&grade=13">村中薫<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.01</td>
+          <td><span>大学1</span></td>
+          <td>桐蔭横浜大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50668)">
+          <td><span>86</span></td>
+          <td><a href="/dashboard?name=菅原源太&grade=12">菅原源太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.02</td>
+          <td><span>高校3</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21915)">
+          <td><span>87</span></td>
+          <td><a href="/dashboard?name=荻野倖太朗&grade=10">荻野倖太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.02</td>
+          <td><span>高校1</span></td>
+          <td>ﾙﾈｻﾝｽ港南中</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30022)">
+          <td><span>88</span></td>
+          <td><a href="/dashboard?name=西谷悠生&grade=11">西谷悠生<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.04</td>
+          <td><span>高校2</span></td>
+          <td>公文国際</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35610)">
+          <td><span>89</span></td>
+          <td><a href="/dashboard?name=荒川颯汰&grade=12">荒川颯汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.04</td>
+          <td><span>高校3</span></td>
+          <td>中央中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21916)">
+          <td><span>90</span></td>
+          <td><a href="/dashboard?name=小野翔真&grade=14">小野翔真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.05</td>
+          <td><span>大学2</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35611)">
+          <td><span>91</span></td>
+          <td><a href="/dashboard?name=池野圭&grade=11">池野圭<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.07</td>
+          <td><span>高校2</span></td>
+          <td>東海大浦安</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21919)">
+          <td><span>92</span></td>
+          <td><a href="/dashboard?name=古屋純希&grade=14">古屋純希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.10</td>
+          <td><span>大学2</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14346)">
+          <td><span>93</span></td>
+          <td><a href="/dashboard?name=近内翼&grade=11">近内翼<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.11</td>
+          <td><span>高校2</span></td>
+          <td>ﾏｯｸ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21920)">
+          <td><span>94</span></td>
+          <td><a href="/dashboard?name=古閑萌人&grade=15">古閑萌人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.11</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43422)">
+          <td><span>95</span></td>
+          <td><a href="/dashboard?name=荻野竜之介&grade=11">荻野竜之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.14</td>
+          <td><span>高校2</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21921)">
+          <td><span>96</span></td>
+          <td><a href="/dashboard?name=鈴木謙太朗&grade=19">鈴木謙太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.17</td>
+          <td><span>一般</span></td>
+          <td>NTTｸﾞﾙｰﾌﾟ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14372)">
+          <td><span>97</span></td>
+          <td><a href="/dashboard?name=新井田崇友&grade=11">新井田崇友<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.17</td>
+          <td><span>高校2</span></td>
+          <td>ｻｷﾞﾇﾏSCM</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21922)">
+          <td><span>98</span></td>
+          <td><a href="/dashboard?name=北﨑慎&grade=13">北﨑慎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.18</td>
+          <td><span>大学1</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35612)">
+          <td><span>99</span></td>
+          <td><a href="/dashboard?name=下城航輝&grade=11">下城航輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.20</td>
+          <td><span>高校2</span></td>
+          <td>武南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30024)">
+          <td><span>100</span></td>
+          <td><a href="/dashboard?name=神出友也&grade=11">神出友也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.20</td>
+          <td><span>高校2</span></td>
+          <td>みなと総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14373)">
+          <td><span>101</span></td>
+          <td><a href="/dashboard?name=大堀陸&grade=10">大堀陸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.20</td>
+          <td><span>高校1</span></td>
+          <td>ﾀﾞﾝﾛｯﾌﾟSC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21924)">
+          <td><span>102</span></td>
+          <td><a href="/dashboard?name=日下大空&grade=11">日下大空<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.21</td>
+          <td><span>高校2</span></td>
+          <td>NECGSC溝の口</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21925)">
+          <td><span>103</span></td>
+          <td><a href="/dashboard?name=高野竜也&grade=13">高野竜也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.22</td>
+          <td><span>大学1</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35613)">
+          <td><span>104</span></td>
+          <td><a href="/dashboard?name=小林春樹&grade=11">小林春樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.22</td>
+          <td><span>高校2</span></td>
+          <td>古河第三</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37615)">
+          <td><span>105</span></td>
+          <td><a href="/dashboard?name=根本琳世&grade=9">根本琳世<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.24</td>
+          <td><span>中学3</span></td>
+          <td>春日台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42490)">
+          <td><span>106</span></td>
+          <td><a href="/dashboard?name=田口涼也&grade=19">田口涼也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.24</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21926)">
+          <td><span>107</span></td>
+          <td><a href="/dashboard?name=足立光駿&grade=16">足立光駿<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.24</td>
+          <td><span>大学4</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14383)">
+          <td><span>108</span></td>
+          <td><a href="/dashboard?name=中川爽真&grade=12">中川爽真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.25</td>
+          <td><span>高校3</span></td>
+          <td>Nagatsuta.SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35614)">
+          <td><span>109</span></td>
+          <td><a href="/dashboard?name=渡部瑞樹&grade=11">渡部瑞樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.25</td>
+          <td><span>高校2</span></td>
+          <td>前橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46601)">
+          <td><span>110</span></td>
+          <td><a href="/dashboard?name=南雲善&grade=9">南雲善<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.28</td>
+          <td><span>中学3</span></td>
+          <td>伊勢原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21928)">
+          <td><span>111</span></td>
+          <td><a href="/dashboard?name=清水博斗&grade=10">清水博斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.28</td>
+          <td><span>高校1</span></td>
+          <td>日大藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35615)">
+          <td><span>112</span></td>
+          <td><a href="/dashboard?name=濵野崚太郎&grade=10">濵野崚太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.29</td>
+          <td><span>高校1</span></td>
+          <td>鉾田第二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48484)">
+          <td><span>113</span></td>
+          <td><a href="/dashboard?name=依田和樹&grade=13">依田和樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.30</td>
+          <td><span>大学1</span></td>
+          <td>甲府市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50671)">
+          <td><span>114</span></td>
+          <td><a href="/dashboard?name=森谷優人&grade=10">森谷優人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.30</td>
+          <td><span>高校1</span></td>
+          <td>ｾﾝﾄﾗﾙ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50427)">
+          <td><span>115</span></td>
+          <td><a href="/dashboard?name=内藤慧太&grade=10">内藤慧太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.31</td>
+          <td><span>高校1</span></td>
+          <td>駿台甲府</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21931)">
+          <td><span>116</span></td>
+          <td><a href="/dashboard?name=上中幸哉&grade=15">上中幸哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.36</td>
+          <td><span>大学3</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21932)">
+          <td><span>117</span></td>
+          <td><a href="/dashboard?name=佐藤雄太&grade=15">佐藤雄太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.36</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50672)">
+          <td><span>118</span></td>
+          <td><a href="/dashboard?name=平澤麟太郎&grade=11">平澤麟太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.37</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42491)">
+          <td><span>119</span></td>
+          <td><a href="/dashboard?name=中ノ内豊大&grade=19">中ノ内豊大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.37</td>
+          <td><span>一般</span></td>
+          <td>海自横連</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21933)">
+          <td><span>120</span></td>
+          <td><a href="/dashboard?name=熊倉広輝&grade=13">熊倉広輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.38</td>
+          <td><span>大学1</span></td>
+          <td>桐蔭横浜大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48878)">
+          <td><span>121</span></td>
+          <td><a href="/dashboard?name=山田壮一郎&grade=10">山田壮一郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.38</td>
+          <td><span>高校1</span></td>
+          <td>市ｹ尾</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21934)">
+          <td><span>122</span></td>
+          <td><a href="/dashboard?name=山﨑純平&grade=10">山﨑純平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.38</td>
+          <td><span>高校1</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14374)">
+          <td><span>123</span></td>
+          <td><a href="/dashboard?name=瀧田優磨&grade=10">瀧田優磨<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.39</td>
+          <td><span>高校1</span></td>
+          <td>ｻﾞﾊﾞｽ鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21936)">
+          <td><span>124</span></td>
+          <td><a href="/dashboard?name=井上嘉人&grade=10">井上嘉人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.39</td>
+          <td><span>高校1</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(49043)">
+          <td><span>125</span></td>
+          <td><a href="/dashboard?name=影山剛士&grade=11">影山剛士<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.40</td>
+          <td><span>高校2</span></td>
+          <td>横浜学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30029)">
+          <td><span>126</span></td>
+          <td><a href="/dashboard?name=村井洸太&grade=10">村井洸太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.41</td>
+          <td><span>高校1</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14384)">
+          <td><span>127</span></td>
+          <td><a href="/dashboard?name=岡野将人&grade=12">岡野将人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.41</td>
+          <td><span>高校3</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14385)">
+          <td><span>128</span></td>
+          <td><a href="/dashboard?name=中村賢梧&grade=12">中村賢梧<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.41</td>
+          <td><span>高校3</span></td>
+          <td>ﾙﾈｻﾝｽ港南台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21937)">
+          <td><span>129</span></td>
+          <td><a href="/dashboard?name=服部一&grade=10">服部一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.41</td>
+          <td><span>高校1</span></td>
+          <td>YSMC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30030)">
+          <td><span>130</span></td>
+          <td><a href="/dashboard?name=バックマンダグラス&grade=12">バックマンダグラス<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.43</td>
+          <td><span>高校3</span></td>
+          <td>柏陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37616)">
+          <td><span>131</span></td>
+          <td><a href="/dashboard?name=岡部快澄&grade=9">岡部快澄<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.45</td>
+          <td><span>中学3</span></td>
+          <td>桐光学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14386)">
+          <td><span>132</span></td>
+          <td><a href="/dashboard?name=田中誠斗&grade=12">田中誠斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.46</td>
+          <td><span>高校3</span></td>
+          <td>ｱｸﾗﾌﾞ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50673)">
+          <td><span>133</span></td>
+          <td><a href="/dashboard?name=常原健吾&grade=13">常原健吾<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.48</td>
+          <td><span>大学1</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50674)">
+          <td><span>134</span></td>
+          <td><a href="/dashboard?name=関口広太&grade=11">関口広太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.49</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35616)">
+          <td><span>135</span></td>
+          <td><a href="/dashboard?name=菊池智哉&grade=12">菊池智哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.50</td>
+          <td><span>高校3</span></td>
+          <td>古河第一</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30033)">
+          <td><span>136</span></td>
+          <td><a href="/dashboard?name=村上裕哉&grade=12">村上裕哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.52</td>
+          <td><span>高校3</span></td>
+          <td>伊志田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(49045)">
+          <td><span>137</span></td>
+          <td><a href="/dashboard?name=髙井太一&grade=11">髙井太一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.53</td>
+          <td><span>高校2</span></td>
+          <td>川和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14286)">
+          <td><span>138</span></td>
+          <td><a href="/dashboard?name=沼田隼輝&grade=9">沼田隼輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.53</td>
+          <td><span>中学3</span></td>
+          <td>神奈中小田原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35617)">
+          <td><span>139</span></td>
+          <td><a href="/dashboard?name=渡辺裕葵&grade=10">渡辺裕葵<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.55</td>
+          <td><span>高校1</span></td>
+          <td>駿台甲府</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30035)">
+          <td><span>140</span></td>
+          <td><a href="/dashboard?name=永井真那&grade=10">永井真那<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.55</td>
+          <td><span>高校1</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30034)">
+          <td><span>141</span></td>
+          <td><a href="/dashboard?name=徳本望&grade=10">徳本望<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.55</td>
+          <td><span>高校1</span></td>
+          <td>桐蔭学園中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43425)">
+          <td><span>142</span></td>
+          <td><a href="/dashboard?name=西村魁修&grade=11">西村魁修<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.55</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50675)">
+          <td><span>143</span></td>
+          <td><a href="/dashboard?name=スコット龍海&grade=9">スコット龍海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.55</td>
+          <td><span>中学3</span></td>
+          <td>林水泳教室</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21940)">
+          <td><span>144</span></td>
+          <td><a href="/dashboard?name=西川浩司&grade=14">西川浩司<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.56</td>
+          <td><span>大学2</span></td>
+          <td>ｺﾅﾐ洋光台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35618)">
+          <td><span>145</span></td>
+          <td><a href="/dashboard?name=大橋勇介&grade=12">大橋勇介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.56</td>
+          <td><span>高校3</span></td>
+          <td>鹿沼</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21941)">
+          <td><span>146</span></td>
+          <td><a href="/dashboard?name=前場洋輝&grade=12">前場洋輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.57</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37785)">
+          <td><span>147</span></td>
+          <td><a href="/dashboard?name=上原舜吏&grade=9">上原舜吏<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.57</td>
+          <td><span>中学3</span></td>
+          <td>上溝南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21942)">
+          <td><span>148</span></td>
+          <td><a href="/dashboard?name=佐々木龍希&grade=13">佐々木龍希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.58</td>
+          <td><span>大学1</span></td>
+          <td>神奈川大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35619)">
+          <td><span>149</span></td>
+          <td><a href="/dashboard?name=福山凜太朗&grade=12">福山凜太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.59</td>
+          <td><span>高校3</span></td>
+          <td>常磐大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42537)">
+          <td><span>150</span></td>
+          <td><a href="/dashboard?name=橋爪久司&grade=19">橋爪久司<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.60</td>
+          <td><span>一般</span></td>
+          <td>海自横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35620)">
+          <td><span>151</span></td>
+          <td><a href="/dashboard?name=山口広翔&grade=10">山口広翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.63</td>
+          <td><span>高校1</span></td>
+          <td>高崎工業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21945)">
+          <td><span>152</span></td>
+          <td><a href="/dashboard?name=草野光希&grade=10">草野光希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.63</td>
+          <td><span>高校1</span></td>
+          <td>湘南工大附</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30036)">
+          <td><span>153</span></td>
+          <td><a href="/dashboard?name=濱野頼貴&grade=12">濱野頼貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.64</td>
+          <td><span>高校3</span></td>
+          <td>立野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30037)">
+          <td><span>154</span></td>
+          <td><a href="/dashboard?name=山村遼樹&grade=12">山村遼樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.65</td>
+          <td><span>高校3</span></td>
+          <td>日大藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37786)">
+          <td><span>155</span></td>
+          <td><a href="/dashboard?name=吉田大起&grade=7">吉田大起<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.65</td>
+          <td><span>中学1</span></td>
+          <td>綾瀬城山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21948)">
+          <td><span>156</span></td>
+          <td><a href="/dashboard?name=諸星元大&grade=10">諸星元大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.66</td>
+          <td><span>高校1</span></td>
+          <td>神奈中SS</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50440)">
+          <td><span>157</span></td>
+          <td><a href="/dashboard?name=尾山光&grade=12">尾山光<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.67</td>
+          <td><span>高校3</span></td>
+          <td>日大明誠</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35623)">
+          <td><span>158</span></td>
+          <td><a href="/dashboard?name=橋本真希&grade=12">橋本真希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.68</td>
+          <td><span>高校3</span></td>
+          <td>鉾田第二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35621)">
+          <td><span>159</span></td>
+          <td><a href="/dashboard?name=荻原悠杜&grade=12">荻原悠杜<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.68</td>
+          <td><span>高校3</span></td>
+          <td>宇都宮工業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35622)">
+          <td><span>160</span></td>
+          <td><a href="/dashboard?name=野口直央&grade=12">野口直央<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.68</td>
+          <td><span>高校3</span></td>
+          <td>高崎</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14388)">
+          <td><span>161</span></td>
+          <td><a href="/dashboard?name=関涼馬&grade=12">関涼馬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.71</td>
+          <td><span>高校3</span></td>
+          <td>ｻｷﾞﾇﾏSCM</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37787)">
+          <td><span>162</span></td>
+          <td><a href="/dashboard?name=葛西颯玖&grade=8">葛西颯玖<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.72</td>
+          <td><span>中学2</span></td>
+          <td>奈良</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42492)">
+          <td><span>163</span></td>
+          <td><a href="/dashboard?name=小泉渓&grade=19">小泉渓<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.72</td>
+          <td><span>一般</span></td>
+          <td>海自横連</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35624)">
+          <td><span>164</span></td>
+          <td><a href="/dashboard?name=德田龍輝&grade=11">德田龍輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.73</td>
+          <td><span>高校2</span></td>
+          <td>高崎経済大附</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14389)">
+          <td><span>165</span></td>
+          <td><a href="/dashboard?name=大井凌空&grade=12">大井凌空<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.73</td>
+          <td><span>高校3</span></td>
+          <td>ｱｸﾗﾌﾞ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35625)">
+          <td><span>166</span></td>
+          <td><a href="/dashboard?name=中村優友&grade=12">中村優友<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.74</td>
+          <td><span>高校3</span></td>
+          <td>明和県央</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14335)">
+          <td><span>167</span></td>
+          <td><a href="/dashboard?name=中谷志優&grade=9">中谷志優<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.74</td>
+          <td><span>中学3</span></td>
+          <td>ｻｷﾞﾇﾏSC鷺沼</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21951)">
+          <td><span>168</span></td>
+          <td><a href="/dashboard?name=根岸康大&grade=11">根岸康大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.74</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21953)">
+          <td><span>169</span></td>
+          <td><a href="/dashboard?name=鈴木登偉&grade=12">鈴木登偉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.76</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35626)">
+          <td><span>170</span></td>
+          <td><a href="/dashboard?name=小林志門&grade=11">小林志門<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.76</td>
+          <td><span>高校2</span></td>
+          <td>藤岡中央</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21954)">
+          <td><span>171</span></td>
+          <td><a href="/dashboard?name=根本泰志&grade=9">根本泰志<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.76</td>
+          <td><span>中学3</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30041)">
+          <td><span>172</span></td>
+          <td><a href="/dashboard?name=羽田卓馬&grade=10">羽田卓馬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.76</td>
+          <td><span>高校1</span></td>
+          <td>横浜隼人</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21956)">
+          <td><span>173</span></td>
+          <td><a href="/dashboard?name=綿貫海斗&grade=15">綿貫海斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.77</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37618)">
+          <td><span>174</span></td>
+          <td><a href="/dashboard?name=岸和海&grade=9">岸和海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.77</td>
+          <td><span>中学3</span></td>
+          <td>川崎橘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21955)">
+          <td><span>175</span></td>
+          <td><a href="/dashboard?name=前野慎也&grade=16">前野慎也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.77</td>
+          <td><span>大学4</span></td>
+          <td>東海大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21958)">
+          <td><span>176</span></td>
+          <td><a href="/dashboard?name=説田啓佑&grade=11">説田啓佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.78</td>
+          <td><span>高校2</span></td>
+          <td>NECGSC溝の口</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48485)">
+          <td><span>177</span></td>
+          <td><a href="/dashboard?name=松本幸妃&grade=13">松本幸妃<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.79</td>
+          <td><span>大学1</span></td>
+          <td>笛吹市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14288)">
+          <td><span>178</span></td>
+          <td><a href="/dashboard?name=池琉晴&grade=9">池琉晴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.80</td>
+          <td><span>中学3</span></td>
+          <td>相模原DC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21960)">
+          <td><span>179</span></td>
+          <td><a href="/dashboard?name=堀口和真&grade=11">堀口和真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.81</td>
+          <td><span>高校2</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21961)">
+          <td><span>180</span></td>
+          <td><a href="/dashboard?name=堀康平&grade=14">堀康平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.82</td>
+          <td><span>大学2</span></td>
+          <td>桐蔭横浜大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30044)">
+          <td><span>181</span></td>
+          <td><a href="/dashboard?name=池原知希&grade=11">池原知希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.82</td>
+          <td><span>高校2</span></td>
+          <td>百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30043)">
+          <td><span>182</span></td>
+          <td><a href="/dashboard?name=宇野響騎&grade=11">宇野響騎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.82</td>
+          <td><span>高校2</span></td>
+          <td>横浜創学館</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35627)">
+          <td><span>183</span></td>
+          <td><a href="/dashboard?name=福原健&grade=12">福原健<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.83</td>
+          <td><span>高校3</span></td>
+          <td>白鴎大足利</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42493)">
+          <td><span>184</span></td>
+          <td><a href="/dashboard?name=我妻昂&grade=19">我妻昂<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.83</td>
+          <td><span>一般</span></td>
+          <td>海自横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21965)">
+          <td><span>185</span></td>
+          <td><a href="/dashboard?name=山本隆&grade=15">山本隆<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.85</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14390)">
+          <td><span>186</span></td>
+          <td><a href="/dashboard?name=岩堀聡&grade=12">岩堀聡<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.86</td>
+          <td><span>高校3</span></td>
+          <td>ｾﾝﾄﾗﾙ東戸塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50137)">
+          <td><span>187</span></td>
+          <td><a href="/dashboard?name=長田尚也&grade=9">長田尚也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.87</td>
+          <td><span>中学3</span></td>
+          <td>笛南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21967)">
+          <td><span>188</span></td>
+          <td><a href="/dashboard?name=木島圭汰&grade=12">木島圭汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.88</td>
+          <td><span>高校3</span></td>
+          <td>麻溝台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21968)">
+          <td><span>189</span></td>
+          <td><a href="/dashboard?name=国吉七琉&grade=11">国吉七琉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.88</td>
+          <td><span>高校2</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35628)">
+          <td><span>190</span></td>
+          <td><a href="/dashboard?name=佐々木涼介&grade=12">佐々木涼介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.90</td>
+          <td><span>高校3</span></td>
+          <td>宇都宮商業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46602)">
+          <td><span>191</span></td>
+          <td><a href="/dashboard?name=藤原涼太&grade=9">藤原涼太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.91</td>
+          <td><span>中学3</span></td>
+          <td>生麦</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50676)">
+          <td><span>192</span></td>
+          <td><a href="/dashboard?name=寺島俊結&grade=12">寺島俊結<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.92</td>
+          <td><span>高校3</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(49047)">
+          <td><span>193</span></td>
+          <td><a href="/dashboard?name=日下部瑞貴&grade=10">日下部瑞貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.92</td>
+          <td><span>高校1</span></td>
+          <td>ｻｲｴﾝｽ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30047)">
+          <td><span>194</span></td>
+          <td><a href="/dashboard?name=大平滉介&grade=12">大平滉介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.93</td>
+          <td><span>高校3</span></td>
+          <td>横浜隼人</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46603)">
+          <td><span>195</span></td>
+          <td><a href="/dashboard?name=飯島涼太&grade=8">飯島涼太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.93</td>
+          <td><span>中学2</span></td>
+          <td>金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30046)">
+          <td><span>196</span></td>
+          <td><a href="/dashboard?name=池田大佳&grade=12">池田大佳<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.93</td>
+          <td><span>高校3</span></td>
+          <td>桐光学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50677)">
+          <td><span>197</span></td>
+          <td><a href="/dashboard?name=西村恭佑&grade=11">西村恭佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.94</td>
+          <td><span>高校2</span></td>
+          <td>ｾﾝﾄﾗﾙ東戸塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50678)">
+          <td><span>198</span></td>
+          <td><a href="/dashboard?name=古瀬王海&grade=12">古瀬王海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:25.96</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37624)">
+          <td><span>199</span></td>
+          <td><a href="/dashboard?name=河合平&grade=9">河合平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.00</td>
+          <td><span>中学3</span></td>
+          <td>新田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48465)">
+          <td><span>200</span></td>
+          <td><a href="/dashboard?name=国富弘貴&grade=19">国富弘貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.01</td>
+          <td><span>一般</span></td>
+          <td>昭和町</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50679)">
+          <td><span>201</span></td>
+          <td><a href="/dashboard?name=石田俊輔&grade=14">石田俊輔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.01</td>
+          <td><span>大学2</span></td>
+          <td>桐蔭横浜大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21972)">
+          <td><span>202</span></td>
+          <td><a href="/dashboard?name=鈴木春覇&grade=9">鈴木春覇<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.01</td>
+          <td><span>中学3</span></td>
+          <td>ﾙﾈｻﾝｽ港南台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42494)">
+          <td><span>203</span></td>
+          <td><a href="/dashboard?name=落合誉通&grade=19">落合誉通<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.02</td>
+          <td><span>一般</span></td>
+          <td>海自横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21973)">
+          <td><span>204</span></td>
+          <td><a href="/dashboard?name=星野優斗&grade=13">星野優斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.02</td>
+          <td><span>大学1</span></td>
+          <td>東海大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50428)">
+          <td><span>205</span></td>
+          <td><a href="/dashboard?name=廣田圭祐&grade=10">廣田圭祐<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.03</td>
+          <td><span>高校1</span></td>
+          <td>甲府商業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50441)">
+          <td><span>206</span></td>
+          <td><a href="/dashboard?name=山田虎次郎&grade=12">山田虎次郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.07</td>
+          <td><span>高校3</span></td>
+          <td>日大明誠</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30049)">
+          <td><span>207</span></td>
+          <td><a href="/dashboard?name=福士雄太&grade=12">福士雄太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.09</td>
+          <td><span>高校3</span></td>
+          <td>湘南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14392)">
+          <td><span>208</span></td>
+          <td><a href="/dashboard?name=齋藤朝陽&grade=12">齋藤朝陽<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.09</td>
+          <td><span>高校3</span></td>
+          <td>ﾄﾋﾟｰｱﾔｾ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46605)">
+          <td><span>209</span></td>
+          <td><a href="/dashboard?name=小川優真&grade=8">小川優真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.09</td>
+          <td><span>中学2</span></td>
+          <td>上永谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21978)">
+          <td><span>210</span></td>
+          <td><a href="/dashboard?name=永田和暉&grade=15">永田和暉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.09</td>
+          <td><span>大学3</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48971)">
+          <td><span>211</span></td>
+          <td><a href="/dashboard?name=川西和真&grade=11">川西和真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.09</td>
+          <td><span>高校2</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21979)">
+          <td><span>212</span></td>
+          <td><a href="/dashboard?name=中村龍斗&grade=12">中村龍斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.10</td>
+          <td><span>高校3</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14393)">
+          <td><span>213</span></td>
+          <td><a href="/dashboard?name=ロベルアレクサンダー&grade=12">ロベルアレクサンダー<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.11</td>
+          <td><span>高校3</span></td>
+          <td>SA横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14293)">
+          <td><span>214</span></td>
+          <td><a href="/dashboard?name=藤野拓人&grade=9">藤野拓人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.13</td>
+          <td><span>中学3</span></td>
+          <td>ゆがわらSC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21981)">
+          <td><span>215</span></td>
+          <td><a href="/dashboard?name=林田大輝&grade=12">林田大輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.14</td>
+          <td><span>高校3</span></td>
+          <td>ｺﾅﾐ海老名</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21980)">
+          <td><span>216</span></td>
+          <td><a href="/dashboard?name=武貞斗&grade=12">武貞斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.14</td>
+          <td><span>高校3</span></td>
+          <td>麻溝台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30050)">
+          <td><span>217</span></td>
+          <td><a href="/dashboard?name=陸旭辰&grade=12">陸旭辰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.15</td>
+          <td><span>高校3</span></td>
+          <td>厚木</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(35630)">
+          <td><span>218</span></td>
+          <td><a href="/dashboard?name=城村颯来&grade=12">城村颯来<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.15</td>
+          <td><span>高校3</span></td>
+          <td>佐野日大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(32864)">
+          <td><span>219</span></td>
+          <td><a href="/dashboard?name=遠藤諒平&grade=10">遠藤諒平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.15</td>
+          <td><span>高校1</span></td>
+          <td>甲府東</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50685)">
+          <td><span>220</span></td>
+          <td><a href="/dashboard?name=太田要芽&grade=9">太田要芽<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.16</td>
+          <td><span>中学3</span></td>
+          <td>ﾙﾈｻﾝｽ港南台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50684)">
+          <td><span>221</span></td>
+          <td><a href="/dashboard?name=金木太一&grade=10">金木太一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.16</td>
+          <td><span>高校1</span></td>
+          <td>ﾀﾞﾝﾛｯﾌﾟS平塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37625)">
+          <td><span>222</span></td>
+          <td><a href="/dashboard?name=内野隼&grade=8">内野隼<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.17</td>
+          <td><span>中学2</span></td>
+          <td>慶應湘南藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21983)">
+          <td><span>223</span></td>
+          <td><a href="/dashboard?name=杉浦優一朗&grade=8">杉浦優一朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.18</td>
+          <td><span>中学2</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30051)">
+          <td><span>224</span></td>
+          <td><a href="/dashboard?name=大曲悠介&grade=12">大曲悠介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.18</td>
+          <td><span>高校3</span></td>
+          <td>有馬</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21982)">
+          <td><span>225</span></td>
+          <td><a href="/dashboard?name=田端祐紀&grade=11">田端祐紀<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.18</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30052)">
+          <td><span>226</span></td>
+          <td><a href="/dashboard?name=波多江直之&grade=10">波多江直之<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.19</td>
+          <td><span>高校1</span></td>
+          <td>藤沢西</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43343)">
+          <td><span>227</span></td>
+          <td><a href="/dashboard?name=竹内悠也&grade=12">竹内悠也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.19</td>
+          <td><span>高校3</span></td>
+          <td>桐蔭学園中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21984)">
+          <td><span>228</span></td>
+          <td><a href="/dashboard?name=山岸丈晃&grade=13">山岸丈晃<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.19</td>
+          <td><span>大学1</span></td>
+          <td>桐蔭横浜大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37626)">
+          <td><span>229</span></td>
+          <td><a href="/dashboard?name=金澤一樹&grade=9">金澤一樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.21</td>
+          <td><span>中学3</span></td>
+          <td>善行</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37627)">
+          <td><span>230</span></td>
+          <td><a href="/dashboard?name=岡本和&grade=9">岡本和<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.23</td>
+          <td><span>中学3</span></td>
+          <td>湘洋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14394)">
+          <td><span>231</span></td>
+          <td><a href="/dashboard?name=深谷颯音&grade=12">深谷颯音<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.24</td>
+          <td><span>高校3</span></td>
+          <td>ｻｷﾞﾇﾏSCM</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46607)">
+          <td><span>232</span></td>
+          <td><a href="/dashboard?name=野澤巧&grade=9">野澤巧<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.27</td>
+          <td><span>中学3</span></td>
+          <td>港南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21988)">
+          <td><span>233</span></td>
+          <td><a href="/dashboard?name=北彪正&grade=9">北彪正<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.27</td>
+          <td><span>中学3</span></td>
+          <td>ｲﾄﾏﾝ多摩</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42503)">
+          <td><span>234</span></td>
+          <td><a href="/dashboard?name=古賀武文&grade=19">古賀武文<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.27</td>
+          <td><span>一般</span></td>
+          <td>海自横連</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30054)">
+          <td><span>235</span></td>
+          <td><a href="/dashboard?name=鈴木健太郎&grade=11">鈴木健太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.28</td>
+          <td><span>高校2</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30053)">
+          <td><span>236</span></td>
+          <td><a href="/dashboard?name=磯田陸&grade=12">磯田陸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.28</td>
+          <td><span>高校3</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14294)">
+          <td><span>237</span></td>
+          <td><a href="/dashboard?name=平賀簾太郎&grade=9">平賀簾太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.29</td>
+          <td><span>中学3</span></td>
+          <td>ｺﾅﾐ林間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30055)">
+          <td><span>238</span></td>
+          <td><a href="/dashboard?name=小野悠翔&grade=12">小野悠翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.30</td>
+          <td><span>高校3</span></td>
+          <td>秦野総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21989)">
+          <td><span>239</span></td>
+          <td><a href="/dashboard?name=阿部広太郎&grade=10">阿部広太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.30</td>
+          <td><span>高校1</span></td>
+          <td>東急SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37628)">
+          <td><span>240</span></td>
+          <td><a href="/dashboard?name=海藤隆之介&grade=9">海藤隆之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.31</td>
+          <td><span>中学3</span></td>
+          <td>日本大学</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21990)">
+          <td><span>241</span></td>
+          <td><a href="/dashboard?name=中橋侑久&grade=11">中橋侑久<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.31</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43344)">
+          <td><span>242</span></td>
+          <td><a href="/dashboard?name=久保雄誠&grade=11">久保雄誠<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.32</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21992)">
+          <td><span>243</span></td>
+          <td><a href="/dashboard?name=神尾至輝&grade=9">神尾至輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.33</td>
+          <td><span>中学3</span></td>
+          <td>NECGSC玉川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14357)">
+          <td><span>244</span></td>
+          <td><a href="/dashboard?name=高橋貫太&grade=11">高橋貫太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.34</td>
+          <td><span>高校2</span></td>
+          <td>ｻｷﾞﾇﾏSC鷺沼</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30057)">
+          <td><span>245</span></td>
+          <td><a href="/dashboard?name=小野紘之介&grade=11">小野紘之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.35</td>
+          <td><span>高校2</span></td>
+          <td>横浜商科大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30056)">
+          <td><span>246</span></td>
+          <td><a href="/dashboard?name=高橋直也&grade=12">高橋直也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.35</td>
+          <td><span>高校3</span></td>
+          <td>東</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42504)">
+          <td><span>247</span></td>
+          <td><a href="/dashboard?name=林真也&grade=19">林真也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.36</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48972)">
+          <td><span>248</span></td>
+          <td><a href="/dashboard?name=葉山晋乃介&grade=11">葉山晋乃介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.38</td>
+          <td><span>高校2</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37630)">
+          <td><span>249</span></td>
+          <td><a href="/dashboard?name=伊藤翼&grade=9">伊藤翼<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.38</td>
+          <td><span>中学3</span></td>
+          <td>港南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14395)">
+          <td><span>250</span></td>
+          <td><a href="/dashboard?name=金子瑛&grade=11">金子瑛<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.38</td>
+          <td><span>高校2</span></td>
+          <td>逗子SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21994)">
+          <td><span>251</span></td>
+          <td><a href="/dashboard?name=坂倉友之介&grade=10">坂倉友之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.39</td>
+          <td><span>高校1</span></td>
+          <td>ｺﾅﾐ海老名</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37631)">
+          <td><span>252</span></td>
+          <td><a href="/dashboard?name=松井優弥&grade=8">松井優弥<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.39</td>
+          <td><span>中学2</span></td>
+          <td>厚木</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14358)">
+          <td><span>253</span></td>
+          <td><a href="/dashboard?name=岡颯大&grade=10">岡颯大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.40</td>
+          <td><span>高校1</span></td>
+          <td>OCEAN</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30058)">
+          <td><span>254</span></td>
+          <td><a href="/dashboard?name=平川慧&grade=12">平川慧<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.40</td>
+          <td><span>高校3</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30059)">
+          <td><span>255</span></td>
+          <td><a href="/dashboard?name=須永健太&grade=11">須永健太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.40</td>
+          <td><span>高校2</span></td>
+          <td>向上</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21995)">
+          <td><span>256</span></td>
+          <td><a href="/dashboard?name=佐藤治太&grade=12">佐藤治太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.40</td>
+          <td><span>高校3</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50138)">
+          <td><span>257</span></td>
+          <td><a href="/dashboard?name=吉川幸佑&grade=9">吉川幸佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.41</td>
+          <td><span>中学3</span></td>
+          <td>甲府南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37632)">
+          <td><span>258</span></td>
+          <td><a href="/dashboard?name=渡部光冴&grade=9">渡部光冴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.42</td>
+          <td><span>中学3</span></td>
+          <td>港南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30061)">
+          <td><span>259</span></td>
+          <td><a href="/dashboard?name=佐野琉馬&grade=11">佐野琉馬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.43</td>
+          <td><span>高校2</span></td>
+          <td>菅</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21997)">
+          <td><span>260</span></td>
+          <td><a href="/dashboard?name=熊谷光一郎&grade=9">熊谷光一郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.45</td>
+          <td><span>中学3</span></td>
+          <td>協栄MD座間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37633)">
+          <td><span>261</span></td>
+          <td><a href="/dashboard?name=真喜屋大輝&grade=9">真喜屋大輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.46</td>
+          <td><span>中学3</span></td>
+          <td>宮前平</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48884)">
+          <td><span>262</span></td>
+          <td><a href="/dashboard?name=橋本浩輝&grade=11">橋本浩輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.46</td>
+          <td><span>高校2</span></td>
+          <td>瀬谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21999)">
+          <td><span>263</span></td>
+          <td><a href="/dashboard?name=石井大也&grade=11">石井大也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.46</td>
+          <td><span>高校2</span></td>
+          <td>TOINGAKUEN</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(21998)">
+          <td><span>264</span></td>
+          <td><a href="/dashboard?name=伊藤和麿&grade=12">伊藤和麿<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.46</td>
+          <td><span>高校3</span></td>
+          <td>ｲﾄﾏﾝ横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50686)">
+          <td><span>265</span></td>
+          <td><a href="/dashboard?name=石田優&grade=8">石田優<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.47</td>
+          <td><span>中学2</span></td>
+          <td>逗子開成中</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30063)">
+          <td><span>266</span></td>
+          <td><a href="/dashboard?name=押木蓮太朗&grade=11">押木蓮太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.47</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30064)">
+          <td><span>267</span></td>
+          <td><a href="/dashboard?name=片岡春貴&grade=12">片岡春貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.48</td>
+          <td><span>高校3</span></td>
+          <td>みなと総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50687)">
+          <td><span>268</span></td>
+          <td><a href="/dashboard?name=児山泰玄&grade=10">児山泰玄<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.50</td>
+          <td><span>高校1</span></td>
+          <td>伊勢原SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22000)">
+          <td><span>269</span></td>
+          <td><a href="/dashboard?name=佐藤真輝&grade=9">佐藤真輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.50</td>
+          <td><span>中学3</span></td>
+          <td>協栄MD座間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42808)">
+          <td><span>270</span></td>
+          <td><a href="/dashboard?name=樋田峰大&grade=9">樋田峰大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.51</td>
+          <td><span>中学3</span></td>
+          <td>ﾌｨｯﾂ塩山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14296)">
+          <td><span>271</span></td>
+          <td><a href="/dashboard?name=平井悠一&grade=9">平井悠一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.52</td>
+          <td><span>中学3</span></td>
+          <td>ﾙﾈｻﾝｽ港南中</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48886)">
+          <td><span>272</span></td>
+          <td><a href="/dashboard?name=森川颯斗&grade=12">森川颯斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.52</td>
+          <td><span>高校3</span></td>
+          <td>川和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14274)">
+          <td><span>273</span></td>
+          <td><a href="/dashboard?name=岩瀬智也&grade=7">岩瀬智也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.54</td>
+          <td><span>中学1</span></td>
+          <td>NECGSC溝の口</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30066)">
+          <td><span>274</span></td>
+          <td><a href="/dashboard?name=永翁広太&grade=11">永翁広太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.55</td>
+          <td><span>高校2</span></td>
+          <td>横浜創学館</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14360)">
+          <td><span>275</span></td>
+          <td><a href="/dashboard?name=小野滉太&grade=11">小野滉太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.55</td>
+          <td><span>高校2</span></td>
+          <td>ｺﾅﾐ天王町</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50442)">
+          <td><span>276</span></td>
+          <td><a href="/dashboard?name=遠藤航太郎&grade=11">遠藤航太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.55</td>
+          <td><span>高校2</span></td>
+          <td>甲府東</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30065)">
+          <td><span>277</span></td>
+          <td><a href="/dashboard?name=杉山桜大&grade=12">杉山桜大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.55</td>
+          <td><span>高校3</span></td>
+          <td>金沢総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37637)">
+          <td><span>278</span></td>
+          <td><a href="/dashboard?name=松本桂太&grade=7">松本桂太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.57</td>
+          <td><span>中学1</span></td>
+          <td>高浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42505)">
+          <td><span>279</span></td>
+          <td><a href="/dashboard?name=東郷英章&grade=19">東郷英章<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.59</td>
+          <td><span>一般</span></td>
+          <td>JFE京浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50689)">
+          <td><span>280</span></td>
+          <td><a href="/dashboard?name=畑慶辰&grade=10">畑慶辰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.59</td>
+          <td><span>高校1</span></td>
+          <td>ﾏｯｸ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50124)">
+          <td><span>281</span></td>
+          <td><a href="/dashboard?name=藤川高廉&grade=8">藤川高廉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.60</td>
+          <td><span>中学2</span></td>
+          <td>韮崎東</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22003)">
+          <td><span>282</span></td>
+          <td><a href="/dashboard?name=松信優弥&grade=11">松信優弥<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.61</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48498)">
+          <td><span>283</span></td>
+          <td><a href="/dashboard?name=坂本健士&grade=19">坂本健士<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.61</td>
+          <td><span>一般</span></td>
+          <td>南ｱﾙﾌﾟｽ市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30069)">
+          <td><span>284</span></td>
+          <td><a href="/dashboard?name=前田恭祐&grade=12">前田恭祐<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.62</td>
+          <td><span>高校3</span></td>
+          <td>金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43347)">
+          <td><span>285</span></td>
+          <td><a href="/dashboard?name=勝田雄大&grade=12">勝田雄大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.62</td>
+          <td><span>高校3</span></td>
+          <td>南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37639)">
+          <td><span>286</span></td>
+          <td><a href="/dashboard?name=鈴木翔&grade=9">鈴木翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.63</td>
+          <td><span>中学3</span></td>
+          <td>つきみ野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30070)">
+          <td><span>287</span></td>
+          <td><a href="/dashboard?name=中坪晴希&grade=11">中坪晴希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.63</td>
+          <td><span>高校2</span></td>
+          <td>神奈川総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46519)">
+          <td><span>288</span></td>
+          <td><a href="/dashboard?name=桐村温大&grade=9">桐村温大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.64</td>
+          <td><span>中学3</span></td>
+          <td>境木</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48486)">
+          <td><span>289</span></td>
+          <td><a href="/dashboard?name=田草川翔太&grade=19">田草川翔太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.64</td>
+          <td><span>一般</span></td>
+          <td>山梨市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43349)">
+          <td><span>290</span></td>
+          <td><a href="/dashboard?name=蓑輪陸&grade=12">蓑輪陸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.64</td>
+          <td><span>高校3</span></td>
+          <td>緑園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42777)">
+          <td><span>291</span></td>
+          <td><a href="/dashboard?name=八木野航平&grade=6">八木野航平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.66</td>
+          <td><span>小学6</span></td>
+          <td>ﾌｨｯﾂ竜王</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30071)">
+          <td><span>292</span></td>
+          <td><a href="/dashboard?name=星野瑠偉&grade=11">星野瑠偉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.67</td>
+          <td><span>高校2</span></td>
+          <td>柏陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37640)">
+          <td><span>293</span></td>
+          <td><a href="/dashboard?name=大木琢生&grade=9">大木琢生<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.67</td>
+          <td><span>中学3</span></td>
+          <td>江陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37641)">
+          <td><span>294</span></td>
+          <td><a href="/dashboard?name=石貝拓海&grade=8">石貝拓海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.67</td>
+          <td><span>中学2</span></td>
+          <td>腰越</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48888)">
+          <td><span>295</span></td>
+          <td><a href="/dashboard?name=齋藤駿貴&grade=11">齋藤駿貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.68</td>
+          <td><span>高校2</span></td>
+          <td>山手学院</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37643)">
+          <td><span>296</span></td>
+          <td><a href="/dashboard?name=中岸岳也&grade=9">中岸岳也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.69</td>
+          <td><span>中学3</span></td>
+          <td>成瀬</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37644)">
+          <td><span>297</span></td>
+          <td><a href="/dashboard?name=佐藤零翼&grade=9">佐藤零翼<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.70</td>
+          <td><span>中学3</span></td>
+          <td>潮田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30072)">
+          <td><span>298</span></td>
+          <td><a href="/dashboard?name=山口玲於&grade=11">山口玲於<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.70</td>
+          <td><span>高校2</span></td>
+          <td>津久井浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48890)">
+          <td><span>299</span></td>
+          <td><a href="/dashboard?name=林航輝&grade=11">林航輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.71</td>
+          <td><span>高校2</span></td>
+          <td>旭</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37645)">
+          <td><span>300</span></td>
+          <td><a href="/dashboard?name=飽田陸斗&grade=9">飽田陸斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.71</td>
+          <td><span>中学3</span></td>
+          <td>寺尾</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22004)">
+          <td><span>301</span></td>
+          <td><a href="/dashboard?name=清水裕太&grade=11">清水裕太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.72</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22006)">
+          <td><span>302</span></td>
+          <td><a href="/dashboard?name=大杉有斗&grade=10">大杉有斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.72</td>
+          <td><span>高校1</span></td>
+          <td>ﾀﾞﾝﾛｯﾌﾟS平塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42810)">
+          <td><span>303</span></td>
+          <td><a href="/dashboard?name=鈴木仁&grade=12">鈴木仁<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.72</td>
+          <td><span>高校3</span></td>
+          <td>都留</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30075)">
+          <td><span>304</span></td>
+          <td><a href="/dashboard?name=難波海斗&grade=10">難波海斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.74</td>
+          <td><span>高校1</span></td>
+          <td>厚木商業</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22007)">
+          <td><span>305</span></td>
+          <td><a href="/dashboard?name=三宅博文&grade=11">三宅博文<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.75</td>
+          <td><span>高校2</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50691)">
+          <td><span>306</span></td>
+          <td><a href="/dashboard?name=小松純大&grade=10">小松純大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.78</td>
+          <td><span>高校1</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43350)">
+          <td><span>307</span></td>
+          <td><a href="/dashboard?name=河村駿佑&grade=11">河村駿佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.78</td>
+          <td><span>高校2</span></td>
+          <td>戸塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48891)">
+          <td><span>308</span></td>
+          <td><a href="/dashboard?name=上野雅直&grade=11">上野雅直<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.78</td>
+          <td><span>高校2</span></td>
+          <td>柏陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37646)">
+          <td><span>309</span></td>
+          <td><a href="/dashboard?name=太田海璃&grade=7">太田海璃<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.81</td>
+          <td><span>中学1</span></td>
+          <td>西高津</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37647)">
+          <td><span>310</span></td>
+          <td><a href="/dashboard?name=高尾虹歌&grade=9">高尾虹歌<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.82</td>
+          <td><span>中学3</span></td>
+          <td>片瀬</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37648)">
+          <td><span>311</span></td>
+          <td><a href="/dashboard?name=中川晃&grade=9">中川晃<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.83</td>
+          <td><span>中学3</span></td>
+          <td>平間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37649)">
+          <td><span>312</span></td>
+          <td><a href="/dashboard?name=荒木和貴&grade=9">荒木和貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.83</td>
+          <td><span>中学3</span></td>
+          <td>上永谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48487)">
+          <td><span>313</span></td>
+          <td><a href="/dashboard?name=秋山泰輝&grade=19">秋山泰輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.83</td>
+          <td><span>一般</span></td>
+          <td>甲府市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22011)">
+          <td><span>314</span></td>
+          <td><a href="/dashboard?name=佐古大亮&grade=9">佐古大亮<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.83</td>
+          <td><span>中学3</span></td>
+          <td>ｲﾄﾏﾝ多摩</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22013)">
+          <td><span>315</span></td>
+          <td><a href="/dashboard?name=清水悠&grade=8">清水悠<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.85</td>
+          <td><span>中学2</span></td>
+          <td>ﾚｵSS旭</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46521)">
+          <td><span>316</span></td>
+          <td><a href="/dashboard?name=大塚禅&grade=9">大塚禅<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.85</td>
+          <td><span>中学3</span></td>
+          <td>江陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37650)">
+          <td><span>317</span></td>
+          <td><a href="/dashboard?name=山田耀太&grade=9">山田耀太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.87</td>
+          <td><span>中学3</span></td>
+          <td>六角橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30078)">
+          <td><span>318</span></td>
+          <td><a href="/dashboard?name=小竹凌雅&grade=12">小竹凌雅<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.88</td>
+          <td><span>高校3</span></td>
+          <td>相模原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46522)">
+          <td><span>319</span></td>
+          <td><a href="/dashboard?name=鈴木春音&grade=8">鈴木春音<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.88</td>
+          <td><span>中学2</span></td>
+          <td>清新</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46523)">
+          <td><span>320</span></td>
+          <td><a href="/dashboard?name=割鞘泰耀&grade=9">割鞘泰耀<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.89</td>
+          <td><span>中学3</span></td>
+          <td>六角橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37651)">
+          <td><span>321</span></td>
+          <td><a href="/dashboard?name=小堺湧斗&grade=9">小堺湧斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.89</td>
+          <td><span>中学3</span></td>
+          <td>新羽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22015)">
+          <td><span>322</span></td>
+          <td><a href="/dashboard?name=平本拓己&grade=11">平本拓己<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.89</td>
+          <td><span>高校2</span></td>
+          <td>相模原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22016)">
+          <td><span>323</span></td>
+          <td><a href="/dashboard?name=岩井誠治&grade=8">岩井誠治<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.89</td>
+          <td><span>中学2</span></td>
+          <td>ｻﾞﾊﾞｽ鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42506)">
+          <td><span>324</span></td>
+          <td><a href="/dashboard?name=藤野議章&grade=19">藤野議章<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.90</td>
+          <td><span>一般</span></td>
+          <td>海自横連</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30080)">
+          <td><span>325</span></td>
+          <td><a href="/dashboard?name=レガスト健一&grade=12">レガスト健一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.91</td>
+          <td><span>高校3</span></td>
+          <td>平塚湘風</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30081)">
+          <td><span>326</span></td>
+          <td><a href="/dashboard?name=木村怜旺&grade=12">木村怜旺<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.92</td>
+          <td><span>高校3</span></td>
+          <td>百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30082)">
+          <td><span>327</span></td>
+          <td><a href="/dashboard?name=山崎康平&grade=10">山崎康平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.93</td>
+          <td><span>高校1</span></td>
+          <td>上鶴間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22018)">
+          <td><span>328</span></td>
+          <td><a href="/dashboard?name=大塚陽&grade=11">大塚陽<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.93</td>
+          <td><span>高校2</span></td>
+          <td>相模原市水協</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43352)">
+          <td><span>329</span></td>
+          <td><a href="/dashboard?name=秋本竜之介&grade=12">秋本竜之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.93</td>
+          <td><span>高校3</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30083)">
+          <td><span>330</span></td>
+          <td><a href="/dashboard?name=飯岡岳&grade=10">飯岡岳<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.94</td>
+          <td><span>高校1</span></td>
+          <td>日大藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(20786)">
+          <td><span>331</span></td>
+          <td><a href="/dashboard?name=山内洋喜&grade=9">山内洋喜<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.94</td>
+          <td><span>中学3</span></td>
+          <td>ﾌｨｯﾂ甲府</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48892)">
+          <td><span>332</span></td>
+          <td><a href="/dashboard?name=加佐見洋斗&grade=10">加佐見洋斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.96</td>
+          <td><span>高校1</span></td>
+          <td>山手学院</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50125)">
+          <td><span>333</span></td>
+          <td><a href="/dashboard?name=穎川太郎&grade=8">穎川太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.97</td>
+          <td><span>中学2</span></td>
+          <td>山梨南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(39673)">
+          <td><span>334</span></td>
+          <td><a href="/dashboard?name=若林暖人&grade=8">若林暖人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.97</td>
+          <td><span>中学2</span></td>
+          <td>上条</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46524)">
+          <td><span>335</span></td>
+          <td><a href="/dashboard?name=佐藤能亜&grade=8">佐藤能亜<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.97</td>
+          <td><span>中学2</span></td>
+          <td>桐光学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46525)">
+          <td><span>336</span></td>
+          <td><a href="/dashboard?name=星川健太郎&grade=9">星川健太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.98</td>
+          <td><span>中学3</span></td>
+          <td>下瀬谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37654)">
+          <td><span>337</span></td>
+          <td><a href="/dashboard?name=政池佑人&grade=9">政池佑人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:26.99</td>
+          <td><span>中学3</span></td>
+          <td>六角橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37655)">
+          <td><span>338</span></td>
+          <td><a href="/dashboard?name=小見山侃大&grade=8">小見山侃大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.00</td>
+          <td><span>中学2</span></td>
+          <td>慶應普通部</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22021)">
+          <td><span>339</span></td>
+          <td><a href="/dashboard?name=中西芳明ｱﾚｯｸｽ&grade=14">中西芳明ｱﾚｯｸｽ<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.00</td>
+          <td><span>大学2</span></td>
+          <td>日本体育大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22022)">
+          <td><span>340</span></td>
+          <td><a href="/dashboard?name=熊谷真樹&grade=12">熊谷真樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.02</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30084)">
+          <td><span>341</span></td>
+          <td><a href="/dashboard?name=中村歩海&grade=12">中村歩海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.04</td>
+          <td><span>高校3</span></td>
+          <td>川崎工科</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14303)">
+          <td><span>342</span></td>
+          <td><a href="/dashboard?name=大谷央人&grade=9">大谷央人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.05</td>
+          <td><span>中学3</span></td>
+          <td>ｻｷﾞﾇﾏSCM</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37657)">
+          <td><span>343</span></td>
+          <td><a href="/dashboard?name=井山海&grade=9">井山海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.05</td>
+          <td><span>中学3</span></td>
+          <td>白鴎</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22024)">
+          <td><span>344</span></td>
+          <td><a href="/dashboard?name=亀井勇輝&grade=9">亀井勇輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.06</td>
+          <td><span>中学3</span></td>
+          <td>ATSC.YW</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14304)">
+          <td><span>345</span></td>
+          <td><a href="/dashboard?name=北澤博貴&grade=8">北澤博貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.07</td>
+          <td><span>中学2</span></td>
+          <td>NECGSC玉川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48488)">
+          <td><span>346</span></td>
+          <td><a href="/dashboard?name=天野築&grade=19">天野築<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.07</td>
+          <td><span>一般</span></td>
+          <td>大月市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48973)">
+          <td><span>347</span></td>
+          <td><a href="/dashboard?name=木村佳正&grade=11">木村佳正<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.07</td>
+          <td><span>高校2</span></td>
+          <td>武相</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30086)">
+          <td><span>348</span></td>
+          <td><a href="/dashboard?name=中村ライアン&grade=12">中村ライアン<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.08</td>
+          <td><span>高校3</span></td>
+          <td>金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43354)">
+          <td><span>349</span></td>
+          <td><a href="/dashboard?name=大槻渉&grade=12">大槻渉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.08</td>
+          <td><span>高校3</span></td>
+          <td>桐蔭学園中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(33730)">
+          <td><span>350</span></td>
+          <td><a href="/dashboard?name=中嶋晟一朗&grade=8">中嶋晟一朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.08</td>
+          <td><span>中学2</span></td>
+          <td>山梨大学附属</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22028)">
+          <td><span>351</span></td>
+          <td><a href="/dashboard?name=小峯拓樹&grade=10">小峯拓樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.10</td>
+          <td><span>高校1</span></td>
+          <td>東急SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48893)">
+          <td><span>352</span></td>
+          <td><a href="/dashboard?name=寺島陸&grade=10">寺島陸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.11</td>
+          <td><span>高校1</span></td>
+          <td>神奈川総合</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37659)">
+          <td><span>353</span></td>
+          <td><a href="/dashboard?name=得平空賀&grade=9">得平空賀<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.11</td>
+          <td><span>中学3</span></td>
+          <td>鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14275)">
+          <td><span>354</span></td>
+          <td><a href="/dashboard?name=吉澤凛夢&grade=7">吉澤凛夢<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.12</td>
+          <td><span>中学1</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48975)">
+          <td><span>355</span></td>
+          <td><a href="/dashboard?name=佐藤優介&grade=10">佐藤優介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.12</td>
+          <td><span>高校1</span></td>
+          <td>武相</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22031)">
+          <td><span>356</span></td>
+          <td><a href="/dashboard?name=内野颯&grade=9">内野颯<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.13</td>
+          <td><span>中学3</span></td>
+          <td>ｲﾄﾏﾝ多摩</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43355)">
+          <td><span>357</span></td>
+          <td><a href="/dashboard?name=佐藤謙介&grade=10">佐藤謙介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.14</td>
+          <td><span>高校1</span></td>
+          <td>旭</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22032)">
+          <td><span>358</span></td>
+          <td><a href="/dashboard?name=白石敦士&grade=11">白石敦士<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.15</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30087)">
+          <td><span>359</span></td>
+          <td><a href="/dashboard?name=吾郷廉&grade=12">吾郷廉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.15</td>
+          <td><span>高校3</span></td>
+          <td>ｻｲｴﾝｽ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48489)">
+          <td><span>360</span></td>
+          <td><a href="/dashboard?name=間瀬玄盛&grade=13">間瀬玄盛<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.15</td>
+          <td><span>大学1</span></td>
+          <td>甲斐市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37661)">
+          <td><span>361</span></td>
+          <td><a href="/dashboard?name=上田涼太&grade=8">上田涼太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.15</td>
+          <td><span>中学2</span></td>
+          <td>川和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14305)">
+          <td><span>362</span></td>
+          <td><a href="/dashboard?name=渡邉慶一&grade=9">渡邉慶一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.15</td>
+          <td><span>中学3</span></td>
+          <td>ｲﾄﾏﾝ港北</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22034)">
+          <td><span>363</span></td>
+          <td><a href="/dashboard?name=泉水怜&grade=8">泉水怜<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.16</td>
+          <td><span>中学2</span></td>
+          <td>ｾﾝﾄﾗﾙ戸塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22033)">
+          <td><span>364</span></td>
+          <td><a href="/dashboard?name=高原秀斗&grade=11">高原秀斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.16</td>
+          <td><span>高校2</span></td>
+          <td>Nagatsuta.SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48490)">
+          <td><span>365</span></td>
+          <td><a href="/dashboard?name=土屋修人&grade=19">土屋修人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.16</td>
+          <td><span>一般</span></td>
+          <td>笛吹市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48894)">
+          <td><span>366</span></td>
+          <td><a href="/dashboard?name=高橋凪&grade=11">高橋凪<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.17</td>
+          <td><span>高校2</span></td>
+          <td>鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46529)">
+          <td><span>367</span></td>
+          <td><a href="/dashboard?name=本多佑&grade=9">本多佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.18</td>
+          <td><span>中学3</span></td>
+          <td>湘南学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37662)">
+          <td><span>368</span></td>
+          <td><a href="/dashboard?name=後藤旭輝&grade=8">後藤旭輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.18</td>
+          <td><span>中学2</span></td>
+          <td>つきみ野</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50694)">
+          <td><span>369</span></td>
+          <td><a href="/dashboard?name=太田智希&grade=9">太田智希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.19</td>
+          <td><span>中学3</span></td>
+          <td>ｾﾝﾄﾗﾙ東戸塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37663)">
+          <td><span>370</span></td>
+          <td><a href="/dashboard?name=小菅蒼央&grade=8">小菅蒼央<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.19</td>
+          <td><span>中学2</span></td>
+          <td>野比</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48895)">
+          <td><span>371</span></td>
+          <td><a href="/dashboard?name=内堀峻成&grade=11">内堀峻成<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.20</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園中等</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50696)">
+          <td><span>372</span></td>
+          <td><a href="/dashboard?name=赤津伊織&grade=11">赤津伊織<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.21</td>
+          <td><span>高校2</span></td>
+          <td>ﾚｵSS愛川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(20788)">
+          <td><span>373</span></td>
+          <td><a href="/dashboard?name=遠藤叶大&grade=9">遠藤叶大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.21</td>
+          <td><span>中学3</span></td>
+          <td>ﾌｨｯﾂ竜王</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14307)">
+          <td><span>374</span></td>
+          <td><a href="/dashboard?name=勅使川原孔明&grade=8">勅使川原孔明<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.21</td>
+          <td><span>中学2</span></td>
+          <td>ﾙﾈｻﾝｽ港南中</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37664)">
+          <td><span>375</span></td>
+          <td><a href="/dashboard?name=川西優哉&grade=9">川西優哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.22</td>
+          <td><span>中学3</span></td>
+          <td>公文国際</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14308)">
+          <td><span>376</span></td>
+          <td><a href="/dashboard?name=渡部一心&grade=9">渡部一心<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.24</td>
+          <td><span>中学3</span></td>
+          <td>協栄MD相模原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22037)">
+          <td><span>377</span></td>
+          <td><a href="/dashboard?name=深澤和人&grade=9">深澤和人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.24</td>
+          <td><span>中学3</span></td>
+          <td>ﾒｶﾞﾛｽ大和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37666)">
+          <td><span>378</span></td>
+          <td><a href="/dashboard?name=石本大道&grade=7">石本大道<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.24</td>
+          <td><span>中学1</span></td>
+          <td>今泉</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43356)">
+          <td><span>379</span></td>
+          <td><a href="/dashboard?name=三須隆太郎&grade=10">三須隆太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.26</td>
+          <td><span>高校1</span></td>
+          <td>山手学院</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22038)">
+          <td><span>380</span></td>
+          <td><a href="/dashboard?name=浅野良太&grade=12">浅野良太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.27</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37668)">
+          <td><span>381</span></td>
+          <td><a href="/dashboard?name=高梨大和&grade=9">高梨大和<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.28</td>
+          <td><span>中学3</span></td>
+          <td>南林間</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50697)">
+          <td><span>382</span></td>
+          <td><a href="/dashboard?name=益子和樹&grade=12">益子和樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.29</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30089)">
+          <td><span>383</span></td>
+          <td><a href="/dashboard?name=石倉聖士&grade=12">石倉聖士<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.29</td>
+          <td><span>高校3</span></td>
+          <td>公文国際</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22041)">
+          <td><span>384</span></td>
+          <td><a href="/dashboard?name=石川浩暉&grade=11">石川浩暉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.31</td>
+          <td><span>高校2</span></td>
+          <td>ﾄﾋﾟｰｱﾔｾ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22040)">
+          <td><span>385</span></td>
+          <td><a href="/dashboard?name=田中彰&grade=11">田中彰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.31</td>
+          <td><span>高校2</span></td>
+          <td>日大藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30090)">
+          <td><span>386</span></td>
+          <td><a href="/dashboard?name=平林琉斗&grade=12">平林琉斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.32</td>
+          <td><span>高校3</span></td>
+          <td>厚木北</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42782)">
+          <td><span>387</span></td>
+          <td><a href="/dashboard?name=雨宮凛空&grade=8">雨宮凛空<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.33</td>
+          <td><span>中学2</span></td>
+          <td>なかだてSS</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22045)">
+          <td><span>388</span></td>
+          <td><a href="/dashboard?name=阿部烈&grade=9">阿部烈<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.34</td>
+          <td><span>中学3</span></td>
+          <td>ｳｫｰﾀｰﾒｲﾂ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22046)">
+          <td><span>389</span></td>
+          <td><a href="/dashboard?name=廣木和真&grade=8">廣木和真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.34</td>
+          <td><span>中学2</span></td>
+          <td>ｺﾅﾐ天王町</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37669)">
+          <td><span>390</span></td>
+          <td><a href="/dashboard?name=秋山真颯&grade=7">秋山真颯<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.34</td>
+          <td><span>中学1</span></td>
+          <td>高津</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14276)">
+          <td><span>391</span></td>
+          <td><a href="/dashboard?name=臼居聖汰&grade=7">臼居聖汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.35</td>
+          <td><span>中学1</span></td>
+          <td>SPﾎｳﾄｸ金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22047)">
+          <td><span>392</span></td>
+          <td><a href="/dashboard?name=鈴木優風&grade=11">鈴木優風<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.36</td>
+          <td><span>高校2</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50699)">
+          <td><span>393</span></td>
+          <td><a href="/dashboard?name=結城陽斗&grade=11">結城陽斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.36</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37670)">
+          <td><span>394</span></td>
+          <td><a href="/dashboard?name=髙橋泰地&grade=9">髙橋泰地<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.38</td>
+          <td><span>中学3</span></td>
+          <td>東山田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30091)">
+          <td><span>395</span></td>
+          <td><a href="/dashboard?name=矢澤拓海&grade=12">矢澤拓海<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.39</td>
+          <td><span>高校3</span></td>
+          <td>茅ｹ崎</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46533)">
+          <td><span>396</span></td>
+          <td><a href="/dashboard?name=村上将太&grade=9">村上将太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.40</td>
+          <td><span>中学3</span></td>
+          <td>谷本</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22050)">
+          <td><span>397</span></td>
+          <td><a href="/dashboard?name=安蒜雅弘&grade=12">安蒜雅弘<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.41</td>
+          <td><span>高校3</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22051)">
+          <td><span>398</span></td>
+          <td><a href="/dashboard?name=赤瀬川祐一&grade=12">赤瀬川祐一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.41</td>
+          <td><span>高校3</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30092)">
+          <td><span>399</span></td>
+          <td><a href="/dashboard?name=小川航輝&grade=12">小川航輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.41</td>
+          <td><span>高校3</span></td>
+          <td>横浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(20740)">
+          <td><span>400</span></td>
+          <td><a href="/dashboard?name=風間心来&grade=7">風間心来<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.41</td>
+          <td><span>中学1</span></td>
+          <td>ﾌﾞﾙｰｱｰｽ石和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14315)">
+          <td><span>401</span></td>
+          <td><a href="/dashboard?name=西山爽&grade=8">西山爽<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.42</td>
+          <td><span>中学2</span></td>
+          <td>ｺﾅﾐ海老名</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42495)">
+          <td><span>402</span></td>
+          <td><a href="/dashboard?name=公地将大&grade=19">公地将大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.43</td>
+          <td><span>一般</span></td>
+          <td>富士ﾌｲﾙﾑ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22052)">
+          <td><span>403</span></td>
+          <td><a href="/dashboard?name=高田涼平&grade=10">高田涼平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.43</td>
+          <td><span>高校1</span></td>
+          <td>ﾙﾈｻﾝｽ淵野辺</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48896)">
+          <td><span>404</span></td>
+          <td><a href="/dashboard?name=小林峻良&grade=11">小林峻良<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.43</td>
+          <td><span>高校2</span></td>
+          <td>横浜創学館</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37671)">
+          <td><span>405</span></td>
+          <td><a href="/dashboard?name=鈴木鴻&grade=9">鈴木鴻<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.44</td>
+          <td><span>中学3</span></td>
+          <td>上溝</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37673)">
+          <td><span>406</span></td>
+          <td><a href="/dashboard?name=加藤誠也&grade=9">加藤誠也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.47</td>
+          <td><span>中学3</span></td>
+          <td>桐光学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22055)">
+          <td><span>407</span></td>
+          <td><a href="/dashboard?name=野西隆太&grade=10">野西隆太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.48</td>
+          <td><span>高校1</span></td>
+          <td>NECGSC玉川</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22057)">
+          <td><span>408</span></td>
+          <td><a href="/dashboard?name=東條颯大&grade=7">東條颯大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.49</td>
+          <td><span>中学1</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14317)">
+          <td><span>409</span></td>
+          <td><a href="/dashboard?name=岸川究&grade=8">岸川究<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.50</td>
+          <td><span>中学2</span></td>
+          <td>YSMC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48898)">
+          <td><span>410</span></td>
+          <td><a href="/dashboard?name=滝本力斗&grade=10">滝本力斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.50</td>
+          <td><span>高校1</span></td>
+          <td>横浜清陵</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48509)">
+          <td><span>411</span></td>
+          <td><a href="/dashboard?name=加藤義一&grade=19">加藤義一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.51</td>
+          <td><span>一般</span></td>
+          <td>甲府市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30093)">
+          <td><span>412</span></td>
+          <td><a href="/dashboard?name=内藤敦輝&grade=12">内藤敦輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.51</td>
+          <td><span>高校3</span></td>
+          <td>有馬</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22058)">
+          <td><span>413</span></td>
+          <td><a href="/dashboard?name=大島創仁&grade=11">大島創仁<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.51</td>
+          <td><span>高校2</span></td>
+          <td>YSMC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30094)">
+          <td><span>414</span></td>
+          <td><a href="/dashboard?name=梅津朝陽&grade=10">梅津朝陽<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.52</td>
+          <td><span>高校1</span></td>
+          <td>住吉</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22060)">
+          <td><span>415</span></td>
+          <td><a href="/dashboard?name=星大就&grade=11">星大就<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.52</td>
+          <td><span>高校2</span></td>
+          <td>ﾁｬﾝﾋﾟｵﾝS</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22061)">
+          <td><span>416</span></td>
+          <td><a href="/dashboard?name=金子知広&grade=9">金子知広<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.52</td>
+          <td><span>中学3</span></td>
+          <td>ｻﾞﾊﾞｽ鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30095)">
+          <td><span>417</span></td>
+          <td><a href="/dashboard?name=高倉康平&grade=12">高倉康平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.53</td>
+          <td><span>高校3</span></td>
+          <td>旭</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50701)">
+          <td><span>418</span></td>
+          <td><a href="/dashboard?name=日下航太朗&grade=10">日下航太朗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.54</td>
+          <td><span>高校1</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30096)">
+          <td><span>419</span></td>
+          <td><a href="/dashboard?name=高槗佳汰&grade=12">高槗佳汰<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.54</td>
+          <td><span>高校3</span></td>
+          <td>川崎北</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22063)">
+          <td><span>420</span></td>
+          <td><a href="/dashboard?name=作前太一&grade=10">作前太一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.54</td>
+          <td><span>高校1</span></td>
+          <td>神奈中SS</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22066)">
+          <td><span>421</span></td>
+          <td><a href="/dashboard?name=下江陽翔&grade=8">下江陽翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.57</td>
+          <td><span>中学2</span></td>
+          <td>東急SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50702)">
+          <td><span>422</span></td>
+          <td><a href="/dashboard?name=奈留海人&grade=10">奈留海人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.57</td>
+          <td><span>高校1</span></td>
+          <td>ﾅｲｽ･横山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37674)">
+          <td><span>423</span></td>
+          <td><a href="/dashboard?name=石井健琉&grade=9">石井健琉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.57</td>
+          <td><span>中学3</span></td>
+          <td>鴨宮</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48899)">
+          <td><span>424</span></td>
+          <td><a href="/dashboard?name=松本祐太&grade=10">松本祐太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.57</td>
+          <td><span>高校1</span></td>
+          <td>横浜商科大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42496)">
+          <td><span>425</span></td>
+          <td><a href="/dashboard?name=平井翔&grade=19">平井翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.58</td>
+          <td><span>一般</span></td>
+          <td>横浜市役所</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37675)">
+          <td><span>426</span></td>
+          <td><a href="/dashboard?name=露木慎之介&grade=7">露木慎之介<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.58</td>
+          <td><span>中学1</span></td>
+          <td>浜須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22067)">
+          <td><span>427</span></td>
+          <td><a href="/dashboard?name=児玉諒大&grade=12">児玉諒大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.58</td>
+          <td><span>高校3</span></td>
+          <td>湘南学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22068)">
+          <td><span>428</span></td>
+          <td><a href="/dashboard?name=山田海斗&grade=9">山田海斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.58</td>
+          <td><span>中学3</span></td>
+          <td>SPﾎｳﾄｸ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37676)">
+          <td><span>429</span></td>
+          <td><a href="/dashboard?name=小池麗生&grade=9">小池麗生<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.59</td>
+          <td><span>中学3</span></td>
+          <td>西中原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30097)">
+          <td><span>430</span></td>
+          <td><a href="/dashboard?name=高橋佑季&grade=11">高橋佑季<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.59</td>
+          <td><span>高校2</span></td>
+          <td>横浜創学館</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50703)">
+          <td><span>431</span></td>
+          <td><a href="/dashboard?name=柄澤健太&grade=11">柄澤健太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.60</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22069)">
+          <td><span>432</span></td>
+          <td><a href="/dashboard?name=小丸泰知&grade=10">小丸泰知<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.61</td>
+          <td><span>高校1</span></td>
+          <td>ｲﾄﾏﾝ多摩</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(39676)">
+          <td><span>433</span></td>
+          <td><a href="/dashboard?name=小俣圭輔&grade=7">小俣圭輔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.62</td>
+          <td><span>中学1</span></td>
+          <td>都留二</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37677)">
+          <td><span>434</span></td>
+          <td><a href="/dashboard?name=髙田陸&grade=9">髙田陸<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.62</td>
+          <td><span>中学3</span></td>
+          <td>西本郷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48900)">
+          <td><span>435</span></td>
+          <td><a href="/dashboard?name=栂野優斗&grade=11">栂野優斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.62</td>
+          <td><span>高校2</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50110)">
+          <td><span>436</span></td>
+          <td><a href="/dashboard?name=三品陽人&grade=7">三品陽人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.63</td>
+          <td><span>中学1</span></td>
+          <td>駿台甲府</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30098)">
+          <td><span>437</span></td>
+          <td><a href="/dashboard?name=田中瑞己&grade=12">田中瑞己<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.63</td>
+          <td><span>高校3</span></td>
+          <td>川和</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50140)">
+          <td><span>438</span></td>
+          <td><a href="/dashboard?name=新井康輝&grade=9">新井康輝<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.64</td>
+          <td><span>中学3</span></td>
+          <td>山梨南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48901)">
+          <td><span>439</span></td>
+          <td><a href="/dashboard?name=清水優聖&grade=10">清水優聖<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.64</td>
+          <td><span>高校1</span></td>
+          <td>横浜商科大</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37679)">
+          <td><span>440</span></td>
+          <td><a href="/dashboard?name=片倉幹太&grade=7">片倉幹太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.65</td>
+          <td><span>中学1</span></td>
+          <td>金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30099)">
+          <td><span>441</span></td>
+          <td><a href="/dashboard?name=田縄芽弥&grade=10">田縄芽弥<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.65</td>
+          <td><span>高校1</span></td>
+          <td>湘南学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50704)">
+          <td><span>442</span></td>
+          <td><a href="/dashboard?name=中谷浬&grade=9">中谷浬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.66</td>
+          <td><span>中学3</span></td>
+          <td>ﾙﾈｻﾝｽ港南台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30100)">
+          <td><span>443</span></td>
+          <td><a href="/dashboard?name=樋口海翔&grade=12">樋口海翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.66</td>
+          <td><span>高校3</span></td>
+          <td>鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(20742)">
+          <td><span>444</span></td>
+          <td><a href="/dashboard?name=藤田悠太郎&grade=9">藤田悠太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.67</td>
+          <td><span>中学3</span></td>
+          <td>ﾌｨｯﾂ竜王</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50706)">
+          <td><span>445</span></td>
+          <td><a href="/dashboard?name=戸石豊&grade=7">戸石豊<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.68</td>
+          <td><span>中学1</span></td>
+          <td>ﾄﾋﾟｰｱﾔｾ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37681)">
+          <td><span>446</span></td>
+          <td><a href="/dashboard?name=平尾笙人&grade=8">平尾笙人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.68</td>
+          <td><span>中学2</span></td>
+          <td>川崎有馬</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37680)">
+          <td><span>447</span></td>
+          <td><a href="/dashboard?name=加藤翔太&grade=9">加藤翔太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.68</td>
+          <td><span>中学3</span></td>
+          <td>御幸</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42499)">
+          <td><span>448</span></td>
+          <td><a href="/dashboard?name=柳瀬浩喜&grade=19">柳瀬浩喜<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.68</td>
+          <td><span>一般</span></td>
+          <td>海自横須賀</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22072)">
+          <td><span>449</span></td>
+          <td><a href="/dashboard?name=伊賀上竜馬&grade=9">伊賀上竜馬<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.69</td>
+          <td><span>中学3</span></td>
+          <td>Nagatsuta.SC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50707)">
+          <td><span>450</span></td>
+          <td><a href="/dashboard?name=青本空大&grade=9">青本空大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.69</td>
+          <td><span>中学3</span></td>
+          <td>ﾅｲｽ･横山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48491)">
+          <td><span>451</span></td>
+          <td><a href="/dashboard?name=樋口満貴&grade=19">樋口満貴<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.69</td>
+          <td><span>一般</span></td>
+          <td>大月市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30101)">
+          <td><span>452</span></td>
+          <td><a href="/dashboard?name=伊藤瑞起&grade=10">伊藤瑞起<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.70</td>
+          <td><span>高校1</span></td>
+          <td>白山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37682)">
+          <td><span>453</span></td>
+          <td><a href="/dashboard?name=藤井暖大&grade=9">藤井暖大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.71</td>
+          <td><span>中学3</span></td>
+          <td>秦野南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30102)">
+          <td><span>454</span></td>
+          <td><a href="/dashboard?name=石黒大地&grade=12">石黒大地<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.71</td>
+          <td><span>高校3</span></td>
+          <td>柏陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50141)">
+          <td><span>455</span></td>
+          <td><a href="/dashboard?name=家登正旺&grade=9">家登正旺<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.71</td>
+          <td><span>中学3</span></td>
+          <td>山梨大学附属</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50708)">
+          <td><span>456</span></td>
+          <td><a href="/dashboard?name=永井悠太郎&grade=10">永井悠太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.72</td>
+          <td><span>高校1</span></td>
+          <td>ﾏｯｸ藤沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22074)">
+          <td><span>457</span></td>
+          <td><a href="/dashboard?name=根本勢也&grade=10">根本勢也<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.72</td>
+          <td><span>高校1</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22076)">
+          <td><span>458</span></td>
+          <td><a href="/dashboard?name=向出秀平&grade=12">向出秀平<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.73</td>
+          <td><span>高校3</span></td>
+          <td>三浦学苑</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37683)">
+          <td><span>459</span></td>
+          <td><a href="/dashboard?name=五十嵐翔&grade=8">五十嵐翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.74</td>
+          <td><span>中学2</span></td>
+          <td>高倉</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30104)">
+          <td><span>460</span></td>
+          <td><a href="/dashboard?name=尾熊夢翔&grade=10">尾熊夢翔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.75</td>
+          <td><span>高校1</span></td>
+          <td>海洋科学</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50709)">
+          <td><span>461</span></td>
+          <td><a href="/dashboard?name=山田真希&grade=8">山田真希<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.75</td>
+          <td><span>中学2</span></td>
+          <td>ATSC.YW</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22077)">
+          <td><span>462</span></td>
+          <td><a href="/dashboard?name=三枝瑠生&grade=11">三枝瑠生<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.75</td>
+          <td><span>高校2</span></td>
+          <td>日大高</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30103)">
+          <td><span>463</span></td>
+          <td><a href="/dashboard?name=佐野竜太&grade=11">佐野竜太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.75</td>
+          <td><span>高校2</span></td>
+          <td>舞岡</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22078)">
+          <td><span>464</span></td>
+          <td><a href="/dashboard?name=広木誠道&grade=10">広木誠道<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.76</td>
+          <td><span>高校1</span></td>
+          <td>ﾙﾈｻﾝｽ淵野辺</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37684)">
+          <td><span>465</span></td>
+          <td><a href="/dashboard?name=杉山健斗&grade=9">杉山健斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.76</td>
+          <td><span>中学3</span></td>
+          <td>江陽</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37685)">
+          <td><span>466</span></td>
+          <td><a href="/dashboard?name=末松洋祐&grade=8">末松洋祐<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.78</td>
+          <td><span>中学2</span></td>
+          <td>金沢</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48976)">
+          <td><span>467</span></td>
+          <td><a href="/dashboard?name=横石浩太郎&grade=12">横石浩太郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.78</td>
+          <td><span>高校3</span></td>
+          <td>慶応</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50710)">
+          <td><span>468</span></td>
+          <td><a href="/dashboard?name=川村健心&grade=11">川村健心<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.79</td>
+          <td><span>高校2</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46155)">
+          <td><span>469</span></td>
+          <td><a href="/dashboard?name=柏岡瑶人&grade=6">柏岡瑶人<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.79</td>
+          <td><span>小学6</span></td>
+          <td>八田</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(32868)">
+          <td><span>470</span></td>
+          <td><a href="/dashboard?name=河西晃佑&grade=12">河西晃佑<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.80</td>
+          <td><span>高校3</span></td>
+          <td>駿台甲府</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37686)">
+          <td><span>471</span></td>
+          <td><a href="/dashboard?name=森村聡&grade=9">森村聡<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.81</td>
+          <td><span>中学3</span></td>
+          <td>日本大学</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14278)">
+          <td><span>472</span></td>
+          <td><a href="/dashboard?name=成田律己&grade=7">成田律己<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.82</td>
+          <td><span>中学1</span></td>
+          <td>ｲﾄﾏﾝ新百合丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37687)">
+          <td><span>473</span></td>
+          <td><a href="/dashboard?name=松浦海音&grade=9">松浦海音<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.82</td>
+          <td><span>中学3</span></td>
+          <td>野比</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(43359)">
+          <td><span>474</span></td>
+          <td><a href="/dashboard?name=嘉山嚴德&grade=11">嘉山嚴德<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.82</td>
+          <td><span>高校2</span></td>
+          <td>南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37688)">
+          <td><span>475</span></td>
+          <td><a href="/dashboard?name=宮澤宙士&grade=8">宮澤宙士<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.82</td>
+          <td><span>中学2</span></td>
+          <td>上永谷</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50126)">
+          <td><span>476</span></td>
+          <td><a href="/dashboard?name=小嶋大蒼&grade=8">小嶋大蒼<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.85</td>
+          <td><span>中学2</span></td>
+          <td>河口湖南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37689)">
+          <td><span>477</span></td>
+          <td><a href="/dashboard?name=大湊侑悟&grade=9">大湊侑悟<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.85</td>
+          <td><span>中学3</span></td>
+          <td>富岡</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30105)">
+          <td><span>478</span></td>
+          <td><a href="/dashboard?name=長友裕次郎&grade=11">長友裕次郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.85</td>
+          <td><span>高校2</span></td>
+          <td>麻溝台</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48492)">
+          <td><span>479</span></td>
+          <td><a href="/dashboard?name=中村浩一&grade=14">中村浩一<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.85</td>
+          <td><span>大学2</span></td>
+          <td>韮崎市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37690)">
+          <td><span>480</span></td>
+          <td><a href="/dashboard?name=黒川優樹&grade=8">黒川優樹<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.85</td>
+          <td><span>中学2</span></td>
+          <td>西柴</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30107)">
+          <td><span>481</span></td>
+          <td><a href="/dashboard?name=三木健生&grade=11">三木健生<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.86</td>
+          <td><span>高校2</span></td>
+          <td>川崎北</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37691)">
+          <td><span>482</span></td>
+          <td><a href="/dashboard?name=小濱秀&grade=9">小濱秀<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.86</td>
+          <td><span>中学3</span></td>
+          <td>藤沢第一</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22082)">
+          <td><span>483</span></td>
+          <td><a href="/dashboard?name=井町晟&grade=12">井町晟<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.88</td>
+          <td><span>高校3</span></td>
+          <td>川崎橘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46540)">
+          <td><span>484</span></td>
+          <td><a href="/dashboard?name=石渡翔瑛&grade=7">石渡翔瑛<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.88</td>
+          <td><span>中学1</span></td>
+          <td>舞岡</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30108)">
+          <td><span>485</span></td>
+          <td><a href="/dashboard?name=岸宗彦&grade=12">岸宗彦<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.88</td>
+          <td><span>高校3</span></td>
+          <td>南陵</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(14322)">
+          <td><span>486</span></td>
+          <td><a href="/dashboard?name=長嶋城治&grade=8">長嶋城治<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.91</td>
+          <td><span>中学2</span></td>
+          <td>ﾀﾞﾝﾛｯﾌﾟS平塚</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22083)">
+          <td><span>487</span></td>
+          <td><a href="/dashboard?name=安藤愛斗&grade=9">安藤愛斗<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.91</td>
+          <td><span>中学3</span></td>
+          <td>ﾙﾈｻﾝｽ港南中</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22085)">
+          <td><span>488</span></td>
+          <td><a href="/dashboard?name=上野元&grade=8">上野元<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.92</td>
+          <td><span>中学2</span></td>
+          <td>ｾﾝﾄﾗﾙ横浜</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22086)">
+          <td><span>489</span></td>
+          <td><a href="/dashboard?name=伊藤幸哉&grade=10">伊藤幸哉<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.94</td>
+          <td><span>高校1</span></td>
+          <td>逗子開成</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22087)">
+          <td><span>490</span></td>
+          <td><a href="/dashboard?name=荒舩陽太&grade=9">荒舩陽太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.94</td>
+          <td><span>中学3</span></td>
+          <td>SPﾎｳﾄｸ左近山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46543)">
+          <td><span>491</span></td>
+          <td><a href="/dashboard?name=宮川汰登&grade=9">宮川汰登<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.95</td>
+          <td><span>中学3</span></td>
+          <td>湯河原</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42500)">
+          <td><span>492</span></td>
+          <td><a href="/dashboard?name=藤川尚弥&grade=19">藤川尚弥<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.96</td>
+          <td><span>一般</span></td>
+          <td>海自横連</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(50127)">
+          <td><span>493</span></td>
+          <td><a href="/dashboard?name=山﨑颯瑶&grade=8">山﨑颯瑶<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.96</td>
+          <td><span>中学2</span></td>
+          <td>猿橋</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30109)">
+          <td><span>494</span></td>
+          <td><a href="/dashboard?name=伊藤壮真&grade=12">伊藤壮真<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.96</td>
+          <td><span>高校3</span></td>
+          <td>希望ｹ丘</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30110)">
+          <td><span>495</span></td>
+          <td><a href="/dashboard?name=根本晃輔&grade=10">根本晃輔<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.96</td>
+          <td><span>高校1</span></td>
+          <td>光陵</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(30111)">
+          <td><span>496</span></td>
+          <td><a href="/dashboard?name=伊藤颯汰郎&grade=10">伊藤颯汰郎<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.97</td>
+          <td><span>高校1</span></td>
+          <td>湘南</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22089)">
+          <td><span>497</span></td>
+          <td><a href="/dashboard?name=縄谷渓太&grade=8">縄谷渓太<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.97</td>
+          <td><span>中学2</span></td>
+          <td>ｻﾞﾊﾞｽ鶴見</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(42507)">
+          <td><span>498</span></td>
+          <td><a href="/dashboard?name=森則昭&grade=19">森則昭<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.97</td>
+          <td><span>一般</span></td>
+          <td>ﾊﾟﾅｿﾆｯｸ</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(53605)">
+          <td><span>499</span></td>
+          <td><a href="/dashboard?name=佐竹智弘&grade=6">佐竹智弘<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.97</td>
+          <td><span>小学6</span></td>
+          <td>ｻｷﾞﾇﾏSCM</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(22090)">
+          <td><span>500</span></td>
+          <td><a href="/dashboard?name=山田亜嵐&grade=8">山田亜嵐<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.98</td>
+          <td><span>中学2</span></td>
+          <td>YSMC</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(48510)">
+          <td><span>501</span></td>
+          <td><a href="/dashboard?name=門元亮&grade=19">門元亮<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.98</td>
+          <td><span>一般</span></td>
+          <td>甲斐市</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(37695)">
+          <td><span>502</span></td>
+          <td><a href="/dashboard?name=三村翔夢&grade=9">三村翔夢<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.98</td>
+          <td><span>中学3</span></td>
+          <td>桐蔭学園</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(20745)">
+          <td><span>503</span></td>
+          <td><a href="/dashboard?name=松澤耀大&grade=9">松澤耀大<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.98</td>
+          <td><span>中学3</span></td>
+          <td>Sports1塩山</td>
+        </tr>
+
+        <tr class=" " onclick="show_detail(46544)">
+          <td><span>504</span></td>
+          <td><a href="/dashboard?name=大本真央&grade=8">大本真央<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td>0:27.98</td>
+          <td><span>中学2</span></td>
+          <td>上永谷</td>
+        </tr>
+
+      </tbody></table>
+
+
+      <p class="load" onclick="jump_page(current_event, current_year, current_pool, 1)">さらに読み込む<i class="fas fa-sync-alt"></i></p>
+
+    </div>
+
+  </main>
+
+  <div id="pageDown" onclick="go_bottom()"><i class="fas fa-arrow-down"></i></div>
+
+  <div id="selectEvents" class="deactivate modal">
+    <div class="window">
+      <div class="events">
+        <p>種目一覧</p>
+        <div class="card fr" onclick="change_style(12)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>50</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(13)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>100</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(14)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>200</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(15)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>400</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(16)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>800</p></div>
+        </div>
+        <div class="card fr" onclick="change_style(17)">
+          <img src="static/img/Fr.svg" alt="自由形">
+          <div><p>自由形</p><p>1500</p></div>
+        </div>
+
+        <div class="card ba" onclick="change_style(22)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card ba" onclick="change_style(23)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card ba" onclick="change_style(24)">
+          <img src="static/img/Ba.svg" alt="背泳ぎ">
+          <div><p>背泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card br" onclick="change_style(32)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>50</p></div>
+        </div>
+        <div class="card br" onclick="change_style(33)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>100</p></div>
+        </div>
+        <div class="card br" onclick="change_style(34)">
+          <img src="static/img/Br.svg" alt="平泳ぎ">
+          <div><p>平泳ぎ</p><p>200</p></div>
+        </div>
+
+        <div class="card fly" onclick="change_style(42)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>50</p></div>
+        </div>
+        <div class="card fly" onclick="change_style(43)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>100</p></div>
+        </div>
+        <div class="card fly" onclick="change_style(44)">
+          <img src="static/img/Fly.svg" alt="バタフライ">
+          <div><p>バタフライ</p><p>200</p></div>
+        </div>
+
+        <div class="card im" onclick="change_style(53)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>100</p></div>
+        </div>
+        <div class="card im" onclick="change_style(54)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>200</p></div>
+        </div>
+        <div class="card im" onclick="change_style(55)">
+          <img src="static/img/IM.svg" alt="個人メドレー">
+          <div><p>個人メドレー</p><p>400</p></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="close" onclick="deactivate_all()">
+      <i class="fas fa-window-close"></i> 閉じる
+    </p>
+  </div>
+
+  <footer>
+  <p><span>Reo</span> Kanzaki</p>
+  <img src="static/img/kcabo.svg" alt="kcabo">
+  <a href="https://kcabo.github.io/"></a>
+</footer>
+
+<script>
+  function activate(target) {
+    target.classList.toggle("active");
+  };
+</script>
+<script src="static/js/aos.js"></script>
+<script>
+  AOS.init({once: true, offset: 0, duration: 600});
+</script>
+  <div id="overlay" class=""></div>
+
+<div id="detail" class="deactivate modal ">
+  <div class="window">
+    <div class="result">
+      <div class="meetInfo">
+        <p>
+          <span id="res_start">2019/12/24(土)</span>
+          <span id="res_end">~12/25(日)</span>
+          <span id="res_area">神奈川</span>
+        </p>
+        <p id="res_meet">第21回かながわゆめ国体開催記念招待</p>
+        <p class="place">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="res_place">相模原市立総合水泳場</span>
+          <i class="fas fa-flag"></i>
+          <span id="res_pool">短水路</span>
+        </p>
+      </div>
+
+      <div class="event" swim-style="IM">
+        <img src="static/img/fr.svg" alt="style">
+        <span id="res_event">400m 個人メドレー</span>
+      </div>
+
+      <p class="swimmer">
+        <a href="#">
+          <span id="res_name">神崎伶央</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <span id="res_grade">大学2</span>
+        <a href="#" class="team">
+          <span id="res_team">銀泳会</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </p>
+
+      <p class="result_time">
+        <i class="fas fa-stopwatch"></i>
+        <span id="res_time">0:25.98</span>
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <p>順位</p>
+          <p id="res_rank">2位</p>
+        </div>
+        <div class="card">
+          <p>偏差値(全体)</p>
+          <p id="res_dev1">67</p>
+        </div>
+        <div class="card">
+          <p id="res_devrange">偏差値(大学)</p>
+          <p id="res_dev2">59</p>
+        </div>
+      </div>
+
+      <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+      <div class="laps">
+        <div class="column">
+          <p>0:29.12</p>
+          <p>1:01.11</p>
+          <p>1:29.12</p>
+          <p>2:09.99</p>
+        </div>
+        <div class="column">
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="close" onclick="deactivate_all()">
+    <i class="fas fa-window-close"></i> 閉じる
+  </p>
+</div>
+
+<script>
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+
+  overlay.addEventListener('click', deactivate_all, false)
+
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+  function show_detail(r_id) {
+    if (r_id) {
+      var data = {id: r_id};
+      activate(detail);
+      activate(overlay);
+      post_data(data);
+    }
+  }
+
+  function post_data(data) {
+    axios.post('/apiResult', data)
+      .then(res => apply_data(res.data))
+      .catch(err => alert(err))
+      // .finally(res => console.log('finally'))
+  }
+
+  function apply_data(data) {
+    document.getElementById('res_start').innerHTML = data['start'];
+    document.getElementById('res_end').innerHTML = data['end'];
+    document.getElementById('res_area').innerHTML = data['area'];
+    document.getElementById('res_meet').innerHTML = data['meet'];
+    document.getElementById('res_place').innerHTML = data['place'];
+    document.getElementById('res_pool').innerHTML = data['pool'];
+    document.getElementById('res_event').innerHTML = data['event'];
+    document.getElementById('res_name').innerHTML = data['name'];
+    document.getElementById('res_grade').innerHTML = data['grade_jp'];
+    document.getElementById('res_team').innerHTML = data['team'];
+    document.getElementById('res_time').innerHTML = data['time'];
+    document.getElementById('res_rank').innerHTML = data['rank'];
+    document.getElementById('res_dev1').innerHTML = data['dev1'];
+    document.getElementById('res_devrange').innerHTML = data['devrange'];
+    document.getElementById('res_dev2').innerHTML = data['dev2'];
+
+    document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
+    document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?name=${data['name']}&grade=${data['grade']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?query=${data['team']}`);
+
+    document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
+    document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
+  }
+
+  function format_laps(laps) {
+    var content = '';
+    for(var lap of laps) {
+      if(lap == '') {
+        content += `<p>-</p>`
+      } else {
+        content += `<p>${lap}</p>`
+      };
+    };
+    return content;
+  }
+
+</script>
+
+  <script>
+    var current_year = 19;
+    var current_sex = 1;
+    var current_pool = 1;
+    var current_style = 12;
+    var current_event = `${current_sex}${current_style}`;
+
+    function change_style(style_num) {
+      jump_page(`${current_sex}${style_num}`, current_year, current_pool);
+    }
+
+    function jump_page(event_num, year_num, pool_num, whole_data) {
+      var elm_show = document.getElementById('showGrade');
+      if(whole_data) {
+        var url = `?event=${event_num}&year=${year_num}&pool=${pool_num}&all=1`;
+      } else {
+        var url = `?event=${event_num}&year=${year_num}&pool=${pool_num}`;
+      };
+      if(elm_show.checked) {
+        document.grades.action = url;
+        document.grades.submit();
+      } else {
+        location.href = url;
+      };
+    }
+  </script>
+  <script>
+    function go_bottom(){
+      var doc = document.documentElement;
+      var bottom = doc.scrollHeight - doc.clientHeight;
+      window.scroll(0, bottom);
+    };
+  </script>
+</body>
+
+</html>
