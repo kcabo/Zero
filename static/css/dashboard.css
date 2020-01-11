@@ -14,10 +14,16 @@ main {
   max-width: 600px;
   margin: auto;
 }
-#about img {
-  width: 50px;
+#about .user {
+  font-size: 50px;
   position: absolute;
   top: 8px;
+}
+#about .user.men {
+  color: var(--men);
+}
+#about .user.women {
+  color: var(--women);
 }
 #about h1 {
   position: relative;
@@ -109,7 +115,7 @@ main {
   top: 0;
   left: 0;
   background: #ddd;
-  transition: all 1.5s;
+  transition: all 1.3s;
 }
 #about .numeric-data {
   margin: 5px 10px;
@@ -144,14 +150,14 @@ main {
   position: relative;
 }
 #about .participate .event span {
-  width: 100px;
+  width: 0px;
   height: 100%;
   display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 3px;
-  transition: all 1.5s;
+  transition: all 1.4s;
 }
 #about .participate .event .fr {background: var(--fr);}
 #about .participate .event .ba {background: var(--ba);}
@@ -169,7 +175,7 @@ main {
   padding: 0 10px;
 }
 h2 {
-  margin: 30px 10px 3px;
+  margin: 22px 10px 3px;
   text-align: center;
   font-size: 1.6rem;
   color: #444;
@@ -255,7 +261,7 @@ h2 i {
   color: #888;
 }
 .ranking .cell p:nth-child(2) {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
   padding-top: 5px;
 }
@@ -331,7 +337,6 @@ h2 i {
 #bests .row {
   display: flex;
   justify-content: space-between;
-  font-size: 1.3rem;
   text-align: center;
 }
 #bests .row .caption {
@@ -349,6 +354,8 @@ h2 i {
 }
 #bests .row .cell {
   width: 35%;
+  font-size: 1.4rem;
+
 }
 #bests .row .cell p:last-child {
   color: #aaa;
