@@ -36,7 +36,7 @@
   background: white;
   top: 0;
   right: 0;
-  transition: all .9s cubic-bezier(0.55, 0.05, 0.22, 0.99);
+  transition: all .7s cubic-bezier(0.55, 0.05, 0.22, 0.99);
 }
 #hero.active .caption span i {
   right: 100%;
