@@ -155,6 +155,10 @@ def total_count():
 def index():
     return render_template('index.html', count_records=total_count())
 
+@app.route('/credits')
+def credits():
+    return render_template('credits.html')
+
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'
