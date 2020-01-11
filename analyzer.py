@@ -114,29 +114,28 @@ class Swimmer:
 
 
 class Candidate:
-    def __init__(self, df):
-        self.id = df.iloc[0]['id']
-        self.sex = 'men' if df.iloc[0]['sex'] == 1 else 'women'
-        self.name = df.iloc[0]['name']
-        grade = df.iloc[0]['grade']
+    def __init__(self, sex, name, grade, teams):
+        self.sex = 'men' if sex == 1 else 'women'
+        self.name = name
         self.grade = grade
         self.grade_jp = japanese_grades[grade]
-        teams = df['team'].unique()
-        self.teams = teams.tolist()
+        self.teams = teams.unique().tolist()
 
 def raise_candidates(records):
-    fixed = map(lambda x:(x.id, x.event, x.name, x.team, x.grade), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'event', 'name', 'team', 'grade'])
+    fixed = map(lambda x:(x.event, x.name, x.team, x.grade), records)
+    df = pd.DataFrame(fixed, columns = ['event', 'name', 'team', 'grade'])
     df['sex'] = df['event'] // 100
-    unique = df.drop_duplicates(subset=['sex', 'name', 'grade']).copy()
-    unique.sort_values(['sex', 'name'], inplace=True)
+    df_men = df[df['sex'] == 1]
+    df_women = df[df['sex'] == 2]
+    del df
+    men = set_candidates(df_men, 1)
+    women = set_candidates(df_women, 2)
+    return men, women
 
-    candidates = []
-    for sex, name, grade in zip(unique['sex'], unique['name'], unique['grade']):
-        c = Candidate(df[(df['sex'] == sex) & (df['name'] == name) & (df['grade'] == grade)])
-        candidates.append(c)
-
-    return candidates
+def set_candidates(df, sex):
+    unique = df.drop_duplicates(subset=['name', 'grade'])
+    unique.sort_values(['name', 'grade'], inplace=True)
+    return [Candidate(sex, name, grade, df[(df['name'] == name) & (df['grade'] == grade)]['team']) for name, grade in zip(unique['name'], unique['grade'])]
 
 def format_ranking(df):
     df['time'] = df['time_val'].map(val_2_fmt)

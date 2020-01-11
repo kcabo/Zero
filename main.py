@@ -342,18 +342,16 @@ def search():
         records_with_another_team = db.session.query(Record).filter(Record.name.in_(names), Record.relay == 0).all()
         records.extend(records_with_another_team)
         del records_with_another_team
-        msg = f'{query} の検索結果'
     else:
         records = []
-        msg = ''
-    placeholder = 'Search...'
-    candidates = analyzer.raise_candidates(records)
-    show_sorry = False if candidates else True
+
+    men, women = analyzer.raise_candidates(records)
+    show_sorry = False if men or women else True
     return render_template(
             'search.html',
-            message = msg,
-            placeholder = placeholder,
-            candidates = candidates,
+            query = query,
+            men = men,
+            women = women,
             show_sorry = show_sorry)
 
 

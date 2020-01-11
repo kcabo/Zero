@@ -10,31 +10,27 @@
   <main>
 
     <div id="header">
-      <p>{{message}}</p>
+      <p>{{query}} の検索結果</p>
       <form class="card" method="get" action="/search" name="my_form">
-        <input name="query" type="text" placeholder="{{placeholder}}">
-        <!-- <input type="checkbox" name="exact" value="true" id="exact">
-        <label for="exact">完全一致</label> -->
+        <input name="query" type="text" placeholder="Search..." value="{{query}}">
+        <i class="fas fa-search"></i>
       </form>
-      <div>
-        <!-- <div onclick="postForm(false)">選手名検索</div>
-        <div onclick="postForm(true)">団体名検索</div> -->
-        <div onclick="postForm()">検索</div>
-      </div>
+      <div onclick="document.my_form.submit()">検索</div>
     </div>
 
-
     <div id="results">
-      {% for c in candidates %}
-      <div class="card {{c.sex}}" data-aos="fade-right">
-        <img src="static/img/{{c.sex}}.svg" alt="{{c.sex}}">
-        <a href="/dashboard?name={{c.name}}&grade={{c.grade}}">{{c.name}}</a>
-        <div>
-          <span>{{c.grade_jp}}</span>
-          {% for t in c.teams %}
-          <span onclick="search_team('{{t}}')">{{t}}</span>
-          {% endfor %}
+      {% for candidates in [men, women] %}
+      <div class="column">
+        {% for c in candidates %}
+        <div class="card {{c.sex}}" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?name={{c.name}}&grade={{c.grade}}">{{c.name}}<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>{{c.grade_jp}}</span>
+            {% for t in c.teams %}<a href="/search?query={{t}}">{{t}}</a>{% endfor %}
+          </div>
         </div>
+        {% endfor %}
       </div>
       {% endfor %}
     </div>
@@ -49,16 +45,6 @@
   </main>
 
   {% include "partial/footer.html" %}
-
-  <script>
-    function postForm() {
-      document.my_form.submit();
-    };
-    function search_team(team) {
-      var url = "/search?query=" + team;
-      location.href = url;
-    };
-  </script>
 
 </body>
 
