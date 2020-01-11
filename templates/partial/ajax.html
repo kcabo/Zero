@@ -105,7 +105,7 @@
   }
 
   function post_data(data) {
-    axios.post('/api', data)
+    axios.post('/apiResult', data)
       .then(res => apply_data(res.data))
       .catch(err => alert(err))
       // .finally(res => console.log('finally'))

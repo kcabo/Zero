@@ -60,8 +60,8 @@ class BestResult:
 
 class Swimmer:
     def __init__(self, records):
-        converted = map(lambda x:(x.Record.id, x.Record.event, x.Record.time, x.Meet.pool, x.Meet.start, x.Meet.name), records)
-        df = pd.DataFrame(converted, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name'])
+        converted = map(lambda x:(x.Record.id, x.Record.event, x.Record.time, x.Meet.pool, x.Meet.start, x.Meet.name, x.Meet.year), records)
+        df = pd.DataFrame(converted, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name', 'year'])
         df['event'] = df['event_val'].map(lambda x: FormatEvent(x))
         df['time'] = df['time_val'].map(val_2_fmt) # 読める形にフォーマット
         df['start'] = df['start'].map(lambda x: datetime.datetime.strptime(str(x), '%Y%m%d').strftime('%Y/%m/%d')) # 日付を文字列型でフォーマット
@@ -77,6 +77,7 @@ class Swimmer:
         event_counts = df['event_val'].value_counts()
         e1 = event_counts.index[0] if len(event_counts) > 0 else 0  # 出場種目が棄権しか無いと得意種目すら無い
         e2 = event_counts.index[1] if len(event_counts) > 1 else 0 # 1種目しか出場しておらずS2が無いときは空白
+        self.events = [FormatEvent(e) for e in [int(e1), int(e2)]] # int関数はnumpy64をpython型に変換してる
 
         from_date = datetime.datetime(2019,4,1) # 経過日数の基準となる日付
         df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化 基準日からの経過日数
@@ -89,15 +90,17 @@ class Swimmer:
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 0)]))
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 1)]))
 
+        # 偏差値導出のためのベストをvalueでぬきだす
+        year = 19
+        e1_times_short = df['time_val'][(df['event_val'] == e1) & (df['pool'] == 0) & (df['year'] == year)].tolist()
+        e1_times_long = df['time_val'][(df['event_val'] == e1) & (df['pool'] == 1) & (df['year'] == year)].tolist()
+        e2_times_short = df['time_val'][(df['event_val'] == e2) & (df['pool'] == 0) & (df['year'] == year)].tolist()
+        e2_times_long = df['time_val'][(df['event_val'] == e2) & (df['pool'] == 1) & (df['year'] == year)].tolist()
+        self.e1bests = min(e1_times_short) if e1_times_short else 0, min(e1_times_long) if e1_times_long else 0
+        self.e2bests = min(e2_times_short) if e2_times_short else 0, min(e2_times_long) if e2_times_long else 0
+
         df.sort_values(['time_val', 'pool'], inplace=True) # タイム順速いに並び替え
         df.drop_duplicates(['pool', 'event_val'], inplace=True) # 種目、水路をユニークにする。一番速いタイムのみ残る。これで残っている記録はすべてベストになる
-
-        # 偏差値導出のためのベストをvalueでぬきだす ない場合は空リスト 有るときはリストの1個目 int関数はnumpy64をpython型に変換してる
-        self.events = [FormatEvent(e) for e in [int(e1), int(e2)]]
-        self.e1bests = (df['time_val'][(df['event_val'] == e1) & (df['pool'] == 0)].tolist(),
-                    df['time_val'][(df['event_val'] == e1) & (df['pool'] == 1)].tolist())
-        self.e2bests = (df['time_val'][(df['event_val'] == e2) & (df['pool'] == 0)].tolist(),
-                    df['time_val'][(df['event_val'] == e2) & (df['pool'] == 1)].tolist())
 
         # 6カテゴリ(5種目＋長距離)のベストをカードごとのインスタンスとして作成
         cards = []
