@@ -1,0 +1,16 @@
+#credits {
+  width: 95%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+#credits ul {
+  list-style: none;
+  color: #222;
+}
+#credits li i {
+  padding: 8px;
+  color: #EF709D;
+}
+#credits a {
+  color: #222;
+}

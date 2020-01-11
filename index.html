@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% include "partial/head.html" %}
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="email=no,telephone=no,address=no" />
+<link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+<link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+<meta name="description" content="あなたの泳力はどれくらい？数百万のレースデータを分析しビジュアル化。水泳連盟公式よりも早くランキングを作成。日本全国の水泳大会を毎日解析しています。どなたでも無料で最新のランキングや選手個人の分析結果をご覧いただけます。">
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-149393969-2');
+</script>
+<link rel="stylesheet" href="static/css/aos.css">
+<link rel="stylesheet" href="static/css/common.css">
   <title>Swimmers Zero</title>
-  <link rel="stylesheet" href="static/css/odometer-theme-default.css">
+  <!-- 変更 -->
   <link rel="stylesheet" href="static/css/index_3.css">
 </head>
 <body>
-  {% include "partial/header.html" %}
+
+
+
 
   <main>
+
+
 
     <div id="hero">
       <img src="static/img/freestyle.jpg" alt="freestyle">
@@ -123,15 +144,24 @@
 
   </main>
 
-  {% include "partial/footer.html" %}
+  <footer>
+  <p><span>Reo</span> Kanzaki</p>
+  <img src="static/img/kcabo.svg" alt="kcabo">
+  <a href="https://kcabo.github.io/"></a>
+</footer>
 
-  <script src="static/js/odometer.min.js"></script>
-  <script>
-    var odometer = document.getElementsByClassName('odometer')[0];
-    window.onload = function() {
-      odometer.innerHTML = {{count_records}};
-    };
-  </script>
+<script>
+  function activate(target) {
+    target.classList.toggle("active");
+  };
+</script>
+<script src="static/js/aos.js"></script>
+<script>
+  AOS.init({once: true, offset: 0, duration: 600});
+</script>
+
+  <!-- 変更 -->
+
   <script>
     var lists = document.getElementById('lists');
     function seemore() {
