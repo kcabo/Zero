@@ -11,14 +11,15 @@
 
     <div id="header">
       <p>{{message}}</p>
-      <form class="card" method="post" action="/search" name="query">
-        <input name="name" type="text" placeholder="{{placeholder}}">
-        <input type="checkbox" name="exact" value="true" id="exact">
-        <label for="exact">完全一致</label>
+      <form class="card" method="get" action="/search" name="my_form">
+        <input name="query" type="text" placeholder="{{placeholder}}">
+        <!-- <input type="checkbox" name="exact" value="true" id="exact">
+        <label for="exact">完全一致</label> -->
       </form>
       <div>
-        <div onclick="postForm(false)">選手名検索</div>
-        <div onclick="postForm(true)">団体名検索</div>
+        <!-- <div onclick="postForm(false)">選手名検索</div>
+        <div onclick="postForm(true)">団体名検索</div> -->
+        <div onclick="postForm()">検索</div>
       </div>
     </div>
 
@@ -27,9 +28,9 @@
       {% for c in candidates %}
       <div class="card {{c.sex}}" data-aos="fade-right">
         <img src="static/img/{{c.sex}}.svg" alt="{{c.sex}}">
-        <a href="/dashboard?id={{c.id}}">{{c.name}}</a>
+        <a href="/dashboard?name={{c.name}}&grade={{c.grade}}">{{c.name}}</a>
         <div>
-          <span>{{c.grade}}</span>
+          <span>{{c.grade_jp}}</span>
           {% for t in c.teams %}
           <span onclick="search_team('{{t}}')">{{t}}</span>
           {% endfor %}
@@ -50,16 +51,11 @@
   {% include "partial/footer.html" %}
 
   <script>
-    function postForm(isTeam) {
-      if(isTeam){
-        document.query.name.name = "team";
-      };
-      document.query.submit();
+    function postForm() {
+      document.my_form.submit();
     };
-  </script>
-  <script>
     function search_team(team) {
-      var url = "/search?team=" + team;
+      var url = "/search?query=" + team;
       location.href = url;
     };
   </script>

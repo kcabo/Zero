@@ -101,12 +101,12 @@
 
     <div id="ranking" sex={{sex}}>
       <table><tbody>
-        {% for id, new, name, time, grade, team in ranking %}
+        {% for id, new, name, time, grade, grade_jp, team in ranking %}
         <tr class="{% if loop.index <= 10 %}top10{% endif %} {% if new %}new{% endif %}" onclick="show_detail({{id}})">
           <td><span>{{loop.index}}</span></td>
-          <td><a href="/dashboard?id={{id}}">{{name}}<i class="fas fa-chevron-circle-right"></i></a></td>
+          <td><a href="/dashboard?name={{name}}&grade={{grade}}">{{name}}<i class="fas fa-chevron-circle-right"></i></a></td>
           <td>{{time}}</td>
-          <td><span>{{grade}}</span></td>
+          <td><span>{{grade_jp}}</span></td>
           <td>{{team}}</td>
         </tr>
         {% endfor %}
