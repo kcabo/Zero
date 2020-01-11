@@ -92,9 +92,8 @@ class Swimmer:
         df.sort_values(['time_val', 'pool'], inplace=True) # タイム順速いに並び替え
         df.drop_duplicates(['pool', 'event_val'], inplace=True) # 種目、水路をユニークにする。一番速いタイムのみ残る。これで残っている記録はすべてベストになる
 
-        # 偏差値導出のためのベストをvalueでぬきだす ない場合は空リスト 有るときはリストの1個目
-        self.e1 = FormatEvent(int(e1))
-        self.e2 = FormatEvent(int(e2))
+        # 偏差値導出のためのベストをvalueでぬきだす ない場合は空リスト 有るときはリストの1個目 int関数はnumpy64をpython型に変換してる
+        self.events = [FormatEvent(e) for e in [int(e1), int(e2)]]
         self.e1bests = (df['time_val'][(df['event_val'] == e1) & (df['pool'] == 0)].tolist(),
                     df['time_val'][(df['event_val'] == e1) & (df['pool'] == 1)].tolist())
         self.e2bests = (df['time_val'][(df['event_val'] == e2) & (df['pool'] == 0)].tolist(),
@@ -204,7 +203,7 @@ def detail_dictionary(target):
     res['team'] = target.Record.team
     res['time'] = val_2_fmt(target.Record.time)
     res['rank'] = target.Record.rank
-    res['devrange'] = f'偏差値({res["grade"][0:2]})' # 最初の二文字
+    res['devrange'] = f'偏差値({res["grade_jp"][0:2]})' # 最初の二文字
     res['style'] = my_event.eng_style()
     res['grade'] = target.Record.grade
 
