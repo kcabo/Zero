@@ -42,7 +42,9 @@
   <main>
 
     <div id="about"><div class="wrap">
-      <img src="static/img/men.svg" alt="sex">
+      <!-- 変更 -->
+      <!-- <img src="static/img/men.svg" alt="sex"> -->
+      <i class="user men fas fa-user-circle"></i>
       <!-- 変更 -->
       <h1><span></span>房野泰知</h1>
       <p class="tips">
@@ -111,7 +113,7 @@
 
     <!-- 変更 -->
     <div class="trend-container">
-      <h2><i class="far fa-chart-bar"></i>100m 背泳ぎの調子</h2>
+      <h2><i class="fas fa-poll"></i></i>100m 背泳ぎの調子</h2>
       <div class="trend card">
         <p>(淡色が短水路)</p>
         <div class="wrap">
@@ -121,7 +123,7 @@
         </div>
       </div>
       <div class="ranking">
-        <div class="item">
+        <div class="item" data-aos="flip-up">
           <p class="pool">長</p>
           <div class="card">
             <div class="cell">
@@ -140,7 +142,7 @@
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item" data-aos="flip-up">
           <p class="pool">短</p>
           <div class="card">
             <div class="cell">
@@ -166,7 +168,7 @@
 
 
 
-    <h2><i class="far fa-chart-bar"></i>50m 自由形の調子</h2>
+    <h2><i class="fas fa-poll"></i></i>50m 自由形の調子</h2>
     <div class="trend card">
       <p>淡色が短水路</p>
       <div class="wrap">
@@ -279,7 +281,8 @@
     </div>
 
 
-    <h2><i class="far fa-address-card"></i>全記録</h2>
+    <!-- 変更 -->
+    <h2><i class="fas fa-database"></i></i>全記録</h2>
 
     <div id="records" class="card">
       <table>
@@ -572,10 +575,11 @@
             }
           }]
         },
-        animation: {
-          duration: 1500,
-          easing: 'easeOutQuint',
-        }
+        // animation: {
+        //   duration: 1500,
+        //   easing: 'easeOutQuint',
+        // }
+        animation: false
       }
     };
     var myChart = new Chart(element, lineConfig);
