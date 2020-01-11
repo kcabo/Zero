@@ -38,7 +38,7 @@
             <p data-aos="flip-up">{{s.total_count}}</p>
           </div>
           <div class="child">
-            <p>{{s.e1.eng_event()}}偏差値</p>
+            <p>{{s.events[0].eng_event()}}偏差値</p>
             <p data-aos="flip-up">{{s.deviation}}</p>
           </div>
         </div>
@@ -65,49 +65,74 @@
     </div></div>
     <script>
       window.onload = function() {
-      document.getElementsByClassName('mask')[0].style.height = '{{s.mask_height}}px'
+      document.getElementsByClassName('mask')[0].style.height = '{{s.mask_height}}px';
       document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '{{s.count_race[0]}}%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '{{s.count_race[1]}}%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '{{s.count_race[2]}}%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '{{s.count_race[3]}}%';
       document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '{{s.count_race[4]}}%';
+      document.getElementsByTagName('h1')[0].classList.add('start');
+      document.getElementsByClassName('icons')[0].classList.add('start');
+      fetch_ranking();
       }
     </script>
 
+    {% for i in range(2) %}
     <div class="trend-container">
-      <h2><i class="fas fa-poll"></i></i>{{s.e1.jpn_event()}}の調子</h2>
+      <h2><i class="fas fa-poll"></i></i>{{s.events[i].jpn_event()}}の調子</h2>
       <div class="trend card">
         <p>(淡色が短水路)</p>
         <div class="wrap">
           <div class="chartarea">
-            <canvas id="trend1" height="200"></canvas>
+            <canvas class="myLineChart" height="200"></canvas>
           </div>
         </div>
       </div>
-
-    </div>
-
-    <h2><i class="far fa-chart-bar"></i>{{s.e1.jpn_event()}}の調子</h2>
-    <div class="trend card">
-      <p>淡色が短水路</p>
-      <div class="wrap">
-        <div class="chartarea">
-          <canvas id="trend1" height="200"></canvas>
+      <div class="ranking">
+        <div class="item" data-aos="flip-up">
+          <p class="pool">長</p>
+          <div class="card">
+            <div class="cell">
+              <p>ベストタイム</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+              <p>-</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+              <p>-</p>
+            </div>
+          </div>
+        </div>
+        <div class="item" data-aos="flip-up">
+          <p class="pool">短</p>
+          <div class="card">
+            <div class="cell">
+              <p>ベストタイム</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+              <p>-</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p><i class="fas fa-spinner fa-pulse"></i></p>
+              <p>-</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    {% endfor %}
 
-    <h2><i class="far fa-chart-bar"></i>{{s.e2.jpn_event()}}の調子</h2>
-    <div class="trend card">
-      <p>淡色が短水路</p>
-      <div class="wrap">
-        <div class="chartarea">
-          <canvas id="trend2" height="200"></canvas>
-        </div>
-      </div>
-    </div>
 
-    <h2><i class="fas fa-crosshairs"></i>ベストタイム一覧</h2>
+    <h2><i class="fas fa-dumbbell"></i>ベストタイム一覧</h2>
     <div id="bests">
       {% for card in s.cards %}
       <div class="card" data-aos="flip-left">
@@ -137,7 +162,7 @@
     </div>
 
 
-    <h2><i class="far fa-address-card"></i>全記録</h2>
+    <h2><i class="fas fa-database"></i>全記録</h2>
 
     <div id="records" class="card">
       <table>
@@ -159,11 +184,23 @@
   {% include "partial/footer.html" %}
   {% include "partial/ajax.html" %}
 
+  <script>
+    function fetch_ranking() {
+      alert("{{s.e1bests}} {{s.e2bests}}");
+    //   axios.post('/api', data)
+    //     .then(res => apply_data(res.data))
+    //     .catch(err => alert(err))
+    }
+    function set_ranking_data(data) {
+      document.getElementById('res_start').innerHTML = data['start'];
+    }
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>
   var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
-  var trend1 = document.getElementById("trend1").getContext('2d');
-  var trend2 = document.getElementById("trend2").getContext('2d');
+  var trend1 = document.getElementsByClassName("myLineChart")[0].getContext('2d');
+  var trend2 = document.getElementsByClassName("myLineChart")[1].getContext('2d');
   var colorE1 = '#4cc4eb';
   var colorE2 = '#bbe1ed';
   var colorE3 = '#48cfad';
@@ -229,6 +266,8 @@
               stepSize: 1,
               autoSkip: false,
               maxRotation: 0,
+              fontSize: 12,
+              fontColor: '#ccc',
               callback: function(value, index, values) {
                 // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
                 var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
@@ -243,8 +282,8 @@
               borderDash: [3],
               zeroLineBorderDash: [3],
               tickMarkLength: 8,
-              color: '#aaa',
-              zeroLineColor: '#aaa',
+              color: '#ccc',
+              zeroLineColor: '#ccc',
               lineWidth: 0.5,
               zeroLineWidth: 0.5,
             }
@@ -258,10 +297,7 @@
             }
           }]
         },
-        animation: {
-          duration: 1500,
-          easing: 'easeOutQuint',
-        }
+        animation: false
       }
     };
     var myChart = new Chart(element, lineConfig);

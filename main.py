@@ -162,15 +162,6 @@ def wake_up(): # 監視サービスで監視する用のURL
 
 @app.route('/dashboard')
 def dashboard():
-    # # GETでパラメータにRecordsのIDを格納しているので誰の記録か探す
-    # id = request.args.get('id', 1, type=int)
-    # target = db.session.query(Record).get(id)
-
-    # 検索のために選手の情報を取得
-    # sex = target.event // 100 # event百の位が性別
-    # name = target.name
-    # grade = target.grade # 整数
-
     # name と grade がついていることを保証している
     name = request.args.get('name')
     grade = request.args.get('grade', type=int)
@@ -192,7 +183,7 @@ def dashboard():
     swimmer.teams = teams
 
     # 偏差値の導出
-    event_code = swimmer.e1.code
+    event_code = swimmer.events[0].code
     if event_code:
         # 0全体・1小学・2中学・3高校・4大学・5一般
         agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5]
@@ -271,16 +262,7 @@ def result_detail():
 
 @app.route('/search')
 def search():
-    # if request.method == 'POST':
-    #     name = request.form.get('name', '').replace(' ','').replace('_','').replace('%','')
-    #     team = request.form.get('team', '').replace(' ','').replace('_','').replace('%','')
-    #     exact = True if request.form.get('exact', '') == 'true' else False
-    # else:
-    #     name = request.args.get('name')
-    #     team = request.args.get('team')
-    #     exact = True
     query = request.args.get('query', '').replace(' ','').replace('_','').replace('%','')
-
     if query:
         records = db.session.query(Record).filter(Record.name.like(f"%{query}%"), Record.relay == 0).all()
         team_mates = db.session.query(Record).filter(Record.team.like(f"%{query}%"), Record.relay == 0).all()
@@ -290,38 +272,10 @@ def search():
         records.extend(records_with_another_team)
         del records_with_another_team
         msg = f'{query} の検索結果'
-        placeholder = query
     else:
         records = []
         msg = ''
-        placeholder = 'Search...'
-
-    # if name and exact:
-    #     records = db.session.query(Record).filter(Record.name == name, Record.relay == 0).all()
-    #     msg = f'選手: "{name}" の検索結果 (完全一致)'
-    #     placeholder = name
-    # elif name and not exact:
-    #     records = db.session.query(Record).filter(Record.name.like(f"%{name}%"), Record.relay == 0).all()
-    #     msg = f'選手: "{name}" の検索結果 (部分一致)'
-    #     placeholder = name
-    # elif team and exact:
-    #     team_mates = db.session.query(Record).filter(Record.team == team, Record.relay == 0).all()
-    #     msg = f'所属: "{team}" の検索結果 (完全一致)'
-    #     placeholder = team
-    # elif team and not exact:
-    #     team_mates = db.session.query(Record).filter(Record.team.like(f"%{team}%"), Record.relay == 0).all()
-    #     msg = f'所属: "{team}" の検索結果 (部分一致)'
-    #     placeholder = team
-    # else:
-    #     records = []
-    #     msg = ''
-    #     placeholder = 'Search...'
-    #
-    # # team_matesは検索したチームから出た記録しか抽出されないので、各選手の他のチームから出た記録も検索
-    # if team:
-    #     names = {m.name for m in team_mates}
-    #     records = db.session.query(Record).filter(Record.name.in_(names), Record.relay == 0).all()
-
+    placeholder = 'Search...'
     candidates = analyzer.raise_candidates(records)
     show_sorry = False if candidates else True
     return render_template(
