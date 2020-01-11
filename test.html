@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="format-detection" content="email=no,telephone=no,address=no">
+<meta name="format-detection" content="email=no,telephone=no,address=no" />
 <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
 <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
 <meta name="description" content="あなたの泳力はどれくらい？数百万のレースデータを分析しビジュアル化。水泳連盟公式よりも早くランキングを作成。日本全国の水泳大会を毎日解析しています。どなたでも無料で最新のランキングや選手個人の分析結果をご覧いただけます。">
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-149393969-2');
+</script>
 <link rel="stylesheet" href="static/css/aos.css">
 <link rel="stylesheet" href="static/css/common.css">
-  <title>房野泰知【個人分析結果】 | Swimmers Zero</title>
+  <title>須田悠介【個人分析結果】 | Swimmers Zero</title>
   <link rel="stylesheet" href="static/css/dashboard.css">
 </head>
-<body data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0" cz-shortcut-listen="true">
+<body>
   <div id="header-wrapper">
   <header>
     <div id="burger" onclick="activate(this);activate(menu)">
@@ -30,8 +37,8 @@
 
 <div id="menu" class="">
   <div id="search">
-    <form method="post" action="/search">
-      <input name="name" type="text" placeholder="選手を検索">
+    <form method="get" action="/search">
+      <input name="query" type="text" placeholder="選手やチームを検索">
       <input type="submit" value="">
       <i class="fas fa-search"></i>
     </form>
@@ -42,39 +49,32 @@
   <main>
 
     <div id="about"><div class="wrap">
-      <!-- 変更 -->
-      <!-- <img src="static/img/men.svg" alt="sex"> -->
       <i class="user men fas fa-user-circle"></i>
-      <!-- 変更 -->
-      <h1><span></span>房野泰知</h1>
+      <h1><span></span>須田悠介</h1>
       <p class="tips">
-        <span>大学1</span>
+        <span>高校3</span>
 
-        <a href="/search?team=岡山大学">岡山大学</a>
+        <a href="/search?query=ﾙﾈｻﾝｽ港南中">ﾙﾈｻﾝｽ港南中</a>
+
+        <a href="/search?query=湘南工大附">湘南工大附</a>
 
       </p>
       <div class="icons">
-        <i class="fas fa-fist-raised"></i>
-        <i class="fas fa-chess-king"></i>
         <i class="fas fa-star"></i>
-        <i class="fas fa-dragon"></i>
-        <i class="fas fa-pen-nib"></i>
-        <i class="fas fa-users"></i>
-        <i class="fas fa-pastafarianism"></i>
       </div>
 
       <div class="row">
         <div class="gauge">
-          <div class="mask" style="height: 100px;"></div>
+          <div class="mask"></div>
         </div>
         <div class="numeric-data">
           <div class="child">
             <p>総レース数</p>
-            <p data-aos="flip-up">2</p>
+            <p data-aos="flip-up">14</p>
           </div>
           <div class="child">
-            <p>100Ba偏差値</p>
-            <p data-aos="flip-up">65.2</p>
+            <p>100Fr偏差値</p>
+            <p data-aos="flip-up">68.0</p>
           </div>
         </div>
 
@@ -98,89 +98,121 @@
 
       </div>
     </div></div>
-    <script>
-      window.onload = function() {
-      document.getElementsByClassName('mask')[0].style.height = '20px'
-      document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '50%';
-      document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '50%';
-      document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '0%';
-      document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '0%';
-      document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '0%';
-      document.getElementsByTagName('h1')[0].classList.add('start');
-      document.getElementsByClassName('icons')[0].classList.add('start');
-      }
-    </script>
 
-    <!-- 変更 -->
+
     <div class="trend-container">
-      <h2><i class="fas fa-poll"></i></i>100m 背泳ぎの調子</h2>
+      <h2><i class="fas fa-poll"></i></i>100m 自由形の調子</h2>
       <div class="trend card">
         <p>(淡色が短水路)</p>
         <div class="wrap">
-          <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <canvas id="trend1" height="275" style="display: block; height: 200px; width: 400px;" width="550" class="chartjs-render-monitor"></canvas>
+          <div class="chartarea">
+            <canvas class="myLineChart" height="200"></canvas>
           </div>
         </div>
       </div>
       <div class="ranking">
+
         <div class="item" data-aos="flip-up">
           <p class="pool">長</p>
           <div class="card">
             <div class="cell">
-              <p>ベストタイム</p>
-              <p><i class="fas fa-spinner fa-pulse"></i></p>
+              <p>今年度ベスト</p>
+              <p class="set-best"><i class="fas fa-spinner fa-pulse"></i></p>
             </div>
             <div class="cell rank">
               <p>同学年</p>
-              <p><i class="fas fa-spinner fa-pulse"></i></p>
-              <p>-</p>
+              <p class="set-same-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-same-count">-</p>
             </div>
             <div class="cell rank">
               <p>全体</p>
-              <p><i class="fas fa-spinner fa-pulse"></i></p>
-              <p>-</p>
+              <p class="set-whole-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-whole-count">-</p>
             </div>
           </div>
         </div>
+
         <div class="item" data-aos="flip-up">
           <p class="pool">短</p>
           <div class="card">
             <div class="cell">
-              <p>ベストタイム</p>
-              <p>1:02.28</p>
+              <p>今年度ベスト</p>
+              <p class="set-best"><i class="fas fa-spinner fa-pulse"></i></p>
             </div>
             <div class="cell rank">
               <p>同学年</p>
-              <p>38</p>
-              <p>13272</p>
+              <p class="set-same-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-same-count">-</p>
             </div>
             <div class="cell rank">
               <p>全体</p>
-              <p>38</p>
-              <p>34273</p>
+              <p class="set-whole-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-whole-count">-</p>
             </div>
           </div>
         </div>
+
       </div>
-
-
     </div>
 
-
-
-    <h2><i class="fas fa-poll"></i></i>50m 自由形の調子</h2>
-    <div class="trend card">
-      <p>淡色が短水路</p>
-      <div class="wrap">
-        <div class="chartarea"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-          <canvas id="trend2" height="275" width="550" class="chartjs-render-monitor" style="display: block; height: 200px; width: 400px;"></canvas>
+    <div class="trend-container">
+      <h2><i class="fas fa-poll"></i></i>50m 自由形の調子</h2>
+      <div class="trend card">
+        <p>(淡色が短水路)</p>
+        <div class="wrap">
+          <div class="chartarea">
+            <canvas class="myLineChart" height="200"></canvas>
+          </div>
         </div>
       </div>
+      <div class="ranking">
+
+        <div class="item" data-aos="flip-up">
+          <p class="pool">長</p>
+          <div class="card">
+            <div class="cell">
+              <p>今年度ベスト</p>
+              <p class="set-best"><i class="fas fa-spinner fa-pulse"></i></p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p class="set-same-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-same-count">-</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p class="set-whole-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-whole-count">-</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="item" data-aos="flip-up">
+          <p class="pool">短</p>
+          <div class="card">
+            <div class="cell">
+              <p>今年度ベスト</p>
+              <p class="set-best"><i class="fas fa-spinner fa-pulse"></i></p>
+            </div>
+            <div class="cell rank">
+              <p>同学年</p>
+              <p class="set-same-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-same-count">-</p>
+            </div>
+            <div class="cell rank">
+              <p>全体</p>
+              <p class="set-whole-ranking"><i class="fas fa-spinner fa-pulse"></i></p>
+              <p class="set-whole-count">-</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
 
-    <!-- 変更 -->
-    <h2><i class="fas fa-dumbbell"></i></i>ベストタイム一覧</h2>
+
+    <h2><i class="fas fa-dumbbell"></i>ベストタイム一覧</h2>
     <div id="bests">
 
       <div class="card" data-aos="flip-left">
@@ -197,9 +229,9 @@
               <p></p>
             </div>
             <div class="nav">50</div>
-            <div class="cell" onclick="show_detail(2992)">
-              <p>0:23.87</p>
-              <p>2019/12/14</p>
+            <div class="cell" onclick="show_detail(35573)">
+              <p>0:23.18</p>
+              <p>2019/07/20</p>
             </div>
           </div>
 
@@ -209,16 +241,16 @@
               <p></p>
             </div>
             <div class="nav">100</div>
-            <div class="cell" onclick="show_detail()">
-              <p></p>
-              <p></p>
+            <div class="cell" onclick="show_detail(30523)">
+              <p>0:50.99</p>
+              <p>2019/06/21</p>
             </div>
           </div>
 
           <div class="row">
-            <div class="cell" onclick="show_detail()">
-              <p></p>
-              <p></p>
+            <div class="cell" onclick="show_detail(44822)">
+              <p>1:48.84</p>
+              <p>2019/07/29</p>
             </div>
             <div class="nav">200</div>
             <div class="cell" onclick="show_detail()">
@@ -251,14 +283,14 @@
           </div>
 
           <div class="row">
+            <div class="cell" onclick="show_detail(44930)">
+              <p>0:57.05</p>
+              <p>2019/07/29</p>
+            </div>
+            <div class="nav">100</div>
             <div class="cell" onclick="show_detail()">
               <p></p>
               <p></p>
-            </div>
-            <div class="nav">100</div>
-            <div class="cell" onclick="show_detail(3672)">
-              <p>1:03.23</p>
-              <p>2019/12/14</p>
             </div>
           </div>
 
@@ -281,25 +313,108 @@
     </div>
 
 
-    <!-- 変更 -->
-    <h2><i class="fas fa-database"></i></i>全記録</h2>
+    <h2><i class="fas fa-database"></i>全記録</h2>
 
     <div id="records" class="card">
       <table>
         <tbody>
 
-          <tr onclick="show_detail(2992)">
-            <td><span style-num="1">50Fr</span></td>
-            <td>0:23.87</td>
-            <td><span pool="1">長</span></td>
-            <td>2019/12/14<br>岡山:県長水路記録会</td>
+          <tr onclick="show_detail(44822)">
+            <td><span style-num="1">200Fr</span></td>
+            <td>1:48.84</td>
+            <td><span pool=0>短</span></td>
+            <td>2019/07/29<br>神奈川:第42回全国JOC夏季県予選会(2)</td>
           </tr>
 
-          <tr onclick="show_detail(3672)">
+          <tr onclick="show_detail(44930)">
             <td><span style-num="2">100Ba</span></td>
-            <td>1:03.23</td>
-            <td><span pool="1">長</span></td>
-            <td>2019/12/14<br>岡山:県長水路記録会</td>
+            <td>0:57.05</td>
+            <td><span pool=0>短</span></td>
+            <td>2019/07/29<br>神奈川:第42回全国JOC夏季県予選会(2)</td>
+          </tr>
+
+          <tr onclick="show_detail(35573)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.18</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/07/20<br>山梨:第70回関東高等学校選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(35634)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.45</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/07/20<br>山梨:第70回関東高等学校選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(35703)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:51.52</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/07/20<br>山梨:第70回関東高等学校選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(35643)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:52.12</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/07/20<br>山梨:第70回関東高等学校選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(30286)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.22</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/06/21<br>神奈川:第57回県高等学校総体</td>
+          </tr>
+
+          <tr onclick="show_detail(30007)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.71</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/06/21<br>神奈川:第57回県高等学校総体</td>
+          </tr>
+
+          <tr onclick="show_detail(30523)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:50.99</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/06/21<br>神奈川:第57回県高等学校総体</td>
+          </tr>
+
+          <tr onclick="show_detail(30296)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:51.08</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/06/21<br>神奈川:第57回県高等学校総体</td>
+          </tr>
+
+          <tr onclick="show_detail(14397)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.37</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/05/25<br>神奈川:第41回県ｼﾞｭﾆｱ選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(14375)">
+            <td><span style-num="1">50Fr</span></td>
+            <td>0:23.99</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/05/25<br>神奈川:第41回県ｼﾞｭﾆｱ選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(14538)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:51.20</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/05/25<br>神奈川:第41回県ｼﾞｭﾆｱ選手権</td>
+          </tr>
+
+          <tr onclick="show_detail(14516)">
+            <td><span style-num="1">100Fr</span></td>
+            <td>0:52.34</td>
+            <td><span pool=1>長</span></td>
+            <td>2019/05/25<br>神奈川:第41回県ｼﾞｭﾆｱ選手権</td>
           </tr>
 
         </tbody>
@@ -430,7 +545,7 @@
   }
 
   function post_data(data) {
-    axios.post('/api', data)
+    axios.post('/apiResult', data)
       .then(res => apply_data(res.data))
       .catch(err => alert(err))
       // .finally(res => console.log('finally'))
@@ -445,7 +560,7 @@
     document.getElementById('res_pool').innerHTML = data['pool'];
     document.getElementById('res_event').innerHTML = data['event'];
     document.getElementById('res_name').innerHTML = data['name'];
-    document.getElementById('res_grade').innerHTML = data['grade'];
+    document.getElementById('res_grade').innerHTML = data['grade_jp'];
     document.getElementById('res_team').innerHTML = data['team'];
     document.getElementById('res_time').innerHTML = data['time'];
     document.getElementById('res_rank').innerHTML = data['rank'];
@@ -455,8 +570,8 @@
 
     document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
     document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?id=${data['id']}`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?team=${data['team']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?name=${data['name']}&grade=${data['grade']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?query=${data['team']}`);
 
     document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
     document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
@@ -476,11 +591,60 @@
 
 </script>
 
+  <script>
+    window.onload = function() {
+    document.getElementsByClassName('mask')[0].style.height = '7.0px';
+    document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '92%';
+    document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '7%';
+    document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '0%';
+    document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '0%';
+    document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '0%';
+    document.getElementsByTagName('h1')[0].classList.add('start');
+    document.getElementsByClassName('icons')[0].classList.add('start');
+
+    var e1_best_short = 0;
+    var e1_best_long = 5099;
+    var e2_best_short = 0;
+    var e2_best_long = 2318;
+    var best_values = [e1_best_long, e1_best_short, e2_best_long, e2_best_short];
+    var event_codes = [113, 112];
+    var grade = 12;
+
+    var elm_bests = document.getElementsByClassName('set-best');
+    var elms_same_ranking = document.getElementsByClassName('set-same-ranking');
+    var elms_same_count = document.getElementsByClassName('set-same-count');
+    var elms_whole_ranking = document.getElementsByClassName('set-whole-ranking');
+    var elms_whole_count = document.getElementsByClassName('set-whole-count');
+
+    for(i = 0; i <= 3; i++) {
+      var data = {
+        index: i,
+        time_val: best_values[i],
+        event_code: event_codes[Math.floor(i / 2)],
+        pool: i % 2 == 0 ? 1 : 0,
+        grade: grade
+      };
+      axios.post('/apiRank', data)
+        .then(res => {
+          data = res.data;
+          var index = data['index'];
+          elm_bests[index].innerHTML = data['time'];
+          elms_same_ranking[index].innerHTML = data['same_ranking'];
+          elms_same_count[index].innerHTML = data['same_count'];
+          elms_whole_ranking[index].innerHTML = data['whole_ranking'];
+          elms_whole_count[index].innerHTML = data['whole_count'];
+        })
+        .catch(err => alert(err))
+    }
+    }
+
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>
   var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
-  var trend1 = document.getElementById("trend1").getContext('2d');
-  var trend2 = document.getElementById("trend2").getContext('2d');
+  var trend1 = document.getElementsByClassName("myLineChart")[0].getContext('2d');
+  var trend2 = document.getElementsByClassName("myLineChart")[1].getContext('2d');
   var colorE1 = '#4cc4eb';
   var colorE2 = '#bbe1ed';
   var colorE3 = '#48cfad';
@@ -489,9 +653,9 @@
   var lineWidth = 1.6;
 
   var e1_short_data = [];
-  var e1_long_data = [{x:257,y:50}];
+  var e1_long_data = [{x:54,y:60}, {x:81,y:100}, {x:110,y:0}];
   var e2_short_data = [];
-  var e2_long_data = [{x:257,y:50}];
+  var e2_long_data = [{x:54,y:0}, {x:81,y:78}, {x:110,y:100}];
 
   set_line_chart(trend1, e1_long_data, e1_short_data, colorE1, colorE2);
   set_line_chart(trend2, e2_long_data, e2_short_data, colorE3, colorE4);
@@ -558,7 +722,6 @@
                 }
               }
             },
-            // 変更
             gridLines: {
               borderDash: [3],
               zeroLineBorderDash: [3],
@@ -578,10 +741,6 @@
             }
           }]
         },
-        // animation: {
-        //   duration: 1500,
-        //   easing: 'easeOutQuint',
-        // }
         animation: false
       }
     };
@@ -592,6 +751,6 @@
   document.getElementsByClassName('trend')[1].getElementsByClassName('wrap')[0].scrollLeft = 400;
   </script>
 
+</body>
 
-
-</body></html>
+</html>
