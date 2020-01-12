@@ -51,11 +51,9 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  /* opacity: .4; */
   background: white;
   top: 0;
   left: 0;
-  /* right: 0; */
   transition: all .5s .5s cubic-bezier(0.55, 0.05, 0.22, 0.99);
 }
 #hero.active .caption span i {
@@ -81,7 +79,7 @@
 #hero form i {
   position: absolute;
   right: 20px;
-  top: 11px;
+  top: 12px;
   color: #888;
   font-size: 2rem;
 }
@@ -248,11 +246,10 @@ h3::after {
   text-decoration: none;
   color: black;
   border: solid 1px black;
-  line-height: 40px;
-  width: 160px;
-  font-size: 1.4rem;
-  padding-left: 15px;
-  margin: 6px;
+  width: 150px;
+  font-size: 1.2rem;
+  padding: 8px 10px;
+  margin: 4px;
   transition: all .3s;
 }
 #links a:hover {
@@ -274,6 +271,7 @@ h3::after {
 #contact form {
   max-width: 500px;
   margin: auto;
+  font-size: 1.6rem;
 }
 #contact textarea {
   margin-top: 8px;
@@ -283,10 +281,8 @@ h3::after {
   border-radius: 3px;
   outline: none;
   padding: 10px;
-  font-size: 1.5rem;
 }
 #contact input {
-  font-size: 1.5rem;
   outline: none;
   background-image: linear-gradient(180deg,  rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
   color: white;
