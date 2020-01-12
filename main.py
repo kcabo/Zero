@@ -163,6 +163,12 @@ def credits():
 def develop():
     return render_template('develop.html')
 
+@app.route('/msg', methods = ['POST'])
+def receive_message():
+    msg = request.form.getlist("msg")[0]
+    notify_line(msg)
+    return render_template('index.html', count_records=total_count(), msg=msg)
+
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'

@@ -3,121 +3,84 @@
 <head>
   {% include "partial/head.html" %}
   <title>Swimmers Zero</title>
-  <link rel="stylesheet" href="static/css/odometer-theme-default.css">
-  <link rel="stylesheet" href="static/css/index_3.css">
+  <link rel="stylesheet" href="static/css/index.css">
 </head>
-<body>
+<body onload="activate(hero)">
   {% include "partial/header.html" %}
 
   <main>
 
     <div id="hero">
-      <img src="static/img/freestyle.jpg" alt="freestyle">
-      <p>全員､ランクイン｡</p>
-      <div class="column">
-        <form method="get" action="/search">
-          <input name="query" type="text" placeholder="選手やチームを検索">
-          <i class="fas fa-search"></i>
-        </form>
-        <div class="buttons">
-          <div class="button">
-            <i class="fas fa-user"></i>
-            <p>男子ランキング<i class="fas fa-chevron-circle-right"></i></p>
-            <a href="ranking?event=112&year=19&pool=1"></a>
-          </div>
-          <div class="button">
-            <i class="fas fa-user"></i>
-            <p>女子ランキング<i class="fas fa-chevron-circle-right"></i></p>
-            <a href="ranking?event=212&year=19&pool=1"></a>
-          </div>
-        </div>
+      <img src="static/img/freestyle.jpg" alt="水泳選手">
+      <h1 class="caption">
+        <div></div>
+        <span><i></i>全員、</span>
+        <span><i></i>ランクイン。</span>
+      </h1>
+      <form method="get" action="/search">
+        <input name="query" type="text" placeholder="Search...">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+
+    <div id="ranking">
+      <div class="button men" data-aos="fade-right">
+        <a href="ranking?event=112&year=19&pool=1&select=1">
+          <span>男子</span>
+          <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
+          <img src="static/img/man.jpg" alt="水泳選手">
+        </a>
+      </div>
+      <div class="button women" data-aos="fade-left">
+        <a href="ranking?event=212&year=19&pool=1&select=1">
+          <span>女子</span>
+          <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
+          <img src="static/img/woman.jpg" alt="水泳選手">
+        </a>
+      </div>
+    </div>
+
+    <div id="new">
+      <h3>新機能</h3>
+      <ul>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="100" data-aos-anchor="#seemore">記録をタップでレース詳細</p></li>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="200" data-aos-anchor="#seemore">選手名とチーム名の同時検索</p></li>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="300" data-aos-anchor="#seemore">個人ページに本年度の順位</p></li>
+      </ul>
+      <a id="seemore" href="develop">さらに見る<i class="fas fa-angle-right"></i></a>
+    </div>
+
+    <div id="data">
+      <img src="static/img/earth.jpg" alt="地球">
+      <div class="limit">
+        <h2><span>324</span>万 3,211 件<br>のレースデータから分析</h2>
         <p>
-          総レース数<i class="fas fa-caret-right"></i>
-          <span class="odometer">0</span>
+          日本全国の数字にこだわるすべてのスイマーへ――
+          スイマーズゼロがデータ分析の新しい可能性を提供します。
+          日本全国すべての水泳大会を毎日解析し、加工・分析したデータを無料で公開しております。
         </p>
       </div>
-
-    </div>
-
-    <div id="update">
-      <h2>UPDATE</h2>
-      <ul id="lists" class="less">
-        <li>
-          <p>2019/12/15</p>
-          <p>１ヶ月記念にトップページをいい感じにしました！</p>
-        </li>
-        <li>
-          <p>2019/12/12</p>
-          <p>ユーザー数100人を突破しました！ありがとうございます！</p>
-        </li>
-        <li>
-          <p>2019/12/03</p>
-          <p>ベストタイムが正常に出力されないバグを修正</p>
-        </li>
-        <li>
-          <p>2019/11/28</p>
-          <p>団体名検索を追加 / ドメイン取得 <a href="https://swim-zero.com/">こちら</a>のURLを使用してください！</p>
-        </li>
-        <li>
-          <p>2019/11/27</p>
-          <p>選手名のあいまい検索を追加</p>
-        </li>
-        <li>
-          <p>2019/11/26</p>
-          <p>ランキングページデザイン変更 / 学年による絞り込み</p>
-        </li>
-        <li>
-          <p>2019/11/23</p>
-          <p>偏差値に関わる統計値調整 / ダッシュボード内部処理改善</p>
-        </li>
-        <li>
-          <p>2019/11/20</p>
-          <p>外国籍選手除外 / S1偏差値導出 / 一部ランキングの高速化</p>
-        </li>
-        <li>
-          <p>2019/11/19</p>
-          <p>トップページのデザイン変更</p>
-        </li>
-        <li>
-          <p>2019/11/15</p>
-          <p>ベータ版をローンチ</p>
-        </li>
-      </ul>
-      <p onclick="seemore()">もっとみる <i class="fas fa-chevron-down"></i></p>
     </div>
 
 
-    <div id="about">
-      <h2>ABOUT</h2>
-      <p>
-        数字にこだわるすべてのスイマーへ――
-        データ分析の新しい可能性を提供します。
-        日本全国すべてのレース結果を毎日自動解析。
-        修正点や改善点、新しい分析のアイデアがございましたら是非私にお寄せください。
-        ※リレーや男女混合種目のデータはまだ反映できておりません。
-      </p>
+    <div id="contact">
+      <h3>開発者にメッセージ</h3>
+      <p>私に直接メッセージを送れます。データの依頼やスイマーズゼロへの要望・意見、激励の言葉などお気軽にどうぞ。メッセージは匿名で送信されます。</p>
+      <form action="msg" method="post">
+        <textarea name="msg" rows="8" cols="80" minlength="5" maxlength="300"></textarea>
+        <input type="submit" value="送信">
+      </form>
     </div>
 
 
 
-    <div id="todo">
-      <h2>COMING SOON</h2>
-      <ul>
-        <li><i class="fas fa-check-circle"></i>ランキング種目選択の刷新</li>
-        <li><i class="fas fa-check-circle"></i>ベスト更新の通知機能</li>
-        <li><i class="fas fa-check-circle"></i>大会検索</li>
-        <li><i class="fas fa-check-circle"></i>リレーの記録の取り込み</li>
-        <li><i class="fas fa-check-circle"></i>DBのテーブル構造変更</li>
-        <li><i class="fas fa-check-circle"></i>ラップタイムの分析・ベストとの比較</li>
-        <li><i class="fas fa-check-circle"></i>19年以前の記録の取り込み</li>
-        <li><i class="fas fa-check-circle"></i>全員の記録の分布を見られるように</li>
-        <li><i class="fas fa-check-circle"></i>偏差値計算機能</li>
-        <li><i class="fas fa-check-circle"></i>レース詳細を非同期通信で見られるように</li>
-        <li><i class="fas fa-check-circle"></i>混合種目の記録の男女判別</li>
-        <li><i class="fas fa-check-circle"></i>大会標準記録との連動</li>
-        <li><i class="fas fa-check-circle"></i>初回アクセス時のみ使い方表示</li>
-        <li><i class="fas fa-check-circle"></i>大会得点予想(隠し機能)</li>
-      </ul>
+    <div id="links">
+      <div class="limit">
+        <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
+        <a href="ranking.html">ランキング<i class="fas fa-angle-right"></i></a>
+        <a href="search.html">詳細検索<i class="fas fa-angle-right"></i></a>
+        <a href="test.html">個人分析ページ<i class="fas fa-angle-right"></i></a>
+      </div>
     </div>
 
 
@@ -125,19 +88,6 @@
 
   {% include "partial/footer.html" %}
 
-  <script src="static/js/odometer.min.js"></script>
-  <script>
-    var odometer = document.getElementsByClassName('odometer')[0];
-    window.onload = function() {
-      odometer.innerHTML = {{count_records}};
-    };
-  </script>
-  <script>
-    var lists = document.getElementById('lists');
-    function seemore() {
-      lists.classList.toggle("less");
-    };
-  </script>
 </body>
 
 </html>
