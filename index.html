@@ -20,35 +20,32 @@
 <link rel="stylesheet" href="static/css/aos.css">
 <link rel="stylesheet" href="static/css/common.css">
   <title>Swimmers Zero</title>
-  <!-- 変更 -->
   <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body onload="activate(hero)">
-
   <div id="header-wrapper">
-    <header>
-      <div id="burger" onclick="activate(this);activate(menu)">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
-      <div class="placeholder"></div>
-    </header>
-  </div>
-
-  <div id="menu" class="">
-    <div id="search">
-      <form method="get" action="/search">
-        <input name="query" type="text" placeholder="選手やチームを検索">
-        <input type="submit" value="">
-        <i class="fas fa-search"></i>
-      </form>
+  <header>
+    <div id="burger" onclick="activate(this);activate(menu)">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    <div class="item">
-    </div>
-  </div>
+    <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+    <div class="placeholder"></div>
+  </header>
+</div>
 
+<div id="menu" class="">
+  <div id="search">
+    <form method="get" action="/search">
+      <input name="query" type="text" placeholder="選手やチームを検索">
+      <input type="submit" value="">
+      <i class="fas fa-search"></i>
+    </form>
+  </div>
+  <div class="item">
+  </div>
+</div>
 
   <main>
 
@@ -95,7 +92,7 @@
     <div id="data">
       <img src="static/img/earth.jpg" alt="地球">
       <div class="limit">
-        <h2><span>324</span>万 3,211 件<br>のレースデータから分析</h2>
+        <h2><span>5</span>万 6209 件<br>のレースデータから分析</h2>
         <p>
           日本全国の数字にこだわるすべてのスイマーへ――
           スイマーズゼロがデータ分析の新しい可能性を提供します。
@@ -115,23 +112,19 @@
     </div>
 
 
-
-    <div id="links">
-      <div class="limit">
-        <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
-        <a href="ranking.html">ランキング<i class="fas fa-angle-right"></i></a>
-        <a href="search.html">詳細検索<i class="fas fa-angle-right"></i></a>
-        <a href="test.html">個人分析ページ<i class="fas fa-angle-right"></i></a>
-      </div>
-    </div>
-
-
   </main>
 
   <footer>
+  <div class="links">
+    <a href="/">トップページ<i class="fas fa-angle-right"></i></a>
+    <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
+    <a href="develop">開発状況<i class="fas fa-angle-right"></i></a>
+    <a href="search">詳細検索<i class="fas fa-angle-right"></i></a>
+    <a href="ranking?event=112&year=19&pool=1&select=1">ランキング<i class="fas fa-angle-right"></i></a>
+    <a href="https://kcabo.github.io/">開発者のページ<i class="fas fa-angle-right"></i></a>
+  </div>
   <p><span>Reo</span> Kanzaki</p>
   <img src="static/img/kcabo.svg" alt="kcabo">
-  <a href="https://kcabo.github.io/"></a>
 </footer>
 
 <script>
@@ -143,9 +136,10 @@
 <script>
   AOS.init({once: true, offset: 0, duration: 600});
 </script>
+  <script>
+     // alert('送信されました。'); 
+  </script>
 
-  <!-- 変更 -->
-  <script> // alert('送信されました。');</script>
 </body>
 
 </html>
