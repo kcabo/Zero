@@ -19,6 +19,7 @@
   margin: auto;
   padding-top: 35px;
   position: relative;
+  white-space: nowrap;
 }
 #hero .caption div {
   width: 10px;
@@ -34,7 +35,7 @@
 }
 #hero .caption span {
   margin-left: 10px;
-  display: inline-block;
+  display: table;
   font-size: 4rem;
   color: white;
   font-family: "Noto Serif JP";
@@ -48,7 +49,7 @@
 #hero .caption span i {
   display: inline-block;
   position: absolute;
-  width: 120%;
+  width: 100%;
   height: 100%;
   /* opacity: .4; */
   background: white;
@@ -157,3 +158,63 @@
   color: #82C91E;
   margin-right: 8px;
 }
+
+
+#data {
+  position: relative;
+  height: 300px;
+  padding: 30px;
+  color: white;
+}
+#data img {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(80%);;
+  z-index: -1;
+}
+#data h2 {
+  font-size: 2rem;
+}
+#data h2 span {
+  font-size: 4rem;
+  padding-right: 5px;
+}
+#data p {
+  padding: 20px;
+  font-size: 1.4rem;
+  line-height: 2;
+  font-weight: bold;
+}
+
+#links {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#links a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  border: solid 2px black;
+  line-height: 40px;
+  width: 180px;
+  font-size: 1.6rem;
+  padding-left: 10px;
+  margin: 6px;
+  transition: all .3s;
+}
+#links a:hover {
+  background: black;
+  color: white;
+}
+#links a i {
+  margin-left: 10px;
+}
+
+/* #hero {display: none} */
