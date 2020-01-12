@@ -1,22 +1,33 @@
-
 h2 {
+  text-align: center;
   font-size: 1.6rem;
-  font-weight: bold;
-  padding-left: 20px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+}
+h2::after {
+  content: '';
+  display: block;
+  width: 30px;
+  margin: 2px auto;
+  background: var(--main);
+  height: 2.5px;
+  border-radius: 3px;
+}
+
+#update, #todo {
+  max-width: 800px;
+  margin: auto;
 }
 
 #update {
-  margin: 20px 0;
+  padding: 10px 0;
 }
 #update ul {
-  margin-top: -8px;
+  margin-top: -10px;
 }
 #update li {
-  margin: 0 20px;
-  font-weight: normal;
   list-style: none;
-  padding: 10px 0;
+  padding: 10px;
 }
 #update li + li {
   border-top: dashed 1px #ddd;
@@ -26,43 +37,40 @@ h2 {
   text-align: center;
   line-height: 1.5;
   border-radius: 2px;
-  background: #EE964B;
+  background: var(--main);
   color: white;
   margin-bottom: 2px;
 }
 #update li p:last-child, #update li a {
-  color: #222;
-  font-size: 1.2rem;
+  color: black;
+  font-size: 1.3rem;
 }
-#update ul.less li:nth-child(n + 3) {
+#update ul.less li:nth-child(n + 4) {
   display: none;
 }
-
 #update ul + p {
-  display: none;
-}
-#update ul.less + p {
-  display: block;
   cursor: pointer;
-  color: #aaa;
+  color: #666;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+}
+#update ul + p i {
+  margin-left: 5px;
+  transition: all 1s;
+}
+#update ul.less + p i {
+  transform: rotateX(180deg);
 }
 
-#todo, #credits{
-  margin-bottom: 30px;
+#todo {
+  padding: 30px;
 }
-#todo ul, #credits ul {
-  width: 90%;
-  margin: auto;
+#todo ul {
+  line-height: 2;
   list-style: none;
-}
-#todo li, #credits li, #credits a {
-  line-height: 2.4;
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.3rem;
 }
 #todo li i {
-  padding: 8px;
-  color: #70E4EF;
+  margin-right: 8px;
+  color: var(--main);
 }

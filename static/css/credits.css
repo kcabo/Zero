@@ -1,8 +1,17 @@
 h2 {
+  text-align: center;
   font-size: 1.6rem;
-  font-weight: bold;
-  padding-left: 20px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+}
+h2::after {
+  content: '';
+  display: block;
+  width: 30px;
+  margin: 2px auto;
+  background: var(--main);
+  height: 2.5px;
+  border-radius: 3px;
 }
 #credits {
   width: 95%;
