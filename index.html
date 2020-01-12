@@ -25,15 +25,38 @@
 </head>
 <body onload="activate(hero)">
 
+  <div id="header-wrapper">
+    <header>
+      <div id="burger" onclick="activate(this);activate(menu)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
+      <div class="placeholder"></div>
+    </header>
+  </div>
+
+  <div id="menu" class="">
+    <div id="search">
+      <form method="get" action="/search">
+        <input name="query" type="text" placeholder="選手やチームを検索">
+        <input type="submit" value="">
+        <i class="fas fa-search"></i>
+      </form>
+    </div>
+    <div class="item">
+    </div>
+  </div>
 
 
 
   <main>
 
     <div id="hero">
-      <img src="static/img/top_image2.jpg" alt="水泳選手">
+      <img src="static/img/top_image3.jpg" alt="水泳選手">
       <div class="caption">
-        <span><i></i>全員、</span>
+        <p><span><i></i>全員、</span></p>
         <span><i></i>ランクイン。</span>
       </div>
     </div>
