@@ -54,18 +54,36 @@
 
     <div id="hero">
       <img src="static/img/freestyle.jpg" alt="水泳選手">
-      <div class="caption">
+      <h1 class="caption">
+        <div></div>
         <p><span><i></i>全員、</span></p>
         <span><i></i>ランクイン。</span>
-      </div>
+      </h1>
       <form method="get" action="/search">
         <input name="query" type="text" placeholder="選手またはチームを検索">
         <i class="fas fa-search"></i>
       </form>
     </div>
 
-    <div id="button">
-      
+    <div id="ranking">
+      <div class="button men" data-aos="fade-right">
+        <p>毎日更新</p>
+        <p>ランキング<span>男子</span><i class="fas fa-chevron-circle-right"></i></p>
+      </div>
+      <div class="button women" data-aos="fade-left">
+        <p>毎日更新</p>
+        <p>ランキング<span>女子</span><i class="fas fa-chevron-circle-right"></i></p>
+      </div>
+    </div>
+
+    <div id="new">
+      <h3>お知らせ</h3>
+      <ul>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="100" data-aos-anchor="#anchorNew">記録をタップすると詳細が見られます</p></li>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="200" data-aos-anchor="#anchorNew">選手名とチーム名を同時に検索できます</p></li>
+        <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="300" data-aos-anchor="#anchorNew">個人ページから本年度の順位がわかります</p></li>
+      </ul>
+      <p id="anchorNew"></p>
     </div>
 
 
