@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body onload="activate(hero)">
+  
   {% include "partial/header.html" %}
 
   <main>
@@ -24,14 +25,14 @@
     </div>
 
     <div id="ranking">
-      <div class="button men" data-aos="fade-right">
+      <div class="button men" data-aos="fade-right" data-aos-duration="1000">
         <a href="ranking?event=112&year=19&pool=1&select=1">
           <span>男子</span>
           <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
           <img src="static/img/man.jpg" alt="水泳選手">
         </a>
       </div>
-      <div class="button women" data-aos="fade-left">
+      <div class="button women" data-aos="fade-left" data-aos-duration="1000">
         <a href="ranking?event=212&year=19&pool=1&select=1">
           <span>女子</span>
           <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
@@ -53,7 +54,7 @@
     <div id="data">
       <img src="static/img/earth.jpg" alt="地球">
       <div class="limit">
-        <h2><span>324</span>万 3,211 件<br>のレースデータから分析</h2>
+        <h2><span>{{count_records // 10000}}</span>万 {{count_records % 10000}} 件<br>のレースデータから分析</h2>
         <p>
           日本全国の数字にこだわるすべてのスイマーへ――
           スイマーズゼロがデータ分析の新しい可能性を提供します。
@@ -67,26 +68,18 @@
       <h3>開発者にメッセージ</h3>
       <p>私に直接メッセージを送れます。データの依頼やスイマーズゼロへの要望・意見、激励の言葉などお気軽にどうぞ。メッセージは匿名で送信されます。</p>
       <form action="msg" method="post">
-        <textarea name="msg" rows="8" cols="80" minlength="5" maxlength="300"></textarea>
+        <textarea name="msg" rows="5" minlength="5" maxlength="300"></textarea>
         <input type="submit" value="送信">
       </form>
-    </div>
-
-
-
-    <div id="links">
-      <div class="limit">
-        <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
-        <a href="ranking.html">ランキング<i class="fas fa-angle-right"></i></a>
-        <a href="search.html">詳細検索<i class="fas fa-angle-right"></i></a>
-        <a href="test.html">個人分析ページ<i class="fas fa-angle-right"></i></a>
-      </div>
     </div>
 
 
   </main>
 
   {% include "partial/footer.html" %}
+  <script>
+    {% if msg %} alert('送信されました。'); {% endif %}
+  </script>
 
 </body>
 
