@@ -1,0 +1,68 @@
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding-left: 20px;
+  padding-bottom: 8px;
+}
+
+#update {
+  margin: 20px 0;
+}
+#update ul {
+  margin-top: -8px;
+}
+#update li {
+  margin: 0 20px;
+  font-weight: normal;
+  list-style: none;
+  padding: 10px 0;
+}
+#update li + li {
+  border-top: dashed 1px #ddd;
+}
+#update li p:first-child {
+  width: 70px;
+  text-align: center;
+  line-height: 1.5;
+  border-radius: 2px;
+  background: #EE964B;
+  color: white;
+  margin-bottom: 2px;
+}
+#update li p:last-child, #update li a {
+  color: #222;
+  font-size: 1.2rem;
+}
+#update ul.less li:nth-child(n + 3) {
+  display: none;
+}
+
+#update ul + p {
+  display: none;
+}
+#update ul.less + p {
+  display: block;
+  cursor: pointer;
+  color: #aaa;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+#todo, #credits{
+  margin-bottom: 30px;
+}
+#todo ul, #credits ul {
+  width: 90%;
+  margin: auto;
+  list-style: none;
+}
+#todo li, #credits li, #credits a {
+  line-height: 2.4;
+  font-size: 1.2rem;
+  color: #333;
+}
+#todo li i {
+  padding: 8px;
+  color: #70E4EF;
+}
