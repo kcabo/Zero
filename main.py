@@ -159,6 +159,10 @@ def index():
 def credits():
     return render_template('credits.html')
 
+@app.route('/develop')
+def develop():
+    return render_template('develop.html')
+
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'
