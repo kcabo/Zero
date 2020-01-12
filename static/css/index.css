@@ -6,7 +6,7 @@
 #hero img {
   position: absolute;
   width: 100%;
-  /* filter: brightness(130%); */
+  filter: brightness(110%);
   z-index: -1;
 }
 #hero .caption {
@@ -42,4 +42,27 @@
 }
 #hero.active .caption span i {
   left: 100%;
+}
+#hero form {
+  margin: 170px auto 20px;
+  width: 70%;
+  max-width: 500px;
+  background: #fffe;
+  padding:  12px;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+#hero form input {
+  outline: none;
+  color: #444;
+}
+#hero form i {
+  position: absolute;
+  right: 20px;
+  top: 11px;
+  color: #888;
+  font-size: 2rem;
 }
