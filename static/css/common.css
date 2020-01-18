@@ -132,11 +132,11 @@ header .placeholder {
 
 footer {
   position: relative;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   background: #eee;
 }
 footer .links {
+  padding: 15px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
