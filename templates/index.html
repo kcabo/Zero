@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body onload="activate(hero)">
-  
+
   {% include "partial/header.html" %}
 
   <main>
@@ -79,6 +79,7 @@
   {% include "partial/footer.html" %}
   <script>
     {% if msg %} alert('送信されました。'); {% endif %}
+    // ここで/に飛ぶ
   </script>
 
 </body>
