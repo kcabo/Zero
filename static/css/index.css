@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:900&display=swap&subset=japanese');
+body {
+  background: #F8F9FC;
+}
 #hero {
   position: relative;
   max-width: 1000px;
