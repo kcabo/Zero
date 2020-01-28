@@ -11,7 +11,8 @@
   --im: #8b54d0;
   --grade: #1E88E5;
   --team: #FFB300;
-  --bg: #f3f7fa;
+  /* --bg: #f3f7fa; */
+  --bg: #F8F9FC;
   --shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
   --g-light: rgba(51,204,255);
   --g-heavy: rgba(51,102,255);
@@ -155,7 +156,7 @@ header .placeholder {
 footer {
   position: relative;
   padding: 20px 0;
-  background: #eee;
+  background: #F5F5F5;
 }
 footer .links {
   padding: 15px 0;
@@ -196,7 +197,7 @@ footer p span {
 footer img {
   height: 35px;
   position: absolute;
-  background: #eee;
+  background: #F5F5F5;
   padding: 0 10px;
   bottom: 9px;
   left: 10%;
