@@ -245,6 +245,7 @@ h1 {
 }
 #selectEvents .events .card p {
   color: white;
+  font-weight: bold;
 }
 #selectEvents .events .card p:last-child {
   font-size: 1.8rem;
