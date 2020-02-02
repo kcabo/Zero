@@ -8,7 +8,7 @@
   /* --men: #4fc0e8;
   --women: #ed85c0; */
   --men: #323da5;
-  --women: #f95794;
+  --women: #e75f92;
   --main: #0496FF;
   --feeble: #D1EBFF;
   /* --fr: #03A9F4;
@@ -17,11 +17,17 @@
   --fly: #fa8231;
   --im: #8b54d0; */
 
-  --fr: linear-gradient(29deg, rgb(4, 150, 255) 45%, rgb(90, 225, 225) 100%);
+  /* --fr: linear-gradient(29deg, rgb(4, 150, 255) 45%, rgb(90, 225, 225) 100%);
   --ba: linear-gradient(29deg, rgb(69, 186, 105) 45%, rgb(217, 234, 78) 100%);
   --br: linear-gradient(29deg, rgb(90, 101, 255) 45%, rgb(88, 158, 254) 100%);
   --fly: linear-gradient(29deg, rgb(254, 158, 74) 45%, rgb(254, 213, 69) 100%);
-  --im: linear-gradient(29deg, rgb(159, 57, 228) 45%, rgb(209, 49, 172) 100%);
+  --im: linear-gradient(29deg, rgb(159, 57, 228) 45%, rgb(209, 49, 172) 100%); */
+
+  --fr: rgb(4, 150, 255);
+  --ba: rgb(69, 186, 105);
+  --br: rgb(90, 101, 255);
+  --fly: rgb(254, 158, 74);
+  --im: rgb(159, 57, 228);
 
   --grade: #1E88E5;
   --team: #FFB300;
