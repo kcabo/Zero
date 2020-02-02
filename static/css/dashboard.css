@@ -288,8 +288,6 @@ h2 i {
 }
 
 
-
-
 #bests {
   white-space: nowrap;
   overflow-x: auto;
@@ -305,6 +303,7 @@ h2 i {
   width: 200px;
   margin: 2px 3px;
   display: inline-block;
+  vertical-align: top;
   overflow: hidden;
 }
 #bests .head {
