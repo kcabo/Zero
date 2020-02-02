@@ -8,6 +8,9 @@
 <link rel="icon" type="image/png" href="static/img/icon-192x192.png">
 <link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
 <meta name="description" content="あなたの泳力はどれくらい？数百万のレースデータを分析しビジュアル化。水泳連盟公式よりも早くランキングを作成。日本全国の水泳大会を毎日解析しています。どなたでも無料で最新のランキングや選手個人の分析結果をご覧いただけます。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="スイマーズゼロ">
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 <script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
@@ -23,35 +26,39 @@
   <link rel="stylesheet" href="static/css/search.css">
 </head>
 <body>
-  <div id="header-wrapper">
   <header>
-    <div id="burger" onclick="activate(this);activate(menu)">
-      <span></span>
-      <span></span>
-      <span></span>
+  <div class="wrapper">
+    <div class="placeholder">
     </div>
-    <a href="/"><img src="static/img/logo_zero.svg" alt="Swimmers Zero"></a>
-    <div class="placeholder"></div>
-  </header>
-</div>
+    <a href="/"><div class="logo">
+      <svg viewBox="0 0 631.051 631.012">
+        <defs>
+          <linearGradient id="gradient1" x1="0" x2="0" y1="0" y2="1">
+            <stop class="stop1" offset="0%" />
+            <stop class="stop2" offset="100%" />
+          </linearGradient>
+        </defs>
+        <path d="M308.759 629.566c-1.656-.817-57.845-56.322-124.865-123.344L62.0385 384.364l6.3655-4.509c8.3811-5.937 81.919-57.278 127.558-89.057 19.907-13.86 36.219-25.503 36.25-25.873.032-.37-1.491-1.183-3.383-1.808-4.453-1.469-10.728-7.785-13.694-13.784-1.99-4.023-2.344-6.269-2.354-14.925-.011-10.112-.027-10.176-2.011-8.419-5.28 4.672-165.7625 136.549-167.3626 137.53-.9781.6-6.8481-4.629-20.8172-18.543C11.89 334.318 2.4385 324.282 1.58699 322.674c-2.471378-4.667-2.005298-11.979 1.04244-16.356C6.96821 300.087 305.537 2.28416 308.585 1.14758c5.495-2.04968 12.04-1.30612 16.285 1.85011 2.145 1.59505 54.252 53.29821 115.794 114.89631l111.894 111.995-8.339 5.355c-4.586 2.944-13.314 8.579-19.394 12.521-6.08 3.942-15.78 10.215-21.555 13.94-5.775 3.725-14.775 9.543-20 12.929-5.225 3.386-16.7 10.787-25.5 16.446-8.8 5.658-19.6 12.628-24 15.489-4.4 2.86-11.15 7.229-15 9.708-3.85 2.479-17.35 11.18-30 19.336-12.65 8.157-33.125 21.339-45.5 29.293-12.375 7.955-23.097 15.015-23.826 15.689-1.076.995-.286 1.813 4.181 4.334 13.304 7.508 20.797 19.915 22.298 36.919.352 3.987.856 7.25 1.12 7.25.45 0 48.515-24.389 86.727-44.006 9.35-4.8 33.2-16.97 53-27.044 19.8-10.074 47.942-24.422 62.538-31.884 14.597-7.461 35.431-18.066 46.298-23.566l19.759-10 6.891 7.179c8.188 8.531 10.018 12.955 8.095 19.571-1.091 3.751-19.103 22.138-153.409 156.599-89.735 89.84-153.493 152.924-155.39 153.75-4.133 1.799-8.985 1.749-12.793-.131zm.565-171.668c13.255-6.148 21.96-21.032 20.63-35.274-2.499-26.763-32.026-36.928-52.828-18.187-6.983 6.291-11.002 15.925-10.997 26.361.006 13.902 7.077 24.136 20.023 28.98 5.528 2.068 16.594 1.17 23.172-1.88zm-29.038-73.024c11.022-5.473 20.41-6.682 32.649-4.202l3.166.642-2.02-8.858c-2.673-11.72-9.575-42.218-20.224-89.358-4.783-21.175-8.898-39.101-9.143-39.835-.28-.837-3.21 1.456-7.863 6.155-11.585 11.698-26.389 17.857-38.817 16.147-4.531-.623-4.92-.52-4.421 1.175.61 2.076 26.657 132.989 26.657 133.981 0 .347 3.27-2.464 7.266-6.246 3.997-3.783 9.734-8.103 12.75-9.601zm-22.114-136.227c7.929-4.018 14.29-10.498 18.557-18.905 3.234-6.371 3.715-8.222 3.701-14.234-.035-15.218-8.648-23.554-22.835-22.1-10.091 1.033-20.334 7.975-26.889 18.222-5.546 8.67-7.346 20.962-4.179 28.541 1.792 4.289 6.651 9 10.99 10.656 5.099 1.945 14.464.957 20.655-2.18z"/>
+      </svg>
+      <p>SWIMMERS <span>ZERO</span></p>
+    </div></a>
+    <div class="search-btn" onclick="activate_search()">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </div>
+  </div>
 
-<div id="menu" class="">
-  <div id="search">
+  <div id="search" class="deactivate">
     <form method="get" action="/search">
-      <input name="query" type="text" placeholder="選手やチームを検索">
-      <input type="submit" value="">
-      <i class="fas fa-search"></i>
+      <input id="searchbox" name="q" type="text" placeholder="選手やチームを検索">
     </form>
   </div>
-  <div class="item">
-  </div>
-</div>
+</header>
   <main>
 
     <div id="header">
-      <p>ｺﾅﾐ林間 の検索結果</p>
+      <p>湘南工大附 の検索結果</p>
       <form class="card" method="get" action="/search" name="my_form">
-        <input name="query" type="text" placeholder="Search..." value="ｺﾅﾐ林間">
+        <input name="q" type="text" placeholder="Search..." value="湘南工大附">
         <i class="fas fa-search"></i>
       </form>
       <div onclick="document.my_form.submit()">検索</div>
@@ -63,316 +70,190 @@
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=三橋拓也&grade=12">三橋拓也<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=3031&name=五味智信">五味智信<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=843&name=井上晴輝">井上晴輝<i class="fas fa-chevron-circle-right"></i></a>
           <div>
             <span>高校3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=横浜商科大">横浜商科大</a>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=井上慧豪&grade=6">井上慧豪<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=伊藤蓮大郎&grade=1">伊藤蓮大郎<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=佐々木耕大&grade=7">佐々木耕大<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=南林間">南林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=佐藤大樹&grade=7">佐藤大樹<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=勝本陸生&grade=4">勝本陸生<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=天野慎一郎&grade=14">天野慎一郎<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>大学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=安藤諒星&grade=5">安藤諒星<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=山崎康平&grade=10">山崎康平<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>高校1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=上鶴間">上鶴間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=岡村雄広&grade=6">岡村雄広<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=嶋田汐&grade=4">嶋田汐<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=平賀嵩太郎&grade=5">平賀嵩太郎<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=平賀簾太郎&grade=9">平賀簾太郎<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=平阪昂志朗&grade=3">平阪昂志朗<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=後藤旭輝&grade=8">後藤旭輝<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=つきみ野">つきみ野</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=村井洸太&grade=10">村井洸太<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>高校1</span>
-            <a href="/search?query=日大高">日大高</a><a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=村田拓斗&grade=8">村田拓斗<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=あかね台">あかね台</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=柴田友哉&grade=5">柴田友哉<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=森原健斗&grade=7">森原健斗<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=森川晃一郎&grade=1">森川晃一郎<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=水品魁瑠&grade=1">水品魁瑠<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=池上颯汰&grade=6">池上颯汰<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=泉奎太&grade=3">泉奎太<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=泉汰成&grade=8">泉汰成<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=清水鷲音&grade=5">清水鷲音<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=清水麗音&grade=8">清水麗音<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=田奈">田奈</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=片平琉惺&grade=3">片平琉惺<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=田中健晴&grade=6">田中健晴<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=芦田一樹&grade=6">芦田一樹<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=若槻陽向&grade=5">若槻陽向<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card men" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=鈴木竣也&grade=12">鈴木竣也<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=1290&name=元石大翔">元石大翔<i class="fas fa-chevron-circle-right"></i></a>
           <div>
             <span>高校3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=慶應湘南藤沢">慶應湘南藤沢</a>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=鎌田空&grade=4">鎌田空<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=984&name=北島龍之介">北島龍之介<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=長岡真之介&grade=8">長岡真之介<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=749&name=北林寿雪">北林寿雪<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=あかね台">あかね台</a>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=関一颯&grade=5">関一颯<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=1042&name=大久保寛至">大久保寛至<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card men" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=青木快斗&grade=5">青木快斗<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=848&name=大井凌空">大井凌空<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=975&name=山崎海翔">山崎海翔<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1065&name=成畑凌雅">成畑凌雅<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=769&name=日髙颯哉">日髙颯哉<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1038&name=松山元哉">松山元哉<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1183&name=根本大雅">根本大雅<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=770&name=田中一颯">田中一颯<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=840&name=田中誠斗">田中誠斗<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=979&name=福岡颯">福岡颯<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1285&name=草野光希">草野光希<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1060&name=藤原厚弘">藤原厚弘<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=718&name=諸星元大">諸星元大<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=778&name=近内翼">近内翼<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=3332&name=須田悠介">須田悠介<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card men" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=1064&name=髙森悠叶">髙森悠叶<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
@@ -382,253 +263,181 @@
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=井上来海&grade=7">井上来海<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=南林間">南林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=佐々木楓&grade=5">佐々木楓<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=北村萌佳&grade=3">北村萌佳<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=千葉蒼依&grade=3">千葉蒼依<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=坂下志緒&grade=6">坂下志緒<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=坂倉凜&grade=6">坂倉凜<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=坂東あかり&grade=8">坂東あかり<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=大野南">大野南</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=安重このみ&grade=6">安重このみ<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=小野さくら&grade=7">小野さくら<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=大和">大和</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=山内杏夏&grade=5">山内杏夏<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=山口奏帆&grade=4">山口奏帆<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=岡村なつは&grade=3">岡村なつは<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=嶋田凪&grade=6">嶋田凪<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=平川理桜&grade=6">平川理桜<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学6</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=平賀柚菜&grade=4">平賀柚菜<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=後藤颯希&grade=4">後藤颯希<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
-          </div>
-        </div>
-
-        <div class="card women" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=押部広奈&grade=11">押部広奈<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2271&name=佐々木梨湖">佐々木梨湖<i class="fas fa-chevron-circle-right"></i></a>
           <div>
             <span>高校2</span>
-            <a href="/search?query=湘南工大附">湘南工大附</a><a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=杉﨑心遥&grade=3">杉﨑心遥<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2650&name=佐藤里乃">佐藤里乃<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=東田愛生&grade=8">東田愛生<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2323&name=国分渚月">国分渚月<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>中学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=南林間">南林間</a>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=松本澪奈&grade=5">松本澪奈<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=3197&name=小堀倭加">小堀倭加<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学5</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>大学1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=林優光&grade=2">林優光<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2280&name=小川凜">小川凜<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=清水美奈葉&grade=7">清水美奈葉<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2419&name=山門帆菜美">山門帆菜美<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>中学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a><a href="/search?query=つきみ野">つきみ野</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=田中楓夏&grade=3">田中楓夏<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2454&name=岩渕立歩">岩渕立歩<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=荒川愛芽&grade=1">荒川愛芽<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2408&name=岩澤優沙">岩澤優沙<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学1</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=荒川芽咲&grade=3">荒川芽咲<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2415&name=成井こころ">成井こころ<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=鎌田岬&grade=2">鎌田岬<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2460&name=押部広奈">押部広奈<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学2</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=長谷川千紗&grade=3">長谷川千紗<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=2277&name=森岡碧海">森岡碧海<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学3</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
         <div class="card women" data-aos="fade-right">
           <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?name=高安凛&grade=4">高安凛<i class="fas fa-chevron-circle-right"></i></a>
+          <a href="/dashboard?s_id=3255&name=深田真優">深田真優<i class="fas fa-chevron-circle-right"></i></a>
           <div>
-            <span>小学4</span>
-            <a href="/search?query=ｺﾅﾐ林間">ｺﾅﾐ林間</a>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2542&name=清水紗良">清水紗良<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2457&name=田中夢乃">田中夢乃<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2431&name=石﨑美結">石﨑美結<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>大学1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2249&name=酒本莉翠">酒本莉翠<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2276&name=金野海彩">金野海彩<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校2</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2423&name=関口風香">関口風香<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2411&name=須田彩叶">須田彩叶<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校1</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
+          </div>
+        </div>
+
+        <div class="card women" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=2464&name=馬場帆南">馬場帆南<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>高校3</span>
+            <a href="/search?q=湘南工大附">湘南工大附</a>
           </div>
         </div>
 
@@ -641,15 +450,42 @@
   </main>
 
   <footer>
+  <div class="links">
+    <a href="/">トップページ<i class="fas fa-angle-right"></i></a>
+    <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
+    <a href="develop">開発状況<i class="fas fa-angle-right"></i></a>
+    <a href="search">詳細検索<i class="fas fa-angle-right"></i></a>
+    <a href="ranking?event=112&year=19&pool=1&select=1">ランキング<i class="fas fa-angle-right"></i></a>
+    <a href="https://kcabo.github.io/">開発者のページ<i class="fas fa-angle-right"></i></a>
+  </div>
   <p><span>Reo</span> Kanzaki</p>
   <img src="static/img/kcabo.svg" alt="kcabo">
-  <a href="https://kcabo.github.io/"></a>
 </footer>
+
+<div id="overlay" class=""></div>
 
 <script>
   function activate(target) {
     target.classList.toggle("active");
   };
+
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+  overlay.addEventListener('click', deactivate_all, false)
+
+  function activate_search(){
+    activate(search)
+    activate(overlay);
+    document.getElementById('searchbox').focus()
+  }
+
 </script>
 <script src="static/js/aos.js"></script>
 <script>

@@ -1,5 +1,3 @@
-<div id="overlay" class=""></div>
-
 <div id="detail" class="deactivate modal ">
   <div class="window">
     <div class="result">
@@ -9,16 +7,16 @@
           <span id="res_end">~12/25(日)</span>
           <span id="res_area">神奈川</span>
         </p>
-        <p id="res_meet">第21回かながわゆめ国体開催記念招待</p>
+        <p id="res_meet">大会名</p>
         <p class="place">
           <i class="fas fa-map-marker-alt"></i>
-          <span id="res_place">相模原市立総合水泳場</span>
+          <span id="res_place">会場</span>
           <i class="fas fa-flag"></i>
-          <span id="res_pool">短水路</span>
+          <span id="res_pool">水路</span>
         </p>
       </div>
 
-      <div class="event" swim-style="IM">
+      <div class="event" swim-style="Fr">
         <img src="static/img/fr.svg" alt="style">
         <span id="res_event">400m 個人メドレー</span>
       </div>
@@ -78,20 +76,6 @@
   </p>
 </div>
 
-<script>
-  var deactivate_elms = document.getElementsByClassName('deactivate');
-  var overlay = document.getElementById('overlay');
-
-  function deactivate_all() {
-    for (var i = 0; i < deactivate_elms.length; i++) {
-      deactivate_elms[i].classList.remove("active");
-    };
-    overlay.classList.remove("active");
-  }
-
-  overlay.addEventListener('click', deactivate_all, false)
-
-</script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
@@ -105,7 +89,7 @@
   }
 
   function post_data(data) {
-    axios.post('/apiResult', data)
+    axios.post('/resultAPI', data)
       .then(res => apply_data(res.data))
       .catch(err => alert(err))
       // .finally(res => console.log('finally'))
@@ -130,8 +114,8 @@
 
     document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
     document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?name=${data['name']}&grade=${data['grade']}`);
-    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?query=${data['team']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?s_id=${data['s_id']}&name=${data['name']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?q=${data['team']}`);
 
     document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
     document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);

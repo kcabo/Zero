@@ -15,7 +15,7 @@
       <p class="tips">
         <span>{{s.grade_jp}}</span>
         {% for t in s.teams %}
-        <a href="/search?query={{t}}">{{t}}</a>
+        <a href="/search?q={{t}}">{{t}}</a>
         {% endfor %}
       </p>
       <div class="icons">
@@ -58,11 +58,14 @@
       </div>
     </div></div>
 
+    <div id="tips">
+      <span>TIPS</span>記録をタップで詳細情報・グラフは薄色が短水路
+    </div>
+
     {% for i in range(2) %}
     <div class="trend-container">
       <h2><i class="fas fa-poll"></i></i>{{s.events[i].jpn_event()}}の調子</h2>
       <div class="trend card">
-        <p>(淡色が短水路)</p>
         <div class="wrap">
           <div class="chartarea">
             <canvas class="myLineChart" height="200"></canvas>
@@ -150,56 +153,64 @@
 
   <script>
     window.onload = function() {
-    document.getElementsByClassName('mask')[0].style.height = '{{s.mask_height}}px';
-    document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '{{s.count_race[0]}}%';
-    document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '{{s.count_race[1]}}%';
-    document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '{{s.count_race[2]}}%';
-    document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '{{s.count_race[3]}}%';
-    document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '{{s.count_race[4]}}%';
-    document.getElementsByTagName('h1')[0].classList.add('start');
-    document.getElementsByClassName('icons')[0].classList.add('start');
+      document.getElementsByClassName('mask')[0].style.height = '{{s.mask_height}}px';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('fr')[0].style.width = '{{s.count_race[0]}}%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('ba')[0].style.width = '{{s.count_race[1]}}%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('br')[0].style.width = '{{s.count_race[2]}}%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('fly')[0].style.width = '{{s.count_race[3]}}%';
+      document.getElementsByClassName('participate')[0].getElementsByClassName('im')[0].style.width = '{{s.count_race[4]}}%';
+      document.getElementsByTagName('h1')[0].classList.add('start');
+      document.getElementsByClassName('icons')[0].classList.add('start');
 
-    var e1_best_short = {{s.e1bests[0]}};
-    var e1_best_long = {{s.e1bests[1]}};
-    var e2_best_short = {{s.e2bests[0]}};
-    var e2_best_long = {{s.e2bests[1]}};
-    var best_values = [e1_best_long, e1_best_short, e2_best_long, e2_best_short];
-    var event_codes = [{{s.events[0].code}}, {{s.events[1].code}}];
-    var grade = {{s.grade}};
+      var e1_best_short = {{s.e1bests[0]}};
+      var e1_best_long = {{s.e1bests[1]}};
+      var e2_best_short = {{s.e2bests[0]}};
+      var e2_best_long = {{s.e2bests[1]}};
+      var best_values = [e1_best_long, e1_best_short, e2_best_long, e2_best_short];
+      var event_codes = [{{s.events[0].code}}, {{s.events[1].code}}];
+      var grade = {{s.grade}};
 
-    var elm_bests = document.getElementsByClassName('set-best');
-    var elms_same_ranking = document.getElementsByClassName('set-same-ranking');
-    var elms_same_count = document.getElementsByClassName('set-same-count');
-    var elms_whole_ranking = document.getElementsByClassName('set-whole-ranking');
-    var elms_whole_count = document.getElementsByClassName('set-whole-count');
+      var elm_bests = document.getElementsByClassName('set-best');
+      var elms_same_ranking = document.getElementsByClassName('set-same-ranking');
+      var elms_same_count = document.getElementsByClassName('set-same-count');
+      var elms_whole_ranking = document.getElementsByClassName('set-whole-ranking');
+      var elms_whole_count = document.getElementsByClassName('set-whole-count');
 
-    for(i = 0; i <= 3; i++) {
-      var data = {
-        index: i,
-        time_val: best_values[i],
-        event_code: event_codes[Math.floor(i / 2)],
-        pool: i % 2 == 0 ? 1 : 0,
-        grade: grade
-      };
-      axios.post('/apiRank', data)
-        .then(res => {
-          data = res.data;
-          var index = data['index'];
-          elm_bests[index].innerHTML = data['time'];
-          elms_same_ranking[index].innerHTML = data['same_ranking'];
-          elms_same_count[index].innerHTML = data['same_count'];
-          elms_whole_ranking[index].innerHTML = data['whole_ranking'];
-          elms_whole_count[index].innerHTML = data['whole_count'];
-        })
-        .catch(err => alert(err))
-    }
+      for(i = 0; i <= 3; i++) {
+        var data = {
+          index: i,
+          time_val: best_values[i],
+          event_code: event_codes[Math.floor(i / 2)],
+          pool: i % 2 == 0 ? 1 : 0,
+          grade: grade
+        };
+        axios.post('/rankAPI', data)
+          .then(res => {
+            data = res.data;
+            var index = data['index'];
+            elm_bests[index].innerHTML = data['time'];
+            elms_same_ranking[index].innerHTML = data['same_ranking'];
+            elms_same_count[index].innerHTML = data['same_count'];
+            elms_whole_ranking[index].innerHTML = data['whole_ranking'];
+            elms_whole_count[index].innerHTML = data['whole_count'];
+          })
+          .catch(err => alert(err))
+      }
     }
 
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script>
-  var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+  var jMonths = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3',
+                  '4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3',
+                  '4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3',
+                  '4', '5', '6', '7', '8', '9', '10', '11', '12', '1', '2', '3', '4'];
+  var elapsed_days = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 334, 365,
+                  395, 426, 456, 487, 518, 548, 579, 609, 640, 671, 699, 730,
+                  760, 791, 821, 852, 883, 913, 944, 974, 1005, 1036, 1065,
+                  1096, 1126, 1157, 1187, 1218, 1249, 1279, 1310, 1340, 1371, 1402, 1430, 1461
+                ]
   var trend1 = document.getElementsByClassName("myLineChart")[0].getContext('2d');
   var trend2 = document.getElementsByClassName("myLineChart")[1].getContext('2d');
   var colorE1 = '#4cc4eb';
@@ -253,7 +264,7 @@
         },
         elements: {
           line: {
-            tension: 0.15,
+            tension: 0.1,
           },
         },
         legend: {
@@ -263,15 +274,16 @@
           xAxes: [{
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 275,
+              suggestedMax: 1036,
               stepSize: 1,
               autoSkip: false,
               maxRotation: 0,
-              fontSize: 12,
+              fontSize: 11,
               fontColor: '#ccc',
               callback: function(value, index, values) {
                 // 4月1日からの経過日数リスト。これらは各月の一日目。個人的に最高にイカしてる実装方法
-                var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+                // var i = [0, 30, 61, 91, 122, 153, 183, 214, 244, 275, 306, 335, 365].indexOf(value);
+                var i = elapsed_days.indexOf(value);
                 if (i >= 0) {
                   return jMonths[i]
                 } else {
@@ -280,13 +292,13 @@
               }
             },
             gridLines: {
-              borderDash: [3],
-              zeroLineBorderDash: [3],
-              tickMarkLength: 8,
+              // borderDash: [3],
+              // zeroLineBorderDash: [3],
+              // tickMarkLength: 8,
               color: '#ccc',
               zeroLineColor: '#ccc',
-              lineWidth: 0.5,
-              zeroLineWidth: 0.5,
+              lineWidth: 0.3,
+              zeroLineWidth: 0.3,
             }
           }],
           yAxes: [{

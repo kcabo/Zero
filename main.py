@@ -2,6 +2,8 @@ import datetime
 
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import aliased
+from sqlalchemy import func, desc, or_
 import requests
 
 import analyzer
@@ -83,8 +85,16 @@ def calc_deviation(value, mean, std): # 無効の場合ハイフン
     else:
         return '-'
 
+def deviation(time, pool, event, grade):
+    if time and event:
+        pop = db.session.query(Stats.mean, Stats.std).filter_by(pool=pool, event=event, grade=grade).one()
+        return calc_deviation(time, pop.mean, pop.std)
+    else:
+        return '-'
+
+
 def count_records():
-    count = session.query(func.count(Record.record_id)).scalar()
+    count = db.session.query(func.count(Record.record_id)).scalar()
     return count
 
 def notify_line(message):
@@ -95,6 +105,24 @@ def notify_line(message):
         payload = {'message': message, 'notificationDisabled': True}
         r = requests.post(url, headers=headers, params=payload)
 
+def set_conditions(pool, event, year=None, grades=None, time_limit=None):
+    # query内で使用する条件文のリスト
+    conditions = [
+        Record.meet_id == Meet.meet_id,
+        Record.swimmer_id == Swimmer.swimmer_id,
+        Record.team_id == Team.team_id,
+        Meet.pool == pool,
+        Record.event == event,
+        Record.time > 0
+    ]
+    if year:
+        conditions.append(Meet.year == year)
+        if grades:  # grade0のときは全学年検索
+            conditions.append(getattr(Swimmer, f'grade_{year}').in_(grades))
+    if time_limit:
+        conditions.append(Record.time <= time_limit)
+
+    return conditions
 
 
 ####### 以下ルーター #######
@@ -119,34 +147,42 @@ def receive_message():
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL
     return 'ok'
-    
+
 
 @app.route('/ranking',  methods = ['POST', 'GET']) # 学年はPOST通信
 def ranking():
-    event = request.args.get('event', 112, type=int)
-    year = request.args.get('year', 19, type=int)
     pool = request.args.get('pool', 1, type=int)
-    all = request.args.get('all', 0, type=int)
+    event = request.args.get('event', 112, type=int)
+    year = request.args.get('year', CURRENT_YEAR, type=int)
     grades = request.form.getlist("grade", type=int) # POST時のフォームの内容が格納されるGET時は空リスト
+    page = 1
 
-    if grades: # 学年絞り込み指定ある時
-        records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.grade.in_(grades), Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .all())
-    elif all == 0: # もっとみる、を押す前
-        target_event = db.session.query(Stats).filter_by(pool=pool, event=event, agegroup=0).one()
+    time_limit = None
+    if len(grades) == 0 and page == 1: # 2ページ目以降考えてない
+        target_event = db.session.query(Stats.border).filter_by(pool=pool, event=event, grade=0).one()
         time_limit = target_event.border
-        records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.time > 0, Record.time <= time_limit, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .all())
-    else:
-        records = (db.session.query(Record, Meet)
-                .filter(Record.event==event, Record.time > 0, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .all())
 
-    df = analyzer.format_ranking(analyzer.output_ranking(records))
-    # {% for id, new, name, time, grade, grade_jp, team in ranking %}
-    ranking = zip(df['id'], df['new'], df['name'], df['time'], df['grade'], df['grade_jp'], df['team'])
+    conditions = set_conditions(pool, event, year, grades, time_limit)
+    stmt = db.session.query(
+            Record.record_id,
+            Swimmer.swimmer_id,
+            Swimmer.name,
+            getattr(Swimmer, f'grade_{year}'),
+            Team.team_name,
+            Record.time,
+            Meet.start
+        ).distinct(
+            Record.swimmer_id
+        ).filter(
+            *conditions
+        ).order_by(
+            Record.swimmer_id,
+            Record.time
+        ).subquery()
+
+    subq = aliased(Record, stmt)
+    ranking_raw = db.session.query(stmt).order_by(subq.time).limit(500).all()
+    ranking = analyzer.setup_ranking(ranking_raw, year)
     my_event = FormatEvent(event)
     return render_template(
             'ranking.html',
@@ -157,53 +193,63 @@ def ranking():
             pool = pool,
             style = event % 100,
             grades = grades,
-            all = all)
+        )
 
+def unique_teams(team_ids):
+    teams = db.session.query(Team.team_name).filter(Team.team_id.in_(team_ids)).order_by(Team.team_name).all()
+    return [x.team_name for x in teams]
 
 @app.route('/dashboard')
 def dashboard():
-    # name と grade がついていることを保証している
-    name = request.args.get('name')
-    grade = request.args.get('grade', type=int)
+    swimmer_id = request.args.get('s_id', type=int)
+    year = CURRENT_YEAR
+    records = db.session.query(
+                Record.record_id,
+                Record.event,
+                Record.time,
+                Record.team_id,
+                Meet.pool,
+                Meet.start,
+                Meet.meet_name,
+                Meet.year,
+            ).filter(
+                Record.meet_id == Meet.meet_id,
+                Record.swimmer_id == swimmer_id,
+                # Meet.year == 19
+            ).order_by(
+                desc(Meet.start),
+                Record.event,
+                Record.time
+            ).all()
 
-    # 取得した選手の名前・学年でフィルタリングしてrecordsテーブルから取得
-    # 同時にそれぞれのrecordのmeetidからMeetを内部結合 年度はとりま19年に指定
-    records = (db.session.query(Record, Meet)
-            .filter(Record.name == name, Record.grade == grade, Record.meetid == Meet.meetid, Meet.year == 19)
-            .all())
+    teams = unique_teams({r.team_id for r in records})
+    profile = analyzer.Profile(records)
+
+    target = db.session.query(Swimmer).get(swimmer_id)
+    target.visits += 1
+    db.session.commit()
 
     # 見出しの選手情報：     性別　名前　学年　所属一覧
-    teams = {r.Record.team for r in records} # set型なので重複削除される
-    sex = records[0].Record.event // 100 # ひとつめのレコードのeventの百の位
-    swimmer = analyzer.Swimmer(records)
-    del records # メモリ削減。効果ないかも
-    swimmer.sex = 'men' if sex == 1 else 'women'
-    swimmer.name = name
-    swimmer.grade_jp = japanese_grades[grade]
-    swimmer.grade = grade
-    swimmer.teams = teams
+    profile.sex = 'men' if target.sex == 1 else 'women'
+    profile.name = target.name
+    grade = getattr(target, f'grade_{year}')
+    if grade is None:
+        grade = 0
+    profile.grade = grade
+    profile.grade_jp = japanese_grades[grade]
+    profile.teams = teams
 
     # 偏差値の導出
-    event_code = swimmer.events[0].code
-    if event_code:
-        # 0全体・1小学・2中学・3高校・4大学・5一般
-        agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5]
-        agegroup = agegroup_list[grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
-        stats = db.session.query(Stats).filter_by(event=event_code, agegroup=agegroup).order_by(Stats.pool).all() # 1番目が短水路、2番目が長水路になる
-        dev_short = calc_deviation(swimmer.e1bests[0], stats[0].mean, stats[0].std)
-        dev_long = calc_deviation(swimmer.e1bests[1], stats[1].mean, stats[1].std)
-        deviation = dev_long if dev_long != '-' else dev_short
-    else:
-        deviation = '-'
-
-    if deviation == '-':
+    profile.args.append(grade)
+    dev = deviation(*profile.args)
+    if dev == '-':
         mask_height = 100
-    elif deviation >= 75:
+    elif dev >= 75:
         mask_height = 0
     else:
-        mask_height = 75 - deviation
-    swimmer.deviation = deviation
-    swimmer.mask_height = mask_height
+        mask_height = 75 - dev
+    profile.deviation = dev
+    profile.mask_height = mask_height
 
     # バッジの格納
     icons = []
@@ -211,61 +257,91 @@ def dashboard():
         icons.append('fa-users')
     if [True for t in teams if t in ['慶應義塾大', 'KEIO', '慶應義塾大学', '慶応', '慶応女子', '慶應志木', '慶應', '慶應湘南藤沢', '慶應湘南', '慶應普通部', '銀泳会']]:
         icons.append('fa-pen-nib')
-    if name == '神崎伶央':
+    if target.awards % 7 == 0:
         icons.append('fa-pastafarianism')
-    if deviation >= 65:
+    if dev != '-' and dev >= 65:
         icons.append('fa-star')
-    if deviation >= 70:
-        icons.append('fa-chess-king')
-    if swimmer.total_count >= 50:
+        if dev >= 70:
+            icons.append('fa-chess-king')
+    if profile.total_count >= 50:
         icons.append('fa-fist-raised')
     # <i class="fas fa-dragon"></i>
-    swimmer.icons = icons
+    profile.icons = icons
 
-    return render_template('dashboard.html', s = swimmer)
+    return render_template('dashboard.html', s = profile)
 
 
 @app.route('/search')
 def search():
-    query = request.args.get('query', '').replace(' ','').replace('_','').replace('%','')
+    query = request.args.get('q', '').replace(' ','').replace('_','').replace('%','')
     if query:
-        records = db.session.query(Record).filter(Record.name.like(f"%{query}%"), Record.relay == 0).all()
-        team_mates = db.session.query(Record).filter(Record.team.like(f"%{query}%"), Record.relay == 0).all()
-        # team_matesは検索したチームから出た記録しか抽出されないので、各選手の他のチームから出た記録も検索
-        names = {m.name for m in team_mates} # 検索したチームに所属する選手の他の所属を検索
-        records_with_another_team = db.session.query(Record).filter(Record.name.in_(names), Record.relay == 0).all()
-        records.extend(records_with_another_team)
-        del records_with_another_team
+        swimmer_ids = db.session.query(Swimmer.swimmer_id).filter(Swimmer.name.like(f"%{query}%")).all()
+        team_ids = db.session.query(Team.team_id).filter(Team.team_name.like(f"%{query}%")).all()
+        records = db.session.query(
+                    Swimmer.swimmer_id,
+                    Swimmer.sex,
+                    Swimmer.name,
+                    Swimmer.grade_19,
+                    Team.team_name
+                ).distinct(
+                    Record.swimmer_id,
+                    Record.team_id
+                ).filter(
+                    Record.swimmer_id == Swimmer.swimmer_id,
+                    Record.team_id == Team.team_id,
+                    Record.relay == 0,
+                    Swimmer.grade_19 != None,
+                    or_(
+                        Record.swimmer_id.in_([s.swimmer_id for s in swimmer_ids]),
+                        Record.team_id.in_([t.team_id for t in team_ids])
+                    )
+                ).limit(500).all()
     else:
         records = []
 
     men, women = analyzer.raise_candidates(records)
     show_sorry = False if men or women else True
     return render_template(
-            'search.html',
-            query = query,
-            men = men,
-            women = women,
-            show_sorry = show_sorry)
+                'search.html',
+                query = query,
+                men = men,
+                women = women,
+                show_sorry = show_sorry
+            )
 
 
-
-@app.route('/apiResult', methods=['POST'])
+@app.route('/resultAPI', methods=['POST'])
 def result_detail():
     body = request.get_json()
     id = body['id']
-    target = db.session.query(Record, Meet).filter(Record.id==id, Record.meetid == Meet.meetid).first()
-    res = analyzer.detail_dictionary(target)
-    agegroup_list = [0,1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,5] # 0全体・1小学・2中学・3高校・4大学・5一般
-    agegroup = agegroup_list[target.Record.grade] # gradeからagegroupへの変換 gradeは1以上なので最初の0が選ばれることはない
-    stats_agegroup = db.session.query(Stats).filter_by(event=target.Record.event, agegroup=agegroup, pool=target.Meet.pool).first()
-    stats_whole = db.session.query(Stats).filter_by(event=target.Record.event, agegroup=0, pool=target.Meet.pool).first()
-    res['dev1'] = calc_deviation(target.Record.time, stats_whole.mean, stats_whole.std)
-    res['dev2'] = calc_deviation(target.Record.time, stats_agegroup.mean, stats_agegroup.std)
-    return jsonify(res)
+    result = db.session.query(
+                Record,
+                Meet,
+                Swimmer,
+                Team
+            ).filter(
+                Record.meet_id == Meet.meet_id,
+                Record.swimmer_id == Swimmer.swimmer_id,
+                Record.team_id == Team.team_id,
+                Record.record_id == id
+            ).first()
+
+    rtn = analyzer.result_dictionary(result)
+    time = result.Record.time
+    year = result.Meet.year
+    grade = getattr(result.Swimmer, f'grade_{year}')
+    rtn['dev1'] = deviation(time, result.Meet.pool, result.Record.event, 0)
+    rtn['dev2'] = deviation(time, result.Meet.pool, result.Record.event, grade)
+    return jsonify(rtn)
 
 
-@app.route('/apiRank', methods=['POST'])
+def count_faster_swimmer(pool, event, year, grades, time_limit):
+    # 自分より速いスイマーの数を数える
+    conditions = set_conditions(pool, event, year, grades, time_limit)
+    count = db.session.query(Swimmer.swimmer_id).distinct(Swimmer.swimmer_id).filter(*conditions).count()
+    return count + 1
+
+@app.route('/rankAPI', methods=['POST'])
 def time_and_rank():
     body = request.get_json()
     index = body['index']
@@ -273,33 +349,21 @@ def time_and_rank():
     event = body['event_code']
     pool = body['pool']
     grade = body['grade']
-    year = 19
+    year = CURRENT_YEAR
 
-    if event:
-        target_stats = db.session.query(Stats).filter_by(event=event, agegroup=0, pool=pool).one()
-        whole_count = target_stats.count
-        same_count = (db.session.query(Record, Meet)
-                .filter(Record.event == event, Record.time > 0, Record.grade == grade, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .distinct(Record.name)
-                .count())
+    if event: # 二種目目がない人は0が格納されている
+        whole_stats = db.session.query(Stats.count_ranking).filter_by(pool=pool, event=event, grade=0).one()
+        whole_count = whole_stats.count_ranking
+        same_grade_stats = db.session.query(Stats.count_ranking).filter_by(pool=pool, event=event, grade=grade).one()
+        same_count = same_grade_stats.count_ranking
     else:
         whole_count = '-'
         same_count = '-'
 
     if time_val:
-        # 自分より速いスイマーの数を数える
-        whole_count_faster_swimmer = (db.session.query(Record, Meet)
-                .filter(Record.event == event, Record.time > 0, Record.time < time_val, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .distinct(Record.name, Record.grade)
-                .count())
-        whole_ranking = whole_count_faster_swimmer + 1
-
-        same_count_faster_swimmer = (db.session.query(Record, Meet)
-                .filter(Record.event == event, Record.time > 0, Record.time < time_val, Record.grade == grade, Record.meetid == Meet.meetid, Meet.pool == pool, Meet.year == year)
-                .distinct(Record.name)
-                .count())
-        same_ranking = same_count_faster_swimmer + 1
-
+        time_limit = time_val - 1 # このタイム以下の人が探される
+        whole_ranking = count_faster_swimmer(pool, event, year, None, time_limit)
+        same_ranking = count_faster_swimmer(pool, event, year, [grade], time_limit)
     else:
         whole_ranking = '-'
         same_ranking = '-'
@@ -307,13 +371,13 @@ def time_and_rank():
     time = analyzer.val_2_fmt(time_val)
 
     rtn = {
-        'index': index,
-        'time': time if time else '-',
-        'same_ranking': same_ranking,
-        'same_count': same_count,
-        'whole_ranking': whole_ranking,
-        'whole_count': whole_count
-    }
+            'index': index,
+            'time': time if time else '-',
+            'same_ranking': same_ranking,
+            'same_count': same_count,
+            'whole_ranking': whole_ranking,
+            'whole_count': whole_count
+        }
     return jsonify(rtn)
 
 

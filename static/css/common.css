@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700|Roboto:400,700&display=swap&subset=japanese');
+@font-face {
+    font-family: 'Hussar';
+    src: url('../font/my_font.woff2') format('woff2'),
+        url('../font/my_font.woff') format('woff');
+}
 :root {
   --men: #4fc0e8;
   --women: #ed85c0;
@@ -28,130 +33,90 @@ body {
   overflow-x: hidden;
 }
 
-#header-wrapper {
-  /* border-bottom: solid .5px #eee; */
-  width: 100%;
-}
 header {
-  padding: 7px 12px;
-  display: flex;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: auto;
-}
-
-header #burger {
-  cursor: pointer;
   position: relative;
-  width: 22px;
-  height: 14px;
-  margin: 8px 0;
 }
-header #burger span {
-  display: inline-block;
-  transition: all .4s;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #222;
-  border-radius: 4px;
+header .wrapper {
+  max-width: 800px;
+  margin: auto;
+  padding: 0 7px;
+  display: flex;
 }
-header #burger span:nth-of-type(1) {
-  top: 0;
-}
-header #burger span:nth-of-type(2) {
-  top: 6px;
-}
-header #burger span:nth-of-type(3) {
-  bottom: 0;
-}
-
-header #burger.active span:nth-of-type(1) {
-  transform: translateY(6px) rotate(-315deg);
-}
-header #burger.active span:nth-of-type(2) {
-  opacity: 0;
-}
-header #burger.active span:nth-of-type(3) {
-  transform: translateY(-6px) rotate(315deg);
-}
-
 header a {
+  display: block;
+  width: 175px;
+  margin: auto;
   text-decoration: none;
 }
-
-header svg {
-  width: 28px;
-  margin-right: 5px;
+header .logo {
+  display: flex;
+  padding-top: 2px;
 }
-header svg path {
+header .logo svg {
+  width: 25px;
+  height: 25px;
+}
+header .logo svg path {
   fill: url("#gradient1")
 }
-header .stop1 {
+header .logo .stop1 {
   stop-color: var(--g-light);
 }
-header .stop2 {
+header .logo .stop2 {
   stop-color: var(--g-heavy);
 }
-
-header a img {
-  padding-top: 3px;
-  height: 32px;
+header .logo p {
+  font-family: 'Hussar';
+  font-size: 1.4rem;
+  line-height: 30px;
+  padding-left: 5px;
+  color: #303030;
 }
-header .placeholder {
-  width: 22px;
+header .logo span {
+  color: var(--main);
 }
-
-#menu {
-  height: 0px;
-  opacity: 0;
-  transition: all .4s;
-  box-shadow: 0px 12px 12px -12px rgba(0,0,0,0.2);
-  border-bottom: solid 0.5px #eee;
+header .search-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: #999;
 }
-#menu.active {
-  height: 150px;
-  opacity: 1;
+header .search-btn, header .placeholder {
+  width: 40px;
+  height: 40px;
 }
-#menu #search {
-  width: 100%;
-  padding: 10px
-}
-#menu form {
-  width: 55%;
-  max-width: 400px;
-  margin: auto;
-  border-radius: 5px;
-  background: #F1F3F5;
-  position: relative;
-  display: flex;
-}
-#menu form input:nth-child(1) {
-  display: block;
-  outline: none;
-  margin-left: -8%;
-  line-height: 2;
-  font-size: 1.6rem;
-  transform: scale(0.7);
-  letter-spacing: 1px;
-  width: 85%;
-  font-weight: bold;
-}
-#menu form input:nth-child(2) {
-  outline: none;
+header .search-btn {
+  padding: 8px;
   cursor: pointer;
-  display: block;
-  width: 15%;
-}
-#menu form i {
-  position: absolute;
-  top: calc(50% - 8px);
-  right: 10px;
-  font-size: 16px;
-  color: #aaa;
 }
 
+header #search {
+  width: 100%;
+  max-width: 800px;
+  background: var(--bg);
+  border-top: solid .7px #ccc;
+  position: absolute;
+  padding: 10px 0 12px;
+  top: 40px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  z-index: 3;
+  display: none;
+}
+header #search.active {
+  display: block;
+}
+header #search form {
+  border-bottom: solid 1.6px var(--main);
+  width: 250px;
+  font-size: 1.6rem;
+  margin: auto;
+  padding: 4px;
+}
+header #search form input {
+  padding: 0 8px;
+  outline: none;
+}
 
 footer {
   position: relative;
