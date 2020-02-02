@@ -9,11 +9,18 @@
   --women: #ed85c0;
   --main: #0496FF;
   --feeble: #D1EBFF;
-  --fr: #03A9F4;
+  /* --fr: #03A9F4;
   --ba: #20bf6b;
   --br: #3867d6;
   --fly: #fa8231;
-  --im: #8b54d0;
+  --im: #8b54d0; */
+
+  --fr: linear-gradient(29deg, rgb(4, 150, 255) 45%, rgb(90, 225, 225) 100%);
+  --ba: linear-gradient(29deg, rgb(69, 186, 105) 45%, rgb(217, 234, 78) 100%);
+  --br: linear-gradient(29deg, rgb(90, 101, 255) 45%, rgb(88, 158, 254) 100%);
+  --fly: linear-gradient(29deg, rgb(254, 158, 74) 45%, rgb(254, 213, 69) 100%);
+  --im: linear-gradient(29deg, rgb(159, 57, 228) 45%, rgb(209, 49, 172) 100%);
+
   --grade: #1E88E5;
   --team: #FFB300;
   /* --bg: #f3f7fa; */
@@ -53,7 +60,7 @@ header a {
 }
 header .logo {
   display: flex;
-  padding-top: 3px;
+  padding-top: 3.6px;
 }
 header .logo svg {
   width: 28px;
@@ -70,9 +77,9 @@ header .logo .stop2 {
 }
 header .logo p {
   font-family: 'Hussar';
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   line-height: 34px;
-  padding-left: 5px;
+  padding-left: 7px;
   color: #303030;
 }
 header .logo span {
