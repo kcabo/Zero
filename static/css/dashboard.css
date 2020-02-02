@@ -296,6 +296,7 @@ h2 i {
   overflow-y: hidden;
   max-width: 800px;
   margin: auto;
+  height: 230px;
 }
 #bests::-webkit-scrollbar {
   width: 0px;
@@ -305,7 +306,6 @@ h2 i {
   margin: 2px 3px;
   display: inline-block;
   overflow: hidden;
-  height: 210px;
 }
 #bests .head {
   height: 80px;
@@ -417,19 +417,19 @@ h2 i {
   font-weight: bold;
 }
 #records tr td:nth-child(1) span[style-num = "1"] {
-  background-color: var(--fr);
+  background: var(--fr);
 }
 #records tr td:nth-child(1) span[style-num = "2"] {
-  background-color: var(--ba);
+  background: var(--ba);
 }
 #records tr td:nth-child(1) span[style-num = "3"] {
-  background-color: var(--br);
+  background: var(--br);
 }
 #records tr td:nth-child(1) span[style-num = "4"] {
-  background-color: var(--fly);
+  background: var(--fly);
 }
 #records tr td:nth-child(1) span[style-num = "5"] {
-  background-color: var(--im);
+  background: var(--im);
 }
 #records tr td:nth-child(2) {
   font-size: 16px;
