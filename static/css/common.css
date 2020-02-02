@@ -5,8 +5,10 @@
         url('../font/my_font.woff') format('woff');
 }
 :root {
-  --men: #4fc0e8;
-  --women: #ed85c0;
+  /* --men: #4fc0e8;
+  --women: #ed85c0; */
+  --men: #323da5;
+  --women: #f95794;
   --main: #0496FF;
   --feeble: #D1EBFF;
   /* --fr: #03A9F4;
@@ -79,7 +81,7 @@ header .logo p {
   font-family: 'Hussar';
   font-size: 1.7rem;
   line-height: 34px;
-  padding-left: 7px;
+  padding-left: 8px;
   color: #303030;
 }
 header .logo span {
