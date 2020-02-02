@@ -11,8 +11,8 @@ from constant import FormatEvent, japanese_grades
 from config import LINE_TOKEN
 
 app = Flask(__name__)
-# app.config.from_object('config.Develop')
-app.config.from_object('config.Product') # 本番用
+app.config.from_object('config.Develop')
+# app.config.from_object('config.Product') # 本番用
 db = SQLAlchemy(app)
 
 CURRENT_YEAR = 19

@@ -35,6 +35,10 @@ body {
 
 header {
   position: relative;
+  z-index: 3;
+}
+header.active {
+  z-index: 30;
 }
 header .wrapper {
   max-width: 800px;
@@ -44,17 +48,16 @@ header .wrapper {
 }
 header a {
   display: block;
-  width: 175px;
   margin: auto;
   text-decoration: none;
 }
 header .logo {
   display: flex;
-  padding-top: 2px;
+  padding-top: 3px;
 }
 header .logo svg {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
 }
 header .logo svg path {
   fill: url("#gradient1")
@@ -67,8 +70,8 @@ header .logo .stop2 {
 }
 header .logo p {
   font-family: 'Hussar';
-  font-size: 1.4rem;
-  line-height: 30px;
+  font-size: 1.8rem;
+  line-height: 34px;
   padding-left: 5px;
   color: #303030;
 }
@@ -76,16 +79,16 @@ header .logo span {
   color: var(--main);
 }
 header .search-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   fill: #999;
 }
 header .search-btn, header .placeholder {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 header .search-btn {
-  padding: 8px;
+  padding: 11px;
   cursor: pointer;
 }
 
@@ -96,14 +99,14 @@ header #search {
   border-top: solid .7px #ccc;
   position: absolute;
   padding: 10px 0 12px;
-  top: 40px;
+  top: 50px;
   right: 0;
   left: 0;
   margin: auto;
   z-index: 3;
   display: none;
 }
-header #search.active {
+header.active  #search {
   display: block;
 }
 header #search form {
@@ -111,11 +114,12 @@ header #search form {
   width: 250px;
   font-size: 1.6rem;
   margin: auto;
-  padding: 4px;
+  padding: 0 4px;
 }
 header #search form input {
   padding: 0 8px;
   outline: none;
+  line-height: 2;
 }
 
 footer {

@@ -174,7 +174,8 @@ main {
 #tips span {
   background: var(--main);
   color: white;
-  padding: 3px 10px;
+  padding: 1.3px 8px;
+  font-weight: bold;
   margin-right: 8px;
   border-radius: 3px;
   letter-spacing: 1px;
@@ -216,7 +217,7 @@ h2 i {
 }
 .trend .chartarea {
   margin: auto;
-  width: 600px;
+  width: 700px;
 }
 .trend canvas {
   width: 100%;
@@ -304,6 +305,7 @@ h2 i {
   margin: 2px 3px;
   display: inline-block;
   overflow: hidden;
+  height: 210px;
 }
 #bests .head {
   height: 80px;

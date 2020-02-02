@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="static/css/dashboard.css">
 </head>
 <body>
-  <header>
+  <header class="deactivate">
   <div class="wrapper">
     <div class="placeholder">
     </div>
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <div id="search" class="deactivate">
+  <div id="search">
     <form method="get" action="/search">
       <input id="searchbox" name="q" type="text" placeholder="選手やチームを検索">
     </form>
@@ -941,12 +941,13 @@
 <div id="overlay" class=""></div>
 
 <script>
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+  var main_header = document.getElementsByTagName('header')[0];
+
   function activate(target) {
     target.classList.toggle("active");
   };
-
-  var deactivate_elms = document.getElementsByClassName('deactivate');
-  var overlay = document.getElementById('overlay');
 
   function deactivate_all() {
     for (var i = 0; i < deactivate_elms.length; i++) {
@@ -957,9 +958,9 @@
   overlay.addEventListener('click', deactivate_all, false)
 
   function activate_search(){
-    activate(search)
+    activate(main_header);
     activate(overlay);
-    document.getElementById('searchbox').focus()
+    document.getElementById('searchbox').focus();
   }
 
 </script>
@@ -1060,7 +1061,7 @@
   function post_data(data) {
     axios.post('/resultAPI', data)
       .then(res => apply_data(res.data))
-      // .catch(err => alert(err))
+      .catch(err => alert(err))
       // .finally(res => console.log('finally'))
   }
 
@@ -1147,7 +1148,7 @@
             elms_whole_ranking[index].innerHTML = data['whole_ranking'];
             elms_whole_count[index].innerHTML = data['whole_count'];
           })
-          // .catch(err => alert(err))
+          .catch(err => alert(err))
       }
     }
 
