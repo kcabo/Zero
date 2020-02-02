@@ -58,16 +58,23 @@ class BestResult:
         self.time = ''
         self.date = ''
 
-class Swimmer:
+class Profile:
     def __init__(self, records):
-        converted = map(lambda x:(x.Record.id, x.Record.event, x.Record.time, x.Meet.pool, x.Meet.start, x.Meet.name, x.Meet.year), records)
-        df = pd.DataFrame(converted, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name', 'year'])
+        fixed = map(lambda x:(
+                x.record_id,
+                x.event,
+                x.time,
+                x.pool,
+                x.start,
+                x.meet_name,
+                x.year
+            ), records)
+        df = pd.DataFrame(fixed, columns = ['id', 'event_val', 'time_val', 'pool', 'start', 'meet_name', 'year'])
         df['event'] = df['event_val'].map(lambda x: FormatEvent(x))
         df['time'] = df['time_val'].map(val_2_fmt) # 読める形にフォーマット
-        df['start'] = df['start'].map(lambda x: datetime.datetime.strptime(str(x), '%Y%m%d').strftime('%Y/%m/%d')) # 日付を文字列型でフォーマット
+        df['start'] = df['start'].map(lambda x: '/'.join([(d := str(x))[:4], d[4:6], d[6:]]))
 
-        df2 = df.sort_values(['start', 'event_val', 'time_val'], ascending=[False, True, True]) # 日付のみ新しい順に
-        self.records = zip(df2['id'], df2['event'], df2['time'], df2['pool'], df2['start'], df2['meet_name'])
+        self.records = zip(df['id'], df['event'], df['time'], df['pool'], df['start'], df['meet_name'])
         df = df[df['time_val'] > 0] # 空白タイム削除
 
         self.total_count = len(df)
@@ -79,7 +86,7 @@ class Swimmer:
         e2 = event_counts.index[1] if len(event_counts) > 1 else 0 # 1種目しか出場しておらずS2が無いときは空白
         self.events = [FormatEvent(e) for e in [int(e1), int(e2)]] # int関数はnumpy64をpython型に変換してる
 
-        from_date = datetime.datetime(2019,4,1) # 経過日数の基準となる日付
+        from_date = datetime.datetime(2017,4,1) # 経過日数の基準となる日付
         df['days'] = df['start'].map(lambda x: (datetime.datetime.strptime(x, '%Y/%m/%d') - from_date).days) # 日付のシリアル化 基準日からの経過日数
         df.sort_values(['pool', 'event_val', 'days', 'time_val'], inplace=True) # すべて昇順で並び替え
         df.drop_duplicates(subset=['pool', 'event_val', 'days'], inplace=True) # 同じ日の同じレース（予選と決勝など）は早い方のタイムを残す
@@ -90,7 +97,7 @@ class Swimmer:
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 0)]))
         self.trends.append(trend_points(df[(df['event_val'] == e2) & (df['pool'] == 1)]))
 
-        # 偏差値導出のためのベストをvalueでぬきだす
+        # ajaxのためのベストをvalueでぬきだす
         year = 19
         e1_times_short = df['time_val'][(df['event_val'] == e1) & (df['pool'] == 0) & (df['year'] == year)].tolist()
         e1_times_long = df['time_val'][(df['event_val'] == e1) & (df['pool'] == 1) & (df['year'] == year)].tolist()
@@ -98,6 +105,13 @@ class Swimmer:
         e2_times_long = df['time_val'][(df['event_val'] == e2) & (df['pool'] == 1) & (df['year'] == year)].tolist()
         self.e1bests = min(e1_times_short) if e1_times_short else 0, min(e1_times_long) if e1_times_long else 0
         self.e2bests = min(e2_times_short) if e2_times_short else 0, min(e2_times_long) if e2_times_long else 0
+
+        # 偏差値導出用 関数に渡す引数
+        self.args = [
+            self.e1bests[1] if self.e1bests[1] else self.e1bests[0],
+            1 if self.e1bests[1] else 0,
+            int(e1)
+        ]
 
         df.sort_values(['time_val', 'pool'], inplace=True) # タイム順速いに並び替え
         df.drop_duplicates(['pool', 'event_val'], inplace=True) # 種目、水路をユニークにする。一番速いタイムのみ残る。これで残っている記録はすべてベストになる
@@ -110,21 +124,22 @@ class Swimmer:
         cards.append(BestsCard(df, [32, 33, 34]))
         cards.append(BestsCard(df, [42, 43, 44]))
         cards.append(BestsCard(df, [53, 54, 55]))
-        self.cards = [card for card in cards if card.events] # ベストのないカードはeventsアトリビュートがFalse
+        # ベストのないカードはeventsアトリビュートがFalseだから格納されない
+        self.cards = [card for card in cards if card.events]
+
 
 
 class Candidate:
-    def __init__(self, sex, name, grade, teams):
+    def __init__(self, id, sex, name, grade, teams):
+        self.id = id
         self.sex = 'men' if sex == 1 else 'women'
         self.name = name
-        self.grade = grade
         self.grade_jp = japanese_grades[grade]
         self.teams = teams.unique().tolist()
 
 def raise_candidates(records):
-    fixed = map(lambda x:(x.event, x.name, x.team, x.grade), records)
-    df = pd.DataFrame(fixed, columns = ['event', 'name', 'team', 'grade'])
-    df['sex'] = df['event'] // 100
+    fixed = map(lambda x:(x.swimmer_id, x.sex, x.name, x.grade_19, x.team_name), records)
+    df = pd.DataFrame(fixed, columns = ['id', 'sex', 'name', 'grade', 'team'])
     df_men = df[df['sex'] == 1]
     df_women = df[df['sex'] == 2]
     del df
@@ -133,81 +148,57 @@ def raise_candidates(records):
     return men, women
 
 def set_candidates(df, sex):
-    unique = df.drop_duplicates(subset=['name', 'grade'])
+    unique = df.drop_duplicates(subset=['id'])
     unique.sort_values(['name', 'grade'], inplace=True)
-    return [Candidate(sex, name, grade, df[(df['name'] == name) & (df['grade'] == grade)]['team']) for name, grade in zip(unique['name'], unique['grade'])]
+    return [Candidate(id, sex, name, grade, df[df['id'] == id]['team']) for name, grade, id in zip(unique['name'], unique['grade'], unique['id'])]
 
-def format_ranking(df):
+
+def setup_ranking(ranking, year):
+    data = map(lambda x:(
+            x.record_id,
+            x.swimmer_id,
+            x.name,
+            getattr(x, f'grade_{year}'),
+            x.team_name,
+            x.time,
+            x.start
+        ), ranking)
+    df = pd.DataFrame(data, columns = ['id', 's_id', 'name', 'grade', 'team', 'time_val', 'start'])
     df['time'] = df['time_val'].map(val_2_fmt)
     df['grade_jp'] = df['grade'].map(lambda x: japanese_grades[x])
     week_ago = datetime.date.today() - datetime.timedelta(days=7)
     week_ago_int = int(week_ago.strftime('%Y%m%d'))
     df['new'] = df['start'] >= week_ago_int
-    return df
-
-def output_ranking(records):
-    fixed = map(lambda x:(x.Record.id, x.Record.name, x.Record.team, x.Record.grade, x.Record.time, x.Meet.start), records)
-    df = pd.DataFrame(fixed, columns = ['id', 'name', 'team', 'grade', 'time_val', 'start'])
-    df.sort_values(['time_val'], inplace=True)
-    df.drop_duplicates(subset=['name','grade'], inplace=True)
-    df.reset_index(drop=True, inplace=True)
-    return df
+    return zip(df['id'], df['new'], df['s_id'], df['name'], df['time'], df['grade_jp'], df['team'])
 
 
-def compile_statistics(records, agegroup):
-    # agegroup ... 0全体・1小学・2中学・3高校・4大学・5一般
-    grades_list = [[], [1,2,3,4,5,6], [7,8,9], [10,11,12], [13,14,15,16,17,18], [19]]
-    df = output_ranking(records)
-    if agegroup == 0:
-        vals = df['time_val']
-        border = int(df.at[499, 'time_val']) if len(df) >= 500 else 999999 # 500人もランキングがいなかったなら99万をセット
-    else:
-        target_grades = grades_list[agegroup] # 対象の学年のリストを取り出す
-        vals = df[df['grade'].isin(target_grades)]['time_val']
-        border = 0
-    count = len(vals)
-    if count < 2: # データ少ないと統計値計算できない
-        return None, None, None, None, None, None, count
-    else:
-        # 外れ値除くための範囲を決める
-        q1 = vals.quantile(.25)
-        q3 = vals.quantile(.75)
-        iqr = q3-q1
-        lower_limit = q1 - iqr * 1.5
-        upper_limit = q3 + iqr * 1.5
 
-        # 外れ値除外したやつの要約統計量を取得
-        desc = vals[(vals > lower_limit) & (vals < upper_limit)].describe()
-        mean = round(desc['mean'], 2) # 小数点第2位までで四捨五入
-        std = round(desc['std'], 2)
-        new_q1 = desc['25%']
-        new_q2 = desc['50%']
-        new_q3 = desc['75%']
-
-        return mean, std, new_q1, new_q2, new_q3, border, count
-
-def detail_dictionary(target):
+def result_dictionary(target):
     from constant import area_dict
     yobi = ["月","火","水","木","金","土","日"]
     start = datetime.datetime.strptime(str(target.Meet.start), '%Y%m%d')
     end = datetime.datetime.strptime(str(target.Meet.end), '%Y%m%d')
     my_event = FormatEvent(target.Record.event)
+    year = target.Meet.year
+    grade = getattr(target.Swimmer, f'grade_{year}')
+
     res = {}
     res['start'] = start.strftime('%Y/%m/%d') + '(' + yobi[start.weekday()] + ')'
     res['end'] = '~' + end.strftime('%m/%d') + '(' + yobi[end.weekday()] + ')'
     res['area'] = area_dict[target.Meet.area]
-    res['meet'] = target.Meet.name
+    res['meet'] = target.Meet.meet_name
     res['place'] = target.Meet.place
     res['pool'] = '長水路' if target.Meet.pool == 1 else '短水路'
     res['event'] = my_event.jpn_event()
-    res['name'] = target.Record.name
-    res['grade_jp'] = japanese_grades[target.Record.grade]
-    res['team'] = target.Record.team
+    res['name'] = target.Swimmer.name
+    res['s_id'] = target.Swimmer.swimmer_id
+    res['grade_jp'] = japanese_grades[grade]
+    res['team'] = target.Team.team_name
     res['time'] = val_2_fmt(target.Record.time)
     res['rank'] = target.Record.rank
     res['devrange'] = f'偏差値({res["grade_jp"][0:2]})' # 最初の二文字
     res['style'] = my_event.eng_style()
-    res['grade'] = target.Record.grade
+    res['grade'] = grade
 
     laps_raw = target.Record.laps
     laps = [int(l) for l in laps_raw.split(',')]

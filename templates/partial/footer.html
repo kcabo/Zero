@@ -11,10 +11,30 @@
   <img src="static/img/kcabo.svg" alt="kcabo">
 </footer>
 
+<div id="overlay" class=""></div>
+
 <script>
   function activate(target) {
     target.classList.toggle("active");
   };
+
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+  overlay.addEventListener('click', deactivate_all, false)
+
+  function activate_search(){
+    activate(search)
+    activate(overlay);
+    document.getElementById('searchbox').focus()
+  }
+  
 </script>
 <script src="static/js/aos.js"></script>
 <script>
