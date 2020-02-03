@@ -88,64 +88,13 @@ body {
 }
 #hero .msg {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 157px;
-  background: #0009;
-  padding: 5px 9px;
 }
 #hero .msg p {
+  background: #0009;
+  padding: 5px 9px;
   color: white;
-  /* font-weight: bold; */
-  letter-spacing: .1px;
-}
-
-#about {
-  /* background: red; */
-
-}
-#about .count {
-  display: flex;
-  justify-content: center;
-  /* background-image: url('../img/ocean.jpg'); */
-  /* background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center 20%;
-  height: 90px; */
-}
-#about .column {
-  width: 100px;
-  text-align: center;
-  padding: 14px;
-  font-weight: bold;
-  /* color: white; */
-}
-#about .column p:first-child {
-  text-shadow: 3px 1px 3px rgba(0, 0, 0, 0.15);
-  font-size: 2.5rem;
-}
-#about .column:not(:last-child) p:first-child::after {
-  content: '万';
-  font-size: 1.3rem;
-  margin-left: 3px;
-}
-#about .column p:last-child {
-  line-height: 1.4;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-}
-#about .intro::before, #about .intro::after {
-  content: '';
-  display: block;
-  width: 120px;
-  height: 1.5px;
-  background: var(--main);
-  margin: 10px auto;
-}
-#about .intro {
-  padding: 0 20px;
-  text-align: center;
-  font-size: 1.2rem;
-  line-height: 2.5rem;
 }
 
 #ranking {
@@ -202,6 +151,60 @@ body {
   padding-top: 5px;
 }
 
+#about {
+  overflow: hidden;
+  position: relative;
+}
+#about::before {
+  content: '';
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: solid 3px var(--main);
+  z-index: -2;
+  opacity: .1;
+  position: absolute;
+  top: -21px;
+  right: -12px;
+}
+
+#about .count {
+  display: flex;
+  justify-content: center;
+
+}
+#about .column {
+  width: 100px;
+  text-align: center;
+  padding: 17px;
+  font-weight: bold;
+  transition: .2s;
+}
+#about .column:hover {
+  background: var(--main);
+  color: white;
+}
+#about .column p:first-child {
+  text-shadow: 3px 1px 3px rgba(0, 0, 0, 0.15);
+  font-size: 2.5rem;
+}
+#about .column:not(:last-child) p:first-child::after {
+  content: '万';
+  font-size: 1.3rem;
+  margin-left: 3px;
+}
+#about .column p:last-child {
+  line-height: 1.4;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+#about .intro {
+  padding: 0 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 2.5;
+}
+
 h3 {
   text-align: center;
   font-size: 1.6rem;
@@ -219,12 +222,27 @@ h3::after {
 }
 
 #new {
-  padding: 20px;
+  padding: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+#new h3::before {
+  content: '';
+  display: block;
+  width: 110px;
+  height: 110px;
+  border: solid 5px var(--main);
+  z-index: -2;
+  opacity: .1;
+  position: absolute;
+  left: -30px;
+  top: 0px;
 }
 #new ul {
   width: 80%;
   max-width: 500px;
   margin: auto;
+  padding: 0 20px;
   list-style: none;
   font-size: 1.3rem;
   line-height: 1.8;
@@ -263,35 +281,26 @@ h3::after {
   margin: auto;
 }
 
-#data {
+#cool {
   position: relative;
   min-height: 200px;
   padding: 30px;
   color: white;
+  background-image: url('../img/earth_op.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 20%;
 }
-#data img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-  object-position: center;
-  filter: brightness(80%);;
-  z-index: -1;
-}
-#data h2 {
+#cool h2 {
   font-size: 2rem;
+  line-height: 1.7;
+  padding: 10px 0;
 }
-#data h2 span {
-  font-size: 4rem;
-  padding-right: 5px;
-}
-#data p {
-  padding: 20px;
+#cool p {
+  padding: 10px;
   font-size: 1.4rem;
   line-height: 2;
-  /* font-weight: bold; */
+  font-weight: bold;
   text-align: justify;
 }
 
@@ -319,7 +328,7 @@ h3::after {
 }
 #contact input {
   outline: none;
-  background-image: linear-gradient(180deg,  rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
+  background-image: var(--gradient);
   color: white;
   padding: 5px 50px;
   margin: 8px auto;
