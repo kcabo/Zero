@@ -49,11 +49,11 @@ body {
 }
 
 header {
+  background: white;
   position: relative;
-  z-index: 3;
 }
 header.active {
-  z-index: 30;
+  z-index: 3;
 }
 header .wrapper {
   max-width: 800px;
@@ -90,6 +90,9 @@ header .logo p {
   padding-left: 8px;
   color: #303030;
 }
+header .logo p b {
+  letter-spacing: -0.5px;
+}
 header .logo span {
   color: var(--main);
 }
@@ -110,7 +113,7 @@ header .search-btn {
 header #search {
   width: 100%;
   max-width: 800px;
-  background: var(--bg);
+  background: white;
   border-top: solid .7px #ccc;
   position: absolute;
   padding: 10px 0 12px;
