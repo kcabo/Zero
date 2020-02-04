@@ -1,0 +1,43 @@
+<footer>
+  <div class="links">
+    <a href="/">トップページ<i class="fas fa-angle-right"></i></a>
+    <a href="credits">使用素材一覧<i class="fas fa-angle-right"></i></a>
+    <a href="develop">開発状況<i class="fas fa-angle-right"></i></a>
+    <a href="search">詳細検索<i class="fas fa-angle-right"></i></a>
+    <a href="ranking?event=112&year=19&pool=1&select=1">ランキング<i class="fas fa-angle-right"></i></a>
+    <a href="https://kcabo.github.io/">開発者のページ<i class="fas fa-angle-right"></i></a>
+  </div>
+  <p><span>Reo</span> Kanzaki</p>
+  <img src="static/img/kcabo.svg" alt="kcabo">
+</footer>
+
+<div id="overlay" class=""></div>
+
+<script>
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+  var main_header = document.getElementsByTagName('header')[0];
+
+  function activate(target) {
+    target.classList.toggle("active");
+  };
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+  overlay.addEventListener('click', deactivate_all, false)
+
+  function activate_search(){
+    activate(main_header);
+    activate(overlay);
+    document.getElementById('searchbox').focus();
+  }
+
+</script>
+<script src="static/js/aos.js"></script>
+<script>
+  AOS.init({once: true, offset: 0, duration: 600});
+</script>

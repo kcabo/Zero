@@ -1,0 +1,136 @@
+<div id="detail" class="deactivate modal ">
+  <div class="window">
+    <div class="result">
+      <div class="meetInfo">
+        <p>
+          <span id="res_start">2019/12/24(土)</span>
+          <span id="res_end">~12/25(日)</span>
+          <span id="res_area">神奈川</span>
+        </p>
+        <p id="res_meet">大会名</p>
+        <p class="place">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="res_place">会場</span>
+          <i class="fas fa-flag"></i>
+          <span id="res_pool">水路</span>
+        </p>
+      </div>
+
+      <div class="event" swim-style="Fr">
+        <img src="static/img/fr.svg" alt="style">
+        <span id="res_event">400m 個人メドレー</span>
+      </div>
+
+      <p class="swimmer">
+        <a href="#">
+          <span id="res_name">神崎伶央</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <span id="res_grade">大学2</span>
+        <a href="#" class="team">
+          <span id="res_team">銀泳会</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </p>
+
+      <p class="result_time">
+        <i class="fas fa-stopwatch"></i>
+        <span id="res_time">0:25.98</span>
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <p>順位</p>
+          <p id="res_rank">2位</p>
+        </div>
+        <div class="card">
+          <p>偏差値(全体)</p>
+          <p id="res_dev1">67</p>
+        </div>
+        <div class="card">
+          <p id="res_devrange">偏差値(大学)</p>
+          <p id="res_dev2">59</p>
+        </div>
+      </div>
+
+      <p class="lapcap"><i class="fas fa-exchange-alt"></i>Laps</p>
+      <div class="laps">
+        <div class="column">
+          <p>0:29.12</p>
+          <p>1:01.11</p>
+          <p>1:29.12</p>
+          <p>2:09.99</p>
+        </div>
+        <div class="column">
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+          <p>0:29.12</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="close" onclick="deactivate_all()">
+    <i class="fas fa-window-close"></i> 閉じる
+  </p>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+  function show_detail(r_id) {
+    if (r_id) {
+      var data = {id: r_id};
+      activate(detail);
+      activate(overlay);
+      post_data(data);
+    }
+  }
+
+  function post_data(data) {
+    axios.post('/resultAPI', data)
+      .then(res => apply_data(res.data))
+      .catch(err => alert(err))
+      // .finally(res => console.log('finally'))
+  }
+
+  function apply_data(data) {
+    document.getElementById('res_start').innerHTML = data['start'];
+    document.getElementById('res_end').innerHTML = data['end'];
+    document.getElementById('res_area').innerHTML = data['area'];
+    document.getElementById('res_meet').innerHTML = data['meet'];
+    document.getElementById('res_place').innerHTML = data['place'];
+    document.getElementById('res_pool').innerHTML = data['pool'];
+    document.getElementById('res_event').innerHTML = data['event'];
+    document.getElementById('res_name').innerHTML = data['name'];
+    document.getElementById('res_grade').innerHTML = data['grade_jp'];
+    document.getElementById('res_team').innerHTML = data['team'];
+    document.getElementById('res_time').innerHTML = data['time'];
+    document.getElementById('res_rank').innerHTML = data['rank'];
+    document.getElementById('res_dev1').innerHTML = data['dev1'];
+    document.getElementById('res_devrange').innerHTML = data['devrange'];
+    document.getElementById('res_dev2').innerHTML = data['dev2'];
+
+    document.getElementById('detail').getElementsByClassName('event')[0].setAttribute('swim-style', data['style']);
+    document.getElementById('detail').getElementsByClassName('event')[0].getElementsByTagName('img')[0].setAttribute('src', `static/img/${data['style']}.svg`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[0].setAttribute('href', `/dashboard?s_id=${data['s_id']}&name=${data['name']}`);
+    document.getElementById('detail').getElementsByClassName('swimmer')[0].getElementsByTagName('a')[1].setAttribute('href', `/search?q=${data['team']}`);
+
+    document.getElementById('detail').getElementsByClassName('column')[0].innerHTML = format_laps(data['laps1']);
+    document.getElementById('detail').getElementsByClassName('column')[1].innerHTML = format_laps(data['laps2']);
+  }
+
+  function format_laps(laps) {
+    var content = '';
+    for(var lap of laps) {
+      if(lap == '') {
+        content += `<p>-</p>`
+      } else {
+        content += `<p>${lap}</p>`
+      };
+    };
+    return content;
+  }
+
+</script>

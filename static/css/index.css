@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:900&subset=japanese&text=全員、ランクイン。');
+body {
+  background: #F8F9FC;
+}
+#hero {
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+  height: 320px;
+}
+#hero img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(95%);
+  z-index: -1;
+}
+#hero .caption {
+  width: 85%;
+  margin: auto;
+  padding-top: 35px;
+  position: relative;
+  white-space: nowrap;
+}
+#hero .caption div {
+  width: 10px;
+  height: 0%;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: -8px;
+  transition: all .5s cubic-bezier(0.55, 0.05, 0.22, 0.99);
+}
+#hero.active .caption div {
+  height: 105%;
+}
+#hero .caption span {
+  margin-left: 10px;
+  display: table;
+  font-size: 4rem;
+  color: white;
+  font-family: "Noto Serif JP";
+  font-weight: bold;
+  line-height: 1.1;
+  position: relative;
+  margin-top: 5px;
+  overflow: hidden;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#hero .caption span i {
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  top: 0;
+  left: 0;
+  transition: all .5s .5s cubic-bezier(0.55, 0.05, 0.22, 0.99);
+}
+#hero.active .caption span i {
+  left: 100%;
+}
+#hero form {
+  margin: 120px auto 0;
+  width: 70%;
+  max-width: 500px;
+  background: #fffe;
+  padding:  6px 14px;
+  font-size: 1.6rem;
+  border-radius: 1px;
+  font-weight: bold;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+#hero form input {
+  outline: none;
+  color: #444;
+  line-height: 2;
+}
+#hero form i {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  color: #888;
+  font-size: 2rem;
+}
+#hero .msg {
+  position: absolute;
+  right: 12px;
+  top: 157px;
+}
+#hero .msg p {
+  background: #0009;
+  padding: 5px 9px;
+  color: white;
+  margin: 2px 0;
+}
+
+#ranking {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: center;
+  margin: auto;
+}
+#ranking .button {
+  width: 50%;
+  position: relative;
+  display: block;
+  padding: 7px;
+}
+#ranking .button.men {
+  --sex: var(--men);
+}
+#ranking .button.women {
+  --sex: var(--women);
+}
+#ranking a {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  border: solid 1.3px #fffd;
+}
+#ranking .button img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: brightness(80%);
+}
+#ranking .button.women img {
+  filter: brightness(75%);
+}
+#ranking .button p i {
+  margin-left: 5px;
+}
+#ranking .button span {
+  padding: 3px 6px;
+  background: var(--sex);
+}
+#ranking .button p {
+  padding-top: 5px;
+}
+
+#about {
+  overflow: hidden;
+  position: relative;
+}
+#about::before {
+  content: '';
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: solid 3px var(--main);
+  z-index: -2;
+  opacity: .1;
+  position: absolute;
+  top: -21px;
+  right: -12px;
+}
+
+#about .count {
+  display: flex;
+  justify-content: center;
+
+}
+#about .column {
+  width: 100px;
+  text-align: center;
+  padding: 17px;
+  font-weight: bold;
+  transition: .2s;
+}
+#about .column:hover {
+  background: black;
+  color: white;
+}
+#about .column p:first-child {
+  text-shadow: 3px 1px 3px rgba(0, 0, 0, 0.15);
+  font-size: 2.5rem;
+}
+#about .column:not(:last-child) p:first-child::after {
+  content: '万';
+  font-size: 1.3rem;
+  margin-left: 3px;
+}
+#about .column p:last-child {
+  line-height: 1.4;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+#about .intro {
+  padding: 0 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 2.5;
+}
+#about, #new, #contact, #privacy {
+  max-width: 800px;
+  margin: auto;
+}
+h3 {
+  text-align: center;
+  font-size: 1.6rem;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+}
+h3::after {
+  content: '';
+  display: block;
+  width: 30px;
+  margin: 2px auto;
+  background: var(--main);
+  height: 2.5px;
+  border-radius: 3px;
+}
+
+#new {
+  padding: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+#new h3::before {
+  content: '';
+  display: block;
+  width: 110px;
+  height: 110px;
+  border: solid 5px var(--main);
+  z-index: -2;
+  opacity: .1;
+  position: absolute;
+  left: -30px;
+  top: 0px;
+}
+#new ul {
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
+  padding: 0 20px;
+  list-style: none;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  letter-spacing: .6px;
+}
+#new ul p {
+  display: inline-block;
+}
+#new ul i {
+  color: var(--main);
+  margin-right: 8px;
+}
+#new #seemore {
+  width: 120px;
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 1.3rem;
+  border: solid 1px black;
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px 12px;
+  line-height: 1;
+  transition: all .3s;
+}
+#new #seemore i {
+  margin-left: 5px;
+}
+#new #seemore:hover {
+  background: black;
+  color: white;
+}
+
+.limit {
+  max-width: 700px;
+  margin: auto;
+}
+
+#cool {
+  position: relative;
+  min-height: 200px;
+  padding: 30px;
+  color: white;
+  background-image: url('../img/earth_op.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 20%;
+}
+#cool h2 {
+  font-size: 3rem;
+  line-height: 1.7;
+  padding: 10px 0;
+}
+#cool p {
+  padding: 10px;
+  font-size: 1.4rem;
+  line-height: 2;
+  font-weight: bold;
+  text-align: justify;
+}
+
+#contact {
+  padding: 30px 20px;
+}
+#contact p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+#contact form {
+  max-width: 500px;
+  margin: auto;
+  font-size: 1.6rem;
+}
+#contact textarea {
+  margin-top: 8px;
+  width: 100%;
+  border: solid 2px #bbb;
+  background: #fafafa;
+  border-radius: 2px;
+  outline: none;
+  padding: 10px;
+}
+#contact input {
+  outline: none;
+  background-image: var(--gradient);
+  color: white;
+  padding: 5px 50px;
+  margin: 8px auto;
+  display: block;
+  border-radius: 3px;
+  letter-spacing: 2px;
+}
+
+#privacy {
+  padding: 0 30px 30px;
+  line-height: 1.8;
+  font-size: 1.2rem;
+}
+#privacy a {
+  text-decoration: none;
+}
+/* #hero, #ranking, #new{display: none} */
