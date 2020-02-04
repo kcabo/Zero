@@ -205,7 +205,10 @@ body {
   font-size: 1.2rem;
   line-height: 2.5;
 }
-
+#about, #new, #contact, #privacy {
+  max-width: 800px;
+  margin: auto;
+}
 h3 {
   text-align: center;
   font-size: 1.6rem;

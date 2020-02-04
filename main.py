@@ -93,9 +93,19 @@ def deviation(time, pool, event, grade):
         return '-'
 
 
-def count_records():
-    count = db.session.query(func.count(Record.record_id)).scalar()
-    return count
+def count_row():
+    count_race = db.session.query(func.count(Record.record_id)).scalar()
+    count_swimmer = db.session.query(
+            func.count(Swimmer.swimmer_id)
+        ).filter(
+            ~Swimmer.name.contains(',')
+        ).scalar()
+    count_meet = db.session.query(
+            Record.record_id
+        ).distinct(
+            Record.meet_id
+        ).count()
+    return count_race, count_swimmer, count_meet
 
 def notify_line(message):
     url = "https://notify-api.line.me/api/notify"
@@ -128,7 +138,13 @@ def set_conditions(pool, event, year=None, grades=None, time_limit=None):
 ####### 以下ルーター #######
 @app.route('/')
 def index():
-    return render_template('index.html', count_records=count_records())
+    count_race, count_swimmer, count_meet = count_row()
+    return render_template(
+            'index.html',
+            count_race = count_race,
+            count_swimmer = count_swimmer,
+            count_meet = count_meet
+        )
 
 @app.route('/credits')
 def credits():
@@ -142,7 +158,14 @@ def develop():
 def receive_message():
     msg = request.form.getlist("msg")[0]
     notify_line(msg)
-    return render_template('index.html', count_records=total_count(), msg=msg)
+    count_race, count_swimmer, count_meet = count_row()
+    return render_template(
+            'index.html',
+            count_race = count_race,
+            count_swimmer = count_swimmer,
+            count_meet = count_meet,
+            msg = msg
+        )
 
 @app.route('/up')
 def wake_up(): # 監視サービスで監視する用のURL

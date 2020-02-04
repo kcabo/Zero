@@ -2,7 +2,7 @@
 <html>
 <head>
   {% include "partial/head.html" %}
-  <title>【水泳】スイマーズ ゼロ【分析】</title>
+  <title>スイマーズ ゼロ</title>
   <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body onload="activate(hero)">
@@ -22,24 +22,50 @@
         <input name="q" type="text" placeholder="Search...">
         <i class="fas fa-search"></i>
       </form>
+      <div class="msg">
+        <p>お待たせしました。全部作り直しました。</p>
+        <p>一部のデータは現在全力で収集中です。</p>
+      </div>
     </div>
 
     <div id="ranking">
       <div class="button men" data-aos="fade-right" data-aos-duration="1000">
         <a href="ranking?pool=1&event=112&year=19">
           <span>男子</span>
-          <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
+          <p>ランキング<i class="fas fa-chevron-circle-right"></i></p>
           <img src="static/img/man_op.jpg" alt="水泳選手">
         </a>
       </div>
       <div class="button women" data-aos="fade-left" data-aos-duration="1000">
         <a href="ranking?pool=1&event=212&year=19">
           <span>女子</span>
-          <p>ランキング<i class="fas fa-arrow-circle-right"></i></p>
+          <p>ランキング<i class="fas fa-chevron-circle-right"></i></p>
           <img src="static/img/woman_op.jpg" alt="水泳選手">
         </a>
       </div>
     </div>
+
+    <div id="about">
+      <div class="count">
+        <div class="column" ontouchstart>
+          <p>{{count_race // 10000}}</p>
+          <p>レース</p>
+        </div>
+        <div class="column" ontouchstart>
+          <p>{{count_swimmer // 10000}}</p>
+          <p>選手数</p>
+        </div>
+        <div class="column" ontouchstart>
+          <p>{{count_meet}}</p>
+          <p>大会</p>
+        </div>
+      </div>
+      <div class="intro">
+        <p>スイマーズゼロは水泳のレース分析結果を<br />無料で公開するWebサービスです。</p>
+        <p>とある大学生が趣味で、けれど本気で運営しています。</p>
+      </div>
+    </div>
+
 
     <div id="new">
       <h3>新機能</h3>
@@ -48,17 +74,20 @@
         <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="200" data-aos-anchor="#seemore">選手名とチーム名の同時検索</p></li>
         <li><i class="fas fa-bolt"></i><p data-aos="fade-right" data-aos-delay="300" data-aos-anchor="#seemore">個人ページに本年度の順位</p></li>
       </ul>
-      <a id="seemore" href="develop">さらに見る<i class="fas fa-angle-right"></i></a>
+      <a id="seemore" href="develop" ontouchstart="">さらに見る<i class="fas fa-angle-right"></i></a>
     </div>
 
-    <div id="data">
-      <img src="static/img/earth.jpg" alt="地球">
+    <div id="cool">
       <div class="limit">
-        <h2><span>{{count_records // 10000}}</span>万 {{count_records % 10000}} 件<br>のレースデータから分析</h2>
+        <h2>本気のデータ分析</h2>
         <p>
-          日本全国の数字にこだわるすべてのスイマーへ――
-          スイマーズゼロがデータ分析の新しい可能性を提供します。
-          日本全国すべての水泳大会を毎日解析し、加工・分析したデータを無料で公開しております。
+          日本水泳連盟が公開するレース情報を毎日収集し更新してます。
+          集めた数百万のデータのほぼ全てが閲覧可能です。
+        </p>
+        <p>
+          水泳界に新しい可能性をもたらすべく、スイマーズゼロはこれからも進化します。
+          全国のスイマーとその家族やコーチに愛されるサービスにしていきたいです。
+          このサイトが皆様のインサイトやモチベーションに繋がれば幸いです。
         </p>
       </div>
     </div>
@@ -66,11 +95,20 @@
 
     <div id="contact">
       <h3>開発者にメッセージ</h3>
-      <p>私に直接メッセージを送れます。データの依頼やスイマーズゼロへの要望・意見、激励の言葉などお気軽にどうぞ。メッセージは匿名で送信されます。</p>
+      <p>私に直接メッセージを送れます。不具合の報告や要望・意見、激励の言葉などお気軽にどうぞ。メッセージは匿名で送信されます。</p>
       <form action="msg" method="post">
         <textarea name="msg" rows="5" minlength="5" maxlength="300"></textarea>
         <input type="submit" value="送信">
       </form>
+    </div>
+
+    <div id="privacy">
+      <h3>アクセス解析</h3>
+      <p>
+        このサイトでは皆様により良いサービスを提供するためにGoogleアナリティクスを使用しております。
+        これにより収集された皆様の情報には、個人を識別する情報は一切含まれておりません。
+        詳しくは<a href="https://policies.google.com/technologies/partner-sites?hl=ja">こちら</a>を御覧ください。
+      </p>
     </div>
 
 
@@ -78,7 +116,10 @@
 
   {% include "partial/footer.html" %}
   <script>
-    {% if msg %} alert('送信されました。'); {% endif %}
+    {% if msg %}
+      alert('送信されました。');
+      window.location.replace("/");
+    {% endif %}
     // ここで/に飛ぶ
   </script>
 

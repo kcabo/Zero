@@ -27,7 +27,7 @@
   --ba: rgb(69, 186, 105);
   --br: rgb(90, 101, 255);
   --fly: rgb(254, 158, 74);
-  --im: rgb(159, 57, 228);
+  --im: rgb(159, 65, 222);
 
   --grade: #1E88E5;
   --team: #FFB300;
@@ -91,7 +91,7 @@ header .logo p {
   color: #303030;
 }
 header .logo p b {
-  letter-spacing: -1px;
+  letter-spacing: -2px;
 }
 header .logo span {
   color: var(--main);
@@ -135,9 +135,9 @@ header #search form {
   padding: 0 4px;
 }
 header #search form input {
-  padding: 0 8px;
+  padding: 8px;
   outline: none;
-  line-height: 2;
+  line-height: 1;
 }
 
 footer {

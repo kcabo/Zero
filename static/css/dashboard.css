@@ -166,7 +166,7 @@ main {
 #about .participate .event .im {background: var(--im);}
 
 #tips {
-  padding: 10px;
+  padding-top: 10px;
   font-size: 1.1rem;
   color: #444;
   text-align: center;
