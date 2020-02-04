@@ -238,7 +238,6 @@ def dashboard():
             ).filter(
                 Record.meet_id == Meet.meet_id,
                 Record.swimmer_id == swimmer_id,
-                # Meet.year == 19
             ).order_by(
                 desc(Meet.start),
                 Record.event,
@@ -248,7 +247,7 @@ def dashboard():
     teams = unique_teams({r.team_id for r in records})
     profile = analyzer.Profile(records)
 
-    target = db.session.query(Swimmer).filter_by(swimmer_id=swimmer_id).one()
+    target = db.session.query(Swimmer).get(swimmer_id)
     target.visits += 1
     db.session.commit()
 
