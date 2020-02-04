@@ -248,7 +248,7 @@ def dashboard():
     teams = unique_teams({r.team_id for r in records})
     profile = analyzer.Profile(records)
 
-    target = db.session.query(Swimmer).get(swimmer_id)
+    target = db.session.query(Swimmer).filter_by(swimmer_id=swimmer_id).one()
     target.visits += 1
     db.session.commit()
 
@@ -277,18 +277,19 @@ def dashboard():
     # バッジの格納
     icons = []
     if [True for t in teams if t in ['JPN', 'JAPAN', '日本']]:
-        icons.append('fa-users')
+        icons.append('fa-dragon')
     if [True for t in teams if t in ['慶應義塾大', 'KEIO', '慶應義塾大学', '慶応', '慶応女子', '慶應志木', '慶應', '慶應湘南藤沢', '慶應湘南', '慶應普通部', '銀泳会']]:
         icons.append('fa-pen-nib')
     if target.awards % 7 == 0:
-        icons.append('fa-pastafarianism')
+        icons.append('fa-user-secret')
+        icons.append('fa-user-secret')
+        icons.append('fa-user-secret')
     if dev != '-' and dev >= 65:
         icons.append('fa-star')
         if dev >= 70:
             icons.append('fa-chess-king')
     if profile.total_count >= 50:
         icons.append('fa-fist-raised')
-    # <i class="fas fa-dragon"></i>
     profile.icons = icons
 
     return render_template('dashboard.html', s = profile)
