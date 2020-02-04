@@ -1,0 +1,76 @@
+h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+}
+h2::after {
+  content: '';
+  display: block;
+  width: 30px;
+  margin: 2px auto;
+  background: var(--main);
+  height: 2.5px;
+  border-radius: 3px;
+}
+
+#update, #todo {
+  max-width: 800px;
+  margin: auto;
+}
+
+#update {
+  padding: 10px 0;
+}
+#update ul {
+  margin-top: -10px;
+}
+#update li {
+  list-style: none;
+  padding: 10px;
+}
+#update li + li {
+  border-top: dashed 1px #ddd;
+}
+#update li p:first-child {
+  width: 70px;
+  text-align: center;
+  line-height: 1.5;
+  border-radius: 2px;
+  background: var(--main);
+  color: white;
+  margin-bottom: 2px;
+}
+#update li p:last-child, #update li a {
+  color: black;
+  font-size: 1.3rem;
+}
+#update ul.less li:nth-child(n + 4) {
+  display: none;
+}
+#update ul + p {
+  cursor: pointer;
+  color: #666;
+  text-align: center;
+  font-size: 1.2rem;
+}
+#update ul + p i {
+  margin-left: 5px;
+  transition: all 1s;
+}
+#update ul.less + p i {
+  transform: rotateX(180deg);
+}
+
+#todo {
+  padding: 30px;
+}
+#todo ul {
+  line-height: 2;
+  list-style: none;
+  font-size: 1.3rem;
+}
+#todo li i {
+  margin-right: 8px;
+  color: var(--main);
+}

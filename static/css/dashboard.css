@@ -1,281 +1,394 @@
-body {
-  background-color: #f4f4f4ee
+main {
+  background-color: var(--bg);
+  padding-bottom: 20px;
 }
 
 /* 選手名 */
-#swimmer-info {
-  box-shadow: 0 2px 5px #ccc;
-  padding: 12px;
-  display: flex;
-  align-items: center;
+#about {
   background-color: white;
+  box-shadow: 0px 5px 3px -3px rgba(0,0,0,0.16);
 }
-
-#p-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 10px;
+#about .wrap {
+  padding: 12px;
+  position: relative;
+  max-width: 600px;
+  margin: auto;
 }
-#swimmer-info .column {
-  margin-left: 8px;
+#about .user {
+  font-size: 50px;
+  position: absolute;
+  top: 8px;
 }
-h1 {
-  font-size: 25px;
-  letter-spacing: 3px;
-  font-weight: bold;
-  line-height: 1.2;
+#about .user.men {
+  color: var(--men);
 }
-
-#tips span {
-  display: inline-block;
+#about .user.women {
+  color: var(--women);
+}
+#about h1 {
+  position: relative;
+  margin-left: 65px;
+  overflow: hidden;
+}
+#about h1 {
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+#about h1 span {
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 100%;
+  /* transform:skewX(-40deg); */
+  top: 0;
+  left: 0px;
+  transition: all .4s;
+}
+#about h1.start span {
+  top: 30px;
+  /* left: 50vw; */
+}
+#about .tips {
+  margin-left: 65px;
+}
+#about .tips span {
   font-size: 1.1rem;
-  background-color: var(--c-yellow);
+  background: var(--grade);
   color: white;
   padding: 0 10px;
   border-radius: 5px;
-  line-height: 15px;
-  margin: 1px;
+  line-height: 1.4;
+  display: inline-block;
+}
+#about .tips a {
+  display: inline-block;
   cursor: pointer;
+  text-decoration: none;
+  color: white;
+  background: var(--team);
+  font-size: 1.1rem;
+  padding: 0 10px;
+  border-radius: 5px;
+  line-height: 1.4;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+#about .icons {
+  position: absolute;
+  top: 1px;
+  /* left: 250px; */
+  right: 10px;
+}
+#about .icons i {
+  margin: 0 1px;
+  font-size: 1.3rem;
+  color: white;
+  background-image: linear-gradient(180deg,  rgba(119,44,232,0.68) 11.5%, rgba(119,44,232,1) 91.2% );
+  display: inline-block;
+  width: 21px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 2px;
+  transition: all .6s;
+}
+#about .icons.start i {
+  transform: rotateY(360deg);
+}
+#about .row {
+  margin-left: 10px;
+  margin-top: 24px;
+  display: flex;
 }
 
-#tips span.univ {
-  background-color: var(--c-blue);
-  margin-right: 2px;
-  cursor: auto;
+#about .gauge {
+  width: 23px;
+  height: 104px;
+  background-image: linear-gradient(0deg,  rgba(35,210,255,1) 0.3%, rgba(74,104,247,1) 18.2%, rgba(133,80,255,1) 36.4%, rgba(198,59,243,1) 52.5%, rgba(250,84,118,1) 68.8%, rgba(255,223,67,1) 99.9% );
+  border: solid #ddd 2px;
+  position: relative;
+}
+#about .gauge .mask {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ddd;
+  transition: all 1.3s;
+}
+#about .numeric-data {
+  margin: 5px 10px;
+  width: 65px;
+}
+#about .numeric-data .child + .child {
+  margin-top: 8px;
+}
+#about .numeric-data .child p:first-child {
+  color: #aaa;
+}
+#about .numeric-data .child p:last-child {
+  font-size: 2rem;
 }
 
-/* 数枚のカード全体を囲む */
-.cards {
-  width: 90%;
-  margin: auto;
-  padding-top: 15px;
-  max-width: 600px;
+#about .participate {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  justify-content: space-between;
+  padding-bottom: 5px;
 }
+#about .participate .event p:first-child {
+  color: #aaa;
+}
+#about .participate .event p:last-child {
+  margin-top: -2px;
+  width: 100%;
+  height: 3px;
+  background: #ddd;
+  border-radius: 3px;
+  position: relative;
+}
+#about .participate .event span {
+  width: 0px;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+  transition: all 1.4s;
+}
+#about .participate .event .fr {background: var(--fr);}
+#about .participate .event .ba {background: var(--ba);}
+#about .participate .event .br {background: var(--br);}
+#about .participate .event .fly {background: var(--fly);}
+#about .participate .event .im {background: var(--im);}
+
+#tips {
+  padding-top: 10px;
+  font-size: 1.1rem;
+  color: #444;
+  text-align: center;
+}
+#tips span {
+  background: var(--main);
+  color: white;
+  padding: 1.3px 8px;
+  font-weight: bold;
+  margin-right: 8px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
 .card {
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 2px 5px #ccc;
 }
 
-
-/* 各種目の出場回数などを表示する段 */
-#participate {
-  display: flex;
-  justify-content: space-between;
+.trend-container {
+  padding: 0 10px;
 }
-#bar-container {
-  width: 65%;
-  max-width: 400px;
-  padding: 20px 20px 18px 12px;
-}
-#participate .column {
-  width: 34%;
-  min-width: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-#participate .column .card {
-  width: 100%;
-  /* max-width: 400px; */
-  padding: 6px 12px;
-  height: 24%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#participate .card .caption {
-  font-size: 10px;
-  color: #aaa;
-}
-#participate .card .data {
-  /* letter-spacing: -1px; */
-  font-size: 2.3rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: #37474F;
-}
-#participate .card .data span {
-  font-size: 12px;
-  padding-left: 5px;
-  letter-spacing: -0.4px;
-
-}
-
-
-/* 調子の段 */
-#condition {
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 40px;
+h2 {
+  margin: 22px 10px 3px;
   text-align: center;
-}
-#condition h2 {
-  font-size: 14px;
-  color: #555;
-  padding-top: 5px;
-}
-#condition p {
-  font-size: 10px;
-  color: #aaa;
-}
-
-#line-container {
-  padding: 10px;
-}
-
-@media screen and (min-width:1024px) {
-  .cards {
-    display: flex;
-    justify-content: center;
-    max-width: none;
-  }
-  #participate {
-    width: 45%;
-  }
-  #bar-container {
-    width: 300px;
-    max-width: 400px;
-  }
-  #participate .column {
-    width: 200px;
-  }
-  #condition {
-    width: 40%;
-    margin: 0 10px;
-    max-width: 500px;
-  }
-}
-
-
-/* 見出し */
-.caption-container {
-  position: relative;
-  margin-top: 20px;
-  height: 80px;
-}
-.caption-container .circle {
-  position: absolute;
-  top: 0;
-  left: -25px;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: var(--c-sky);
-  z-index: -1;
-}
-.caption-container h3 {
-  font-size: 37px;
-  position: absolute;
-  top: 16px;
-  left: 18px;
-  letter-spacing: 2px;
+  font-size: 1.6rem;
+  color: #444;
   font-weight: bold;
 }
-.caption-container h3::first-letter {
-  font-size: 50px;
-  color: white;
+h2 i {
+  padding-right: 5px;
+  padding-top: 6px;
+  vertical-align: top;
+}
+.trend {
+  margin: 0 auto 6px;
+  /* padding: 18px 6px 6px; */
+  padding: 6px;
+  max-width: 800px;
+}
+.trend .wrap {
+  overflow-x: auto;
+  padding-top: 6px;
+}
+.trend .wrap::-webkit-scrollbar {
+  display: none;
+}
+.trend .chartarea {
+  margin: auto;
+  width: 700px;
+}
+.trend canvas {
+  width: 100%;
 }
 
-/* ベスト横スクロール */
+.trend-container .ranking {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: auto;
+}
+.ranking .item {
+  width: 100%;
+  max-width: 385px;
+  margin: 4px 0;
+  position: relative;
+
+}
+.ranking .pool {
+  font-size: 1.1rem;
+  /* font-weight: bold; */
+  color: white;
+  background: var(--main);
+  border-radius: 3px;
+  width: 20px;
+  line-height: 18px;
+  text-align: center;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+.ranking .pool::first-letter {
+  /* font-size: 1.3rem; */
+}
+.ranking .card {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 10px;
+}
+.ranking .cell {
+  width: 28%;
+  position: relative;
+}
+.ranking .cell p:nth-child(1) {
+  color: #888;
+}
+.ranking .cell p:nth-child(2) {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding-top: 5px;
+}
+.ranking .rank p:nth-child(2)::after {
+  content: '位';
+  font-size: 1rem;
+  padding-left: 3px;
+}
+.ranking .cell p:nth-child(3) {
+  position: absolute;
+  top: 2px;
+  left: 35px;
+  color: #888;
+}
+.ranking .cell p:nth-child(3)::after {
+  content: '人';
+  font-size: .8rem;
+  padding-left: 1px;
+}
+
+
 #bests {
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 800px;
+  margin: auto;
+  height: 230px;
 }
 #bests::-webkit-scrollbar {
   width: 0px;
 }
 #bests .card {
-  display: inline-block;
-  overflow: hidden;
-  margin: 10px 3px;
-}
-#bests .header {
   width: 200px;
+  margin: 2px 3px;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+}
+#bests .head {
   height: 80px;
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  font-size: 11px;
-  text-align: center;
 }
-#bests .header.Fr {
-  background-color: var(--c-fr);
+#bests .head.Fr {
+  background: var(--fr);
 }
-#bests .header.Ba {
-  background-color: var(--c-ba);
+#bests .head.Ba {
+  background: var(--ba);
 }
-#bests .header.Br {
-  background-color: var(--c-br);
+#bests .head.Br {
+  background: var(--br);
 }
-#bests .header.Fly {
-  background-color: var(--c-fly);
+#bests .head.Fly {
+  background: var(--fly);
 }
-#bests .header.IM {
-  background-color: var(--c-im);
+#bests .head.IM {
+  background: var(--im);
 }
-
-#bests .header img {
+#bests .head img {
+  display: block;
   width: 60px;
-  margin: 0 auto;
+  padding-top: 2px;
+  margin: auto;
 }
-#bests .header p {
+#bests .head p {
+  text-align: center;
+  color: white;
   margin-top: -8px;
 }
-#bests .best_container {
-  width: 200px;
+#bests .content {
+  padding: 4px 10px;
+  height: 129.45px;
 }
-#bests table {
-  width: 92%;
-  margin: 10px auto;
+#bests .row {
+  display: flex;
+  justify-content: space-between;
   text-align: center;
-  font-size: 14px;
-  color: #222;
-  border-collapse: collapse;
-  height: 150px;
 }
-#bests thead td, tbody th{
-  font-size: 10px;
-  color: white;
+#bests .row .caption {
+  margin-bottom: 6px;
+  line-height: 17px;
+  width: 65px;
+  line-height: 1.4;
+  /* border-bottom: solid .5px #ddd; */
+  color: #999;
+  font-size: 1rem;
 }
-#bests thead td span{
-  background-color: #1D3557;
-  padding: 2px 18px;
-  border-radius: 4px;
-}
-#bests tbody th span {
-  background-color: #AAB3C0;
-  display: inline-block;
-  width: 90%;
-  line-height: 1.7;
-  border-radius: 4px;
-
-}
-#bests tbody th {
-  width: 28%;
-  font-weight: normal;
-  padding-top: 8px;
-}
-
-#bests tbody tr:nth-child(2n+1) td {
-  /* border: 0.1px #111 solid; */
+#bests .row:not(:first-child) {
   height: 30px;
-  padding-top: 12px;
+  margin-bottom: 6px;
 }
-#bests tbody tr:nth-child(2n) td {
-  font-size: 10px;
-  line-height: 0.8;
-  padding-bottom: 5px;
-  color: #444;
+#bests .row .cell {
+  width: 35%;
+  font-size: 1.4rem;
+
+}
+#bests .row .cell p:last-child {
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1;
+}
+#bests .row .nav {
+  width: 40px;
+  background: #AAB3C0;
+  color: white;
+  font-size: 1rem;
+  line-height: 15px;
+  height: 15px;
+  border-radius: 3px;
+  margin-top: 5px;
+}
+#bests .row .nav::after {
+  content: 'm';
+  font-size: .9rem;
+  padding-left: 2px;
 }
 
 
-/* レコード一覧 */
 #records {
-  padding: 2px;
+  padding: 0 2px;
   width: 90%;
-  margin: 10px auto;
+  max-width: 800px;
+  margin: auto;
 }
 #records table {
   width: 96%;
@@ -302,20 +415,20 @@ h1 {
   letter-spacing: .5px;
   font-weight: bold;
 }
-#records tr td:nth-child(1) span.Fr {
-  background-color: var(--c-fr);
+#records tr td:nth-child(1) span[style-num = "1"] {
+  background: var(--fr);
 }
-#records tr td:nth-child(1) span.Ba {
-  background-color: var(--c-ba);
+#records tr td:nth-child(1) span[style-num = "2"] {
+  background: var(--ba);
 }
-#records tr td:nth-child(1) span.Br {
-  background-color: var(--c-br);
+#records tr td:nth-child(1) span[style-num = "3"] {
+  background: var(--br);
 }
-#records tr td:nth-child(1) span.Fly {
-  background-color: var(--c-fly);
+#records tr td:nth-child(1) span[style-num = "4"] {
+  background: var(--fly);
 }
-#records tr td:nth-child(1) span.IM {
-  background-color: var(--c-im);
+#records tr td:nth-child(1) span[style-num = "5"] {
+  background: var(--im);
 }
 #records tr td:nth-child(2) {
   font-size: 16px;
@@ -332,11 +445,11 @@ h1 {
   border-radius: 3px;
   border: 1px #1D3557 solid;
 }
-#records tr td:nth-child(3) span.s {
+#records tr td:nth-child(3) span[pool = "0"] {
   color: #182C48;
   font-weight: 650;
 }
-#records tr td:nth-child(3) span.l {
+#records tr td:nth-child(3) span[pool = "1"] {
   color: white;
   background-color: #1D3557;
 }

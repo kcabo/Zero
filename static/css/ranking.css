@@ -1,0 +1,406 @@
+main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: normal;
+  padding: 10px;
+}
+#setting {
+  padding: 0 15px;
+  font-size: 1.4rem;
+  text-align: center;
+  line-height: 32px;
+  max-width: 400px;
+  margin: auto;
+}
+
+#setting .selectStyle {
+  color: var(--main);
+  cursor: pointer;
+  border: solid 1px var(--main);
+  transition: all .4s;
+}
+#setting .selectStyle:hover {
+  background: var(--main);
+  color: white;
+}
+#setting .selectStyle i {
+  padding-right: 5px;
+}
+#setting .row {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+#setting .button {
+  width: 32%;
+  position: relative;
+  color: #333;
+}
+
+#setting .button > p {
+  background: white;
+  overflow: hidden;
+  cursor: pointer;
+  color: #555;
+}
+#setting .button i {
+  transition: all .4s;
+  padding-left: 6px;
+}
+#setting .button.active i {
+  transform: rotateX(180deg);
+}
+#setting .button p:hover {
+  background: #eee;
+}
+#setting .button .items {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  background: white;
+  cursor: pointer;
+  transition: opacity .5s;
+  border-top: solid .5px #ddd;
+}
+#setting .button.active .items {
+  visibility: visible;
+  opacity: 1;
+  z-index: 2;
+}
+#setting .button.active {
+  background: #fafafa;
+  z-index: 2;
+}
+
+#gradeFilter {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+#gradeFilter > label p {
+  position: relative;
+  text-align: left;
+  padding-left: 70px;
+  color: #555;
+  font-size: 1.3rem;
+}
+#gradeFilter .tg-back {
+  position: absolute;
+  width: 37px;
+  height: 18px;
+  border-radius: 40px;
+  background: #e5e5e5;
+  top: -1px;
+  bottom: 0;
+  margin: auto;
+  left: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#gradeFilter .tg-front {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: -1px;
+  bottom: 0;
+  margin: auto;
+  left: 20px;
+  background: white;
+  border: solid 1px #d4d4d6;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all .4s;
+}
+#showGrade {
+  display: none;
+}
+#showGrade:checked ~ label .tg-back {
+  background: var(--main);
+}
+#showGrade:checked ~ label .tg-front {
+  left: 38px;
+}
+#gradeFilter .selectGrades {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 8px 0;
+  display: none;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
+}
+#showGrade:checked ~ .selectGrades {
+  display: block;
+}
+#gradeFilter input {
+  display: none;
+}
+#gradeFilter .school label span {
+  display: inline-block;
+  width: 45px;
+  line-height: 1.8;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0);
+  background: #e5e5e5;
+  color: #aaa;
+  margin: 2px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all .4s;
+}
+#gradeFilter .school input:checked + span {
+  background: var(--main);
+  color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#gradeFilter .submit {
+  background-image: linear-gradient(180deg,  rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
+  color: white;
+  width: 90px;
+  border-radius: 5px;
+  margin: 6px auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+#pageDown {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: black;
+  cursor: pointer;
+  opacity: .3;
+  z-index: 2;
+}
+#pageDown i {
+  color: white;
+  font-size: 30px;
+  line-height: 40px;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#selectEvents .events {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#selectEvents .events > p {
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  color: #222;
+  padding: 10px;
+}
+#selectEvents .events .card {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+  background: var(--fr);
+  height: 50px;
+  width: 32%;
+  border-radius: 4px;
+  position: relative;
+  margin: 2px;
+  cursor: pointer;
+  padding: 0 3px;
+}
+#selectEvents .events .card.fr {
+  background: var(--fr);
+}
+#selectEvents .events .card.ba {
+  background: var(--ba);
+}
+#selectEvents .events .card.br {
+  background: var(--br);
+}
+#selectEvents .events .card.fly {
+  background: var(--fly);
+}
+#selectEvents .events .card.im {
+  background: var(--im);
+}
+#selectEvents .events .card img {
+  display: block;
+  width: 40px;
+  margin-top: 4px;
+}
+#selectEvents .events .card div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 45px;
+  margin: auto;
+  height: 37px;
+}
+#selectEvents .events .card p {
+  color: white;
+  font-weight: bold;
+}
+#selectEvents .events .card p:last-child {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+#selectEvents .events .card p:last-child::after {
+  content: 'm';
+  font-size: 1.3rem;
+  padding-left: 2px;
+}
+
+#ranking {
+  width: 100%;
+  padding: 15px;
+  background: var(--bg);
+}
+#ranking[sex = "1"] {
+  --sex: var(--men);
+}
+#ranking[sex = "2"] {
+  --sex: var(--women);
+}
+#ranking table {
+  font-size: 1.3rem;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: relative;
+}
+#ranking tr {
+  background: white;
+  line-height: 36px;
+  overflow: hidden;
+}
+#ranking tr.new td:nth-child(1) span::after {
+  content: 'NEW';
+  font-size: 0.6rem;
+  line-height: 1.6;
+  padding: 0 3px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  background: #FF3C38;
+  color: white;
+  position: absolute;
+  left: -8px;
+  margin-top: -4px;
+}
+#ranking tr.new.top10 td:nth-child(1) span::after {
+  margin-top: -10px;
+  left: -13px;
+}
+#ranking table i {
+  font-size: 1rem;
+  padding-left: 5px;
+  color: var(--sex);
+}
+#ranking td:nth-child(1) {
+  width: 18%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  position: relative;
+}
+#ranking td:nth-child(1) span {
+  width: 100%;
+  display: inline-block;
+  background: var(--sex);
+  line-height: 1.4;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  text-align: center;
+  color: white;
+  width: 70%;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+#ranking td:nth-child(2) {
+  width: 28%;
+  line-height: 1;
+}
+#ranking td:nth-child(2) a {
+  text-decoration: none;
+  color: var(--sex);
+  font-weight: bold;
+}
+#ranking td:nth-child(3) {
+  width: 20%;
+  font-weight: bold;
+  color: #444;
+}
+#ranking td:nth-child(4) {
+  width: 15%;
+}
+#ranking td:nth-child(4) span {
+  border-radius: 5px;
+  display: inline-block;
+  width: 45px;
+  text-align: center;
+  line-height: 16px;
+  border: solid .6px var(--sex);
+  color: var(--sex);
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+#ranking td:nth-child(5) {
+  width: 25%;
+  color: #aaa;
+  font-size: 1rem;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#ranking tr.top10 {
+  line-height: 50px;
+}
+#ranking tr.top10 td:nth-child(1) {
+  border-left: solid 3px var(--sex);
+}
+#ranking tr.top10 td:nth-child(1) span {
+  color: #eff2f5;
+  background: none;
+  font-size: 4rem;
+  line-height: 1;
+  position: absolute;
+  bottom: -6.5px;
+  left: 3px;
+  display: block;
+  letter-spacing: -4px;
+}
+#ranking tr.top10 i {
+  padding-left: 3px;
+}
+#ranking tr.top10 td:nth-child(2) a {
+  font-size: 1.5rem;
+}
+#ranking tr.top10 td:nth-child(3) {
+  font-size: 1.5rem;
+}
+
+#ranking .load {
+  border: solid 1px #aaa;
+  color: #aaa;
+  border-radius: 50px;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 12px;
+  font-size: 1.3rem;
+  line-height: 2.3;
+  cursor: pointer;
+}
+#ranking .load i {
+  padding-left: 5px;
+}
+#ranking .load:hover {
+  background: #eee;
+}
