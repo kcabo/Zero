@@ -65,3 +65,4 @@ Eventとsex, style, distance との対応は頑健なのでDBにせずPythonの�
 17:大学5,
 18:大学6,
 19:一般,
+\copy relays to 'C:\Users\k7cab\Desktop\relays.csv' with csv delimiter ',';
