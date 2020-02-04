@@ -95,6 +95,7 @@ body {
   background: #0009;
   padding: 5px 9px;
   color: white;
+  margin: 2px 0;
 }
 
 #ranking {
@@ -181,7 +182,7 @@ body {
   transition: .2s;
 }
 #about .column:hover {
-  background: var(--main);
+  background: black;
   color: white;
 }
 #about .column p:first-child {
@@ -292,7 +293,7 @@ h3::after {
   background-position: center 20%;
 }
 #cool h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   line-height: 1.7;
   padding: 10px 0;
 }
@@ -310,7 +311,6 @@ h3::after {
 #contact p {
   font-size: 1.2rem;
   line-height: 1.8;
-  text-align: center;
 }
 #contact form {
   max-width: 500px;
@@ -322,7 +322,7 @@ h3::after {
   width: 100%;
   border: solid 2px #bbb;
   background: #fafafa;
-  border-radius: 3px;
+  border-radius: 2px;
   outline: none;
   padding: 10px;
 }
@@ -333,8 +333,16 @@ h3::after {
   padding: 5px 50px;
   margin: 8px auto;
   display: block;
-  border-radius: 5px;
+  border-radius: 3px;
   letter-spacing: 2px;
 }
 
+#privacy {
+  padding: 0 30px 30px;
+  line-height: 1.8;
+  font-size: 1.2rem;
+}
+#privacy a {
+  text-decoration: none;
+}
 /* #hero, #ranking, #new{display: none} */

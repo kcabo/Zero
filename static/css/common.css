@@ -36,7 +36,7 @@
   --shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
   --g-light: rgba(51,204,255);
   --g-heavy: rgba(51,102,255);
-  --gradient: linear-gradient(0deg, var(--g-light) 4.8%, var(--g-heavy) 85.5% );
+  --gradient: linear-gradient(180deg, var(--g-light) 4.8%, var(--g-heavy) 85.5% );
 }
 /* https://coolors.co/39a9dd-33bf74-c9613e-f9904a-8c5ac9 */
 html {
@@ -91,7 +91,7 @@ header .logo p {
   color: #303030;
 }
 header .logo p b {
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
 }
 header .logo span {
   color: var(--main);
@@ -151,7 +151,7 @@ footer .links {
   flex-wrap: wrap;
   justify-content: center;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto 20px;
 }
 footer .links a {
   display: block;
