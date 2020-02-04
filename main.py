@@ -107,12 +107,12 @@ def count_row():
         ).count()
     return count_race, count_swimmer, count_meet
 
-def notify_line(message):
+def notify_line(message, notify_disabled=True):
     url = "https://notify-api.line.me/api/notify"
     print(message)
     if LINE_TOKEN:
         headers = {'Authorization': 'Bearer ' + LINE_TOKEN}
-        payload = {'message': message, 'notificationDisabled': True}
+        payload = {'message': message, 'notificationDisabled': notify_disabled}
         r = requests.post(url, headers=headers, params=payload)
 
 def set_conditions(pool, event, year=None, grades=None, time_limit=None):
@@ -157,7 +157,7 @@ def develop():
 @app.route('/msg', methods = ['POST'])
 def receive_message():
     msg = request.form.getlist("msg")[0]
-    notify_line(msg)
+    notify_line(msg, False)
     count_race, count_swimmer, count_meet = count_row()
     return render_template(
             'index.html',
