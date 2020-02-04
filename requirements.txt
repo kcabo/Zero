@@ -27,4 +27,4 @@ urllib3==1.25.8
 Werkzeug==0.16.1
 win-inet-pton==1.1.0
 wincertstore==0.2
-gunicorn==19.9.0
+gunicorn==20.0.4
