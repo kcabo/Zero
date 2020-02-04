@@ -91,7 +91,7 @@ header .logo p {
   color: #303030;
 }
 header .logo p b {
-  letter-spacing: -2px;
+  letter-spacing: -1.8px;
 }
 header .logo span {
   color: var(--main);
@@ -137,7 +137,7 @@ header #search form {
 header #search form input {
   padding: 8px;
   outline: none;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 footer {
