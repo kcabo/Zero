@@ -157,7 +157,7 @@ def develop():
 @app.route('/msg', methods = ['POST'])
 def receive_message():
     msg = request.form.getlist("msg")[0]
-    notify_line(msg, False)
+    notify_line('<ユーザーからのメッセージ>' + msg, False)
     count_race, count_swimmer, count_meet = count_row()
     return render_template(
             'index.html',
