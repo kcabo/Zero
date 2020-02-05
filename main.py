@@ -175,10 +175,13 @@ def wake_up(): # 監視サービスで監視する用のURL
 @app.route('/ranking',  methods = ['POST', 'GET']) # 学年はPOST通信
 def ranking():
     pool = request.args.get('pool', 1, type=int)
-    event = request.args.get('event', 112, type=int)
+    event = request.args.get('event', 0, type=int)
     year = request.args.get('year', CURRENT_YEAR, type=int)
     grades = request.form.getlist("grade", type=int) # POST時のフォームの内容が格納されるGET時は空リスト
     page = 1
+
+    if event == 0: #旧ランキングページのURLから来たとき
+        return index()
 
     time_limit = None
     if len(grades) == 0 and page == 1: # 2ページ目以降考えてない
@@ -224,7 +227,10 @@ def unique_teams(team_ids):
 
 @app.route('/dashboard')
 def dashboard():
-    swimmer_id = request.args.get('s_id', type=int)
+    swimmer_id = request.args.get('s_id', None, type=int)
+    if swimmer_id is None: #旧ページのURLから来たとき
+        return index()
+
     year = CURRENT_YEAR
     records = db.session.query(
                 Record.record_id,
@@ -297,6 +303,7 @@ def dashboard():
 @app.route('/search')
 def search():
     query = request.args.get('q', '').replace(' ','').replace('_','').replace('%','')
+
     if query:
         swimmer_ids = db.session.query(Swimmer.swimmer_id).filter(Swimmer.name.like(f"%{query}%")).all()
         team_ids = db.session.query(Team.team_id).filter(Team.team_name.like(f"%{query}%")).all()
@@ -402,10 +409,6 @@ def time_and_rank():
             'whole_count': whole_count
         }
     return jsonify(rtn)
-
-
-
-
 
 if __name__ == "__main__": #gunicornで動かす場合は実行されない
     print('組み込みサーバーで起動します')
