@@ -94,18 +94,19 @@ def deviation(time, pool, event, grade):
 
 
 def count_row():
-    count_race = db.session.query(func.count(Record.record_id)).scalar()
-    count_swimmer = db.session.query(
-            func.count(Swimmer.swimmer_id)
-        ).filter(
-            ~Swimmer.name.contains(',')
-        ).scalar()
-    count_meet = db.session.query(
-            Record.record_id
-        ).distinct(
-            Record.meet_id
-        ).count()
-    return count_race, count_swimmer, count_meet
+    # count_race = db.session.query(func.count(Record.record_id)).scalar()
+    # count_swimmer = db.session.query(
+    #         func.count(Swimmer.swimmer_id)
+    #     ).filter(
+    #         ~Swimmer.name.contains(',')
+    #     ).scalar()
+    # count_meet = db.session.query(
+    #         Record.record_id
+    #     ).distinct(
+    #         Record.meet_id
+    #     ).count()
+    # return count_race, count_swimmer, count_meet
+    return 0, 0, 0
 
 def notify_line(message, notify_disabled=True):
     url = "https://notify-api.line.me/api/notify"
