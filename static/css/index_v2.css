@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:900&subset=japanese&text=全員、ランクイン。');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP:900&display=swap&subset=japanese&text=全員、ランクイン。');
 body {
   background: #F8F9FC;
 }
@@ -294,6 +294,7 @@ h3::after {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center 20%;
+  filter: brightness(90%);
 }
 #cool h2 {
   font-size: 3rem;
