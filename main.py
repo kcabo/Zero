@@ -411,7 +411,10 @@ def get_rows_count():
     race = r.get('count_race')
     swimmer = r.get('count_swimmer')
     meet = r.get('count_meet')
-    return int(race), int(swimmer), int(meet)
+    try:
+        return int(race), int(swimmer), int(meet)
+    except ValueError:
+        return 0, 0, 0
 
 def count_row():
     count_race = db.session.query(func.count(Record.record_id)).scalar()
