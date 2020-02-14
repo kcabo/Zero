@@ -4,16 +4,19 @@ from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import aliased
 from sqlalchemy import func, desc, or_
+import redis
 import requests
 
 import analyzer
 from constant import FormatEvent, japanese_grades
-from config import LINE_TOKEN
+from config import LINE_TOKEN, REDIS_URL, ADMIN_URL
 
 app = Flask(__name__)
 # app.config.from_object('config.Develop')
 app.config.from_object('config.Product') # 本番用
 db = SQLAlchemy(app)
+
+r = redis.from_url(REDIS_URL, decode_responses=True)
 
 CURRENT_YEAR = 19
 
@@ -93,20 +96,6 @@ def deviation(time, pool, event, grade):
         return '-'
 
 
-def count_row():
-    # count_race = db.session.query(func.count(Record.record_id)).scalar()
-    # count_swimmer = db.session.query(
-    #         func.count(Swimmer.swimmer_id)
-    #     ).filter(
-    #         ~Swimmer.name.contains(',')
-    #     ).scalar()
-    # count_meet = db.session.query(
-    #         Record.record_id
-    #     ).distinct(
-    #         Record.meet_id
-    #     ).count()
-    # return count_race, count_swimmer, count_meet
-    return 0, 0, 0
 
 def notify_line(message, notify_disabled=True):
     url = "https://notify-api.line.me/api/notify"
@@ -139,12 +128,12 @@ def set_conditions(pool, event, year=None, grades=None, time_limit=None):
 ####### 以下ルーター #######
 @app.route('/')
 def index():
-    count_race, count_swimmer, count_meet = count_row()
+    count_race, count_swimmer, count_meet = get_rows_count()
     return render_template(
             'index.html',
             count_race = count_race,
             count_swimmer = count_swimmer,
-            count_meet = count_meet
+            count_meet = count_meet,
         )
 
 @app.route('/credits')
@@ -159,18 +148,11 @@ def develop():
 def receive_message():
     msg = request.form.getlist("msg")[0]
     notify_line('<ユーザーからのメッセージ>' + msg, False)
-    count_race, count_swimmer, count_meet = count_row()
-    return render_template(
-            'index.html',
-            count_race = count_race,
-            count_swimmer = count_swimmer,
-            count_meet = count_meet,
-            msg = msg
-        )
+    return render_template('thank.html')
 
-@app.route('/up')
-def wake_up(): # 監視サービスで監視する用のURL
-    return 'ok'
+@app.route('/default')
+def default():
+    return render_template('default.html')
 
 
 @app.route('/ranking',  methods = ['POST', 'GET']) # 学年はPOST通信
@@ -410,6 +392,43 @@ def time_and_rank():
             'whole_count': whole_count
         }
     return jsonify(rtn)
+
+
+
+@app.route('/up')
+def wake_up(): # 監視サービスで監視する用のURL
+    return 'ok'
+
+@app.route(ADMIN_URL + '/count')
+def count_and_store():
+    race, swimmer, meet = count_row()
+    r.set('count_race', race)
+    r.set('count_swimmer', swimmer)
+    r.set('count_meet', meet)
+    return f'{race=} {swimmer=} {meet=}'
+
+def get_rows_count():
+    race = r.get('count_race')
+    swimmer = r.get('count_swimmer')
+    meet = r.get('count_meet')
+    return int(race), int(swimmer), int(meet)
+
+def count_row():
+    count_race = db.session.query(func.count(Record.record_id)).scalar()
+
+    count_swimmer = db.session.query(
+            func.count(Swimmer.swimmer_id)
+        ).filter(
+            # カンマを含むのはリレー
+            ~Swimmer.name.contains(',')
+        ).scalar()
+
+    count_meet = db.session.query(
+            Record.record_id
+        ).distinct(
+            Record.meet_id
+        ).count()
+    return count_race, count_swimmer, count_meet
 
 if __name__ == "__main__": #gunicornで動かす場合は実行されない
     print('組み込みサーバーで起動します')
