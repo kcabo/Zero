@@ -148,8 +148,7 @@ def raise_candidates(records):
     return men, women
 
 def set_candidates(df, sex):
-    unique = df.drop_duplicates(subset=['id'])
-    unique.sort_values(['name', 'grade'], inplace=True)
+    unique = df.drop_duplicates(subset=['id']).sort_values(['name', 'grade'])
     return [Candidate(id, sex, name, grade, df[df['id'] == id]['team']) for name, grade, id in zip(unique['name'], unique['grade'], unique['id'])]
 
 
