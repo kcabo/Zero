@@ -414,7 +414,7 @@ def get_rows_count():
     meet = r.get('count_meet')
     try:
         return int(race), int(swimmer), int(meet)
-    except ValueError:
+    except TypeError:
         return 0, 0, 0
 
 def count_row():
