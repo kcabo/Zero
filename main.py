@@ -401,6 +401,7 @@ def wake_up(): # 監視サービスで監視する用のURL
 
 @app.route(ADMIN_URL + '/count')
 def count_and_store():
+    print('>>> counting... set to ', REDIS_URL)
     race, swimmer, meet = count_row()
     r.set('count_race', race)
     r.set('count_swimmer', swimmer)
