@@ -3,6 +3,7 @@
 <head>
   {% include "partial/head.html" %}
   <title>{{s.name}}【個人分析結果】 | スイマーズ ゼロ</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="static/css/dashboard_v2.css">
 </head>
 <body>
@@ -318,6 +319,10 @@
 
   document.getElementsByClassName('trend')[0].getElementsByClassName('wrap')[0].scrollLeft = 1000;
   document.getElementsByClassName('trend')[1].getElementsByClassName('wrap')[0].scrollLeft = 1000;
+  </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({once: true, offset: 0, duration: 600});
   </script>
 
 </body>

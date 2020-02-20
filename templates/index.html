@@ -3,6 +3,7 @@
 <head>
   {% include "partial/head.html" %}
   <title>スイマーズ ゼロ</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="static/css/index_v2.css">
 </head>
 <body onload="activate(hero)">
@@ -119,6 +120,10 @@
   </main>
 
   {% include "partial/footer.html" %}
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({once: true, offset: 0, duration: 600});
+  </script>
 
 </body>
 
