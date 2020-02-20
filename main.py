@@ -56,6 +56,7 @@ class Swimmer(db.Model):
     grade_19 = db.Column(db.Integer)
     grade_20 = db.Column(db.Integer)
     grade_21 = db.Column(db.Integer)
+    is_indiv = db.Column(db.Boolean)
 
 class Team(db.Model):
     __tablename__ = 'teams'
@@ -414,7 +415,7 @@ def get_rows_count():
     meet = r.get('count_meet')
     try:
         return int(race), int(swimmer), int(meet)
-    except TypeError:
+    except TypeError: # Nonetypeなど整数化できない値を取得したとき
         return 0, 0, 0
 
 def count_row():
