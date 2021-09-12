@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="email=no,telephone=no,address=no">
+<link rel="icon" type="image/png" href="static/img/icon-192x192.png">
+<link rel="apple-touch-icon" type="image/png" href="static/img/apple-touch-icon-180x180.png">
+<meta name="description" content="新しい水泳データ分析サービスが誕生。数百万のレースデータをビジュアル化。常に最新のランキングや選手の分析結果をご覧いただけます。">
+<meta name="apple-mobile-web-app-title" content="スイマーズゼロ">
+
+<meta property="og:title" content="スイマーズゼロ【水泳データの新サービス】">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swim-zero.com/">
+<meta property="og:image" content="https://kcabo.github.io/img/ogp.jpg">
+<meta property="og:site_name" content="スイマーズゼロ">
+<meta property="og:description" content="新しい水泳データ分析サービスが誕生。数百万のレースデータをビジュアル化。公式大会に出場経験のある全員のデータをもとに、ランキングや折れ線グラフを作成しました。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@swim_zero">
+
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<script src="https://kit.fontawesome.com/fd65322e4b.js" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149393969-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-149393969-2');
+</script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common_v2.css">
+  <title>検索結果【スイマー検索】 | スイマーズ ゼロ</title>
+  <link rel="stylesheet" href="static/css/search_v1.css">
+</head>
+<body>
+  <header class="deactivate">
+  <div class="wrapper">
+    <a href="https://twitter.com/swim_zero" class="twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a class="logo-wrapper" href="/"><div class="logo">
+      <svg viewBox="0 0 631.051 631.012">
+        <defs>
+          <linearGradient id="gradient1" x1="0" x2="0" y1="0" y2="1">
+            <stop class="stop1" offset="0%" />
+            <stop class="stop2" offset="100%" />
+          </linearGradient>
+        </defs>
+        <path d="M308.759 629.566c-1.656-.817-57.845-56.322-124.865-123.344L62.0385 384.364l6.3655-4.509c8.3811-5.937 81.919-57.278 127.558-89.057 19.907-13.86 36.219-25.503 36.25-25.873.032-.37-1.491-1.183-3.383-1.808-4.453-1.469-10.728-7.785-13.694-13.784-1.99-4.023-2.344-6.269-2.354-14.925-.011-10.112-.027-10.176-2.011-8.419-5.28 4.672-165.7625 136.549-167.3626 137.53-.9781.6-6.8481-4.629-20.8172-18.543C11.89 334.318 2.4385 324.282 1.58699 322.674c-2.471378-4.667-2.005298-11.979 1.04244-16.356C6.96821 300.087 305.537 2.28416 308.585 1.14758c5.495-2.04968 12.04-1.30612 16.285 1.85011 2.145 1.59505 54.252 53.29821 115.794 114.89631l111.894 111.995-8.339 5.355c-4.586 2.944-13.314 8.579-19.394 12.521-6.08 3.942-15.78 10.215-21.555 13.94-5.775 3.725-14.775 9.543-20 12.929-5.225 3.386-16.7 10.787-25.5 16.446-8.8 5.658-19.6 12.628-24 15.489-4.4 2.86-11.15 7.229-15 9.708-3.85 2.479-17.35 11.18-30 19.336-12.65 8.157-33.125 21.339-45.5 29.293-12.375 7.955-23.097 15.015-23.826 15.689-1.076.995-.286 1.813 4.181 4.334 13.304 7.508 20.797 19.915 22.298 36.919.352 3.987.856 7.25 1.12 7.25.45 0 48.515-24.389 86.727-44.006 9.35-4.8 33.2-16.97 53-27.044 19.8-10.074 47.942-24.422 62.538-31.884 14.597-7.461 35.431-18.066 46.298-23.566l19.759-10 6.891 7.179c8.188 8.531 10.018 12.955 8.095 19.571-1.091 3.751-19.103 22.138-153.409 156.599-89.735 89.84-153.493 152.924-155.39 153.75-4.133 1.799-8.985 1.749-12.793-.131zm.565-171.668c13.255-6.148 21.96-21.032 20.63-35.274-2.499-26.763-32.026-36.928-52.828-18.187-6.983 6.291-11.002 15.925-10.997 26.361.006 13.902 7.077 24.136 20.023 28.98 5.528 2.068 16.594 1.17 23.172-1.88zm-29.038-73.024c11.022-5.473 20.41-6.682 32.649-4.202l3.166.642-2.02-8.858c-2.673-11.72-9.575-42.218-20.224-89.358-4.783-21.175-8.898-39.101-9.143-39.835-.28-.837-3.21 1.456-7.863 6.155-11.585 11.698-26.389 17.857-38.817 16.147-4.531-.623-4.92-.52-4.421 1.175.61 2.076 26.657 132.989 26.657 133.981 0 .347 3.27-2.464 7.266-6.246 3.997-3.783 9.734-8.103 12.75-9.601zm-22.114-136.227c7.929-4.018 14.29-10.498 18.557-18.905 3.234-6.371 3.715-8.222 3.701-14.234-.035-15.218-8.648-23.554-22.835-22.1-10.091 1.033-20.334 7.975-26.889 18.222-5.546 8.67-7.346 20.962-4.179 28.541 1.792 4.289 6.651 9 10.99 10.656 5.099 1.945 14.464.957 20.655-2.18z"/>
+      </svg>
+      <p>SWIMME<b>RS</b> <span>ZERO</span></p>
+    </div></a>
+    <div class="search-btn" onclick="activate_search()">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </div>
+  </div>
+
+  <div id="search">
+    <form method="get" action="/search">
+      <input id="searchbox" name="q" type="text" placeholder="選手やチームを検索">
+    </form>
+  </div>
+</header>
+  <main>
+
+    <div id="header">
+      <p>髙橋 の検索結果</p>
+      <form class="card" method="get" action="/search" name="my_form">
+        <input name="q" type="text" placeholder="Search..." value="髙橋">
+        <i class="fas fa-search"></i>
+      </form>
+      <div onclick="document.my_form.submit()">検索</div>
+    </div>
+
+
+    <div id="teams">
+      <div class="head">
+        <i class="fas fa-ellipsis-v"></i>チーム
+      </div>
+
+      <!-- <a class="card" href="/members?team=322">
+        <p>東京SC<i class="fas fa-chevron-circle-right"></i></p>
+      </a> -->
+      <div class="skeleton">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </div>
+    </div>
+
+    <div id="swimmers">
+
+      <div class="column">
+
+        <div class="head men">
+          <i class="fas fa-ellipsis-v"></i>男子
+        </div>
+
+        <div class="skeleton">
+          <i class="fas fa-spinner fa-pulse"></i>
+        </div>
+
+        <div id="men" class="men">
+          <div class="card">
+            <i class="user fas fa-user-circle"></i>
+            <a href="/dashboard?s_id=14428&name=髙橋崚">髙橋崚<i class="fas fa-chevron-circle-right"></i></a>
+            <div>
+              <span>中学1</span>
+              <a href="/search?q=横浜金沢">横浜金沢</a>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <div class="column">
+
+        <div class="head women">
+          <i class="fas fa-ellipsis-v"></i>女子
+        </div>
+
+        <div class="skeleton">
+          <i class="fas fa-spinner fa-pulse"></i>
+        </div>
+
+        <!-- <div class="card women">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=3196&name=髙橋陽向">髙橋陽向<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>中学2</span>
+            <a href="/search?q=ｻｷﾞﾇﾏSC鷺沼">ｻｷﾞﾇﾏSC鷺沼</a><a href="/search?q=川崎有馬">川崎有馬</a>
+          </div>
+        </div> -->
+
+      </div>
+
+    </div>
+
+    <div id="advanced">
+      <h2>見つからない場合</h2>
+      <p>
+        「髙橋から始まる」選手とチームを検索しています。<br />
+        「髙橋を含む」検索をする場合は下の高度検索を使用してください。
+      </p>
+      <a class="btn" href="/search?q=fdsa&advanced=1">
+        <i class="fab fa-searchengin"></i>
+        高度検索
+      </a>
+    </div>
+
+
+
+  </main>
+
+  <footer>
+    <div class="content">
+      <form action="msg" method="post">
+        <h3>お問い合わせ (不具合報告・要望・質問など)</h3>
+        <textarea name="msg" rows="5" minlength="5" maxlength="300"></textarea>
+        <input type="submit" value="送信">
+      </form>
+
+      <a href="https://twitter.com/swim_zero" class="twitter" ontouchstart>
+        <p><i class="fab fa-twitter"></i>Follow Me!</p>
+        <p>新機能について発信中</p>
+      </a>
+      <a href="https://kcabo.github.io/" class="me">
+        開発者のページ<i class="fas fa-share-square"></i>
+      </a>
+
+      <div class="links">
+        <a href="/">トップページ</a>
+        <a href="ranking?pool=1&event=112&year=19">男子ランキング</a>
+        <a href="ranking?pool=1&event=212&year=19">女子ランキング</a>
+        <a href="credits">使用素材</a>
+        <a href="develop">開発状況</a>
+      </div>
+    </div>
+    <div class="tail">
+      SWIMMERS ZERO
+    </div>
+  </footer>
+
+<div id="overlay" class=""></div>
+
+<script>
+  var deactivate_elms = document.getElementsByClassName('deactivate');
+  var overlay = document.getElementById('overlay');
+  var main_header = document.getElementsByTagName('header')[0];
+
+  function activate(target) {
+    target.classList.toggle("active");
+  };
+
+  function deactivate_all() {
+    for (var i = 0; i < deactivate_elms.length; i++) {
+      deactivate_elms[i].classList.remove("active");
+    };
+    overlay.classList.remove("active");
+  }
+  overlay.addEventListener('click', deactivate_all, false)
+
+  function activate_search(){
+    activate(main_header);
+    activate(overlay);
+    document.getElementById('searchbox').focus();
+  }
+
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({once: true, offset: 0, duration: 600});
+</script>
+
+</body>
+
+</html>

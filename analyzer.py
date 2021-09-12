@@ -130,26 +130,34 @@ class Profile:
 
 
 class Candidate:
-    def __init__(self, id, sex, name, grade, teams):
+    def __init__(self, id, name, grade, teams):
         self.id = id
-        self.sex = 'men' if sex == 1 else 'women'
         self.name = name
         self.grade_jp = japanese_grades[grade]
         self.teams = teams.unique().tolist()
+    def conv_dict(self):
+        dic = {
+            'id': self.id,
+            'name': self.name,
+            'grd': self.grade,
+            'teams': self.teams,
+        }
+        return dic
 
 def raise_candidates(records):
     fixed = map(lambda x:(x.swimmer_id, x.sex, x.name, x.grade_19, x.team_name), records)
     df = pd.DataFrame(fixed, columns = ['id', 'sex', 'name', 'grade', 'team'])
-    df_men = df[df['sex'] == 1]
-    df_women = df[df['sex'] == 2]
-    del df
-    men = set_candidates(df_men, 1)
-    women = set_candidates(df_women, 2)
+    men = set_candidates(df[df['sex'] == 1])
+    women = set_candidates(df[df['sex'] == 2])
     return men, women
 
-def set_candidates(df, sex):
+def set_candidates(df):
     unique = df.drop_duplicates(subset=['id']).sort_values(['name', 'grade'])
-    return [Candidate(id, sex, name, grade, df[df['id'] == id]['team']) for name, grade, id in zip(unique['name'], unique['grade'], unique['id'])]
+    return [Candidate(id,
+                name,
+                grade,
+                df[df['id'] == id]['team']) for name, grade, id in zip(unique['name'], unique['grade'], unique['id']
+            )]
 
 
 def setup_ranking(ranking, year):

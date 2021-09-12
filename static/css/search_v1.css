@@ -1,11 +1,23 @@
 .card {
   background-color: white;
   border-radius: 2px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,.16);
+  box-shadow: var(--shadow);
+}
+main {
+  background: var(--bg);
+}
+
+.skeleton {
+  line-height: 40px;
+  width: 100%;
+  text-align: center;
+}
+.skeleton i {
+  font-size: 1.8rem;
 }
 
 #header {
-  background-image: linear-gradient(0deg, rgba(51,204,255,1) 4.8%, rgba(51,102,255,1) 85.5% );
+  background-image: var(--gradient-r);
   height: 160px;
   margin-bottom: 10px;
 }
@@ -57,41 +69,71 @@
   background: #fff6;
 }
 
+#teams {
+  padding: 0 10px;
+  margin: auto;
+  max-width: 520px;
+  --sex: var(--team);
+}
+#teams .card {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.7rem;
+  font-weight: bold;
+  border-left: solid 5px var(--sex);
+  padding: 6px 10px;
+  text-decoration: none;
+  color: black;
+}
+#teams .card i {
+  font-size: 1.2rem;
+  padding-left: 5px;
+  vertical-align: text-top;
+  padding-top: 3.8px;
+  color: var(--sex);
+}
 
-#results {
-  padding: 15px 0;
+
+#swimmers {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-#results .column {
+#swimmers .column {
   width: 100%;
   max-width: 500px;
   margin: 0 10px;
 }
-#results .card {
+#swimmers .card {
   margin-bottom: 8px;
-  padding: 5px 0;
+  padding: 3px 0;
   display: flex;
+  border-left: solid 6px var(--sex);
 }
-#results .card.men {
-  border-left: solid 6px var(--men);
+.men {--sex:var(--men);}
+.women {--sex:var(--women);}
+.head {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  background: var(--sex);
+  margin: 8px 0;
+  border-radius: 2px;
+  line-height: 2;
 }
-#results .card.women {
-  border-left: solid 6px var(--women);
+.head i {
+  padding: 0 8px;
 }
-#results .card i.user {
+#swimmers .card i.user {
   font-size: 30px;
   line-height: 40px;
   padding-left: 7px;
 }
-#results .card.men i {
-  color: var(--men);
+#swimmers .card i {
+  color: var(--sex);
 }
-#results .card.women i {
-  color: var(--women);
-}
-#results .card > a {
+#swimmers .card > a {
   text-decoration: none;
   color: black;
   font-size: 1.7rem;
@@ -101,16 +143,16 @@
   letter-spacing: 1px;
   font-weight: bold;
 }
-#results .card a i {
+#swimmers .card a i {
   font-size: 1.2rem;
   padding-left: 3px;
   vertical-align: text-top;
   padding-top: 3.8px;
 }
-#results .card div {
+#swimmers .card div {
   padding: 5px;
 }
-#results .card div * {
+#swimmers .card div * {
   text-decoration: none;
   font-size: 1.1rem;
   background-color: var(--team);
@@ -122,25 +164,34 @@
   margin: 1.6px;
   cursor: pointer;
 }
-#results .card div span:first-child {
+#swimmers .card div span:first-child {
   background-color: var(--grade);
   cursor: auto;
 }
 
-#sorry {
-  padding: 20px;
-}
-#sorry p {
-  font-size: 1.6rem;
-  text-align: center;
-  color: #888;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-#sorry img {
-  width: 90%;
-  max-width: 300px;
-  display: block;
+#advanced {
+  padding: 20px 10px;
+  max-width: 500px;
   margin: auto;
-  padding: 20px;
+}
+#advanced h2 {
+  font-size: 1.7rem;
+  line-height: 2;
+}
+#advanced p {
+  font-size: 1.3rem;
+}
+#advanced .btn {
+  background: var(--main);
+  color: white;
+  font-size: 1.7rem;
+  font-weight: bold;
+  text-align: center;
+  width: 160px;
+  letter-spacing: 1px;
+  margin: 16px auto;
+  line-height: 2;
+  border-radius: 2px;
+  display: block;
+  text-decoration: none;
 }

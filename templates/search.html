@@ -18,33 +18,105 @@
       <div onclick="document.my_form.submit()">検索</div>
     </div>
 
-    <div id="results">
-      {% for candidates in [men, women] %}
-      <div class="column">
-        {% for c in candidates %}
-        <div class="card {{c.sex}}" data-aos="fade-right">
-          <i class="user fas fa-user-circle"></i>
-          <a href="/dashboard?s_id={{c.id}}&name={{c.name}}">{{c.name}}<i class="fas fa-chevron-circle-right"></i></a>
-          <div>
-            <span>{{c.grade_jp}}</span>
-            {% for t in c.teams %}<a href="/search?q={{t}}">{{t}}</a>{% endfor %}
-          </div>
-        </div>
-        {% endfor %}
+    <div id="teams">
+      <div class="head">
+        <i class="fas fa-ellipsis-v"></i>チーム
       </div>
-      {% endfor %}
+      <!-- <a class="card" href="/team?team=322">
+        <p>東京SC<i class="fas fa-chevron-circle-right"></i></p>
+      </a> -->
+      <div class="skeleton">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </div>
     </div>
 
-    {% if show_sorry %}
-    <div id="sorry">
-      <p>条件に一致する選手は<br>見つかりませんでした</p>
-      <img src="static/img/not_found.svg" alt="notFound">
+    <div id="swimmers">
+
+      <div class="column">
+
+        <div class="head men">
+          <i class="fas fa-ellipsis-v"></i>男子
+        </div>
+
+        <div class="skeleton">
+          <i class="fas fa-spinner fa-pulse"></i>
+        </div>
+
+        <div id="men" class="men">
+
+        </div>
+
+      </div>
+      <div class="column">
+
+        <div class="head women">
+          <i class="fas fa-ellipsis-v"></i>女子
+        </div>
+
+        <div class="skeleton">
+          <i class="fas fa-spinner fa-pulse"></i>
+        </div>
+
+        <div id="women" class="women">
+
+        </div>
+
+      </div>
+
     </div>
-    {% endif %}
+
+
+    <div id="advanced">
+      <h2>見つからない場合</h2>
+      <p>
+        「{{query}}から始まる」選手とチームを検索しています。<br />
+        「{{query}}を含む」検索をする場合は下の高度検索を使用してください。
+      </p>
+      <a class="btn" href="/search?q={{query}}&advanced=1">
+        <i class="fab fa-searchengin"></i>
+        高度検索
+      </a>
+    </div>
+
 
   </main>
 
   {% include "partial/footer.html" %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    var query = {{query}};
+    var query_data = {q: query};
+
+    function post_swimmer(data) {
+      axios.post('/searchNameAPI', data)
+        .then(res => apply_data(res.data))
+        .catch(err => alert(err))
+    }
+
+    function apply_search_result(data) {
+      document.getElementById('men').innerHTML = arrange_element(data['men']);
+      document.getElementById('women').innerHTML = arrange_element(data['women']);
+    }
+    function arrange_element(p_list) {
+      var html = [];
+      for (var p of p_list) {
+        var teams = '';
+        for (var t of p['teams']) {
+          teams += `<a href="/team?q=${t}">${t}</a>`;
+        }
+        var content = `<div class="card">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id=${p['id']}&name=${p['name']}">${p['name']}<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>${p['grd']}</span>
+            ${teams}
+          </div>
+        </div>`
+        html.push(content);
+      }
+      return html.join('')
+    }
+  </script>
 
 </body>
 

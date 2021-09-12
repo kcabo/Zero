@@ -237,9 +237,9 @@ def dashboard():
     teams = unique_teams({r.team_id for r in records})
     profile = analyzer.Profile(records)
 
-    target = db.session.query(Swimmer).get(swimmer_id)
-    target.visits += 1
-    db.session.commit()
+    # target = db.session.query(Swimmer).get(swimmer_id)
+    # target.visits += 1
+    # db.session.commit()
 
     # 見出しの選手情報：     性別　名前　学年　所属一覧
     profile.sex = 'men' if target.sex == 1 else 'women'
@@ -286,42 +286,80 @@ def dashboard():
 
 @app.route('/search')
 def search():
-    query = request.args.get('q', '').replace(' ','').replace('_','').replace('%','')
+    query = request.args.get('q', '')
+    return render_template('search.html', query = query)
 
+@app.route('/searchNameAPI', methods=['POST'])
+def search_name():
+    body = request.get_json()
+    query = body['q'].replace(' ','').replace('_','').replace('%','')
+    rtn = {'men':[], 'women':[]}
     if query:
-        swimmer_ids = db.session.query(Swimmer.swimmer_id).filter(Swimmer.name.like(f"%{query}%")).all()
-        team_ids = db.session.query(Team.team_id).filter(Team.team_name.like(f"%{query}%")).all()
         records = db.session.query(
-                    Swimmer.swimmer_id,
-                    Swimmer.sex,
-                    Swimmer.name,
-                    Swimmer.grade_19,
-                    Team.team_name
-                ).distinct(
-                    Record.swimmer_id,
-                    Record.team_id
-                ).filter(
-                    Record.swimmer_id == Swimmer.swimmer_id,
-                    Record.team_id == Team.team_id,
-                    Record.relay == 0,
-                    Swimmer.grade_19 != None,
-                    or_(
-                        Record.swimmer_id.in_([s.swimmer_id for s in swimmer_ids]),
-                        Record.team_id.in_([t.team_id for t in team_ids])
-                    )
-                ).limit(500).all()
-    else:
-        records = []
+                        Swimmer.swimmer_id,
+                        Swimmer.sex,
+                        Swimmer.name,
+                        Swimmer.grade_19,
+                        Team.team_name
+                    ).distinct(
+                        Record.swimmer_id,
+                        Record.team_id
+                    ).filter(
+                        Record.swimmer_id == Swimmer.swimmer_id,
+                        Record.team_id == Team.team_id,
+                        Record.meet_id == Meet.meet_id,
+                        Meet.year == 19,
+                        Swimmer.is_indiv == True,
+                        Swimmer.name.like(f"{query}%"),
+                        Swimmer.grade_19 != None,
+                    ).order_by(
+                        Record.swimmer_id,
+                        Record.team_id
+                    ).limit(500).all()
 
-    men, women = analyzer.raise_candidates(records)
-    show_sorry = False if men or women else True
-    return render_template(
-                'search.html',
-                query = query,
-                men = men,
-                women = women,
-                show_sorry = show_sorry
-            )
+        men = [{
+            'id': rc.swimmer_id,
+            'name': rc.name,
+            'grd': rc.grade_19,
+            'teams': [rc.team_name]
+        } for rc in records if rc.sex == 1]
+
+        for i, d in enumerate(men):
+            # try:
+            #     if men[i+1]['id'] == d['id']:
+            #
+            # except Exception as e:
+            #     raise
+            pass
+
+        women = [{
+            'id': rc.swimmer_id,
+            'name': rc.name,
+            'grd': rc.grade_19,
+            'teams': [rc.team_name]
+        } for rc in records if rc.sex == 2]
+
+        last_i = len(records) - 1
+
+        for i, rc in enumerate(records):
+            current = rc.swimmer_id
+            dict = {
+                'id': rc.swimmer_id,
+                'name': rc.name,
+                'grd': rc.grade_19,
+                'teams': [rc.team_name]
+            }
+            # if i == last_i:
+            #
+            # if records[i + 1]
+
+
+        # men, women = analyzer.raise_candidates(records)
+        # rtn['men'] = men
+        # rtn['women'] = women
+
+
+    return jsonify(rtn)
 
 
 @app.route('/resultAPI', methods=['POST'])

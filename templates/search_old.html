@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "partial/head.html" %}
+  <title>検索結果【スイマー検索】 | スイマーズ ゼロ</title>
+  <link rel="stylesheet" href="static/css/search_v1.css">
+</head>
+<body>
+  {% include "partial/header.html" %}
+  <main>
+
+    <div id="header">
+      <p>{{query}} の検索結果</p>
+      <form class="card" method="get" action="/search" name="my_form">
+        <input name="q" type="text" placeholder="Search..." value="{{query}}">
+        <i class="fas fa-search"></i>
+      </form>
+      <div onclick="document.my_form.submit()">検索</div>
+    </div>
+
+    <div id="results">
+      {% for candidates in [men, women] %}
+      <div class="column">
+        {% for c in candidates %}
+        <div class="card {{c.sex}}" data-aos="fade-right">
+          <i class="user fas fa-user-circle"></i>
+          <a href="/dashboard?s_id={{c.id}}&name={{c.name}}">{{c.name}}<i class="fas fa-chevron-circle-right"></i></a>
+          <div>
+            <span>{{c.grade_jp}}</span>
+            {% for t in c.teams %}<a href="/search?q={{t}}">{{t}}</a>{% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if show_sorry %}
+    <div id="sorry">
+      <p>条件に一致する選手は<br>見つかりませんでした</p>
+      <img src="static/img/not_found.svg" alt="notFound">
+    </div>
+    {% endif %}
+
+  </main>
+
+  {% include "partial/footer.html" %}
+
+</body>
+
+</html>
